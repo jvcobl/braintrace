@@ -132,7 +132,7 @@ const FearCueDemo = () => {
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={() => handlePredict("expect-us")}
-                  className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                  className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Something bad
                 </button>
