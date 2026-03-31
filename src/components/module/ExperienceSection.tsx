@@ -5,6 +5,7 @@ import SuddenNoiseDemo from "@/components/module/demos/SuddenNoiseDemo";
 import FearCueDemo from "@/components/module/demos/FearCueDemo";
 import MemoryUnderLoadDemo from "@/components/module/demos/MemoryUnderLoadDemo";
 import HPAAxisBuilderDemo from "@/components/module/demos/HPAAxisBuilderDemo";
+import MultistablePerceptionDemo from "@/components/module/demos/MultistablePerceptionDemo";
 
 interface ExperienceSectionProps {
   module: Module;
