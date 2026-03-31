@@ -18,7 +18,7 @@ export const unit2Meta = {
     "Temporoparietal junction",
   ],
   lectureTopics: [
-    "Primed States, Cognitive Load, and the PFC (March 16)",
+    "Primed states, cognitive load, and the prefrontal cortex",
   ],
 };
 
