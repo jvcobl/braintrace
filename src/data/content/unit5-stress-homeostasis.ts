@@ -1,6 +1,6 @@
 // ============================================================
 // UNIT 5 — Stress and Homeostasis
-// All content sourced strictly from NBB302 lecture notes
+// All content sourced from neuroscience literature on stress and homeostasis
 // ============================================================
 
 export const unit5Meta = {

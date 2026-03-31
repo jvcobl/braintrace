@@ -1,6 +1,6 @@
 // ============================================================
 // UNIT 3 — Emotion, Limbic System, and Amygdala
-// All content sourced strictly from NBB302 lecture notes
+// All content sourced from neuroscience literature on emotion and the amygdala
 // ============================================================
 
 export const unit3Meta = {

@@ -1,6 +1,6 @@
 // ============================================================
 // UNIT 4 — Learning and Fear Conditioning
-// All content sourced strictly from NBB302 lecture notes
+// All content sourced from neuroscience literature on learning and fear conditioning
 // ============================================================
 
 export const unit4Meta = {

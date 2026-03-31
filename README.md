@@ -36,7 +36,7 @@ src/
     ui/                  shadcn/ui primitives (not project-specific)
   data/
     modules.ts           All module content — intro copy, trace nodes, explain sections
-    courseMap.ts          NBB302 unit definitions and module-to-unit mappings
+    courseMap.ts          Unit definitions and module-to-unit mappings
 ```
 
 Each module follows the same four-tab flow: **Intro → Experience → Trace → Explain**.
