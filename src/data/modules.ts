@@ -207,6 +207,28 @@ export const modules: Module[] = [
     demoType: "interactive",
     learningObjective: "Distinguish the functional roles of the dlPFC, vmPFC, and OFC within the prefrontal cortex.",
   },
+  {
+    id: "mod-9",
+    title: "Fear vs. Anxiety Sorter",
+    slug: "fear-vs-anxiety-sorter",
+    unitId: "unit-3",
+    shortGoal: "Distinguish fear from anxiety using the course definitions.",
+    shortDescription: "Classify scenarios as fear or anxiety and trace why the distinction matters neurobiologically.",
+    introCopy: "You'll read short scenarios and decide whether each describes fear — a response to an imminent, tangible threat — or anxiety — the anticipation of a future, predicted threat. Then we'll trace the different circuits involved.",
+    traceNodes: [
+      { label: "Fear: Tangible Threat → Amygdala → Immediate Response", description: "Fear is the emotional appraisal of an imminent threat that is present and identifiable. Sensory input reaches the amygdala via the fast subcortical low road, driving an immediate defensive response." },
+      { label: "Anxiety: Predicted Threat → PFC + Amygdala → Anticipatory State", description: "Anxiety is the anticipation of a future threat. The PFC generates predictions about what might happen, and the amygdala responds to those predictions." },
+      { label: "The Distinction", description: "Fear responds to what is in front of you. Anxiety responds to what your brain predicts might happen. Both engage the amygdala, but anxiety additionally requires prefrontal prediction and can become pathological when overgeneralized." },
+    ],
+    explain: {
+      whatHappened: "You classified six scenarios as either fear or anxiety based on whether the threat was present and tangible or predicted and future-oriented.",
+      whatYourBrainDid: "For each scenario, your brain assessed whether the described threat was imminent (triggering the fear classification) or anticipated (triggering the anxiety classification). This distinction mirrors how the amygdala processes threats differently depending on whether sensory input arrives via the fast low road (fear) or via prefrontal prediction pathways (anxiety).",
+      keyPathway: "Fear: Sensory input → Low road (fast subcortical) → Amygdala → Immediate defensive response. Anxiety: PFC prediction → Amygdala activation → Anticipatory physiological state. The amygdala is engaged in both, but the input pathway and timing differ.",
+      nbb302Connection: "The fear–anxiety distinction is central to NBB302's coverage of the amygdala. The amygdala is not a simple fear center — it is a salience center that stamps importance onto events. Fear and anxiety both engage it, but through different circuits. This distinction matters clinically because anxiety disorders involve overgeneralized threat prediction, not an overactive fear response to present stimuli.",
+    },
+    demoType: "interactive",
+    learningObjective: "Distinguish fear from anxiety using the neurobiological definitions from the course.",
+  },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {
