@@ -28,6 +28,7 @@ const demos: Record<string, React.ComponentType> = {
   "mod-9": FearAnxietySorterDemo,
   "mod-10": EmotionArousalSorterDemo,
   "mod-11": ClassicalOperantSorterDemo,
+  "mod-12": HomeostasisAllostasisSorterDemo,
 };
 
 const ExperienceSection = ({ module }: ExperienceSectionProps) => {

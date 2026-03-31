@@ -85,6 +85,7 @@ export const lessonMappings: LessonMapping[] = [
   { moduleId: "mod-4", unitId: "unit-4", title: "Fear Cue and Extinction" },
   { moduleId: "mod-11", unitId: "unit-4", title: "Classical vs. Operant Sorter" },
   { moduleId: "mod-6", unitId: "unit-5", title: "HPA Axis Builder" },
+  { moduleId: "mod-12", unitId: "unit-5", title: "Homeostasis vs. Allostasis Sorter" },
 ];
 
 // Unit 5 anchor lesson mapping
