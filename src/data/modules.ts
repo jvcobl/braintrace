@@ -139,6 +139,30 @@ export const modules: Module[] = [
     demoType: "recall",
     learningObjective: "Understand working memory capacity limits and the prefrontal contributions to maintenance under load.",
   },
+  {
+    id: "mod-6",
+    title: "HPA Axis Builder",
+    slug: "hpa-axis-builder",
+    unitId: "unit-5",
+    shortGoal: "Learn the order of the HPA axis and what happens when cortisol feedback fails.",
+    shortDescription: "Build the stress response cascade step by step and trace how chronic stress overrides the shutdown mechanism.",
+    introCopy: "You'll assemble the HPA axis in the correct order — from the hypothalamus releasing CRH through cortisol negative feedback. Then we'll trace what happens when extreme stress from the central amygdala and PFC prevents the system from shutting down.",
+    traceNodes: [
+      { label: "Hypothalamus → CRH", description: "The hypothalamus detects a stressor and releases corticotropin-releasing hormone (CRH) into the portal blood system connecting it to the anterior pituitary." },
+      { label: "Anterior Pituitary → ACTH", description: "The pituitary receives CRH and releases adrenocorticotropic hormone (ACTH) into the general bloodstream, targeting the adrenal glands." },
+      { label: "Adrenal Cortex → Cortisol", description: "The adrenal cortex receives ACTH and releases glucocorticoids — primarily cortisol — which mobilize energy, suppress the immune system, and modulate brain function." },
+      { label: "Negative Feedback → Shutdown", description: "Cortisol circulates back to the hypothalamus and pituitary, inhibiting further CRH and ACTH release. This normally shuts the stress response down once the stressor passes." },
+      { label: "CeA / PFC Override (Extreme Stress)", description: "Under extreme or chronic stress, the central amygdala and PFC send override signals that prevent negative feedback from working. The HPA axis stays active, cortisol accumulates, and chronic damage follows — hippocampal atrophy, PFC dendritic shrinkage, immune suppression." },
+    ],
+    explain: {
+      whatHappened: "You assembled the HPA axis in sequence — placing each structure and its hormone output in order, from the hypothalamus through cortisol release, negative feedback, and the override mechanism under extreme stress.",
+      whatYourBrainDid: "By building the cascade step by step, you traced the same neuroendocrine pathway your own body uses during stress. The hypothalamus initiates with CRH, the pituitary amplifies with ACTH, and the adrenal cortex produces cortisol. Under normal conditions, cortisol feeds back to shut the system down. Under extreme stress, the central amygdala and PFC override that feedback — keeping cortisol elevated and driving the chronic damage seen in allostatic overload.",
+      keyPathway: "Hypothalamus (CRH) → Anterior Pituitary (ACTH) → Adrenal Cortex (Cortisol) → Negative feedback to hypothalamus and pituitary. Override path: CeA / PFC → block negative feedback → sustained cortisol → hippocampal and PFC atrophy.",
+      nbb302Connection: "This module covers the HPA axis as the primary neuroendocrine stress system from NBB302. The negative feedback loop and its failure under chronic stress connect directly to course material on allostatic overload, hippocampal atrophy in CA3 and dentate gyrus, PFC dendritic shrinkage, and the resilience-vulnerability spectrum measured by vmPFC activation.",
+    },
+    demoType: "interactive",
+    learningObjective: "Trace the HPA axis cascade and explain how cortisol negative feedback can be overridden under extreme stress.",
+  },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {
