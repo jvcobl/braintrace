@@ -233,7 +233,10 @@ const Index = () => {
                   <h3 className="mt-2 font-display text-lg text-foreground group-hover:text-primary transition-colors">
                     {mod.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-[13px] text-muted-foreground leading-relaxed">
+                  <p className="mt-2 text-[13px] text-foreground/70 leading-relaxed italic">
+                    {mod.hook}
+                  </p>
+                  <p className="mt-1 flex-1 text-[13px] text-muted-foreground leading-relaxed">
                     {mod.shortDescription}
                   </p>
                   <p className="mt-4 text-xs font-medium text-muted-foreground/60 group-hover:text-primary transition-colors">
