@@ -198,6 +198,7 @@ export const modules: Module[] = [
     title: "PFC Role Matcher",
     slug: "pfc-role-matcher",
     unitId: "unit-2",
+    hook: "Your prefrontal cortex isn't one system — it's three, and they don't always agree.",
     shortGoal: "Learn the functional divisions of the prefrontal cortex.",
     shortDescription: "Match cognitive scenarios to the correct PFC region and trace why the executive system has distinct subdivisions.",
     introCopy: "You'll read short scenarios describing things the prefrontal cortex does — logic, emotion regulation, predictions — and assign each to the correct PFC subregion: dlPFC, vmPFC, or OFC. Then we'll trace the functional map.",
