@@ -460,7 +460,7 @@ export const unit1CaseNotes = [
     title: "Prosopagnosia",
     content:
       "Prosopagnosia (face blindness) results from damage to the fusiform face area on the fusiform gyrus. People with this condition can see faces — they know a face is in front of them — but they cannot construct an individual's identity from those features. They may fail to recognize close family members or even their own reflection. This demonstrates that face recognition depends on a specialized cortical region, not general visual ability.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u1-cn-03",
