@@ -72,19 +72,16 @@ const Index = () => {
         />
 
         <div className="container relative mx-auto max-w-3xl py-24 text-center md:py-36">
-          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-            Interactive Neuroscience Study Platform
-          </p>
-
-          <h1 className="mt-6 font-display text-[2.5rem] leading-[1.15] tracking-tight text-foreground md:text-[3.25rem] lg:text-[3.75rem]">
-            Perception, Cognition, Emotion,
+          <h1 className="font-display text-[2.5rem] leading-[1.15] tracking-tight text-foreground md:text-[3.25rem] lg:text-[3.75rem]">
+            Your brain is predicting what happens next
             <br className="hidden sm:block" />
-            Conditioning, and Stress
+            — before you even realize it.
           </h1>
 
-          <p className="mx-auto mt-7 max-w-lg text-[1.05rem] leading-relaxed text-muted-foreground">
-            Five units. Interactive lessons that let you experience a neural
-            phenomenon, trace the pathway, and understand the mechanism.
+          <p className="mx-auto mt-7 max-w-xl text-[1.05rem] leading-relaxed text-muted-foreground">
+            NeuroRoute is a free interactive neuroscience site. Experience a
+            phenomenon, trace the neural pathway, and understand what your brain
+            was actually doing.
           </p>
 
           <div className="mt-11 flex items-center justify-center gap-4">
@@ -92,13 +89,13 @@ const Index = () => {
               to={`/unit/${unitIds[0]}`}
               className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Begin with Unit 1
+              Start Exploring
             </Link>
             <Link
               to="/course-map"
               className="inline-flex items-center rounded-lg border border-border bg-card px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-secondary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Browse All Units
+              Browse All Lessons
             </Link>
           </div>
         </div>
