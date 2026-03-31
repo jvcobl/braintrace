@@ -5,7 +5,7 @@
 // and linking existing lesson modules to their parent units.
 // ============================================================
 
-import type { UnitContent, ConceptCard, CaseNote } from "./types";
+import type { UnitContent } from "./types";
 
 import {
   unit1Meta, unit1ConceptCards, unit1Pathways, unit1Distinctions, unit1CaseNotes, unit1Review,
