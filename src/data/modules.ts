@@ -229,6 +229,28 @@ export const modules: Module[] = [
     demoType: "interactive",
     learningObjective: "Distinguish fear from anxiety using the neurobiological definitions from the course.",
   },
+  {
+    id: "mod-10",
+    title: "Emotion vs. Arousal Sorter",
+    slug: "emotion-vs-arousal-sorter",
+    unitId: "unit-3",
+    shortGoal: "Distinguish emotion from arousal using the course definitions.",
+    shortDescription: "Classify scenarios as emotion or arousal and learn why valence is the key differentiator.",
+    introCopy: "You'll read short scenarios and decide whether each describes an emotion — a transient state with specific valence that motivates approach or avoidance — or arousal — physiological intensity without inherent direction. Then we'll trace why this distinction matters.",
+    traceNodes: [
+      { label: "Arousal: Intensity Without Direction", description: "The magnitude of physiological activation — cortisol release, heart rate, pupil dilation. Arousal has no valence; high arousal accompanies both terror and excitement equally." },
+      { label: "Valence: The Directional Quality", description: "The positive or negative quality that gives an experience its approach or avoid character. Valence is what distinguishes emotion from arousal." },
+      { label: "Emotion: Arousal + Valence → Motivated Behavior", description: "A transient state — not a trait — that combines physiological activation with specific valence, producing approach or avoidance motivation." },
+    ],
+    explain: {
+      whatHappened: "You classified six scenarios as either emotion or arousal based on whether the description included specific valence (positive or negative direction) or only physiological intensity.",
+      whatYourBrainDid: "For each scenario, you assessed whether the experience had a clear directional quality — approach or avoid — or simply reflected how activated the body was. This mirrors the distinction the course draws between arousal (intensity) and emotion (intensity plus valence plus motivated behavior).",
+      keyPathway: "Arousal = physiological intensity without direction. Valence = positive or negative quality. Emotion = arousal + valence → transient state motivating approach or avoidance. Confusing arousal with emotion is a common reasoning error.",
+      nbb302Connection: "This module covers the emotion–arousal–valence framework from NBB302. The distinction is foundational: arousal tells you how activated the body is, valence tells you the direction, and emotion combines both into a transient motivational state. Understanding this framework is essential for interpreting amygdala function, fear vs. anxiety, and how interoceptive signals become labeled emotional experiences.",
+    },
+    demoType: "interactive",
+    learningObjective: "Distinguish emotion from arousal and explain the role of valence in creating directional emotional states.",
+  },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {
