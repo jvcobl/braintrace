@@ -19,7 +19,7 @@ export const unit5Meta = {
     "Hippocampus (CA3, dentate gyrus)",
   ],
   lectureTopics: [
-    "Stress and Homeostasis (March 30)",
+    "Stress, homeostasis, and allostasis",
   ],
 };
 
