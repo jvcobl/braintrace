@@ -20,15 +20,15 @@ const UnitHub = () => {
   if (!content || !unitId) {
     return (
       <div className="container flex flex-col items-center justify-center py-32 text-center">
-        <h1 className="font-display text-4xl font-bold text-foreground">Unit Not Found</h1>
-        <p className="mt-3 text-muted-foreground">
+        <h1 className="font-display text-4xl text-foreground">Unit Not Found</h1>
+        <p className="mt-4 text-[15px] text-muted-foreground">
           The unit you're looking for doesn't exist.
         </p>
         <Link
           to="/course-map"
-          className="mt-8 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="mt-10 inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          Course Map
+          Curriculum
         </Link>
       </div>
     );
@@ -48,15 +48,16 @@ const UnitHub = () => {
   const nextUnit = idx < allIds.length - 1 ? allIds[idx + 1] : null;
 
   return (
-    <div className="container max-w-3xl py-12">
+    <div className="container max-w-3xl py-14 md:py-16">
+      {/* Breadcrumb */}
       <Link
         to="/course-map"
-        className="text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+        className="inline-flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
       >
-        ← Course Map
+        <span aria-hidden="true">←</span> Curriculum
       </Link>
 
-      <div className="mt-6 space-y-12">
+      <div className="mt-7 space-y-14">
         {/* 1. Unit overview */}
         <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
 
@@ -93,13 +94,13 @@ const UnitHub = () => {
       </div>
 
       {/* Prev / Next */}
-      <nav className="mt-12 flex items-center justify-between border-t border-border pt-6">
+      <nav className="mt-14 flex items-center justify-between border-t border-border pt-8">
         {prevUnit ? (
           <Link
             to={`/unit/${prevUnit}`}
-            className="group text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+            className="group inline-flex items-center gap-2 text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
           >
-            <span className="text-muted-foreground group-hover:text-primary transition-colors">←</span>{" "}
+            <span className="transition-transform group-hover:-translate-x-0.5">←</span>
             {(() => {
               const pc = getUnitContent(prevUnit);
               return pc ? pc.meta.title : `Unit ${prevUnit.replace("unit-", "")}`;
@@ -111,13 +112,13 @@ const UnitHub = () => {
         {nextUnit ? (
           <Link
             to={`/unit/${nextUnit}`}
-            className="group text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+            className="group inline-flex items-center gap-2 text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
           >
             {(() => {
               const nc = getUnitContent(nextUnit);
               return nc ? nc.meta.title : `Unit ${nextUnit.replace("unit-", "")}`;
-            })()}{" "}
-            <span className="text-muted-foreground group-hover:text-primary transition-colors">→</span>
+            })()}
+            <span className="transition-transform group-hover:translate-x-0.5">→</span>
           </Link>
         ) : (
           <span />
