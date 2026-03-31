@@ -155,7 +155,7 @@ const FearCueDemo = () => {
               <p className="text-sm text-foreground">
                 {trial?.hasUS ? "An unpleasant outcome follows the cue." : "Nothing happens. The cue appears alone."}
               </p>
-              <button onClick={() => setStep("note")} className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent">
+              <button onClick={() => setStep("note")} className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 Continue
               </button>
             </div>
