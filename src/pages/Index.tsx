@@ -77,9 +77,9 @@ const Index = () => {
           </p>
 
           <h1 className="mt-6 font-display text-[2.5rem] leading-[1.15] tracking-tight text-foreground md:text-[3.25rem] lg:text-[3.75rem]">
-            Perception, cognition, emotion,
+            Perception, Cognition, Emotion,
             <br className="hidden sm:block" />
-            conditioning, and stress
+            Conditioning, and Stress
           </h1>
 
           <p className="mx-auto mt-7 max-w-lg text-[1.05rem] leading-relaxed text-muted-foreground">
