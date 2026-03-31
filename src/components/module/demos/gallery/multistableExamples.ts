@@ -7,11 +7,8 @@ export interface MultistableExample {
   title: string;
   interpretations: [string, string];
   prompt: string;
-  /** Choice-specific feedback shown in the switch phase */
   switchFeedback: [string, string];
-  /** Choice-specific hint for finding the other interpretation */
   switchHint: [string, string];
-  /** Choice-specific result text — acknowledges what they saw */
   resultFeedback: [string, string];
   explanation: string;
   neuroscienceNote: string;
@@ -68,50 +65,27 @@ const examples: MultistableExample[] = [
     id: "necker-cube",
     title: "Necker Cube",
     interpretations: [
-      "Front face is lower-left",
-      "Front face is upper-right",
+      "Lower-left face is in front",
+      "Upper-right face is in front",
     ],
     prompt:
-      "This wireframe cube can be seen from two angles. Which face appears to be in front?",
+      "This wireframe cube has no shading or perspective cues. Which square face appears to be closest to you?",
     switchFeedback: [
-      "You see the lower-left face as the front. Now try to see the upper-right face as the front instead — as if you're looking at the cube from below.",
-      "You see the upper-right face as the front. Now try to see the lower-left face as the front instead — as if you're looking at the cube from above.",
+      "You see the lower-left face as the front — as if you're looking at the cube from slightly above. Now try to flip the depth: imagine the upper-right face is the one closest to you, as if you're looking up at the cube from below.",
+      "You see the upper-right face as the front — as if you're looking at the cube from below. Now try to flip the depth: imagine the lower-left face is the one closest to you, as if you're looking down at the cube from above.",
     ],
     switchHint: [
-      "Try focusing on the upper-right square and imagining it as the nearest face of the cube.",
-      "Try focusing on the lower-left square and imagining it as the nearest face of the cube.",
+      "Focus on the upper-right square. Try to see it as a solid surface sitting in front of everything else. The lower-left square should recede into the background.",
+      "Focus on the lower-left square. Try to see it as a solid surface sitting in front of everything else. The upper-right square should recede into the background.",
     ],
     resultFeedback: [
-      "Your brain imposed a 3D interpretation with the lower-left face forward. The drawing has no depth cues that favor either reading.",
-      "Your brain imposed a 3D interpretation with the upper-right face forward. The drawing has no depth cues that favor either reading.",
+      "You interpreted the lower-left face as nearest — your brain imposed a viewpoint from above-right. But the drawing is perfectly flat with no depth cues favoring either reading. The same twelve lines support both 3D interpretations equally. Your visual system chose a depth assignment automatically and ran with it.",
+      "You interpreted the upper-right face as nearest — your brain imposed a viewpoint from below-left. But the drawing is perfectly flat with no depth cues favoring either reading. The same twelve lines support both 3D interpretations equally. Your visual system chose a depth assignment automatically and ran with it.",
     ],
     explanation:
-      "The drawing contains no depth cues that favor one orientation. Your brain imposes a 3D interpretation on a flat 2D pattern, and periodically reverses which face it treats as the front.",
+      "The Necker cube demonstrates depth reversal — a different category of multistable perception from figure-ground (Rubin's vase) or color constancy. Your brain automatically constructs a 3D interpretation from a 2D wireframe, but the drawing is genuinely ambiguous: it contains no shadows, no perspective convergence, and no occlusion cues. With nothing to anchor the depth assignment, your visual system periodically flips between two equally valid readings.",
     neuroscienceNote:
-      "Depth-from-ambiguity recruits parietal areas that normally process 3D space. The reversal reflects competing neural populations in the dorsal visual stream.",
-  },
-  {
-    id: "duck-rabbit",
-    title: "Duck or Rabbit",
-    interpretations: ["A duck facing left", "A rabbit facing right"],
-    prompt:
-      "What animal do you see? Look carefully — the same shape can be read two different ways.",
-    switchFeedback: [
-      "You saw a duck. The beak points left. Now try to see those same shapes as long ears pointing right — a rabbit facing the other direction.",
-      "You saw a rabbit. The ears point right. Now try to see those same shapes as a wide beak pointing left — a duck facing the other direction.",
-    ],
-    switchHint: [
-      "The duck's beak becomes the rabbit's ears. Imagine the animal facing to the right.",
-      "The rabbit's ears become the duck's beak. Imagine the animal facing to the left.",
-    ],
-    resultFeedback: [
-      "You parsed the protruding shapes as a beak — duck. Re-categorizing those features as ears requires your ventral stream to reclassify the entire object.",
-      "You parsed the protruding shapes as ears — rabbit. Re-categorizing those features as a beak requires your ventral stream to reclassify the entire object.",
-    ],
-    explanation:
-      "The ears of the rabbit are the beak of the duck. Your brain's object-recognition system in the ventral stream settles on one category, and switching requires re-categorizing the same features.",
-    neuroscienceNote:
-      "Category-level switching engages inferotemporal cortex and the OFC's expectation system. Prior knowledge and context bias which animal you see first.",
+      "Depth-from-ambiguity recruits parietal cortex areas that normally process 3D spatial relationships. The spontaneous reversal reflects competition between two neural populations in the dorsal visual stream, each encoding a different depth interpretation. The rate of switching is influenced by attention, fatigue, and even individual differences in cortical inhibition.",
   },
 ];
 
