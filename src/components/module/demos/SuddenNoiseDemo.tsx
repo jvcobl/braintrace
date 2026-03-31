@@ -79,6 +79,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
   // Reflection answers
   const [expectAnswer, setExpectAnswer] = useState<"didNotExpect" | "didExpect" | null>(null);
   const [primingAnswer, setPrimingAnswer] = useState<"strongerAfterCue" | "sameOrWeaker" | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const targetTime = useRef(0);
   const waitTimer = useRef<ReturnType<typeof setTimeout>>();
