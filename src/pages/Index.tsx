@@ -6,19 +6,19 @@ import { modules } from "@/data/modules";
 
 const STUDY_METHOD = [
   {
-    step: "1",
+    step: "01",
     name: "Experience",
     description:
       "Each lesson opens with an interactive demo. You observe or participate in a perceptual, cognitive, or physiological phenomenon before encountering any explanation.",
   },
   {
-    step: "2",
+    step: "02",
     name: "Trace",
     description:
       "A pathway diagram maps the brain regions and circuits involved — showing how the signal moves from input to output.",
   },
   {
-    step: "3",
+    step: "03",
     name: "Explain",
     description:
       "A focused write-up connects the demo to the neuroscience: what your brain did, which structures were active, and why the pathway matters.",
@@ -60,30 +60,43 @@ const Index = () => {
       {/* ════════════════════════════════════════════════
           1. HERO
          ════════════════════════════════════════════════ */}
-      <section className="border-b border-border bg-card">
-        <div className="container mx-auto max-w-3xl py-20 text-center md:py-28">
-          <h1 className="font-display text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
-            Interactive neuroscience —
-            <br className="hidden sm:block" />
-            perception, cognition, emotion,
+      <section className="relative overflow-hidden border-b border-border bg-hero-bg">
+        {/* subtle decorative gradient wash */}
+        <div
+          className="pointer-events-none absolute -top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full opacity-[0.07]"
+          style={{
+            background:
+              "radial-gradient(circle, hsl(174 55% 32%) 0%, transparent 70%)",
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="container relative mx-auto max-w-3xl py-24 text-center md:py-36">
+          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+            Interactive Neuroscience Study Platform
+          </p>
+
+          <h1 className="mt-6 font-display text-[2.5rem] leading-[1.15] tracking-tight text-foreground md:text-[3.25rem] lg:text-[3.75rem]">
+            Perception, cognition, emotion,
             <br className="hidden sm:block" />
             conditioning, and stress
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground leading-relaxed md:text-lg">
-            NeuroRoute is a study platform organized into five units. Each
-            lesson lets you experience a neural phenomenon, trace the pathway
-            involved, and read a concise explanation of the mechanism.
+
+          <p className="mx-auto mt-7 max-w-lg text-[1.05rem] leading-relaxed text-muted-foreground">
+            Five units. Interactive lessons that let you experience a neural
+            phenomenon, trace the pathway, and understand the mechanism.
           </p>
-          <div className="mt-10 flex items-center justify-center gap-3">
+
+          <div className="mt-11 flex items-center justify-center gap-4">
             <Link
               to={`/unit/${unitIds[0]}`}
-              className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Begin with Unit 1
             </Link>
             <Link
               to="/course-map"
-              className="inline-flex items-center rounded-md border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex items-center rounded-lg border border-border bg-card px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-secondary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Browse All Units
             </Link>
@@ -95,28 +108,31 @@ const Index = () => {
           2. STUDY METHOD
          ════════════════════════════════════════════════ */}
       <section className="border-b border-border">
-        <div className="container mx-auto max-w-4xl py-16 md:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Study Method
-          </p>
-          <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-            Each lesson follows three steps
-          </h2>
-          <p className="mt-3 max-w-xl text-sm text-muted-foreground leading-relaxed">
-            The same structure repeats across every lesson — first-person
-            experience, then pathway anatomy, then written explanation.
-          </p>
+        <div className="container mx-auto max-w-5xl py-20 md:py-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+              Study Method
+            </p>
+            <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
+              Each lesson follows three steps
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground leading-relaxed">
+              The same structure repeats across every lesson — first-person
+              experience, then pathway anatomy, then written explanation.
+            </p>
+          </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-3">
+          <div className="mx-auto mt-14 grid max-w-4xl gap-5 sm:grid-cols-3">
             {STUDY_METHOD.map((s) => (
-              <div key={s.step} className="rounded-lg border border-border bg-card p-5">
-                <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-secondary text-xs font-bold text-foreground">
-                  {s.step}
-                </span>
-                <h3 className="mt-3 font-display text-base font-semibold text-foreground">
+              <div
+                key={s.step}
+                className="relative rounded-xl border border-border bg-card p-6 shadow-sm"
+              >
+                <span className="font-display text-3xl text-primary/20">{s.step}</span>
+                <h3 className="mt-2 text-[15px] font-semibold text-foreground">
                   {s.name}
                 </h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                <p className="mt-2.5 text-[13px] leading-relaxed text-muted-foreground">
                   {s.description}
                 </p>
               </div>
@@ -128,21 +144,22 @@ const Index = () => {
       {/* ════════════════════════════════════════════════
           3. UNITS
          ════════════════════════════════════════════════ */}
-      <section className="border-b border-border bg-card">
-        <div className="container mx-auto max-w-4xl py-16 md:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Units
-          </p>
-          <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-            Five units covering core neuroscience
-          </h2>
-          <p className="mt-3 max-w-xl text-sm text-muted-foreground leading-relaxed">
-            The curriculum moves from sensory processing through higher
-            cognition to neuroendocrine stress systems. Each unit contains
-            study material and interactive lessons.
-          </p>
+      <section className="border-b border-border bg-section-alt">
+        <div className="container mx-auto max-w-5xl py-20 md:py-24">
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+              Curriculum
+            </p>
+            <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
+              Five units covering core neuroscience
+            </h2>
+            <p className="mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
+              The curriculum moves from sensory processing through higher
+              cognition to neuroendocrine stress systems.
+            </p>
+          </div>
 
-          <div className="mt-10 space-y-3">
+          <div className="mt-12 space-y-3">
             {unitIds.map((uid) => {
               const content = getUnitContent(uid);
               if (!content) return null;
@@ -154,24 +171,24 @@ const Index = () => {
                 <Link
                   key={uid}
                   to={`/unit/${uid}`}
-                  className="group flex items-start gap-4 rounded-lg border border-border bg-background p-5 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="group flex items-start gap-5 rounded-xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-sm">
                     {num}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-base font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
+                    <h3 className="font-display text-[1.05rem] text-foreground leading-snug group-hover:text-primary transition-colors">
                       {content.meta.title}
                     </h3>
-                    <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                    <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">
                       {content.meta.subtitle}
                     </p>
-                    <p className="mt-2 text-xs text-muted-foreground">
+                    <p className="mt-2.5 text-xs font-medium text-muted-foreground/70">
                       {lessonCount} {lessonCount === 1 ? "lesson" : "lessons"}
                     </p>
                   </div>
                   <span
-                    className="mt-1 text-muted-foreground/50 transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                    className="mt-2 text-lg text-muted-foreground/30 transition-all group-hover:translate-x-0.5 group-hover:text-primary"
                     aria-hidden="true"
                   >
                     →
@@ -184,40 +201,42 @@ const Index = () => {
       </section>
 
       {/* ════════════════════════════════════════════════
-          4. RECOMMENDED STARTING POINTS
+          4. RECOMMENDED LESSONS
          ════════════════════════════════════════════════ */}
       <section className="border-b border-border">
-        <div className="container mx-auto max-w-4xl py-16 md:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Where to Start
-          </p>
-          <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-            Recommended lessons
-          </h2>
-          <p className="mt-3 max-w-xl text-sm text-muted-foreground leading-relaxed">
-            These four lessons span different units and demonstrate the range
-            of topics and interaction types available across the platform.
-          </p>
+        <div className="container mx-auto max-w-5xl py-20 md:py-24">
+          <div className="max-w-2xl">
+            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+              Where to Start
+            </p>
+            <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
+              Recommended lessons
+            </h2>
+            <p className="mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
+              These four lessons span different units and demonstrate the range
+              of topics and interaction types across the platform.
+            </p>
+          </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2">
             {featuredModules.map((mod) => {
               const unitContent = getUnitContent(mod.unitId);
               return (
                 <Link
                   key={mod.id}
                   to={`/module/${mod.id}`}
-                  className="group rounded-lg border border-border bg-card p-5 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="group flex flex-col rounded-xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary/60">
                     {unitContent?.meta.title ?? "Lesson"}
                   </p>
-                  <h3 className="mt-1.5 font-display text-base font-semibold text-foreground group-hover:text-primary transition-colors">
+                  <h3 className="mt-2 font-display text-lg text-foreground group-hover:text-primary transition-colors">
                     {mod.title}
                   </h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  <p className="mt-2 flex-1 text-[13px] text-muted-foreground leading-relaxed">
                     {mod.shortDescription}
                   </p>
-                  <p className="mt-3 text-xs text-muted-foreground group-hover:text-primary transition-colors">
+                  <p className="mt-4 text-xs font-medium text-muted-foreground/60 group-hover:text-primary transition-colors">
                     Open lesson →
                   </p>
                 </Link>
@@ -230,26 +249,28 @@ const Index = () => {
       {/* ════════════════════════════════════════════════
           5. APPROACH
          ════════════════════════════════════════════════ */}
-      <section className="border-b border-border bg-card">
-        <div className="container mx-auto max-w-4xl py-16 md:py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            Approach
-          </p>
-          <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-            Why this format works for neuroscience
-          </h2>
-          <p className="mt-3 max-w-xl text-sm text-muted-foreground leading-relaxed">
-            Neuroscience is best understood through pathways, not definitions.
-            Each lesson is structured to build that kind of understanding.
-          </p>
+      <section className="border-b border-border bg-section-alt">
+        <div className="container mx-auto max-w-5xl py-20 md:py-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+              Approach
+            </p>
+            <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
+              Why this format works for neuroscience
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground leading-relaxed">
+              Neuroscience is best understood through pathways, not definitions.
+              Each lesson is structured to build that kind of understanding.
+            </p>
+          </div>
 
-          <div className="mt-10 grid gap-x-8 gap-y-6 sm:grid-cols-2">
+          <div className="mx-auto mt-14 grid max-w-4xl gap-x-10 gap-y-8 sm:grid-cols-2">
             {APPROACH_POINTS.map((pt) => (
-              <div key={pt.title}>
-                <h3 className="font-display text-sm font-semibold text-foreground">
+              <div key={pt.title} className="border-l-2 border-primary/15 pl-5">
+                <h3 className="text-[14px] font-semibold text-foreground">
                   {pt.title}
                 </h3>
-                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
+                <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
                   {pt.body}
                 </p>
               </div>
@@ -262,24 +283,24 @@ const Index = () => {
           6. CLOSING
          ════════════════════════════════════════════════ */}
       <section>
-        <div className="container mx-auto max-w-2xl py-16 text-center md:py-24">
-          <h2 className="font-display text-xl font-bold tracking-tight text-foreground md:text-2xl">
-            Start with any unit or pick a lesson that interests you
+        <div className="container mx-auto max-w-2xl py-20 text-center md:py-28">
+          <h2 className="font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
+            Start with any unit or pick a lesson
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground leading-relaxed">
-            The units are sequential but each lesson is self-contained — you
-            can work through them in order or jump to a specific topic.
+            The units are sequential but each lesson is self-contained — work
+            through them in order or jump to a specific topic.
           </p>
-          <div className="mt-8 flex items-center justify-center gap-3">
+          <div className="mt-10 flex items-center justify-center gap-4">
             <Link
               to={`/unit/${unitIds[0]}`}
-              className="inline-flex items-center rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Begin with Unit 1
             </Link>
             <Link
               to="/about"
-              className="inline-flex items-center rounded-md border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex items-center rounded-lg border border-border bg-card px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-secondary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               About NeuroRoute
             </Link>
