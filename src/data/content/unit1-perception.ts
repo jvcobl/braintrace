@@ -476,7 +476,7 @@ export const unit1CaseNotes = [
       "Joshua Correll's research demonstrated that the same fast heuristic system enabling rapid object recognition also carries serious costs. In computer simulations, subjects consistently shot Black individuals faster than White individuals. The neurobiology shows a rapid P200 ERP 'threat' waveform followed by a delayed or weakened N200 'inhibitory/think-a-second' waveform from the PFC. This illustrates how the speed of the top-down prediction system can override careful evaluation when societal biases have shaped the brain's heuristic expectations.",
     sensitivity: "high" as const,
     sensitivityNote:
-      "This material is presented as a neuroscience study card, not as an interactive experience. It demonstrates the biological cost of the same heuristic system covered in this unit.",
+      "This material is presented as a neuroscience reference, not as an interactive experience. It demonstrates the biological cost of the same heuristic system explored in this section.",
   },
 ];
 
