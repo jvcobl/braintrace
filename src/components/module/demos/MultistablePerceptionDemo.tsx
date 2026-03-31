@@ -9,7 +9,7 @@ interface ExampleState {
   choice: "a" | "b" | null;
 }
 
-const MultistablePerceptionDemo = () => {
+const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [states, setStates] = useState<Record<string, ExampleState>>({});
   const [assist, setAssist] = useState<"none" | "a" | "b">("none");
@@ -111,12 +111,21 @@ const MultistablePerceptionDemo = () => {
 
       {/* Gallery completion summary */}
       {allDone && (
-        <div className="mt-4 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3">
+        <div className="mt-4 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 space-y-2">
           <p className="text-sm text-foreground leading-relaxed">
             <span className="font-medium">Gallery complete.</span>{" "}
             You've experienced three types of multistable perception — figure–ground, illumination, and depth reversal.
-            Continue to <span className="font-medium">Trace</span> to see the neural pathway, or <span className="font-medium">Explain</span> for the full analysis.
           </p>
+          {onNavigate && (
+            <button
+              type="button"
+              onClick={() => onNavigate("Trace")}
+              className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1.5 group"
+            >
+              <span>See the neural pathway in Trace</span>
+              <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
+            </button>
+          )}
         </div>
       )}
 
