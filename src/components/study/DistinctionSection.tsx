@@ -15,27 +15,25 @@ const DistinctionSection = ({ distinctions }: DistinctionSectionProps) => (
         >
           <div className="grid sm:grid-cols-2">
             <div className="p-4 sm:border-r sm:border-border">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-primary">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {d.termA}
-              </h3>
+              </p>
               <p className="mt-2 text-sm text-foreground/80 leading-relaxed">
                 {d.descriptionA}
               </p>
             </div>
             <div className="border-t border-border p-4 sm:border-t-0">
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-primary">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {d.termB}
-              </h3>
+              </p>
               <p className="mt-2 text-sm text-foreground/80 leading-relaxed">
                 {d.descriptionB}
               </p>
             </div>
           </div>
-          <div className="border-t border-border bg-secondary/40 px-4 py-3">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              Key Difference
-            </p>
-            <p className="mt-1 text-sm text-foreground/80 leading-relaxed">
+          <div className="border-t border-border px-4 py-3">
+            <p className="text-sm text-foreground/80 leading-relaxed">
+              <span className="font-semibold text-foreground">Key difference: </span>
               {d.keyDifference}
             </p>
           </div>
