@@ -290,6 +290,7 @@ export const modules: Module[] = [
     title: "Homeostasis vs. Allostasis Sorter",
     slug: "homeostasis-vs-allostasis-sorter",
     unitId: "unit-5",
+    hook: "Your body doesn't just react to stress — it tries to predict it.",
     shortGoal: "Distinguish reactive stability from predictive adaptation.",
     shortDescription: "Classify scenarios as homeostasis or allostasis and learn why allostatic load matters.",
     introCopy: "You'll read short scenarios and decide whether each describes homeostasis — negative feedback restoring a fixed set point — or allostasis — the body predictively shifting its operating parameters to meet anticipated demand. Then we'll trace why chronic allostatic shifts carry a biological cost.",
