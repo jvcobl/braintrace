@@ -1,4 +1,5 @@
 import type { Module } from "@/data/modules";
+import type { SectionId } from "@/components/module/SectionNav";
 import BlurryObjectDemo from "@/components/module/demos/BlurryObjectDemo";
 import FaceOrNotDemo from "@/components/module/demos/FaceOrNotDemo";
 import SuddenNoiseDemo from "@/components/module/demos/SuddenNoiseDemo";
@@ -12,11 +13,16 @@ import EmotionArousalSorterDemo from "@/components/module/demos/EmotionArousalSo
 import ClassicalOperantSorterDemo from "@/components/module/demos/ClassicalOperantSorterDemo";
 import HomeostasisAllostasisSorterDemo from "@/components/module/demos/HomeostasisAllostasisSorterDemo";
 
-interface ExperienceSectionProps {
-  module: Module;
+export interface DemoProps {
+  onNavigate?: (target: "Trace" | "Explain") => void;
 }
 
-const demos: Record<string, React.ComponentType> = {
+interface ExperienceSectionProps {
+  module: Module;
+  onNavigate?: (section: SectionId) => void;
+}
+
+const demos: Record<string, React.ComponentType<DemoProps>> = {
   "mod-1": BlurryObjectDemo,
   "mod-2": FaceOrNotDemo,
   "mod-3": SuddenNoiseDemo,
@@ -31,7 +37,7 @@ const demos: Record<string, React.ComponentType> = {
   "mod-12": HomeostasisAllostasisSorterDemo,
 };
 
-const ExperienceSection = ({ module }: ExperienceSectionProps) => {
+const ExperienceSection = ({ module, onNavigate }: ExperienceSectionProps) => {
   const Demo = demos[module.id];
 
   if (!Demo) {
@@ -45,7 +51,7 @@ const ExperienceSection = ({ module }: ExperienceSectionProps) => {
     );
   }
 
-  return <Demo />;
+  return <Demo onNavigate={onNavigate} />;
 };
 
 export default ExperienceSection;

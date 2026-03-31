@@ -10,7 +10,17 @@ interface ExperienceShellProps {
   summary?: ExperienceSummary;
   /** Callback to restart the experience. */
   onRestart?: () => void;
+  /** Navigate to Trace or Explain when bridge is clicked. */
+  onNavigate?: (target: "Trace" | "Explain") => void;
   children: ReactNode;
+}
+
+/** Detect which section the bridge text references. */
+function bridgeTarget(bridge: string): "Trace" | "Explain" | null {
+  const lower = bridge.toLowerCase();
+  if (lower.includes("trace")) return "Trace";
+  if (lower.includes("explain") || lower.includes("review")) return "Explain";
+  return null;
 }
 
 /**
@@ -23,9 +33,13 @@ const ExperienceShell = ({
   done = false,
   summary,
   onRestart,
+  onNavigate,
   children,
 }: ExperienceShellProps) => {
   if (done && summary) {
+    const target = bridgeTarget(summary.bridge);
+    const handleBridgeClick = target && onNavigate ? () => onNavigate(target) : undefined;
+
     return (
       <section>
         <h2 className="font-display text-2xl font-semibold text-foreground">
@@ -38,16 +52,32 @@ const ExperienceShell = ({
           <p className="text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
             {summary.body}
           </p>
-          <p className="text-xs text-muted-foreground italic">
-            {summary.bridge}
-          </p>
-          {onRestart && (
+
+          {/* Bridge as clickable transition */}
+          {handleBridgeClick ? (
             <button
-              onClick={onRestart}
-              className="mt-4 rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              type="button"
+              onClick={handleBridgeClick}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
             >
-              Try Again
+              <span>{summary.bridge}</span>
+              <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
             </button>
+          ) : (
+            <p className="text-xs text-muted-foreground italic">
+              {summary.bridge}
+            </p>
+          )}
+
+          {onRestart && (
+            <div className="pt-2">
+              <button
+                onClick={onRestart}
+                className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                Try Again
+              </button>
+            </div>
           )}
         </div>
       </section>

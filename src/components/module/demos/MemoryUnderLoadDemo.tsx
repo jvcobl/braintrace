@@ -145,7 +145,7 @@ const loadColors: Record<LoadLevel, string> = {
 
 /* ── Component ── */
 
-const MemoryUnderLoadDemo = () => {
+const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
   const [roundIndex, setRoundIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("intro");
   const [sequence, setSequence] = useState<string[]>([]);
@@ -215,6 +215,7 @@ const MemoryUnderLoadDemo = () => {
 
   return (
     <ExperienceShell
+      onNavigate={onNavigate}
       instructions="You'll memorize letter sequences at three difficulty levels. As load increases, a math distractor competes for the same PFC resources. Watch how your accuracy changes — that pattern reveals the capacity limit."
       done={done}
       summary={getSummary(results)}
@@ -385,7 +386,7 @@ const MemoryUnderLoadDemo = () => {
         {/* FeedbackCard below the interaction area */}
         {feedbackKey && (
           <div className="mt-5">
-            <FeedbackCard feedback={trialFeedback[feedbackKey]} />
+            <FeedbackCard onNavigate={onNavigate} feedback={trialFeedback[feedbackKey]} />
             <div className="mt-4 flex justify-center">
               <button
                 onClick={handleNext}

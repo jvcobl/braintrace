@@ -2,48 +2,86 @@ import type { ExperienceFeedback } from "./types";
 
 interface FeedbackCardProps {
   feedback: ExperienceFeedback;
+  /** Navigate to Trace or Explain. Bridge text auto-detects target. */
+  onNavigate?: (target: "Trace" | "Explain") => void;
+}
+
+/** Detect which section the bridge text references. */
+function bridgeTarget(bridge: string): "Trace" | "Explain" {
+  const lower = bridge.toLowerCase();
+  if (lower.includes("trace")) return "Trace";
+  return "Explain";
 }
 
 /**
  * Renders a single feedback state using the NeuroRoute schema:
  * primary → secondary → bridge → structure.
  */
-const FeedbackCard = ({ feedback }: FeedbackCardProps) => (
-  <div className="space-y-3 max-w-md mx-auto">
-    {/* Primary — outcome */}
-    <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
-      <p className="text-sm font-medium text-foreground leading-relaxed">
-        {feedback.primary}
-      </p>
-    </div>
+const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
+  const target = bridgeTarget(feedback.bridge);
+  const handleNavigate = onNavigate ? () => onNavigate(target) : undefined;
 
-    {/* Secondary — interpretation */}
-    <div className="rounded-lg border border-border bg-secondary/30 px-4 py-3">
-      <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1.5">
-        What this reflects
-      </p>
-      <p className="text-[13px] text-foreground/80 leading-relaxed">
-        {feedback.secondary}
-      </p>
-    </div>
-
-    {/* Structure — pathway reference */}
-    {feedback.structure && (
-      <div className="rounded-lg border border-primary/15 bg-primary/5 px-4 py-3">
-        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 mb-1.5">
-          Pathway
-        </p>
-        <p className="text-[13px] font-mono text-foreground/70 leading-relaxed">
-          {feedback.structure}
+  return (
+    <div className="space-y-3 max-w-md mx-auto">
+      {/* Primary — outcome */}
+      <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
+        <p className="text-sm font-medium text-foreground leading-relaxed">
+          {feedback.primary}
         </p>
       </div>
-    )}
 
-    {/* Bridge — next step */}
-    <p className="text-xs text-muted-foreground text-center italic pt-1">
-      {feedback.bridge}
-    </p>
-  </div>
-);
+      {/* Secondary — interpretation */}
+      <div className="rounded-lg border border-border bg-secondary/30 px-4 py-3">
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1.5">
+          What this reflects
+        </p>
+        <p className="text-[13px] text-foreground/80 leading-relaxed">
+          {feedback.secondary}
+        </p>
+      </div>
+
+      {/* Structure — pathway reference (clickable if navigable) */}
+      {feedback.structure && (
+        <div
+          className={`rounded-lg border px-4 py-3 transition-colors ${
+            handleNavigate
+              ? "border-primary/20 bg-primary/5 cursor-pointer hover:bg-primary/10"
+              : "border-primary/15 bg-primary/5"
+          }`}
+          onClick={handleNavigate}
+          role={handleNavigate ? "button" : undefined}
+          tabIndex={handleNavigate ? 0 : undefined}
+          onKeyDown={handleNavigate ? (e) => { if (e.key === "Enter" || e.key === " ") handleNavigate(); } : undefined}
+        >
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 mb-1.5">
+            Pathway
+            {handleNavigate && (
+              <span className="ml-1.5 text-primary/40">→ view in {target}</span>
+            )}
+          </p>
+          <p className="text-[13px] font-mono text-foreground/70 leading-relaxed">
+            {feedback.structure}
+          </p>
+        </div>
+      )}
+
+      {/* Bridge — clickable transition */}
+      {handleNavigate ? (
+        <button
+          type="button"
+          onClick={handleNavigate}
+          className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors pt-1 flex items-center justify-center gap-1.5 group"
+        >
+          <span>{feedback.bridge}</span>
+          <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
+        </button>
+      ) : (
+        <p className="text-xs text-muted-foreground text-center italic pt-1">
+          {feedback.bridge}
+        </p>
+      )}
+    </div>
+  );
+};
 
 export default FeedbackCard;

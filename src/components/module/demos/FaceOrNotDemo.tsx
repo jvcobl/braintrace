@@ -193,7 +193,7 @@ function getSummary(
 
 /* ── Component ── */
 
-const FaceOrNotDemo = () => {
+const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<("face" | "not-face")[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<"face" | "not-face" | null>(null);
@@ -229,6 +229,7 @@ const FaceOrNotDemo = () => {
 
   return (
     <ExperienceShell
+      onNavigate={onNavigate}
       instructions="For each pattern, decide quickly: does it look like a face? Some are real faces, some are not, and some are deliberately ambiguous. Your responses reveal how your fusiform face area balances detection sensitivity against false alarms."
       done={done}
       summary={getSummary(answers, stimulusSet)}
@@ -267,7 +268,7 @@ const FaceOrNotDemo = () => {
 
         {signalKey && (
           <div className="mt-5">
-            <FeedbackCard feedback={signalFeedback[signalKey]} />
+            <FeedbackCard onNavigate={onNavigate} feedback={signalFeedback[signalKey]} />
             <div className="mt-4 flex justify-center">
               <button
                 onClick={handleNext}
