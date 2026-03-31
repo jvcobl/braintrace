@@ -285,18 +285,18 @@ const Index = () => {
       <section>
         <div className="container mx-auto max-w-2xl py-20 text-center md:py-28">
           <h2 className="font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-            Start with any unit or pick a lesson
+            Pick a lesson and see what your brain does
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground leading-relaxed">
-            The units are sequential but each lesson is self-contained — work
-            through them in order or jump to a specific topic.
+            Each lesson is self-contained — start anywhere, or work through
+            the units in order.
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
             <Link
               to={`/unit/${unitIds[0]}`}
               className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Begin with Unit 1
+              Start Exploring
             </Link>
             <Link
               to="/about"
