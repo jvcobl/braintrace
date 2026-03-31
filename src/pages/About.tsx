@@ -1,60 +1,62 @@
 import { Link } from "react-router-dom";
 
 const steps = [
-  { name: "Intro", desc: "The learning objective and what you'll encounter in this lesson." },
   { name: "Experience", desc: "A short interactive demo that lets you observe the phenomenon firsthand." },
   { name: "Trace", desc: "A simplified neural pathway showing which brain regions are involved." },
-  { name: "Explain", desc: "A concise write-up connecting the demo to the underlying neuroscience." },
+  { name: "Explain", desc: "A focused write-up connecting the demo to the underlying neuroscience." },
 ];
 
 const About = () => (
-  <div className="container max-w-2xl py-12 md:py-20">
-    <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">
+  <div className="container max-w-2xl py-16 md:py-24">
+    <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+      About
+    </p>
+    <h1 className="mt-3 font-display text-3xl tracking-tight text-foreground md:text-4xl">
       About NeuroRoute
     </h1>
 
-    <p className="mt-4 text-muted-foreground leading-relaxed">
+    <p className="mt-6 text-[15px] text-muted-foreground leading-relaxed">
       NeuroRoute is an interactive neuroscience learning platform organized
       into five units — perception, attention, emotion, fear conditioning,
       and stress. Each unit contains study material and interactive lessons
-      that walk you through a phenomenon in four steps:
+      that follow a consistent three-step structure:
     </p>
 
-    <div className="mt-6 grid gap-3 sm:grid-cols-2">
+    <div className="mt-8 grid gap-4 sm:grid-cols-3">
       {steps.map((s, i) => (
-        <div key={s.name} className="rounded-lg border border-border bg-card p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Step {i + 1}
-          </p>
-          <p className="mt-1 font-display text-sm font-semibold text-foreground">
+        <div key={s.name} className="rounded-xl border border-border bg-card p-5 shadow-sm">
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-secondary text-xs font-bold text-foreground">
+            {i + 1}
+          </span>
+          <p className="mt-3 font-display text-[15px] text-foreground">
             {s.name}
           </p>
-          <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+          <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">
             {s.desc}
           </p>
         </div>
       ))}
     </div>
 
-    <p className="mt-6 text-sm text-muted-foreground leading-relaxed">
+    <p className="mt-8 text-[15px] text-muted-foreground leading-relaxed">
       The goal is not to replace lectures or textbooks, but to give you a
       concrete, first-person experience of each concept before you study
       the underlying neuroscience. NeuroRoute runs entirely in your browser —
       no accounts, no saved data, no tracking.
     </p>
 
-    <div className="mt-8 flex gap-3">
+    <div className="mt-10 flex gap-4">
       <Link
         to="/"
-        className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         Browse Units
       </Link>
       <Link
         to="/course-map"
-        className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="inline-flex items-center rounded-lg border border-border bg-card px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-secondary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        Course Map
+        Curriculum
       </Link>
     </div>
   </div>

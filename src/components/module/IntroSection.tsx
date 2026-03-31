@@ -6,11 +6,13 @@ interface IntroSectionProps {
 
 const IntroSection = ({ module }: IntroSectionProps) => (
   <section>
-    <h2 className="font-display text-2xl font-semibold text-foreground">Introduction</h2>
-    <p className="mt-3 text-muted-foreground leading-relaxed">{module.introCopy}</p>
-    <div className="mt-5 rounded-lg bg-accent/40 px-4 py-3">
-      <p className="text-xs font-semibold uppercase tracking-widest text-accent-foreground">Learning Objective</p>
-      <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{module.learningObjective}</p>
+    <h2 className="font-display text-2xl tracking-tight text-foreground">Introduction</h2>
+    <p className="mt-4 text-[15px] text-muted-foreground leading-relaxed">{module.introCopy}</p>
+    <div className="mt-6 rounded-xl border border-border bg-accent/30 px-5 py-4">
+      <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-accent-foreground">
+        Learning Objective
+      </p>
+      <p className="mt-2 text-[13px] text-muted-foreground leading-relaxed">{module.learningObjective}</p>
     </div>
   </section>
 );

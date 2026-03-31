@@ -7,25 +7,27 @@ interface UnitOverviewHeaderProps {
 
 const UnitOverviewHeader = ({ unitNumber, meta }: UnitOverviewHeaderProps) => (
   <header>
-    <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+    <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
       Unit {unitNumber}
     </p>
-    <h1 className="mt-1 font-display text-3xl font-bold text-foreground">{meta.title}</h1>
-    <p className="mt-2 text-muted-foreground">{meta.subtitle}</p>
+    <h1 className="mt-2 font-display text-3xl tracking-tight text-foreground md:text-[2rem]">
+      {meta.title}
+    </h1>
+    <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed">{meta.subtitle}</p>
 
-    <div className="mt-6">
-      <p className="text-sm text-foreground/80 leading-relaxed">{meta.overview}</p>
+    <div className="mt-7">
+      <p className="text-[14px] text-foreground/80 leading-relaxed">{meta.overview}</p>
     </div>
 
-    <div className="mt-6">
-      <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+    <div className="mt-7">
+      <h2 className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
         Major Structures
       </h2>
-      <div className="mt-2 flex flex-wrap gap-1.5">
+      <div className="mt-3 flex flex-wrap gap-2">
         {meta.majorStructures.map((s) => (
           <span
             key={s}
-            className="rounded-full bg-secondary px-2.5 py-0.5 text-xs text-muted-foreground"
+            className="rounded-full bg-secondary px-3 py-1 text-xs text-muted-foreground"
           >
             {s}
           </span>
@@ -34,13 +36,13 @@ const UnitOverviewHeader = ({ unitNumber, meta }: UnitOverviewHeaderProps) => (
     </div>
 
     {meta.lectureTopics.length > 0 && (
-      <div className="mt-5">
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          Lecture Topics
+      <div className="mt-6">
+        <h2 className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+          Topics Covered
         </h2>
-        <ul className="mt-2 space-y-1">
+        <ul className="mt-3 space-y-1.5">
           {meta.lectureTopics.map((t) => (
-            <li key={t} className="text-sm text-foreground/80">{t}</li>
+            <li key={t} className="text-[13px] text-foreground/80">{t}</li>
           ))}
         </ul>
       </div>

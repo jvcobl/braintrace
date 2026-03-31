@@ -9,16 +9,16 @@ interface SectionNavProps {
 
 const SectionNav = ({ current, onSelect }: SectionNavProps) => (
   <nav
-    className="mb-8 flex gap-1 rounded-lg border border-border bg-card p-1"
-    aria-label="Module sections"
+    className="flex gap-1 rounded-xl border border-border bg-card p-1 shadow-sm"
+    aria-label="Lesson sections"
   >
     {sections.map((s) => (
       <button
         key={s}
         onClick={() => onSelect(s)}
-        className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
+        className={`flex-1 rounded-lg px-3 py-2.5 text-[13px] font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
           current === s
-            ? "bg-primary text-primary-foreground"
+            ? "bg-primary text-primary-foreground shadow-sm"
             : "text-muted-foreground hover:bg-secondary hover:text-foreground"
         }`}
         aria-current={current === s ? "step" : undefined}
