@@ -17,6 +17,7 @@ export interface Module {
   title: string;
   slug: string;
   unitId: string;
+  hook: string;
   shortGoal: string;
   shortDescription: string;
   introCopy: string;
@@ -32,8 +33,9 @@ export const modules: Module[] = [
     title: "Blurry Object Guess",
     slug: "blurry-object-guess",
     unitId: "unit-1",
+    hook: "Your brain starts guessing before the image is even clear.",
     shortGoal: "Explore how the brain resolves ambiguous visual input.",
-    shortDescription: "Guess what a blurry image is and discover how top-down processing shapes perception.",
+    shortDescription: "How the visual system predicts identity from minimal input.",
     introCopy: "You'll see a blurry image and try to identify it. Then we'll trace the pathway your brain uses to make sense of incomplete information.",
     traceNodes: [
       { label: "Low Spatial Frequency Input", description: "The visual system receives coarse, blurry information first — broad shapes and contrast patterns that carry low spatial frequency data before fine edges and textures arrive." },
@@ -54,8 +56,9 @@ export const modules: Module[] = [
     title: "Face or Not?",
     slug: "face-or-not",
     unitId: "unit-1",
+    hook: "You keep seeing faces where there aren't any — and there's a reason.",
     shortGoal: "Investigate the brain's bias toward detecting faces.",
-    shortDescription: "Decide whether ambiguous images contain faces and learn about the fusiform face area.",
+    shortDescription: "Why the brain is biased to detect faces, even in noise.",
     introCopy: "You'll view a series of images and decide if each one contains a face. We'll then explore why your brain is so eager to find faces everywhere.",
     traceNodes: [
       { label: "Visual Input", description: "The image enters the visual system, where early processing extracts edges, contrast patterns, and basic shapes — features that could belong to a face or any other object." },
@@ -77,8 +80,9 @@ export const modules: Module[] = [
     title: "Sudden Noise Reaction",
     slug: "sudden-noise-reaction",
     unitId: "unit-3",
+    hook: "Your body reacted before you knew what happened.",
     shortGoal: "Examine the startle reflex and rapid brainstem responses.",
-    shortDescription: "Experience a sudden auditory stimulus and trace the fast neural circuit behind your reaction.",
+    shortDescription: "How surprise triggers a response faster than conscious thought.",
     introCopy: "You'll do a short reaction-time task. Some trials will include a gentle interruption — a brief visual flash and optional soft tone. Afterward, we'll trace the brainstem reflex circuit and how the amygdala can amplify it. Sound is off by default; you can toggle it on if you'd like.",
     traceNodes: [
       { label: "Reflex Path: Sudden Stimulus → Cochlear Root Neurons → PnC → Motor Output", description: "The core acoustic startle circuit is one of the fastest in the nervous system. A sudden stimulus reaches cochlear root neurons, which project directly to the pontine reticular nucleus (PnC). The PnC then drives spinal and facial motor neurons to produce the startle flinch — all within two to three synapses, before conscious awareness." },
@@ -98,8 +102,9 @@ export const modules: Module[] = [
     title: "Fear Cue and Extinction",
     slug: "fear-cue-and-extinction",
     unitId: "unit-4",
+    hook: "Your brain learned to expect danger — then had to learn safety on top of it.",
     shortGoal: "Model how fear responses are learned and extinguished.",
-    shortDescription: "Observe a simple conditioning paradigm and trace the amygdala-based pathway for fear learning.",
+    shortDescription: "How conditioning builds predictions, and why extinction doesn't erase them.",
     introCopy: "You'll step through a simplified conditioning experiment. First, a neutral cue will be paired with an unpleasant outcome — your brain learns to predict danger. Then the cue appears without the outcome, and the fear response fades. Finally, we'll test whether that fear can come back on its own.",
     traceNodes: [
       { label: "Conditioned Cue (CS)", description: "A neutral stimulus is perceived. After repeated pairing with an unpleasant outcome (the US), the amygdala learns to treat this cue as a danger signal — classical fear conditioning." },
@@ -121,9 +126,10 @@ export const modules: Module[] = [
     title: "Memory Under Load",
     slug: "memory-under-load",
     unitId: "unit-2",
+    hook: "Your focus collapsed when the task got crowded — and your brain knows why.",
     shortGoal: "Test how cognitive load affects working memory capacity.",
-    shortDescription: "Try a short memory task under varying levels of distraction and explore the limits of working memory.",
-    introCopy: "You'll try to remember a sequence of items. First with a light load, then with more items and distractors. Watch how your performance changes — that's your dlPFC reaching its limits.",
+    shortDescription: "How the prefrontal cortex loses control under cognitive load.",
+    introCopy: "You'll try to remember a sequence of items. First with a light load, then with more items and distractors. Watch how your performance changes — that's your prefrontal cortex reaching its limits.",
     traceNodes: [
       { label: "Incoming Task Demands", description: "Sensory information and task instructions arrive. The items you need to remember compete with distractors for limited processing resources." },
       { label: "dlPFC: Working Memory & Executive Control", description: "The dorsolateral prefrontal cortex (dlPFC) actively maintains task-relevant items in working memory and coordinates executive control — deciding what to hold, what to ignore, and how to respond. This is metabolically expensive." },
@@ -141,11 +147,12 @@ export const modules: Module[] = [
   },
   {
     id: "mod-6",
-    title: "HPA Axis Builder",
+    title: "Stress Response Builder",
     slug: "hpa-axis-builder",
     unitId: "unit-5",
+    hook: "Your stress response was built to protect you — but it doesn't always know when to stop.",
     shortGoal: "Learn the order of the HPA axis and what happens when cortisol feedback fails.",
-    shortDescription: "Build the stress response cascade step by step and trace how chronic stress overrides the shutdown mechanism.",
+    shortDescription: "How the HPA axis prepares the body for demand — and what happens when shutdown fails.",
     introCopy: "You'll assemble the HPA axis in the correct order — from the hypothalamus releasing CRH through cortisol negative feedback. Then we'll trace what happens when extreme stress from the central amygdala and PFC prevents the system from shutting down.",
     traceNodes: [
       { label: "Hypothalamus → CRH", description: "The hypothalamus detects a stressor and releases corticotropin-releasing hormone (CRH) into the portal blood system connecting it to the anterior pituitary." },
@@ -168,6 +175,7 @@ export const modules: Module[] = [
     title: "Multistable Perception Gallery",
     slug: "multistable-perception-gallery",
     unitId: "unit-1",
+    hook: "The image never changes — but what you see does.",
     shortGoal: "Experience how the brain toggles between competing interpretations of the same image.",
     shortDescription: "Work through a gallery of ambiguous figures and discover why your brain locks onto one reading before you consciously choose.",
     introCopy: "You'll view a series of genuinely ambiguous images — each can be perceived in two valid ways. For each figure, you'll identify what you see first, then try to switch. The image never changes; only your brain's interpretation does.",
@@ -190,6 +198,7 @@ export const modules: Module[] = [
     title: "PFC Role Matcher",
     slug: "pfc-role-matcher",
     unitId: "unit-2",
+    hook: "Your prefrontal cortex isn't one system — it's three, and they don't always agree.",
     shortGoal: "Learn the functional divisions of the prefrontal cortex.",
     shortDescription: "Match cognitive scenarios to the correct PFC region and trace why the executive system has distinct subdivisions.",
     introCopy: "You'll read short scenarios describing things the prefrontal cortex does — logic, emotion regulation, predictions — and assign each to the correct PFC subregion: dlPFC, vmPFC, or OFC. Then we'll trace the functional map.",
@@ -212,6 +221,7 @@ export const modules: Module[] = [
     title: "Fear vs. Anxiety Sorter",
     slug: "fear-vs-anxiety-sorter",
     unitId: "unit-3",
+    hook: "Fear responds to what's in front of you. Anxiety responds to what your brain predicts might happen.",
     shortGoal: "Distinguish fear from anxiety using neurobiological definitions.",
     shortDescription: "Classify scenarios as fear or anxiety and trace why the distinction matters neurobiologically.",
     introCopy: "You'll read short scenarios and decide whether each describes fear — a response to an imminent, tangible threat — or anxiety — the anticipation of a future, predicted threat. Then we'll trace the different circuits involved.",
@@ -234,6 +244,7 @@ export const modules: Module[] = [
     title: "Emotion vs. Arousal Sorter",
     slug: "emotion-vs-arousal-sorter",
     unitId: "unit-3",
+    hook: "Excitement and terror feel completely different — but your body's activation is almost identical.",
     shortGoal: "Distinguish emotion from arousal using neurobiological definitions.",
     shortDescription: "Classify scenarios as emotion or arousal and learn why valence is the key differentiator.",
     introCopy: "You'll read short scenarios and decide whether each describes an emotion — a transient state with specific valence that motivates approach or avoidance — or arousal — physiological intensity without inherent direction. Then we'll trace why this distinction matters.",
@@ -256,6 +267,7 @@ export const modules: Module[] = [
     title: "Classical vs. Operant Sorter",
     slug: "classical-vs-operant-sorter",
     unitId: "unit-4",
+    hook: "You didn't choose to flinch — and that's the whole point.",
     shortGoal: "Distinguish the two major associative learning paradigms.",
     shortDescription: "Classify scenarios as classical or operant conditioning and learn why fear conditioning is strictly classical.",
     introCopy: "You'll read short scenarios and decide whether each describes classical conditioning — where a neutral stimulus is paired with an unconditioned stimulus to produce an automatic response — or operant conditioning — where a voluntary behavior is shaped by its consequences. Then we'll trace why this distinction matters for understanding fear.",
@@ -278,6 +290,7 @@ export const modules: Module[] = [
     title: "Homeostasis vs. Allostasis Sorter",
     slug: "homeostasis-vs-allostasis-sorter",
     unitId: "unit-5",
+    hook: "Your body doesn't just react to stress — it tries to predict it.",
     shortGoal: "Distinguish reactive stability from predictive adaptation.",
     shortDescription: "Classify scenarios as homeostasis or allostasis and learn why allostatic load matters.",
     introCopy: "You'll read short scenarios and decide whether each describes homeostasis — negative feedback restoring a fixed set point — or allostasis — the body predictively shifting its operating parameters to meet anticipated demand. Then we'll trace why chronic allostatic shifts carry a biological cost.",
