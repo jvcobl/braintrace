@@ -158,6 +158,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const [step, setStep] = useState<"predict" | "outcome" | "feedback">("predict");
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [predictions, setPredictions] = useState<{ stage: Stage; prediction: Prediction }[]>([]);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
