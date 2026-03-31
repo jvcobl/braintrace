@@ -42,7 +42,7 @@ const ModulePage = () => {
 
       <div className="mt-6 mb-2">
         <Link
-          to="/course-map"
+          to={`/unit/${mod.unitId}`}
           className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
         >
           {unit ? unit.title : mod.unitId.replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
