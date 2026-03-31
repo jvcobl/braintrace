@@ -9,19 +9,19 @@ const STUDY_METHOD = [
     step: "01",
     name: "Experience",
     description:
-      "Each lesson opens with an interactive demo. You observe or participate in a perceptual, cognitive, or physiological phenomenon before encountering any explanation.",
+      "Each lesson starts with something you do — a blurry image, a sudden sound, a memory task. You encounter the phenomenon before any explanation.",
   },
   {
     step: "02",
     name: "Trace",
     description:
-      "A pathway diagram maps the brain regions and circuits involved — showing how the signal moves from input to output.",
+      "Then you see what your brain predicted, what actually happened, and which neural pathways were involved.",
   },
   {
     step: "03",
     name: "Explain",
     description:
-      "A focused write-up connects the demo to the neuroscience: what your brain did, which structures were active, and why the pathway matters.",
+      "A focused write-up connects the experience to the neuroscience — what your brain did, which structures were active, and why the pathway matters.",
   },
 ];
 
@@ -38,11 +38,11 @@ const APPROACH_POINTS = [
   },
   {
     title: "Active retrieval built in",
-    body: "Sorting, classifying, and predicting during lessons engage the same prefrontal mechanisms you're studying. Each interaction doubles as a retrieval opportunity.",
+    body: "Sorting, classifying, and predicting during lessons engage the same prefrontal mechanisms you're learning about. Each interaction doubles as a retrieval opportunity.",
   },
   {
     title: "Dense and precise",
-    body: "Explanations are written to be complete in a few paragraphs. No filler, no repetition — the kind of writing you'd want the night before an exam.",
+    body: "Explanations are written to be complete in a few paragraphs. No filler, no repetition — the kind of clarity you'd want when you actually want to understand something.",
   },
 ];
 
