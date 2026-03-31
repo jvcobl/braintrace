@@ -109,6 +109,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
   // Results tracking
   const [seqResult, setSeqResult] = useState<"correct" | "orderError" | "hormoneError" | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [fbResult, setFbResult] = useState<"correct" | "missing" | null>(null);
   const [ovResult, setOvResult] = useState<"understood" | "misunderstood" | null>(null);
 
