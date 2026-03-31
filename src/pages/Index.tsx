@@ -1,11 +1,6 @@
 import { Link } from "react-router-dom";
 import ModuleCard from "@/components/ModuleCard";
-
-const placeholderModules = [
-  { title: "Coming Soon", description: "A new module is being prepared." },
-  { title: "Coming Soon", description: "A new module is being prepared." },
-  { title: "Coming Soon", description: "A new module is being prepared." },
-];
+import { modules } from "@/data/modules";
 
 const Index = () => (
   <div className="container py-16 md:py-24">
@@ -30,8 +25,14 @@ const Index = () => (
     <section className="mx-auto mt-20 max-w-4xl">
       <h2 className="mb-6 font-display text-2xl font-semibold text-foreground">Modules</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {placeholderModules.map((mod, i) => (
-          <ModuleCard key={i} title={mod.title} description={mod.description} index={i} />
+        {modules.map((mod, i) => (
+          <ModuleCard
+            key={mod.id}
+            title={mod.title}
+            description={mod.shortDescription}
+            status={mod.status}
+            index={i}
+          />
         ))}
       </div>
     </section>
