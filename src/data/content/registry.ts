@@ -76,7 +76,7 @@ export interface LessonMapping {
 export const lessonMappings: LessonMapping[] = [
   { moduleId: "mod-1", unitId: "unit-1", title: "Blurry Object Guess" },
   { moduleId: "mod-2", unitId: "unit-1", title: "Face or Not?" },
-  { moduleId: "mod-7", unitId: "unit-1", title: "Multistable Perception Toggle" },
+  { moduleId: "mod-7", unitId: "unit-1", title: "Multistable Perception Gallery" },
   { moduleId: "mod-5", unitId: "unit-2", title: "Memory Under Load" },
   { moduleId: "mod-8", unitId: "unit-2", title: "PFC Role Matcher" },
   { moduleId: "mod-3", unitId: "unit-3", title: "Sudden Noise Reaction" },
