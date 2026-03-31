@@ -210,11 +210,11 @@ const Index = () => {
               Where to Start
             </p>
             <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Recommended lessons
+              Try one of these
             </h2>
             <p className="mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
-              These four lessons span different units and demonstrate the range
-              of topics and interaction types across the platform.
+              These four lessons span different topics and show the range of
+              phenomena and interactions across the site.
             </p>
           </div>
 
