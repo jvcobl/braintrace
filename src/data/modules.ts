@@ -1,4 +1,3 @@
-export type ModuleStatus = "available" | "coming-soon" | "locked";
 export type DemoType = "interactive" | "observation" | "recall" | "response";
 
 export interface Module {
@@ -8,10 +7,9 @@ export interface Module {
   unitId: string;
   shortGoal: string;
   shortDescription: string;
-  status: ModuleStatus;
   introCopy: string;
-  tracePlaceholder: string;
-  explanationPlaceholder: string;
+  traceLabel: string;
+  explanationLabel: string;
   demoType: DemoType;
   learningObjective: string;
 }
@@ -24,10 +22,9 @@ export const modules: Module[] = [
     unitId: "unit-1",
     shortGoal: "Explore how the brain resolves ambiguous visual input.",
     shortDescription: "Guess what a blurry image is and discover how top-down processing shapes perception.",
-    status: "available",
     introCopy: "You'll see a blurry image and try to identify it. Then we'll trace the pathway your brain uses to make sense of incomplete information.",
-    tracePlaceholder: "Pathway trace content will go here.",
-    explanationPlaceholder: "Scientific explanation will go here.",
+    traceLabel: "Pathway trace content will go here.",
+    explanationLabel: "Scientific explanation will go here.",
     demoType: "interactive",
     learningObjective: "Understand the role of top-down processing in visual perception.",
   },
@@ -38,10 +35,9 @@ export const modules: Module[] = [
     unitId: "unit-1",
     shortGoal: "Investigate the brain's bias toward detecting faces.",
     shortDescription: "Decide whether ambiguous images contain faces and learn about the fusiform face area.",
-    status: "available",
     introCopy: "You'll view a series of images and decide if each one contains a face. We'll then explore why your brain is so eager to find faces everywhere.",
-    tracePlaceholder: "Pathway trace content will go here.",
-    explanationPlaceholder: "Scientific explanation will go here.",
+    traceLabel: "Pathway trace content will go here.",
+    explanationLabel: "Scientific explanation will go here.",
     demoType: "observation",
     learningObjective: "Identify the neural basis of face perception and pareidolia.",
   },
@@ -52,10 +48,9 @@ export const modules: Module[] = [
     unitId: "unit-3",
     shortGoal: "Examine the startle reflex and rapid brainstem responses.",
     shortDescription: "Experience a sudden auditory stimulus and trace the fast neural circuit behind your reaction.",
-    status: "available",
     introCopy: "A sudden sound will play and we'll look at how quickly your body responds — before your conscious mind even catches up.",
-    tracePlaceholder: "Pathway trace content will go here.",
-    explanationPlaceholder: "Scientific explanation will go here.",
+    traceLabel: "Pathway trace content will go here.",
+    explanationLabel: "Scientific explanation will go here.",
     demoType: "response",
     learningObjective: "Describe the neural circuit underlying the acoustic startle reflex.",
   },
@@ -66,10 +61,9 @@ export const modules: Module[] = [
     unitId: "unit-4",
     shortGoal: "Model how fear responses are learned and extinguished.",
     shortDescription: "Observe a simple conditioning paradigm and trace the amygdala-based pathway for fear learning.",
-    status: "coming-soon",
     introCopy: "You'll watch a cue become associated with an aversive outcome, then see what happens when that association is removed.",
-    tracePlaceholder: "Pathway trace content will go here.",
-    explanationPlaceholder: "Scientific explanation will go here.",
+    traceLabel: "Pathway trace content will go here.",
+    explanationLabel: "Scientific explanation will go here.",
     demoType: "observation",
     learningObjective: "Explain the roles of the amygdala and prefrontal cortex in fear conditioning and extinction.",
   },
@@ -80,10 +74,9 @@ export const modules: Module[] = [
     unitId: "unit-2",
     shortGoal: "Test how cognitive load affects working memory capacity.",
     shortDescription: "Try a short memory task under varying levels of distraction and explore the limits of working memory.",
-    status: "coming-soon",
     introCopy: "You'll attempt to remember items while handling a secondary task. We'll see how your performance changes as load increases.",
-    tracePlaceholder: "Pathway trace content will go here.",
-    explanationPlaceholder: "Scientific explanation will go here.",
+    traceLabel: "Pathway trace content will go here.",
+    explanationLabel: "Scientific explanation will go here.",
     demoType: "recall",
     learningObjective: "Understand working memory capacity limits and the prefrontal contributions to maintenance under load.",
   },

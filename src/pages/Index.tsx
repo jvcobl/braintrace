@@ -4,7 +4,6 @@ import { modules } from "@/data/modules";
 
 const Index = () => (
   <div className="container py-16 md:py-24">
-    {/* Hero */}
     <section className="mx-auto max-w-2xl text-center">
       <h1 className="font-display text-4xl font-bold tracking-tight text-foreground md:text-5xl">
         NeuroRoute
@@ -21,18 +20,11 @@ const Index = () => (
       </Link>
     </section>
 
-    {/* Module Cards */}
     <section className="mx-auto mt-20 max-w-4xl">
       <h2 className="mb-6 font-display text-2xl font-semibold text-foreground">Modules</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {modules.map((mod, i) => (
-          <ModuleCard
-            key={mod.id}
-            title={mod.title}
-            description={mod.shortDescription}
-            status={mod.status}
-            index={i}
-          />
+          <ModuleCard key={mod.id} title={mod.title} description={mod.shortDescription} index={i} />
         ))}
       </div>
     </section>
