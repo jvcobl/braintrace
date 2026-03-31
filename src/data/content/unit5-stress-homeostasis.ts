@@ -391,7 +391,7 @@ export const unit5Review = [
   {
     id: "u5-rq-01",
     question:
-      "Why is stress defined as a physiological state rather than an emotion in this course?",
+      "Why is stress defined as a physiological state rather than an emotion?",
     hint: "Think about the definitions from the emotion unit. What does stress lack that emotions have?",
   },
   {
