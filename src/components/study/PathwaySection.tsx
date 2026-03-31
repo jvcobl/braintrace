@@ -7,13 +7,16 @@ interface PathwaySectionProps {
 const PathwaySection = ({ pathways }: PathwaySectionProps) => (
   <section>
     <h2 className="font-display text-lg font-semibold text-foreground">Pathways</h2>
-    <div className="mt-4 space-y-8">
+    <div className="mt-4 space-y-6">
       {pathways.map((pw) => (
-        <div key={pw.id}>
-          <h3 className="text-sm font-semibold text-foreground">{pw.title}</h3>
+        <div
+          key={pw.id}
+          className="rounded-lg border border-border bg-card p-5"
+        >
+          <h3 className="text-sm font-semibold text-card-foreground">{pw.title}</h3>
           <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{pw.description}</p>
 
-          <ol className="mt-4 space-y-0" aria-label={`${pw.title} steps`}>
+          <ol className="mt-5 space-y-0" aria-label={`${pw.title} steps`}>
             {pw.steps.map((step, i) => (
               <li key={step.number} className="flex gap-4">
                 <div className="flex flex-col items-center">
