@@ -42,6 +42,29 @@ const examples: MultistableExample[] = [
       "Figure-ground segregation begins in V2 and is refined in V4, modulated by top-down feedback from the prefrontal cortex. The initial assignment happens automatically — a cognitive heuristic — before conscious deliberation. The perceptual switch reflects a change in cortical communication patterns, not a change in the retinal input.",
   },
   {
+    id: "color-constancy",
+    title: "Color Constancy",
+    interpretations: ["Blue and dark", "White and gold"],
+    prompt:
+      "Look at the striped panel. What colors do you see — blue and dark, or white and gold?",
+    switchFeedback: [
+      "You see blue and dark stripes. Your brain is reading the lighting as bright and even, so it takes the colors at face value. Now try imagining the panel is sitting in deep shadow — could those same tones be a washed-out white and a muted gold?",
+      "You see white and gold stripes. Your brain is assuming the panel is in shadow and compensating — subtracting the darkness to reveal lighter, warmer colors underneath. Now try imagining the lighting is bright and even — could those tones simply be blue and dark brown?",
+    ],
+    switchHint: [
+      "Imagine a warm shadow falling across a white-and-gold fabric. The shadow would shift white toward blue-grey and gold toward dark brown — exactly these colors.",
+      "Imagine bright, even light on the panel. Under flat lighting, no shadow correction is needed — the blue is blue and the dark tone is dark.",
+    ],
+    resultFeedback: [
+      "You saw blue and dark — your visual system treated the lighting as neutral, so it read the pixel colors directly. But someone else's brain, assuming the panel is in shadow, would automatically subtract the shadow and perceive white and gold instead. Neither reading is wrong; the ambiguity is in the assumed illumination, not the image.",
+      "You saw white and gold — your visual system assumed the panel is in shadow and compensated, perceiving lighter, warmer colors than the pixels actually contain. But someone else's brain, treating the light as even, would see blue and dark. Neither reading is wrong; the ambiguity is in the assumed illumination, not the image.",
+    ],
+    explanation:
+      "This is color constancy — the brain's automatic correction for lighting conditions. Your visual system does not report raw pixel colors; it infers the lighting and adjusts what you perceive so that objects appear to have stable colors across changing illumination. When the lighting itself is ambiguous, different brains make different assumptions, producing genuinely different conscious experiences of the same image.",
+    neuroscienceNote:
+      "Color constancy is computed in V4 and modulated by contextual surround signals. The brain uses the surrounding gradient as a cue to infer illumination. Different assumptions about the light source lead V4 to apply different corrections — which is why two people can look at identical pixel values and sincerely report different colors. This is the same mechanism behind the widely-discussed dress photograph.",
+  },
+  {
     id: "necker-cube",
     title: "Necker Cube",
     interpretations: [
