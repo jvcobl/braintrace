@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
+import PredictionOutcome from "@/components/module/PredictionOutcome";
 
 interface StimulusItem {
   name: string;
@@ -101,6 +102,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
   const [guessStage, setGuessStage] = useState<number | null>(null);
   const [done, setDone] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const current = stimuli[round];
   const hasGuessed = guess !== null;
@@ -115,9 +117,10 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       if (hasGuessed) return;
       setGuess(option);
       setGuessStage(blurStage);
+      if (!hasInteracted) setHasInteracted(true);
       if (option === current.name) setCorrectCount((c) => c + 1);
     },
-    [hasGuessed, blurStage, current.name]
+    [hasGuessed, blurStage, current.name, hasInteracted]
   );
 
   const handleNext = useCallback(() => {
@@ -227,6 +230,17 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
             </div>
           </div>
         )}
+        {/* Prediction & Outcome bridge */}
+        <div className="mt-6">
+          <PredictionOutcome
+            visible={hasInteracted}
+            structureChip="OFC / ventral stream"
+            prediction="Your brain made an early guess from blurry shape and contrast before full visual detail arrived."
+            outcome="As the image sharpened, that first guess was either confirmed or corrected by later ventral-stream processing."
+            update="This lesson shows that the brain predicts first and refines later — fast enough to be useful, but not always accurate."
+            onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+          />
+        </div>
       </div>
     </ExperienceShell>
   );
