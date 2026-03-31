@@ -21,7 +21,10 @@ const FeaturedLessonCards = ({ linkedModules, placeholder }: FeaturedLessonCards
             <h3 className="font-display text-[15px] text-card-foreground leading-snug group-hover:text-primary transition-colors">
               {mod.title}
             </h3>
-            <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">
+            <p className="mt-1.5 text-[13px] text-foreground/70 leading-relaxed italic">
+              {mod.hook}
+            </p>
+            <p className="mt-1 text-[13px] text-muted-foreground leading-relaxed">
               {mod.shortDescription}
             </p>
             <p className="mt-3 text-xs font-medium text-muted-foreground/50 group-hover:text-primary transition-colors">
