@@ -8,7 +8,7 @@ const subheads: { key: keyof ExplainContent; label: string }[] = [
   { key: "whatHappened", label: "What Happened" },
   { key: "whatYourBrainDid", label: "What Your Brain Did" },
   { key: "keyPathway", label: "Key Pathway" },
-  { key: "nbb302Connection", label: "Why It Matters" },
+  { key: "whyItMatters", label: "Why It Matters" },
 ];
 
 const ExplainSection = ({ explain }: ExplainSectionProps) => (
