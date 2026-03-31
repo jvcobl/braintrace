@@ -144,6 +144,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       setReactionMs(ms);
       setResults((prev) => [...prev, { type: currentTrialType!, reactionMs: ms }]);
       setPhase({ kind: "trial", trial: "reacted" });
+      if (!hasInteracted) setHasInteracted(true);
     } else if (phase.trial === "waiting") {
       if (waitTimer.current) clearTimeout(waitTimer.current);
       if (interruptTimer.current) clearTimeout(interruptTimer.current);
