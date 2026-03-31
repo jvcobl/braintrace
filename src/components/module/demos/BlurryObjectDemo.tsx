@@ -230,6 +230,17 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
             </div>
           </div>
         )}
+        {/* Prediction & Outcome bridge */}
+        <div className="mt-6">
+          <PredictionOutcome
+            visible={hasInteracted}
+            structureChip="OFC / ventral stream"
+            prediction="Your brain made an early guess from blurry shape and contrast before full visual detail arrived."
+            outcome="As the image sharpened, that first guess was either confirmed or corrected by later ventral-stream processing."
+            update="This lesson shows that the brain predicts first and refines later — fast enough to be useful, but not always accurate."
+            onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+          />
+        </div>
       </div>
     </ExperienceShell>
   );
