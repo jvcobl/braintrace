@@ -1,14 +1,14 @@
 import type { Module } from "@/data/modules";
 import BlurryObjectDemo from "@/components/module/demos/BlurryObjectDemo";
+import FaceOrNotDemo from "@/components/module/demos/FaceOrNotDemo";
 
 interface ExperienceSectionProps {
   module: Module;
 }
 
 const ExperienceSection = ({ module }: ExperienceSectionProps) => {
-  if (module.id === "mod-1") {
-    return <BlurryObjectDemo />;
-  }
+  if (module.id === "mod-1") return <BlurryObjectDemo />;
+  if (module.id === "mod-2") return <FaceOrNotDemo />;
 
   const demoLabels: Record<string, string> = {
     interactive: "Interactive Demo",
