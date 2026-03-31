@@ -39,10 +39,9 @@ const About = () => (
     </div>
 
     <p className="mt-8 text-[15px] text-muted-foreground leading-relaxed">
-      The goal is not to replace lectures or textbooks, but to give you a
-      concrete, first-person experience of each concept before you study
-      the underlying neuroscience. NeuroRoute runs entirely in your browser —
-      no accounts, no saved data, no tracking.
+      The goal is to give you a concrete, first-person experience of each
+      concept before you study the underlying neuroscience. NeuroRoute runs
+      entirely in your browser — no accounts, no saved data, no tracking.
     </p>
 
     <div className="mt-10 flex gap-4">
