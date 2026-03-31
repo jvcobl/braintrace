@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 const steps = [
+  { name: "Intro", desc: "The learning objective and what you'll encounter in this lesson." },
   { name: "Experience", desc: "A short interactive demo that lets you observe the phenomenon firsthand." },
   { name: "Trace", desc: "A simplified neural pathway showing which brain regions are involved." },
   { name: "Explain", desc: "A concise write-up connecting the demo to NBB302 course material." },
@@ -14,11 +15,12 @@ const About = () => (
 
     <p className="mt-4 text-muted-foreground leading-relaxed">
       NeuroRoute is an interactive neuroscience learning app built for NBB302.
-      Each module focuses on a single perceptual or cognitive phenomenon and
-      walks you through it in three steps:
+      The course is organized into five units — perception, attention, emotion,
+      fear conditioning, and stress. Each unit contains study material and
+      interactive lessons that walk you through a phenomenon in four steps:
     </p>
 
-    <div className="mt-6 grid gap-3 sm:grid-cols-3">
+    <div className="mt-6 grid gap-3 sm:grid-cols-2">
       {steps.map((s, i) => (
         <div key={s.name} className="rounded-lg border border-border bg-card p-4">
           <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -46,7 +48,7 @@ const About = () => (
         to="/"
         className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        Browse Modules
+        Browse Units
       </Link>
       <Link
         to="/course-map"

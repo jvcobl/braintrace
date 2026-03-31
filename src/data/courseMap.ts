@@ -19,10 +19,10 @@ export interface CourseUnit {
 // auto-derived from majorStructures so the Course Map page stays readable.
 const unitKeyTopics: Record<string, string[]> = {
   "unit-1": ["Top-down processing", "Object recognition", "Face perception", "Fusiform face area"],
-  "unit-2": ["Working memory", "Cognitive load", "Prefrontal cortex", "Capacity limits"],
-  "unit-3": ["Startle reflex", "Brainstem circuits", "Auditory processing", "Rapid motor responses"],
-  "unit-4": ["Fear conditioning", "Extinction", "Amygdala", "Prefrontal regulation"],
-  "unit-5": ["HPA axis", "Cortisol", "Allostatic load", "Resilience"],
+  "unit-2": ["Working memory", "Cognitive load", "Prefrontal cortex", "Executive control"],
+  "unit-3": ["Emotion vs. arousal", "Amygdala", "Valence", "Fear vs. anxiety"],
+  "unit-4": ["Fear conditioning", "Extinction", "Amygdala", "vmPFC circuitry"],
+  "unit-5": ["HPA axis", "Cortisol", "Homeostasis vs. allostasis", "Allostatic load"],
 };
 
 function buildCourseUnits(): CourseUnit[] {

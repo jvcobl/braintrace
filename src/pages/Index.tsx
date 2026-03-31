@@ -51,9 +51,9 @@ const Index = () => {
               {/* Unit link */}
               <Link
                 to={`/unit/${uid}`}
-                className="group flex items-start gap-5 p-5 pb-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-t-lg"
+                className="group flex items-start gap-4 p-5 pb-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-t-lg"
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                   {num}
                 </span>
                 <div className="min-w-0">
@@ -68,7 +68,7 @@ const Index = () => {
 
               {/* Lessons nested under this unit */}
               {linkedModules.length > 0 && (
-                <div className="px-5 pb-4 pl-20">
+                <div className="px-5 pb-4 sm:pl-[4.25rem]">
                   <ul className="space-y-1">
                     {linkedModules.map((mod) => (
                       <li key={mod.id}>
