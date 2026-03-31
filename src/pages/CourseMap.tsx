@@ -6,14 +6,15 @@ import { modules } from "@/data/modules";
 const CourseMap = () => (
   <div className="container max-w-4xl py-16 md:py-24">
     <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-      Curriculum
+      Course Map
     </p>
     <h1 className="mt-3 font-display text-3xl tracking-tight text-foreground md:text-4xl">
-      Five units covering core neuroscience
+      All lessons by topic
     </h1>
     <p className="mt-4 max-w-lg text-[15px] text-muted-foreground leading-relaxed">
-      From sensory processing through higher cognition to neuroendocrine
-      stress systems — each with interactive lessons and study material.
+      Five units from sensory processing through higher cognition to
+      neuroendocrine stress systems. Originally developed alongside Emory
+      University's NBB302 course.
     </p>
 
     <div className="mt-12 space-y-4">
