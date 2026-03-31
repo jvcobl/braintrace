@@ -34,10 +34,10 @@ const ModulePage = () => {
   return (
     <div className="container max-w-3xl py-12">
       <Link
-        to="/"
+        to={`/unit/${mod.unitId}`}
         className="text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
       >
-        ← Back to home
+        ← Back to unit
       </Link>
 
       <div className="mt-6 mb-2">
