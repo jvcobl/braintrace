@@ -17,6 +17,7 @@ export interface Module {
   title: string;
   slug: string;
   unitId: string;
+  hook: string;
   shortGoal: string;
   shortDescription: string;
   introCopy: string;
