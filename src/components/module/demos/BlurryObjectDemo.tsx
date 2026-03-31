@@ -140,7 +140,7 @@ const BlurryObjectDemo = () => {
                   key={option}
                   onClick={() => handleGuess(option)}
                   disabled={hasGuessed}
-                  className={`rounded-md px-4 py-3 text-sm font-medium transition-colors ${style} disabled:cursor-default`}
+                  className={`rounded-md px-4 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${style} disabled:cursor-default`}
                 >
                   {option}
                 </button>
