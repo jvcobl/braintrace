@@ -65,7 +65,7 @@ const FearCueDemo = () => {
             <p className="pt-1">Continue to <strong>Trace</strong> to see the circuit.</p>
           </div>
           <div className="mt-6 flex justify-center">
-            <button onClick={restart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent">
+            <button onClick={restart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               Try Again
             </button>
           </div>
@@ -84,7 +84,7 @@ const FearCueDemo = () => {
           <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto">
             In a real experiment, hours or days pass. The extinction memory — "the cue is safe" — can weaken during this gap, allowing the original fear memory to re-emerge.
           </p>
-          <button onClick={advance} className="mt-6 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+          <button onClick={advance} className="mt-6 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
             Continue to Test
           </button>
         </div>
@@ -132,13 +132,13 @@ const FearCueDemo = () => {
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={() => handlePredict("expect-us")}
-                  className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                  className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Something bad
                 </button>
                 <button
                   onClick={() => handlePredict("expect-nothing")}
-                  className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
+                  className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Nothing
                 </button>
@@ -155,7 +155,7 @@ const FearCueDemo = () => {
               <p className="text-sm text-foreground">
                 {trial?.hasUS ? "An unpleasant outcome follows the cue." : "Nothing happens. The cue appears alone."}
               </p>
-              <button onClick={() => setStep("note")} className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent">
+              <button onClick={() => setStep("note")} className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 Continue
               </button>
             </div>
@@ -164,7 +164,7 @@ const FearCueDemo = () => {
           {step === "note" && (
             <div className="text-center max-w-sm px-2">
               <p className="text-sm text-muted-foreground leading-relaxed">{noteText}</p>
-              <button onClick={advance} className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+              <button onClick={advance} className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 {index < TRIALS.length - 1 ? "Next" : "See Summary"}
               </button>
             </div>

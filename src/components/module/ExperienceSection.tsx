@@ -9,33 +9,29 @@ interface ExperienceSectionProps {
   module: Module;
 }
 
+const demos: Record<string, React.ComponentType> = {
+  "mod-1": BlurryObjectDemo,
+  "mod-2": FaceOrNotDemo,
+  "mod-3": SuddenNoiseDemo,
+  "mod-4": FearCueDemo,
+  "mod-5": MemoryUnderLoadDemo,
+};
+
 const ExperienceSection = ({ module }: ExperienceSectionProps) => {
-  if (module.id === "mod-1") return <BlurryObjectDemo />;
-  if (module.id === "mod-2") return <FaceOrNotDemo />;
-  if (module.id === "mod-3") return <SuddenNoiseDemo />;
-  if (module.id === "mod-4") return <FearCueDemo />;
-  if (module.id === "mod-5") return <MemoryUnderLoadDemo />;
+  const Demo = demos[module.id];
 
-  const demoLabels: Record<string, string> = {
-    interactive: "Interactive Demo",
-    observation: "Observation Task",
-    recall: "Recall Task",
-    response: "Response Task",
-  };
+  if (!Demo) {
+    return (
+      <section>
+        <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
+        <div className="mt-4 rounded-lg border border-border bg-card p-8 text-center">
+          <p className="text-sm text-muted-foreground">No demo available for this module.</p>
+        </div>
+      </section>
+    );
+  }
 
-  return (
-    <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-      <div className="mt-4 flex min-h-[240px] flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-card p-8 text-center">
-        <span className="mb-2 inline-block rounded-full bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
-          {demoLabels[module.demoType] ?? "Demo"}
-        </span>
-        <p className="text-muted-foreground">
-          The {module.title.toLowerCase()} demo will appear here.
-        </p>
-      </div>
-    </section>
-  );
+  return <Demo />;
 };
 
 export default ExperienceSection;

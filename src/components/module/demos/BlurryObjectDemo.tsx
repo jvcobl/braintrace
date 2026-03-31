@@ -65,18 +65,18 @@ const BlurryObjectDemo = () => {
       <section>
         <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
         <div className="mt-4 rounded-lg border border-border bg-card p-8 text-center">
-          <h3 className="font-display text-lg font-semibold text-foreground">Demo Complete</h3>
+          <h3 className="font-display text-lg font-semibold text-foreground">What This Shows</h3>
           <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
             Notice how your brain tried to identify each object before the image was fully clear.
             That early guess came from your orbitofrontal cortex using low spatial frequency cues —
             coarse shapes and contrast — to generate a top-down prediction.
           </p>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
-            Continue to the <strong>Trace</strong> tab to see the neural pathway involved.
+            Continue to <strong>Trace</strong> to see the neural pathway involved.
           </p>
           <button
             onClick={handleRestart}
-            className="mt-6 rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            className="mt-6 rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             Try Again
           </button>
@@ -111,7 +111,7 @@ const BlurryObjectDemo = () => {
             <button
               onClick={handleSharpen}
               disabled={blurStage >= BLUR_STAGES.length - 1}
-              className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed"
+              className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Sharpen
             </button>
@@ -140,7 +140,7 @@ const BlurryObjectDemo = () => {
                   key={option}
                   onClick={() => handleGuess(option)}
                   disabled={hasGuessed}
-                  className={`rounded-md px-4 py-3 text-sm font-medium transition-colors ${style} disabled:cursor-default`}
+                  className={`rounded-md px-4 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${style} disabled:cursor-default`}
                 >
                   {option}
                 </button>
@@ -162,7 +162,7 @@ const BlurryObjectDemo = () => {
             </p>
             <button
               onClick={handleNext}
-              className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {round < stimuli.length - 1 ? "Next Object" : "Finish"}
             </button>

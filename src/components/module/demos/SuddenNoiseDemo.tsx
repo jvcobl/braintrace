@@ -144,7 +144,7 @@ const SuddenNoiseDemo = () => {
             <p className="pt-1">Continue to <strong>Trace</strong> to see the reflex circuit and how the amygdala modulates it.</p>
           </div>
           <div className="mt-6 flex justify-center">
-            <button onClick={handleRestart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent">
+            <button onClick={handleRestart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               Try Again
             </button>
           </div>
@@ -165,7 +165,7 @@ const SuddenNoiseDemo = () => {
           <p className="text-xs text-muted-foreground">Trial {trialIndex + 1} of {TRIALS.length}</p>
           <button
             onClick={() => setMuted((m) => !m)}
-            className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent"
+            className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             aria-label={muted ? "Turn sound on" : "Mute sound"}
           >
             {muted ? "🔇 Sound Off" : "🔊 Sound On"}
@@ -173,7 +173,7 @@ const SuddenNoiseDemo = () => {
         </div>
 
         <div
-          className={`relative flex min-h-[180px] items-center justify-center rounded-lg transition-colors duration-100 ${
+          className={`relative flex min-h-[180px] items-center justify-center rounded-lg transition-colors duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
             flashVisible ? "bg-accent" : phase === "target" ? "bg-primary/10" : "bg-secondary"
           }`}
           onClick={isActive ? handleClick : undefined}
@@ -187,7 +187,7 @@ const SuddenNoiseDemo = () => {
               <p className="text-sm text-muted-foreground mb-4">Get ready — click when the circle appears.</p>
               <button
                 onClick={startTrial}
-                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Begin
               </button>
@@ -214,7 +214,7 @@ const SuddenNoiseDemo = () => {
               )}
               <button
                 onClick={handleNext}
-                className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 {trialIndex < TRIALS.length - 1 ? "Next" : "See Results"}
               </button>

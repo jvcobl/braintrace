@@ -122,7 +122,7 @@ const MemoryUnderLoadDemo = () => {
             <p className="pt-1">Continue to <strong>Trace</strong> to see why the dlPFC breaks down under overload.</p>
           </div>
           <div className="mt-6 flex justify-center">
-            <button onClick={handleRestart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent">
+            <button onClick={handleRestart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
               Try Again
             </button>
           </div>
@@ -173,7 +173,7 @@ const MemoryUnderLoadDemo = () => {
               )}
               <button
                 onClick={startShow}
-                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Start
               </button>
@@ -211,7 +211,7 @@ const MemoryUnderLoadDemo = () => {
                 />
                 <button
                   onClick={() => setPhase("recall")}
-                  className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                  className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   Done
                 </button>
@@ -235,7 +235,7 @@ const MemoryUnderLoadDemo = () => {
               />
               <button
                 onClick={handleRecallSubmit}
-                className="mt-3 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="mt-3 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Submit
               </button>
@@ -270,7 +270,7 @@ const MemoryUnderLoadDemo = () => {
               </p>
               <button
                 onClick={handleNext}
-                className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 {roundIndex < ROUNDS.length - 1 ? "Next" : "See Results"}
               </button>
