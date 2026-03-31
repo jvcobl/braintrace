@@ -41,14 +41,22 @@ const MultistablePerceptionDemo = () => {
     setExampleState({ phase: "choose", choice: null });
   };
 
+  const goToNext = () => {
+    if (currentIdx < examples.length - 1) {
+      setCurrentIdx((i) => i + 1);
+      setAssist("none");
+    }
+  };
+
   const flashAssist = useCallback((target: "a" | "b") => {
     setAssist(target);
-    setTimeout(() => setAssist("none"), 1200);
+    setTimeout(() => setAssist("none"), 1400);
   }, []);
 
   const completedCount = Object.values(states).filter(
     (s) => s.phase === "result"
   ).length;
+  const allDone = completedCount === examples.length;
 
   const choiceIdx = state.choice === "a" ? 0 : 1;
   const otherIdx = state.choice === "a" ? 1 : 0;
@@ -58,14 +66,15 @@ const MultistablePerceptionDemo = () => {
       <h2 className="font-display text-2xl font-semibold text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xl">
-        Each figure below is genuinely ambiguous — the image never changes, but
-        your brain can read it in two different ways. Work through the gallery
-        and notice the moment of perceptual switch.
+      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+        Each figure below is genuinely ambiguous — it supports two valid
+        interpretations at once. For each one, report what you see first, then
+        try to switch. The image never changes; only your brain's reading of it
+        does.
       </p>
 
-      {/* Progress dots */}
-      <div className="mt-5 flex items-center gap-2">
+      {/* Progress indicator */}
+      <div className="mt-5 flex items-center gap-2.5">
         {examples.map((ex, i) => {
           const done = states[ex.id]?.phase === "result";
           const active = i === currentIdx;
@@ -74,26 +83,56 @@ const MultistablePerceptionDemo = () => {
               key={ex.id}
               type="button"
               onClick={() => { setCurrentIdx(i); setAssist("none"); }}
-              aria-label={`Go to ${ex.title}${done ? " (completed)" : ""}`}
+              aria-label={`${ex.title}${done ? " (completed)" : active ? " (current)" : ""}`}
               className={`
-                h-2 rounded-full transition-all
-                ${active ? "w-6 bg-primary" : done ? "w-2 bg-primary/40" : "w-2 bg-border"}
+                flex items-center gap-1.5 rounded-full transition-all px-2.5 py-1
+                ${active
+                  ? "bg-primary/10 border border-primary/25"
+                  : done
+                    ? "bg-accent/50 border border-border"
+                    : "bg-secondary/50 border border-border/50"
+                }
               `}
-            />
+            >
+              <span className={`
+                block h-1.5 w-1.5 rounded-full transition-colors
+                ${active ? "bg-primary" : done ? "bg-primary/50" : "bg-border"}
+              `} />
+              <span className={`
+                text-[11px] font-medium transition-colors
+                ${active ? "text-primary" : done ? "text-muted-foreground" : "text-muted-foreground/60"}
+              `}>
+                {ex.title}
+              </span>
+            </button>
           );
         })}
-        <span className="ml-2 text-[11px] text-muted-foreground">
-          {completedCount} / {examples.length}
-        </span>
       </div>
 
-      {/* Active example */}
-      <div className="mt-6 rounded-xl border border-border bg-card p-6 md:p-8">
-        {/* Title + nav */}
-        <div className="flex items-center justify-between gap-4">
-          <h3 className="text-sm font-semibold text-foreground">
-            {example.title}
-          </h3>
+      {/* Gallery completion summary */}
+      {allDone && (
+        <div className="mt-4 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3">
+          <p className="text-sm text-foreground leading-relaxed">
+            <span className="font-medium">Gallery complete.</span>{" "}
+            You've experienced three types of multistable perception — figure–ground, illumination, and depth reversal.
+            Continue to <span className="font-medium">Trace</span> to see the neural pathway, or <span className="font-medium">Explain</span> for the full analysis.
+          </p>
+        </div>
+      )}
+
+      {/* Active example card */}
+      <div className="mt-5 rounded-xl border border-border bg-card overflow-hidden">
+        {/* Card header */}
+        <div className="flex items-center justify-between gap-3 border-b border-border/60 px-5 py-3 md:px-6">
+          <div className="flex items-center gap-2.5">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary/50">
+              {example.category}
+            </span>
+            <span className="text-border" aria-hidden>·</span>
+            <h3 className="text-sm font-semibold text-foreground">
+              {example.title}
+            </h3>
+          </div>
           <div className="flex gap-1.5">
             <button
               type="button"
@@ -102,146 +141,159 @@ const MultistablePerceptionDemo = () => {
               className="rounded-md border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Previous example"
             >
-              ← Prev
+              ←
             </button>
             <button
               type="button"
               disabled={currentIdx === examples.length - 1}
-              onClick={() => { setCurrentIdx((i) => i + 1); setAssist("none"); }}
+              onClick={goToNext}
               className="rounded-md border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Next example"
             >
-              Next →
+              →
             </button>
           </div>
         </div>
 
-        {/* Figure */}
-        <div className="mt-5 mx-auto" style={{ maxWidth: 240 }}>
-          {Figure ? (
-            <Figure highlighted={highlighted} assist={assist} />
-          ) : (
-            <div className="aspect-square rounded-lg bg-secondary flex items-center justify-center text-xs text-muted-foreground">
-              Figure not available
-            </div>
-          )}
-        </div>
-
-        {/* Interaction area */}
-        <div className="mt-6">
-          {/* Phase 1: Choose */}
-          {state.phase === "choose" && (
-            <div className="text-center space-y-4">
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {example.prompt}
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => handleChoice("a")}
-                  className="rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {example.interpretations[0]}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleChoice("b")}
-                  className="rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {example.interpretations[1]}
-                </button>
+        <div className="px-5 py-6 md:px-8 md:py-8">
+          {/* Figure */}
+          <div className="mx-auto" style={{ maxWidth: 220 }}>
+            {Figure ? (
+              <Figure highlighted={highlighted} assist={assist} />
+            ) : (
+              <div className="aspect-square rounded-lg bg-secondary flex items-center justify-center text-xs text-muted-foreground">
+                Figure not available
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
-          {/* Phase 2: Switch */}
-          {state.phase === "switch" && state.choice && (
-            <div className="text-center space-y-4 max-w-sm mx-auto">
-              <p className="text-sm text-foreground leading-relaxed">
-                {example.switchFeedback[choiceIdx]}
-              </p>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {example.switchHint[choiceIdx]}
-              </p>
-
-              {/* Assist buttons */}
-              <div className="flex flex-wrap justify-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => flashAssist(state.choice === "a" ? "b" : "a")}
-                  className="rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                >
-                  Highlight {example.interpretations[otherIdx].toLowerCase()}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => flashAssist(state.choice!)}
-                  className="rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                >
-                  Highlight {example.interpretations[choiceIdx].toLowerCase()}
-                </button>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleConfirmSwitch}
-                className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                I can see both
-              </button>
-            </div>
-          )}
-
-          {/* Phase 3: Result */}
-          {state.phase === "result" && state.choice && (
-            <div className="space-y-4 max-w-md mx-auto">
-              {/* Choice-specific feedback */}
-              <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
-                <p className="text-sm text-foreground leading-relaxed">
-                  {example.resultFeedback[choiceIdx]}
+          {/* Interaction area */}
+          <div className="mt-6">
+            {/* Phase 1: Choose */}
+            {state.phase === "choose" && (
+              <div className="text-center space-y-4 max-w-sm mx-auto">
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {example.prompt}
                 </p>
-              </div>
-
-              {/* General explanation */}
-              <div className="rounded-lg border border-border bg-secondary/40 px-4 py-3">
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1">
-                  What's happening
-                </p>
-                <p className="text-sm text-foreground leading-relaxed">
-                  {example.explanation}
-                </p>
-              </div>
-
-              {/* Neuroscience note */}
-              <div className="rounded-lg border border-primary/15 bg-primary/5 px-4 py-3">
-                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 mb-1">
-                  Neuroscience
-                </p>
-                <p className="text-sm text-foreground leading-relaxed">
-                  {example.neuroscienceNote}
-                </p>
-              </div>
-
-              <div className="flex justify-center gap-3">
-                <button
-                  type="button"
-                  onClick={handleReset}
-                  className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-                >
-                  Try Again
-                </button>
-                {currentIdx < examples.length - 1 && (
+                <div className="flex flex-wrap justify-center gap-3">
                   <button
                     type="button"
-                    onClick={() => { setCurrentIdx((i) => i + 1); setAssist("none"); }}
-                    className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                    onClick={() => handleChoice("a")}
+                    className="rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
-                    Next Example →
+                    {example.interpretations[0]}
                   </button>
-                )}
+                  <button
+                    type="button"
+                    onClick={() => handleChoice("b")}
+                    className="rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    {example.interpretations[1]}
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+
+            {/* Phase 2: Switch */}
+            {state.phase === "switch" && state.choice && (
+              <div className="text-center space-y-4 max-w-sm mx-auto">
+                <p className="text-sm text-foreground leading-relaxed">
+                  {example.switchFeedback[choiceIdx]}
+                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed italic">
+                  {example.switchHint[choiceIdx]}
+                </p>
+
+                {/* Assist buttons */}
+                <div className="flex flex-wrap justify-center gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => flashAssist(state.choice === "a" ? "b" : "a")}
+                    className="rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  >
+                    Show {example.interpretations[otherIdx].toLowerCase()}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => flashAssist(state.choice!)}
+                    className="rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  >
+                    Show {example.interpretations[choiceIdx].toLowerCase()}
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleConfirmSwitch}
+                  className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  I can see both
+                </button>
+              </div>
+            )}
+
+            {/* Phase 3: Result */}
+            {state.phase === "result" && state.choice && (
+              <div className="space-y-3 max-w-md mx-auto">
+                {/* Choice-specific feedback */}
+                <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
+                  <p className="text-sm text-foreground leading-relaxed">
+                    {example.resultFeedback[choiceIdx]}
+                  </p>
+                </div>
+
+                {/* What changed / what didn't */}
+                <div className="rounded-lg border border-border bg-secondary/30 px-4 py-3">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1.5">
+                    Same stimulus, different interpretation
+                  </p>
+                  <p className="text-[13px] text-foreground/80 leading-relaxed">
+                    {example.invariant}
+                  </p>
+                </div>
+
+                {/* Mechanism */}
+                <div className="rounded-lg border border-border bg-secondary/30 px-4 py-3">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1.5">
+                    What's happening
+                  </p>
+                  <p className="text-[13px] text-foreground/80 leading-relaxed">
+                    {example.explanation}
+                  </p>
+                </div>
+
+                {/* Neuroscience */}
+                <div className="rounded-lg border border-primary/15 bg-primary/5 px-4 py-3">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 mb-1.5">
+                    Neuroscience
+                  </p>
+                  <p className="text-[13px] text-foreground/80 leading-relaxed">
+                    {example.neuroscienceNote}
+                  </p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-center gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+                  >
+                    Try Again
+                  </button>
+                  {currentIdx < examples.length - 1 && (
+                    <button
+                      type="button"
+                      onClick={goToNext}
+                      className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                    >
+                      Next: {examples[currentIdx + 1].title} →
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
