@@ -65,6 +65,35 @@ const examples: MultistableExample[] = [
     neuroscienceNote:
       "Color constancy is computed in V4 and modulated by contextual surround signals. The surrounding gradient and exposure in this photograph serve as ambiguous cues for inferring illumination. Different assumptions lead V4 to apply different corrections — which is why two people looking at identical pixels can sincerely report different colors.",
   },
+  {
+    id: "necker-cube",
+    title: "Necker Cube",
+    category: "Depth Reversal",
+    interpretations: [
+      "Lower-left face is in front",
+      "Upper-right face is in front",
+    ],
+    prompt:
+      "This wireframe cube has no shading or perspective cues. Which face appears closest to you?",
+    switchFeedback: [
+      "You see the lower-left face as the front — as if you're looking at the cube from above. Now try to flip the depth: imagine the upper-right face is closest to you, as if you're looking up at the cube from below.",
+      "You see the upper-right face as the front — as if you're looking at the cube from below. Now try to flip the depth: imagine the lower-left face is closest to you, as if you're looking down from above.",
+    ],
+    switchHint: [
+      "Focus on the upper-right square and try to see it as a solid surface in front of everything else.",
+      "Focus on the lower-left square and try to see it as a solid surface in front of everything else.",
+    ],
+    resultFeedback: [
+      "You interpreted the lower-left face as nearest — your brain imposed a viewpoint from above-right. The drawing is perfectly flat: the same twelve lines support both 3D interpretations equally, and your visual system chose one automatically.",
+      "You interpreted the upper-right face as nearest — your brain imposed a viewpoint from below-left. The drawing is perfectly flat: the same twelve lines support both 3D interpretations equally, and your visual system chose one automatically.",
+    ],
+    invariant:
+      "What changed: your brain's assumed viewpoint — whether you're looking at the cube from above or below. What did not change: the drawing. It is a flat 2D wireframe with no shading, perspective, or occlusion cues.",
+    explanation:
+      "The Necker cube demonstrates depth reversal — a different category of multistability from figure–ground or color constancy. Your brain automatically constructs a 3D interpretation from a 2D wireframe, but the drawing is genuinely ambiguous: no shadows, no perspective convergence, no occlusion. With nothing to anchor the depth, your visual system periodically flips between two equally valid readings.",
+    neuroscienceNote:
+      "Depth-from-ambiguity recruits parietal cortex areas that process 3D spatial relationships. The spontaneous reversal reflects competition between two neural populations in the dorsal visual stream, each encoding a different depth interpretation. The switching rate is influenced by attention, fatigue, and individual differences in cortical inhibition.",
+  },
 ];
 
 export default examples;
