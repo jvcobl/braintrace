@@ -46,7 +46,7 @@ const PredictionOutcome = ({
       {/* Header */}
       <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5">
         <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
-          Lesson Insight
+          Prediction &amp; Outcome
         </span>
         {structureChip && (
           <span className="hidden sm:inline-flex items-center rounded-full bg-primary/[0.06] px-1.5 py-px text-[9px] font-medium text-primary/50 tracking-wide">
@@ -74,7 +74,7 @@ const PredictionOutcome = ({
           onClick={onNavigateTrace}
           className="mt-2 sm:mt-2.5 flex items-center gap-1 text-[10px] sm:text-[11px] text-primary/50 hover:text-primary/80 transition-colors group"
         >
-          <span>Continue to Trace</span>
+          <span>See the pathway in Trace</span>
           <svg width="10" height="10" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>
             <path d="M5.5 3.5L9 7l-3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
