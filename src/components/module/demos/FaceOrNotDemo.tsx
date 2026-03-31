@@ -208,6 +208,7 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
     (answer: "face" | "not-face") => {
       if (currentAnswer) return;
       setCurrentAnswer(answer);
+      if (!hasInteracted) setHasInteracted(true);
     },
     [currentAnswer]
   );
