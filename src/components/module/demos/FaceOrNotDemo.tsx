@@ -1,4 +1,8 @@
 import { useState, useCallback } from "react";
+import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
+import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
+
+/* ── Stimulus data ── */
 
 type TrialKind = "face" | "ambiguous" | "non-face";
 
@@ -10,7 +14,7 @@ interface Trial {
 const S = "h-36 w-36 text-foreground";
 
 const stimulusSet: Trial[] = [
-  // 1 — Ambiguous: power outlet (two vertical slots + circle = classic pareidolia trigger)
+  // 1 — Ambiguous: power outlet
   {
     kind: "ambiguous",
     svg: (
@@ -34,7 +38,7 @@ const stimulusSet: Trial[] = [
       </svg>
     ),
   },
-  // 3 — Face: minimal smiley (two dots + arc, no outline — pure face config)
+  // 3 — Face: minimal smiley
   {
     kind: "face",
     svg: (
@@ -45,7 +49,7 @@ const stimulusSet: Trial[] = [
       </svg>
     ),
   },
-  // 4 — Ambiguous: three circles in a triangle (inverted triangle = eyes + mouth position)
+  // 4 — Ambiguous: three circles in triangle
   {
     kind: "ambiguous",
     svg: (
@@ -56,7 +60,7 @@ const stimulusSet: Trial[] = [
       </svg>
     ),
   },
-  // 5 — Non-face: diagonal slash marks
+  // 5 — Non-face: diagonal slashes
   {
     kind: "non-face",
     svg: (
@@ -67,7 +71,7 @@ const stimulusSet: Trial[] = [
       </svg>
     ),
   },
-  // 6 — Ambiguous: house front (two square windows + door = face-like)
+  // 6 — Ambiguous: house front
   {
     kind: "ambiguous",
     svg: (
@@ -106,6 +110,89 @@ const stimulusSet: Trial[] = [
   },
 ];
 
+/* ── Signal-detection feedback (from pasted spec) ── */
+
+type SignalKey = "hit" | "correctReject" | "falseAlarm" | "miss";
+
+const signalFeedback: Record<SignalKey, ExperienceFeedback> = {
+  hit: {
+    primary: "Correct — this was a real face.",
+    secondary:
+      "This reflects FFA activation recognizing the arrangement of features. Recognition relies on cell ensembles — distributed groups encoding eyes, nose, and mouth — not a single dedicated neuron per identity.",
+    bridge: "Explain covers ensemble theory and why 'grandmother cells' are flawed.",
+    structure: "FFA (fusiform gyrus)",
+  },
+  correctReject: {
+    primary: "Correct — this was not a face.",
+    secondary:
+      "The FFA likely activated briefly for the face-like pattern, but higher-order processing overrode the initial detection signal. This mirrors the cortex checking the fast system's output before committing to a judgment.",
+    bridge: "Compare this to how the high road overrides the low road in Unit 3.",
+    structure: "FFA → cortical override",
+  },
+  falseAlarm: {
+    primary: "That was not a face — this is pareidolia.",
+    secondary:
+      "The FFA is biased toward detecting face-like patterns even when none exist. Evolutionarily, missing a real face (predator, social partner) was more costly than falsely detecting one. This detection bias produces false positives — seeing faces in wall plugs, clouds, or random shapes.",
+    bridge: "Trace shows how the FFA fits into the ventral stream.",
+    structure: "FFA (false positive / pareidolia)",
+  },
+  miss: {
+    primary: "That was actually a face — detection missed it.",
+    secondary:
+      "Misses are rarer than false alarms because the FFA is tuned for sensitivity over specificity. This result fits cases where the face was at an unusual angle, partially obscured, or lacking the typical feature arrangement that ensemble-coded neurons respond to most strongly.",
+    bridge: "Explain covers why the FFA favors false positives over misses.",
+    structure: "FFA (detection miss)",
+  },
+};
+
+function classifySignal(
+  answer: "face" | "not-face",
+  kind: TrialKind
+): SignalKey {
+  const calledFace = answer === "face";
+  const isFace = kind === "face";
+  // Ambiguous items are treated as non-face for signal-detection purposes
+  if (calledFace && isFace) return "hit";
+  if (!calledFace && !isFace) return "correctReject";
+  if (calledFace && !isFace) return "falseAlarm";
+  return "miss";
+}
+
+/* ── Summary tiers (from pasted spec) ── */
+
+function getSummary(
+  answers: ("face" | "not-face")[],
+  trials: Trial[]
+): ExperienceSummary {
+  const falseAlarms = answers.filter(
+    (a, i) => a === "face" && trials[i].kind !== "face"
+  ).length;
+  const totalNonFace = trials.filter((t) => t.kind !== "face").length;
+  const faRate = totalNonFace > 0 ? falseAlarms / totalNonFace : 0;
+
+  if (faRate >= 0.5) {
+    return {
+      heading: "What This Shows",
+      body: "A high false-alarm rate reflects strong FFA detection bias — the system fires readily for anything resembling the face template. This is the same mechanism that produces pareidolia in everyday life and was likely protective in evolutionary contexts.",
+      bridge: "Explain covers pareidolia and evolutionary detection trade-offs.",
+    };
+  }
+  if (falseAlarms === 0) {
+    return {
+      heading: "What This Shows",
+      body: "A low false-alarm rate suggests that higher cortical processing effectively checked the FFA's initial detection signals for non-face patterns before they became conscious judgments.",
+      bridge: "Compare this to top-down override in the Blurry Object lesson.",
+    };
+  }
+  return {
+    heading: "What This Shows",
+    body: "Your detection pattern balanced hits and false alarms. This reflects the typical FFA trade-off: sensitive enough to catch real faces, but that sensitivity comes with occasional false positives. The system is optimized for not missing real faces, not for perfect accuracy.",
+    bridge: "Trace shows how the FFA connects to the ventral stream.",
+  };
+}
+
+/* ── Component ── */
+
 const FaceOrNotDemo = () => {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<("face" | "not-face")[]>([]);
@@ -114,10 +201,13 @@ const FaceOrNotDemo = () => {
   const done = index >= stimulusSet.length;
   const trial = !done ? stimulusSet[index] : null;
 
-  const handleAnswer = useCallback((answer: "face" | "not-face") => {
-    if (currentAnswer) return;
-    setCurrentAnswer(answer);
-  }, [currentAnswer]);
+  const handleAnswer = useCallback(
+    (answer: "face" | "not-face") => {
+      if (currentAnswer) return;
+      setCurrentAnswer(answer);
+    },
+    [currentAnswer]
+  );
 
   const handleNext = useCallback(() => {
     if (!currentAnswer) return;
@@ -132,78 +222,19 @@ const FaceOrNotDemo = () => {
     setCurrentAnswer(null);
   }, []);
 
-  if (done) {
-    const faceOnNonFace = answers.filter((a, i) => a === "face" && stimulusSet[i].kind === "non-face").length;
-    const faceOnAmbiguous = answers.filter((a, i) => a === "face" && stimulusSet[i].kind === "ambiguous").length;
-    const totalAmbiguous = stimulusSet.filter((t) => t.kind === "ambiguous").length;
-
-    return (
-      <section>
-        <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-        <div className="mt-4 rounded-lg border border-border bg-card p-8">
-          <h3 className="font-display text-lg font-semibold text-foreground text-center">What This Shows</h3>
-          <div className="mt-4 space-y-3 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            {faceOnNonFace > 0 && (
-              <p>
-                You detected a face in {faceOnNonFace} image{faceOnNonFace > 1 ? "s" : ""} that contained no face-like arrangement at all.
-                This is <strong>pareidolia</strong> — your fusiform face area firing for a non-face stimulus.
-              </p>
-            )}
-            {faceOnAmbiguous > 0 && (
-              <p>
-                You saw faces in {faceOnAmbiguous} of {totalAmbiguous} ambiguous image{totalAmbiguous > 1 ? "s" : ""}.
-                These had face-like spatial layouts (two elements above one element) but weren't actual faces.
-                Your FFA's bias toward the basic face configuration — two eyes above a nose/mouth — made them look face-like.
-              </p>
-            )}
-            {faceOnNonFace === 0 && faceOnAmbiguous === 0 && (
-              <p>
-                You were cautious — you didn't call "face" on any non-face or ambiguous image.
-                Most people do see faces in at least some of the ambiguous images, because the FFA is biased to detect face configurations even when they aren't real faces.
-              </p>
-            )}
-            <p className="pt-1">
-              Continue to <strong>Trace</strong> to see the neural pathway behind this face-detection bias.
-            </p>
-          </div>
-          <div className="mt-6 flex justify-center">
-            <button
-              onClick={handleRestart}
-              className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              Try Again
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  const feedbackText = (() => {
-    if (!currentAnswer || !trial) return null;
-    const calledFace = currentAnswer === "face";
-    if (trial.kind === "face") {
-      return calledFace
-        ? "This one has a genuine face-like pattern — your FFA correctly detected the face configuration."
-        : "Look again — there's a face-like arrangement here (eyes-above-mouth). Your FFA may not have responded strongly to this particular layout.";
-    }
-    if (trial.kind === "non-face") {
-      return calledFace
-        ? "There's no face-like arrangement here. Your FFA may have responded to a vague pattern — that's pareidolia in action."
-        : "Right — no face configuration in this one.";
-    }
-    return calledFace
-      ? "This is ambiguous. The spatial layout resembles a face (two elements above one), so your FFA activated — but it's not an actual face. This is the pareidolia effect."
-      : "This is ambiguous — many people do see a face here because the layout loosely matches the eyes-nose-mouth configuration your FFA is tuned to detect.";
-  })();
+  const signalKey =
+    currentAnswer && trial
+      ? classifySignal(currentAnswer, trial.kind)
+      : null;
 
   return (
-    <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-      <p className="mt-1 text-sm text-muted-foreground">
-        For each image, decide: does it look like a face?
-      </p>
-      <div className="mt-4 rounded-lg border border-border bg-card p-6">
+    <ExperienceShell
+      instructions="For each pattern, decide quickly: does it look like a face? Some are real faces, some are not, and some are deliberately ambiguous. Your responses reveal how your fusiform face area balances detection sensitivity against false alarms."
+      done={done}
+      summary={getSummary(answers, stimulusSet)}
+      onRestart={handleRestart}
+    >
+      <div className="rounded-lg border border-border bg-card p-6">
         <p className="mb-4 text-xs text-muted-foreground">
           {index + 1} of {stimulusSet.length}
         </p>
@@ -216,9 +247,10 @@ const FaceOrNotDemo = () => {
           {(["face", "not-face"] as const).map((opt) => {
             let style = "border border-border bg-card text-foreground hover:bg-secondary";
             if (currentAnswer) {
-              style = opt === currentAnswer
-                ? "border-2 border-primary bg-accent text-accent-foreground"
-                : "border border-border bg-card text-muted-foreground opacity-50";
+              style =
+                opt === currentAnswer
+                  ? "border-2 border-primary bg-accent text-accent-foreground"
+                  : "border border-border bg-card text-muted-foreground opacity-50";
             }
             return (
               <button
@@ -233,19 +265,21 @@ const FaceOrNotDemo = () => {
           })}
         </div>
 
-        {currentAnswer && (
-          <div className="mt-4 text-center">
-            <p className="text-sm text-muted-foreground leading-relaxed">{feedbackText}</p>
-            <button
-              onClick={handleNext}
-              className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              {index < stimulusSet.length - 1 ? "Next" : "See Results"}
-            </button>
+        {signalKey && (
+          <div className="mt-5">
+            <FeedbackCard feedback={signalFeedback[signalKey]} />
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={handleNext}
+                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                {index < stimulusSet.length - 1 ? "Next" : "See Results"}
+              </button>
+            </div>
           </div>
         )}
       </div>
-    </section>
+    </ExperienceShell>
   );
 };
 
