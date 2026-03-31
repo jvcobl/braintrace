@@ -97,9 +97,13 @@ const UnitHub = () => {
         {prevUnit ? (
           <Link
             to={`/unit/${prevUnit}`}
-            className="text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+            className="group text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
           >
-            ← Unit {prevUnit.replace("unit-", "")}
+            <span className="text-muted-foreground group-hover:text-primary transition-colors">←</span>{" "}
+            {(() => {
+              const pc = getUnitContent(prevUnit);
+              return pc ? pc.meta.title : `Unit ${prevUnit.replace("unit-", "")}`;
+            })()}
           </Link>
         ) : (
           <span />
@@ -107,9 +111,13 @@ const UnitHub = () => {
         {nextUnit ? (
           <Link
             to={`/unit/${nextUnit}`}
-            className="text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+            className="group text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
           >
-            Unit {nextUnit.replace("unit-", "")} →
+            {(() => {
+              const nc = getUnitContent(nextUnit);
+              return nc ? nc.meta.title : `Unit ${nextUnit.replace("unit-", "")}`;
+            })()}{" "}
+            <span className="text-muted-foreground group-hover:text-primary transition-colors">→</span>
           </Link>
         ) : (
           <span />
