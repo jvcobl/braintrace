@@ -212,7 +212,7 @@ export const modules: Module[] = [
     title: "Fear vs. Anxiety Sorter",
     slug: "fear-vs-anxiety-sorter",
     unitId: "unit-3",
-    shortGoal: "Distinguish fear from anxiety using the course definitions.",
+    shortGoal: "Distinguish fear from anxiety using neurobiological definitions.",
     shortDescription: "Classify scenarios as fear or anxiety and trace why the distinction matters neurobiologically.",
     introCopy: "You'll read short scenarios and decide whether each describes fear — a response to an imminent, tangible threat — or anxiety — the anticipation of a future, predicted threat. Then we'll trace the different circuits involved.",
     traceNodes: [
