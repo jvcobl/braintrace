@@ -34,9 +34,7 @@ function buildCourseUnits(): CourseUnit[] {
       return { id: uid, title: uid, keyTopics: [], linkedModuleIds: [] };
     }
 
-    // Only link modules that actually exist (mod-1 through mod-5).
-    // Unit 5's placeholder (mod-6) is registered in the content layer
-    // but not linked here since there's no lesson page for it yet.
+    // Link all lesson modules registered for this unit.
     const lessons = getLessonsByUnit(uid);
 
     return {
