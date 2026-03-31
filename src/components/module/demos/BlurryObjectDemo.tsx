@@ -102,6 +102,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
   const [guessStage, setGuessStage] = useState<number | null>(null);
   const [done, setDone] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const current = stimuli[round];
   const hasGuessed = guess !== null;
