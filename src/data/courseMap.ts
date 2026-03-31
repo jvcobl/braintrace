@@ -14,9 +14,8 @@ export interface CourseUnit {
   linkedModuleIds: string[];
 }
 
-// Key topics per unit — curated pedagogical topics matching the original
-// course map display. These are intentionally hand-written rather than
-// auto-derived from majorStructures so the Course Map page stays readable.
+// Key topics per unit — curated pedagogical topics matching the
+// curriculum display. Intentionally hand-written for readability.
 const unitKeyTopics: Record<string, string[]> = {
   "unit-1": ["Top-down processing", "Object recognition", "Face perception", "Fusiform face area"],
   "unit-2": ["Working memory", "Cognitive load", "Prefrontal cortex", "Executive control"],

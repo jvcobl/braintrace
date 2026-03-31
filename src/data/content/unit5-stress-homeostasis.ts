@@ -19,7 +19,7 @@ export const unit5Meta = {
     "Hippocampus (CA3, dentate gyrus)",
   ],
   lectureTopics: [
-    "Stress and Homeostasis (March 30)",
+    "Stress, homeostasis, and allostasis",
   ],
 };
 
@@ -190,7 +190,7 @@ export const unit5ConceptCards = [
     structures: ["PFC"],
     sensitivity: "high" as const,
     sensitivityNote:
-      "This material is presented as a factual neurobiology study card. It is included because it appears in the course notes. If you or someone you know is struggling, please reach out to the 988 Suicide and Crisis Lifeline (call or text 988).",
+      "This material is presented as a factual neurobiology study card. If you or someone you know is struggling, please reach out to the 988 Suicide and Crisis Lifeline (call or text 988).",
   },
 ];
 

@@ -18,7 +18,7 @@ export const unit2Meta = {
     "Temporoparietal junction",
   ],
   lectureTopics: [
-    "Primed States, Cognitive Load, and the PFC (March 16)",
+    "Primed states, cognitive load, and the prefrontal cortex",
   ],
 };
 
@@ -367,7 +367,7 @@ export const unit2Review = [
   {
     id: "u2-rq-06",
     question:
-      "How does illness impair cognitive function? Identify the specific biological mechanism from the course notes.",
+      "How does illness impair cognitive function? Identify the specific biological mechanism involved.",
     hint: "Think about microglia, cytokines, and where the metabolic energy goes during an immune response.",
   },
 ];

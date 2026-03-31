@@ -234,7 +234,7 @@ export const modules: Module[] = [
     title: "Emotion vs. Arousal Sorter",
     slug: "emotion-vs-arousal-sorter",
     unitId: "unit-3",
-    shortGoal: "Distinguish emotion from arousal using the course definitions.",
+    shortGoal: "Distinguish emotion from arousal using neurobiological definitions.",
     shortDescription: "Classify scenarios as emotion or arousal and learn why valence is the key differentiator.",
     introCopy: "You'll read short scenarios and decide whether each describes an emotion — a transient state with specific valence that motivates approach or avoidance — or arousal — physiological intensity without inherent direction. Then we'll trace why this distinction matters.",
     traceNodes: [
@@ -244,7 +244,7 @@ export const modules: Module[] = [
     ],
     explain: {
       whatHappened: "You classified six scenarios as either emotion or arousal based on whether the description included specific valence (positive or negative direction) or only physiological intensity.",
-      whatYourBrainDid: "For each scenario, you assessed whether the experience had a clear directional quality — approach or avoid — or simply reflected how activated the body was. This mirrors the distinction the course draws between arousal (intensity) and emotion (intensity plus valence plus motivated behavior).",
+      whatYourBrainDid: "For each scenario, you assessed whether the experience had a clear directional quality — approach or avoid — or simply reflected how activated the body was. This mirrors the distinction between arousal (intensity) and emotion (intensity plus valence plus motivated behavior).",
       keyPathway: "Arousal = physiological intensity without direction. Valence = positive or negative quality. Emotion = arousal + valence → transient state motivating approach or avoidance. Confusing arousal with emotion is a common reasoning error.",
       whyItMatters: "This module covers the emotion–arousal–valence framework. The distinction is foundational: arousal tells you how activated the body is, valence tells you the direction, and emotion combines both into a transient motivational state. Understanding this framework is essential for interpreting amygdala function, fear vs. anxiety, and how interoceptive signals become labeled emotional experiences.",
     },
@@ -266,7 +266,7 @@ export const modules: Module[] = [
     ],
     explain: {
       whatHappened: "You classified six scenarios as either classical or operant conditioning based on whether the learned response was automatic (stimulus-driven) or voluntary (action-driven).",
-      whatYourBrainDid: "For each scenario, you assessed whether the organism passively acquired an association or actively changed behavior based on consequences. This mirrors the distinction the course draws between Pavlovian and Skinnerian paradigms.",
+      whatYourBrainDid: "For each scenario, you assessed whether the organism passively acquired an association or actively changed behavior based on consequences. This mirrors the distinction between Pavlovian and Skinnerian paradigms.",
       keyPathway: "Classical conditioning: CS + US → automatic CR, mediated by amygdala (BLA → CeA). Operant conditioning: voluntary action → consequence, mediated by nucleus accumbens and dopamine. Fear conditioning is strictly classical.",
       whyItMatters: "This module covers the two major associative learning paradigms. Fear conditioning — the core mechanism of the conditioning unit — is strictly classical: the organism does not choose to become afraid. The CS-US association forms automatically through BLA circuitry. Understanding this distinction is essential for grasping why extinction is new learning (vmPFC inhibiting the original trace) rather than erasure, and why fear can spontaneously return.",
     },

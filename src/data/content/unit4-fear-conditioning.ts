@@ -20,7 +20,7 @@ export const unit4Meta = {
     "Nucleus accumbens",
   ],
   lectureTopics: [
-    "Learning, Fear Conditioning, and vmPFC Circuitry (March 25)",
+    "Learning, fear conditioning, and vmPFC circuitry",
   ],
 };
 

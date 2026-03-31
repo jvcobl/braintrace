@@ -20,8 +20,8 @@ export const unit3Meta = {
     "Ventral hippocampus",
   ],
   lectureTopics: [
-    "The Limbic System and Definitions of Emotion (March 18)",
-    "The Amygdala and the Architecture of Fear (March 23)",
+    "The limbic system and definitions of emotion",
+    "The amygdala and the architecture of fear",
   ],
 };
 
