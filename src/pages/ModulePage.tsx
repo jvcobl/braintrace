@@ -70,7 +70,7 @@ const ModulePage = () => {
 
         <div className="mt-8">
           {section === "Intro" && <IntroSection module={mod} />}
-          {section === "Experience" && <ExperienceSection module={mod} />}
+          {section === "Experience" && <ExperienceSection module={mod} onNavigate={setSection} />}
           {section === "Trace" && <TracePanel nodes={mod.traceNodes} />}
           {section === "Explain" && <ExplainSection explain={mod.explain} />}
         </div>
