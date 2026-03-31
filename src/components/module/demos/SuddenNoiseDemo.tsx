@@ -1,30 +1,90 @@
 import { useState, useCallback, useRef, useEffect } from "react";
+import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
+import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
 
-type Phase = "ready" | "waiting" | "target" | "result";
-type TrialType = "baseline" | "interrupted";
+/* ── Types ── */
+
+type TrialPhase = "ready" | "waiting" | "target" | "reacted";
+type ReflectPhase = "expectation" | "priming" | "context";
+type DemoPhase =
+  | { kind: "trial"; trial: TrialPhase }
+  | { kind: "reflect"; step: ReflectPhase }
+  | { kind: "done" };
 
 interface TrialResult {
-  type: TrialType;
+  type: "baseline" | "interrupted";
   reactionMs: number;
 }
 
-const TRIALS: TrialType[] = ["baseline", "interrupted", "baseline", "interrupted"];
+/* ── Feedback from pasted spec ── */
+
+const expectationFeedback: Record<"didNotExpect" | "didExpect", ExperienceFeedback> = {
+  didNotExpect: {
+    primary: "You were startled — the reflex fired before conscious awareness.",
+    secondary: "This fits the acoustic startle reflex: a 3-synapse loop from cochlear root neurons to the pontine reticular nucleus to spinal motor neurons. The entire circuit completes without cortical involvement, which is why the body reacts before the mind registers what happened.",
+    bridge: "Trace shows the full 3-synapse startle loop.",
+    structure: "Cochlear root neurons → PNC → spinal cord",
+  },
+  didExpect: {
+    primary: "You expected it — but the reflex likely still fired.",
+    secondary: "Conscious prediction cannot fully suppress a 3-synapse brainstem loop. Knowing the stimulus is coming may reduce the magnitude, but the startle reflex itself is involuntary — cortical awareness arrives after the circuit has already completed.",
+    bridge: "Trace shows why cortex cannot override a brainstem reflex.",
+    structure: "Brainstem reflex (cortex too slow to prevent)",
+  },
+};
+
+const primingFeedback: Record<"strongerAfterCue" | "sameOrWeaker", ExperienceFeedback> = {
+  strongerAfterCue: {
+    primary: "The startle response was amplified — this fits fear-potentiated startle.",
+    secondary: "When a warning cue primes the system, auditory input routes from the medial geniculate nucleus (MGN) to the basolateral amygdala (BLA). If the BLA is already in a heightened state, the central amygdala (CeA) amplifies the outgoing startle command. This is the mechanism Mike Davis demonstrated in fear-potentiated startle research.",
+    bridge: "Trace shows the MGN → BLA → CeA amplification pathway.",
+    structure: "MGN → BLA → CeA → amplified startle",
+  },
+  sameOrWeaker: {
+    primary: "The startle did not increase after the cue.",
+    secondary: "This could reflect habituation (the brainstem circuit dampening its response to a now-familiar stimulus) or cortical suppression (the high road partially inhibiting the amygdala's priming effect). Both are real mechanisms, and without direct measurement, either could explain the pattern.",
+    bridge: "Compare habituation vs cortical suppression in Explain.",
+    structure: "Habituation or high road suppression",
+  },
+};
+
+const contextFeedback: ExperienceFeedback = {
+  primary: "Context changes the magnitude of the same reflex.",
+  secondary: "The same rustling sound produces a mild orienting response on a busy campus but a full startle in an isolated setting at night. The stimulus is identical — what changes is the amygdala's priming state. Prior context, anxiety level, sleep quality, and learned associations all modulate the reflex before the sound arrives.",
+  bridge: "Explain covers how primers change amygdala responsiveness.",
+};
+
+const summaryData: ExperienceSummary = {
+  heading: "What This Shows",
+  body: "The acoustic startle reflex exists because organisms that flinched first survived. It runs on three synapses with no cortical involvement. The amygdala does not create the reflex — it amplifies or suppresses it based on context, priming, and learned associations. That amplification is fear-potentiated startle; that suppression is habituation or cortical override.",
+  bridge: "Trace shows both the basic startle loop and the amplification circuit.",
+};
+
+/* ── Trial sequence: baseline then interrupted ── */
+
+const TRIAL_SEQUENCE: ("baseline" | "interrupted")[] = ["baseline", "interrupted"];
+
+/* ── Component ── */
 
 const SuddenNoiseDemo = () => {
+  const [phase, setPhase] = useState<DemoPhase>({ kind: "trial", trial: "ready" });
   const [trialIndex, setTrialIndex] = useState(0);
-  const [phase, setPhase] = useState<Phase>("ready");
-  const [reactionMs, setReactionMs] = useState<number | null>(null);
   const [results, setResults] = useState<TrialResult[]>([]);
+  const [reactionMs, setReactionMs] = useState<number | null>(null);
   const [muted, setMuted] = useState(true);
   const [flashVisible, setFlashVisible] = useState(false);
+
+  // Reflection answers
+  const [expectAnswer, setExpectAnswer] = useState<"didNotExpect" | "didExpect" | null>(null);
+  const [primingAnswer, setPrimingAnswer] = useState<"strongerAfterCue" | "sameOrWeaker" | null>(null);
 
   const targetTime = useRef(0);
   const waitTimer = useRef<ReturnType<typeof setTimeout>>();
   const interruptTimer = useRef<ReturnType<typeof setTimeout>>();
   const audioCtx = useRef<AudioContext | null>(null);
 
-  const done = trialIndex >= TRIALS.length;
-  const currentType = !done ? TRIALS[trialIndex] : null;
+  const done = phase.kind === "done";
+  const currentTrialType = trialIndex < TRIAL_SEQUENCE.length ? TRIAL_SEQUENCE[trialIndex] : null;
 
   useEffect(() => {
     return () => {
@@ -53,13 +113,13 @@ const SuddenNoiseDemo = () => {
   }, [muted]);
 
   const startTrial = useCallback(() => {
-    setPhase("waiting");
+    setPhase({ kind: "trial", trial: "waiting" });
     setReactionMs(null);
     setFlashVisible(false);
 
     const delay = 2000 + Math.random() * 2000;
 
-    if (currentType === "interrupted") {
+    if (currentTrialType === "interrupted") {
       const interruptAt = delay - 500;
       interruptTimer.current = setTimeout(() => {
         setFlashVisible(true);
@@ -70,165 +130,300 @@ const SuddenNoiseDemo = () => {
 
     waitTimer.current = setTimeout(() => {
       targetTime.current = performance.now();
-      setPhase("target");
+      setPhase({ kind: "trial", trial: "target" });
     }, delay);
-  }, [currentType, playTone]);
+  }, [currentTrialType, playTone]);
 
   const handleClick = useCallback(() => {
-    if (phase === "target") {
+    if (phase.kind !== "trial") return;
+    if (phase.trial === "target") {
       const ms = Math.round(performance.now() - targetTime.current);
       setReactionMs(ms);
-      setPhase("result");
-    } else if (phase === "waiting") {
+      setResults((prev) => [...prev, { type: currentTrialType!, reactionMs: ms }]);
+      setPhase({ kind: "trial", trial: "reacted" });
+    } else if (phase.trial === "waiting") {
       if (waitTimer.current) clearTimeout(waitTimer.current);
       if (interruptTimer.current) clearTimeout(interruptTimer.current);
       setFlashVisible(false);
       setReactionMs(-1);
-      setPhase("result");
+      setPhase({ kind: "trial", trial: "reacted" });
     }
-  }, [phase]);
+  }, [phase, currentTrialType]);
 
-  const handleNext = useCallback(() => {
-    if (reactionMs !== null && reactionMs > 0 && currentType) {
-      setResults((prev) => [...prev, { type: currentType, reactionMs }]);
+  const handleNextTrial = useCallback(() => {
+    const next = trialIndex + 1;
+    if (next < TRIAL_SEQUENCE.length) {
+      setTrialIndex(next);
+      setPhase({ kind: "trial", trial: "ready" });
+      setReactionMs(null);
+      setFlashVisible(false);
+    } else {
+      // All trials done → begin reflection
+      setPhase({ kind: "reflect", step: "expectation" });
     }
-    setTrialIndex((i) => i + 1);
-    setPhase("ready");
-    setReactionMs(null);
-    setFlashVisible(false);
-  }, [reactionMs, currentType]);
+  }, [trialIndex]);
 
   const handleRestart = useCallback(() => {
     setTrialIndex(0);
-    setPhase("ready");
+    setPhase({ kind: "trial", trial: "ready" });
     setReactionMs(null);
     setResults([]);
     setFlashVisible(false);
+    setExpectAnswer(null);
+    setPrimingAnswer(null);
   }, []);
 
-  if (done) {
-    const baselineResults = results.filter((r) => r.type === "baseline");
-    const interruptedResults = results.filter((r) => r.type === "interrupted");
-    const avg = (arr: TrialResult[]) =>
-      arr.length > 0 ? Math.round(arr.reduce((s, r) => s + r.reactionMs, 0) / arr.length) : null;
-    const avgB = avg(baselineResults);
-    const avgI = avg(interruptedResults);
+  const isTrialActive =
+    phase.kind === "trial" && (phase.trial === "waiting" || phase.trial === "target");
 
-    return (
-      <section>
-        <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-        <div className="mt-4 rounded-lg border border-border bg-card p-8">
-          <h3 className="font-display text-lg font-semibold text-foreground text-center">What This Shows</h3>
-          <div className="mt-5 grid grid-cols-2 gap-4 max-w-xs mx-auto">
-            <div className="rounded-lg bg-secondary p-4 text-center">
-              <p className="text-xs text-muted-foreground">Calm Trials</p>
-              <p className="mt-1 text-xl font-bold text-foreground">{avgB !== null ? `${avgB}ms` : "—"}</p>
-            </div>
-            <div className="rounded-lg bg-secondary p-4 text-center">
-              <p className="text-xs text-muted-foreground">Interrupted</p>
-              <p className="mt-1 text-xl font-bold text-foreground">{avgI !== null ? `${avgI}ms` : "—"}</p>
-            </div>
-          </div>
-          <div className="mt-5 max-w-md mx-auto text-sm text-muted-foreground leading-relaxed space-y-2">
-            {avgB !== null && avgI !== null ? (
-              avgI < avgB ? (
-                <p>Your reaction was faster after the interruption — the sudden stimulus primed your brainstem startle circuit, putting your motor system on alert.</p>
-              ) : avgI > avgB + 20 ? (
-                <p>Your reaction was slower after the interruption — the unexpected stimulus captured your attention, momentarily competing with the task.</p>
-              ) : (
-                <p>Your reaction times were similar. The interruption may have both primed your motor system and briefly captured attention.</p>
-              )
-            ) : (
-              <p>Not enough valid trials to compare — try again.</p>
-            )}
-            <p className="pt-1">Continue to <strong>Trace</strong> to see the reflex circuit and how the amygdala modulates it.</p>
-          </div>
-          <div className="mt-6 flex justify-center">
-            <button onClick={handleRestart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-              Try Again
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  const isActive = phase === "waiting" || phase === "target";
+  const trialLabel = currentTrialType === "baseline" ? "Baseline" : "With Interruption";
 
   return (
-    <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-      <p className="mt-1 text-sm text-muted-foreground">Click as fast as you can when the circle appears.</p>
+    <ExperienceShell
+      instructions="You'll complete two reaction-time trials: one calm baseline, one with an unexpected interruption. Afterward, you'll reflect on what you noticed. This is not about speed — it's about what the startle reflex reveals."
+      done={done}
+      summary={summaryData}
+      onRestart={handleRestart}
+    >
+      {/* ── Trial phase ── */}
+      {phase.kind === "trial" && (
+        <div className="rounded-lg border border-border bg-card p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className={`text-xs font-semibold uppercase tracking-wide ${
+                currentTrialType === "baseline" ? "text-primary" : "text-amber-500"
+              }`}>
+                {trialLabel}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                Trial {trialIndex + 1} of {TRIAL_SEQUENCE.length}
+              </span>
+            </div>
+            <button
+              onClick={() => setMuted((m) => !m)}
+              className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              aria-label={muted ? "Turn sound on" : "Mute sound"}
+            >
+              {muted ? "🔇 Sound Off" : "🔊 Sound On"}
+            </button>
+          </div>
 
-      <div className="mt-4 rounded-lg border border-border bg-card p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <p className="text-xs text-muted-foreground">Trial {trialIndex + 1} of {TRIALS.length}</p>
-          <button
-            onClick={() => setMuted((m) => !m)}
-            className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            aria-label={muted ? "Turn sound on" : "Mute sound"}
+          {/* Progress */}
+          <div className="mb-4 flex gap-1">
+            {TRIAL_SEQUENCE.map((_, i) => (
+              <div
+                key={i}
+                className={`h-1 flex-1 rounded-full transition-colors ${
+                  i < trialIndex ? "bg-primary/60" : i === trialIndex ? "bg-primary" : "bg-border"
+                }`}
+              />
+            ))}
+          </div>
+
+          <div
+            className={`relative flex min-h-[180px] items-center justify-center rounded-lg transition-colors duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+              flashVisible ? "bg-accent" : phase.trial === "target" ? "bg-primary/10" : "bg-secondary"
+            }`}
+            onClick={isTrialActive ? handleClick : undefined}
+            onKeyDown={isTrialActive ? (e) => { if (e.key === " " || e.key === "Enter") handleClick(); } : undefined}
+            role={isTrialActive ? "button" : undefined}
+            tabIndex={isTrialActive ? 0 : undefined}
+            style={{ cursor: isTrialActive ? "pointer" : "default" }}
           >
-            {muted ? "🔇 Sound Off" : "🔊 Sound On"}
-          </button>
+            {phase.trial === "ready" && (
+              <div className="text-center max-w-sm px-4">
+                <p className="text-sm text-muted-foreground mb-2">
+                  {currentTrialType === "baseline"
+                    ? "First: a calm trial. Click when the circle appears."
+                    : "This trial may include an unexpected interruption. Same task — click the circle."}
+                </p>
+                {currentTrialType === "interrupted" && (
+                  <p className="text-xs text-muted-foreground/70 italic mb-3">
+                    Notice how your body responds, not just your click speed.
+                  </p>
+                )}
+                <button
+                  onClick={startTrial}
+                  className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  Begin
+                </button>
+              </div>
+            )}
+
+            {phase.trial === "waiting" && (
+              <p className="text-sm text-muted-foreground select-none">Wait for it…</p>
+            )}
+
+            {phase.trial === "target" && (
+              <div className="flex flex-col items-center gap-2">
+                <div className="h-14 w-14 rounded-full bg-primary animate-pulse" />
+                <p className="text-sm font-medium text-foreground">Now!</p>
+              </div>
+            )}
+
+            {phase.trial === "reacted" && (
+              <div className="text-center">
+                {reactionMs === -1 ? (
+                  <p className="text-sm font-medium text-destructive">Too early — wait for the circle.</p>
+                ) : (
+                  <>
+                    <p className="text-3xl font-bold text-foreground">{reactionMs}ms</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {currentTrialType === "baseline" ? "Baseline reaction time" : "Reaction time with interruption"}
+                    </p>
+                  </>
+                )}
+                <button
+                  onClick={handleNextTrial}
+                  className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  {trialIndex < TRIAL_SEQUENCE.length - 1 ? "Next Trial" : "Continue to Reflection"}
+                </button>
+              </div>
+            )}
+
+            {flashVisible && (
+              <div className="absolute inset-0 flex items-center justify-center rounded-lg pointer-events-none">
+                <span className="text-3xl select-none">⚡</span>
+              </div>
+            )}
+          </div>
         </div>
+      )}
 
-        <div
-          className={`relative flex min-h-[180px] items-center justify-center rounded-lg transition-colors duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-            flashVisible ? "bg-accent" : phase === "target" ? "bg-primary/10" : "bg-secondary"
-          }`}
-          onClick={isActive ? handleClick : undefined}
-          onKeyDown={isActive ? (e) => { if (e.key === " " || e.key === "Enter") handleClick(); } : undefined}
-          role={isActive ? "button" : undefined}
-          tabIndex={isActive ? 0 : undefined}
-          style={{ cursor: isActive ? "pointer" : "default" }}
-        >
-          {phase === "ready" && (
-            <div className="text-center">
-              <p className="text-sm text-muted-foreground mb-4">Get ready — click when the circle appears.</p>
-              <button
-                onClick={startTrial}
-                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                Begin
-              </button>
+      {/* ── Reflection phase ── */}
+      {phase.kind === "reflect" && (
+        <div className="space-y-5">
+          {/* Reaction time comparison */}
+          {results.length >= 2 && (
+            <div className="rounded-lg border border-border bg-card p-5">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
+                Your reaction times
+              </p>
+              <div className="grid grid-cols-2 gap-3 max-w-xs mx-auto">
+                <div className="rounded-lg bg-secondary p-3 text-center">
+                  <p className="text-xs text-muted-foreground">Baseline</p>
+                  <p className="mt-1 text-xl font-bold text-foreground">
+                    {results.find((r) => r.type === "baseline")?.reactionMs ?? "—"}ms
+                  </p>
+                </div>
+                <div className="rounded-lg bg-secondary p-3 text-center">
+                  <p className="text-xs text-muted-foreground">Interrupted</p>
+                  <p className="mt-1 text-xl font-bold text-foreground">
+                    {results.find((r) => r.type === "interrupted")?.reactionMs ?? "—"}ms
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
-          {phase === "waiting" && (
-            <p className="text-sm text-muted-foreground select-none">Wait for it…</p>
-          )}
-
-          {phase === "target" && (
-            <div className="flex flex-col items-center gap-2">
-              <div className="h-14 w-14 rounded-full bg-primary animate-pulse" />
-              <p className="text-sm font-medium text-foreground">Now!</p>
-            </div>
-          )}
-
-          {phase === "result" && (
-            <div className="text-center">
-              {reactionMs === -1 ? (
-                <p className="text-sm font-medium text-destructive">Too early — wait for the circle.</p>
-              ) : (
-                <p className="text-3xl font-bold text-foreground">{reactionMs}ms</p>
+          {/* Step 1: Expectation */}
+          {phase.step === "expectation" && (
+            <div className="rounded-lg border border-border bg-card p-6">
+              <p className="text-sm font-medium text-foreground mb-1">
+                During the interrupted trial, were you startled by the flash?
+              </p>
+              <p className="text-xs text-muted-foreground mb-4">
+                Think about your body's reaction, not just whether you expected something to happen.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {([
+                  { key: "didNotExpect" as const, label: "Yes — it caught me off guard" },
+                  { key: "didExpect" as const, label: "Not really — I was expecting something" },
+                ]).map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setExpectAnswer(key)}
+                    className={`rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                      expectAnswer === key
+                        ? "border-primary bg-accent text-accent-foreground"
+                        : "border-border bg-card text-foreground hover:bg-secondary"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {expectAnswer && (
+                <div className="mt-5">
+                  <FeedbackCard feedback={expectationFeedback[expectAnswer]} />
+                  <div className="mt-4 flex justify-center">
+                    <button
+                      onClick={() => setPhase({ kind: "reflect", step: "priming" })}
+                      className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
               )}
-              <button
-                onClick={handleNext}
-                className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                {trialIndex < TRIALS.length - 1 ? "Next" : "See Results"}
-              </button>
             </div>
           )}
 
-          {flashVisible && (
-            <div className="absolute inset-0 flex items-center justify-center rounded-lg pointer-events-none">
-              <span className="text-3xl select-none">⚡</span>
+          {/* Step 2: Priming */}
+          {phase.step === "priming" && (
+            <div className="rounded-lg border border-border bg-card p-6">
+              <p className="text-sm font-medium text-foreground mb-1">
+                Did the interruption make the circle-click feel more urgent?
+              </p>
+              <p className="text-xs text-muted-foreground mb-4">
+                Compare how alert you felt clicking in the baseline trial vs. after the flash.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {([
+                  { key: "strongerAfterCue" as const, label: "Yes — I felt more on edge" },
+                  { key: "sameOrWeaker" as const, label: "No — it felt about the same" },
+                ]).map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setPrimingAnswer(key)}
+                    className={`rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                      primingAnswer === key
+                        ? "border-primary bg-accent text-accent-foreground"
+                        : "border-border bg-card text-foreground hover:bg-secondary"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {primingAnswer && (
+                <div className="mt-5">
+                  <FeedbackCard feedback={primingFeedback[primingAnswer]} />
+                  <div className="mt-4 flex justify-center">
+                    <button
+                      onClick={() => setPhase({ kind: "reflect", step: "context" })}
+                      className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Step 3: Context interpretation */}
+          {phase.step === "context" && (
+            <div className="rounded-lg border border-border bg-card p-6">
+              <p className="text-sm font-medium text-foreground mb-3">
+                Now consider: would the same interruption feel different in a dark room alone vs. a bright classroom?
+              </p>
+              <FeedbackCard feedback={contextFeedback} />
+              <div className="mt-4 flex justify-center">
+                <button
+                  onClick={() => setPhase({ kind: "done" })}
+                  className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  See Summary
+                </button>
+              </div>
             </div>
           )}
         </div>
-      </div>
-    </section>
+      )}
+    </ExperienceShell>
   );
 };
 
