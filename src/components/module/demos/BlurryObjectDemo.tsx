@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
 import PredictionOutcome from "@/components/module/PredictionOutcome";
+import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
 
 interface StimulusItem {
   name: string;
@@ -234,10 +235,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
         <div className="mt-6">
           <PredictionOutcome
             visible={hasInteracted}
-            structureChip="OFC / ventral stream"
-            prediction="Your brain made an early guess from blurry shape and contrast before full visual detail arrived."
-            outcome="As the image sharpened, that first guess was either confirmed or corrected by later ventral-stream processing."
-            update="This lesson shows that the brain predicts first and refines later — fast enough to be useful, but not always accurate."
+            {...predictionOutcomeContent["blurry-object"]}
             onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
           />
         </div>

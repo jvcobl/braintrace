@@ -1,6 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
+import PredictionOutcome from "@/components/module/PredictionOutcome";
+import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
 
 /* ── Types ── */
 
@@ -77,6 +79,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
   // Reflection answers
   const [expectAnswer, setExpectAnswer] = useState<"didNotExpect" | "didExpect" | null>(null);
   const [primingAnswer, setPrimingAnswer] = useState<"strongerAfterCue" | "sameOrWeaker" | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const targetTime = useRef(0);
   const waitTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -141,6 +144,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       setReactionMs(ms);
       setResults((prev) => [...prev, { type: currentTrialType!, reactionMs: ms }]);
       setPhase({ kind: "trial", trial: "reacted" });
+      if (!hasInteracted) setHasInteracted(true);
     } else if (phase.trial === "waiting") {
       if (waitTimer.current) clearTimeout(waitTimer.current);
       if (interruptTimer.current) clearTimeout(interruptTimer.current);
@@ -424,6 +428,15 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
           )}
         </div>
       )}
+
+      {/* Prediction & Outcome bridge */}
+      <div className="mt-6">
+        <PredictionOutcome
+          visible={hasInteracted}
+          {...predictionOutcomeContent["sudden-noise"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      </div>
     </ExperienceShell>
   );
 };

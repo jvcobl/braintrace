@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
+import PredictionOutcome from "@/components/module/PredictionOutcome";
+import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
 
 /* ── Step 1: Sequence data ── */
 
@@ -107,6 +109,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
   // Results tracking
   const [seqResult, setSeqResult] = useState<"correct" | "orderError" | "hormoneError" | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [fbResult, setFbResult] = useState<"correct" | "missing" | null>(null);
   const [ovResult, setOvResult] = useState<"understood" | "misunderstood" | null>(null);
 
@@ -129,6 +132,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
     const isCorrect = placed.every((p, i) => p.id === CORRECT_SEQUENCE[i].id);
     setSeqResult(isCorrect ? "correct" : "orderError");
     setPhase("sequence-result");
+    if (!hasInteracted) setHasInteracted(true);
   }, [placed]);
 
   const handleContinueToFeedback = useCallback(() => {
@@ -426,6 +430,15 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           )}
         </div>
       )}
+
+      {/* Prediction & Outcome bridge */}
+      <div className="mt-6">
+        <PredictionOutcome
+          visible={hasInteracted}
+          {...predictionOutcomeContent["hpa-axis-builder"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      </div>
     </ExperienceShell>
   );
 };

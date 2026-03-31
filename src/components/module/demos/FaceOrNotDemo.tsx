@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
+import PredictionOutcome from "@/components/module/PredictionOutcome";
+import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
 
 /* ── Stimulus data ── */
 
@@ -197,6 +199,7 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<("face" | "not-face")[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<"face" | "not-face" | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const done = index >= stimulusSet.length;
   const trial = !done ? stimulusSet[index] : null;
@@ -205,6 +208,7 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
     (answer: "face" | "not-face") => {
       if (currentAnswer) return;
       setCurrentAnswer(answer);
+      if (!hasInteracted) setHasInteracted(true);
     },
     [currentAnswer]
   );
@@ -279,6 +283,14 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
             </div>
           </div>
         )}
+        {/* Prediction & Outcome bridge */}
+        <div className="mt-6">
+          <PredictionOutcome
+            visible={hasInteracted}
+            {...predictionOutcomeContent["face-or-not"]}
+            onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+          />
+        </div>
       </div>
     </ExperienceShell>
   );

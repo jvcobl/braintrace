@@ -1,6 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
+import PredictionOutcome from "@/components/module/PredictionOutcome";
+import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
 
 /* ── Trial structure ── */
 
@@ -156,6 +158,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const [step, setStep] = useState<"predict" | "outcome" | "feedback">("predict");
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [predictions, setPredictions] = useState<{ stage: Stage; prediction: Prediction }[]>([]);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
@@ -165,8 +168,9 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
   const handlePredict = useCallback((p: Prediction) => {
     setPrediction(p);
+    if (!hasInteracted) setHasInteracted(true);
     timer.current = setTimeout(() => setStep("outcome"), 500);
-  }, []);
+  }, [hasInteracted]);
 
   const handleShowFeedback = useCallback(() => {
     if (prediction && trial) {
@@ -331,6 +335,15 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
           )}
         </div>
       )}
+
+      {/* Prediction & Outcome bridge */}
+      <div className="mt-6">
+        <PredictionOutcome
+          visible={hasInteracted}
+          {...predictionOutcomeContent["fear-cue"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      </div>
     </ExperienceShell>
   );
 };
