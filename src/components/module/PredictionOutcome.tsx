@@ -39,7 +39,7 @@ const PredictionOutcome = ({
 
   return (
     <div
-      className="rounded-md border-l-2 border-l-primary/25 bg-muted/30 px-4 py-3 sm:px-5 animate-in fade-in slide-in-from-bottom-1 duration-400"
+      className="rounded-md border-l-2 border-l-primary/25 bg-muted/30 px-3 py-2.5 sm:px-5 sm:py-3 animate-in fade-in slide-in-from-bottom-1 duration-400"
       role="region"
       aria-label="Prediction and outcome"
     >
