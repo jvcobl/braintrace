@@ -49,7 +49,7 @@ const About = () => (
         to="/"
         className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        Browse Units
+        Start Exploring
       </Link>
       <Link
         to="/course-map"

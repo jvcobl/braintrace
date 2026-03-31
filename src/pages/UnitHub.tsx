@@ -25,7 +25,7 @@ const UnitHub = () => {
           The unit you're looking for doesn't exist.
         </p>
         <Link
-          to="/course-map"
+          to="/"
           className="mt-10 inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           Browse Lessons

@@ -150,7 +150,7 @@ const Index = () => {
               What You'll Explore
             </p>
             <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Six interactive lessons across five areas
+              Interactive lessons across five areas
             </h2>
             <p className="mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
               Perception, attention, emotion, learning, and stress. Each lesson
