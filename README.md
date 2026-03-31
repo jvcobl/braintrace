@@ -10,7 +10,7 @@ Fully client-side — no backend, no API keys, no environment variables.
 |------|------|
 | `/` | Home — module grid and entry point |
 | `/module/:id` | Module page with four tabs: Intro, Experience, Trace, Explain |
-| `/course-map` | NBB302 units with key topics and linked modules |
+| `/course-map` | Unit overview with key topics and linked modules |
 | `/about` | Product description and three-step format overview |
 | `*` | 404 — not found |
 
