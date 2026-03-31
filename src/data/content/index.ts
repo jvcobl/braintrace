@@ -1,19 +1,12 @@
 // ============================================================
 // NEUROROUTE — MASTER CONTENT INDEX
 // ============================================================
-// Re-exports all unit content from the canonical source files.
+// All content sourced strictly from NBB302 lecture notes.
+// No external sources. No internet-derived information.
+//
+// This file exports all unit content and provides
+// a summary of what exists for each unit.
 // ============================================================
-
-export type {
-  UnitMeta,
-  ConceptCard,
-  PathwayStep,
-  PathwayBlock,
-  DistinctionBlock,
-  CaseNote,
-  ReviewQuestion,
-  UnitContent,
-} from "./types";
 
 // Unit 1 — Perception and Object Recognition
 export {
@@ -64,3 +57,85 @@ export {
   unit5CaseNotes,
   unit5Review,
 } from "./unit5-stress-homeostasis";
+
+// ============================================================
+// CONTENT SUMMARY
+// ============================================================
+//
+// Unit 1 — Perception and Object Recognition
+//   Concept cards:    30
+//   Pathway blocks:    4
+//   Distinction blocks: 6
+//   Case notes:         4 (1 high-sensitivity: implicit bias)
+//   Review questions:   8
+//
+// Unit 2 — Attention, Cognitive Load, and the PFC
+//   Concept cards:    17
+//   Pathway blocks:    3
+//   Distinction blocks: 5
+//   Case notes:         3
+//   Review questions:   6
+//
+// Unit 3 — Emotion, Limbic System, and Amygdala
+//   Concept cards:    30
+//   Pathway blocks:    5
+//   Distinction blocks: 5
+//   Case notes:         5 (2 high-sensitivity: Kluver-Bucy, Patient SM)
+//   Review questions:   7
+//
+// Unit 4 — Learning and Fear Conditioning
+//   Concept cards:    17
+//   Pathway blocks:    3
+//   Distinction blocks: 4
+//   Case notes:         2
+//   Review questions:   7
+//
+// Unit 5 — Stress and Homeostasis
+//   Concept cards:    23 (1 high-sensitivity: suicide neurobiology)
+//   Pathway blocks:    3
+//   Distinction blocks: 5
+//   Case notes:         3 (1 high-sensitivity: suicide neurobiology)
+//   Review questions:   6
+//
+// ============================================================
+// TOTALS ACROSS ALL UNITS
+// ============================================================
+//
+//   Concept cards:       117
+//   Pathway blocks:       18
+//   Distinction blocks:   25
+//   Case notes:           17
+//   Review questions:     34
+//   High-sensitivity items: 4
+//
+//   Total content items: 211
+//
+// ============================================================
+// CONTENT TYPE REFERENCE
+// ============================================================
+//
+// Concept Card
+//   { id, term, definition, structures, sensitivity?, sensitivityNote? }
+//   Short, scannable definition tied to brain structures.
+//   The core study-tool layer.
+//
+// Pathway Block
+//   { id, title, description, steps: [{ number, structure, description }] }
+//   Step-based circuit/stream trace.
+//   Matches the existing "Trace the Pathway" UI pattern.
+//
+// Distinction Block
+//   { id, termA, termB, descriptionA, descriptionB, keyDifference }
+//   Compare/contrast study block for commonly confused terms.
+//
+// Case Note
+//   { id, title, content, sensitivity, sensitivityNote? }
+//   Clinical examples, case studies, and sensitive material.
+//   sensitivity: "standard" | "high"
+//
+// Review Question
+//   { id, question, hint }
+//   Recall and application questions per unit.
+//   Hints guide without giving the answer.
+//
+// ============================================================

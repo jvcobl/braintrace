@@ -453,28 +453,28 @@ export const unit1CaseNotes = [
     title: "Visual Migraine Auras",
     content:
       "Visual migraine auras demonstrate both loss and gain of function in the visual system. Scotomas (blind spots) show reduced BOLD response in V1–V4, likely linked to cortical spreading depression. Scintillating scotomas produce visual artifacts like 'ants and snow' or color pixels with increased BOLD response. Loss and gain can occur simultaneously. The extreme variability between individuals makes these auras notoriously difficult to study with fMRI.",
-    sensitivity: "standard" as const,
+    sensitivity: "standard",
   },
   {
     id: "u1-cn-02",
     title: "Prosopagnosia",
     content:
       "Prosopagnosia (face blindness) results from damage to the fusiform face area on the fusiform gyrus. People with this condition can see faces — they know a face is in front of them — but they cannot construct an individual's identity from those features. They may fail to recognize close family members or even their own reflection. This demonstrates that face recognition depends on a specialized cortical region, not general visual ability.",
-    sensitivity: "standard" as const,
+    sensitivity: "standard",
   },
   {
     id: "u1-cn-03",
     title: "Chess Expertise and the FFA",
     content:
       "The fusiform face area is likely not exclusively a 'face area' but a general expertise-recognition area. Evidence: the FFA lights up in chess masters viewing chessboard configurations. This suggests the FFA specializes in rapid, expert-level pattern recognition for any domain where deep familiarity has been developed, not just for faces.",
-    sensitivity: "standard" as const,
+    sensitivity: "standard",
   },
   {
     id: "u1-cn-04",
     title: "The Cost of Heuristics: Implicit Bias",
     content:
       "Joshua Correll's research demonstrated that the same fast heuristic system enabling rapid object recognition also carries serious costs. In computer simulations, subjects consistently shot Black individuals faster than White individuals. The neurobiology shows a rapid P200 ERP 'threat' waveform followed by a delayed or weakened N200 'inhibitory/think-a-second' waveform from the PFC. This illustrates how the speed of the top-down prediction system can override careful evaluation when societal biases have shaped the brain's heuristic expectations.",
-    sensitivity: "high" as const,
+    sensitivity: "high",
     sensitivityNote:
       "This material is presented as a neuroscience study card, not as an interactive experience. It demonstrates the biological cost of the same heuristic system covered in this unit.",
   },
