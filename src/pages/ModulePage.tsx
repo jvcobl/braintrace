@@ -47,9 +47,7 @@ const ModulePage = () => {
         <SectionNav current={section} onSelect={setSection} />
 
         {section === "Intro" && <IntroSection module={mod} />}
-        {section === "Experience" && (
-          <ExperienceSection demoType={mod.demoType} moduleTitle={mod.title} />
-        )}
+        {section === "Experience" && <ExperienceSection module={mod} />}
         {section === "Trace" && <TracePanel nodes={mod.traceNodes} />}
         {section === "Explain" && <ExplainSection explain={mod.explain} />}
       </div>
