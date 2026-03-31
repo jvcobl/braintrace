@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
+import PredictionOutcome from "@/components/module/PredictionOutcome";
 
 interface StimulusItem {
   name: string;
