@@ -19,8 +19,8 @@ export const unit1Meta = {
     "Posterior parietal lobe",
   ],
   lectureTopics: [
-    "Sensation vs. Perception & Multisensory Integration (March 2)",
-    "Object Recognition & The Visual Streams (March 4)",
+    "Sensation vs. perception and multisensory integration",
+    "Object recognition and the visual streams",
   ],
 };
 

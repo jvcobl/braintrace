@@ -266,7 +266,7 @@ export const modules: Module[] = [
     ],
     explain: {
       whatHappened: "You classified six scenarios as either classical or operant conditioning based on whether the learned response was automatic (stimulus-driven) or voluntary (action-driven).",
-      whatYourBrainDid: "For each scenario, you assessed whether the organism passively acquired an association or actively changed behavior based on consequences. This mirrors the distinction the course draws between Pavlovian and Skinnerian paradigms.",
+      whatYourBrainDid: "For each scenario, you assessed whether the organism passively acquired an association or actively changed behavior based on consequences. This mirrors the distinction between Pavlovian and Skinnerian paradigms.",
       keyPathway: "Classical conditioning: CS + US → automatic CR, mediated by amygdala (BLA → CeA). Operant conditioning: voluntary action → consequence, mediated by nucleus accumbens and dopamine. Fear conditioning is strictly classical.",
       whyItMatters: "This module covers the two major associative learning paradigms. Fear conditioning — the core mechanism of the conditioning unit — is strictly classical: the organism does not choose to become afraid. The CS-US association forms automatically through BLA circuitry. Understanding this distinction is essential for grasping why extinction is new learning (vmPFC inhibiting the original trace) rather than erasure, and why fear can spontaneously return.",
     },
