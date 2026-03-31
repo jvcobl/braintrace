@@ -23,7 +23,7 @@ const ModulePage = () => {
         </p>
         <Link
           to="/"
-          className="mt-8 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          className="mt-8 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           Back to Home
         </Link>
@@ -33,16 +33,20 @@ const ModulePage = () => {
 
   return (
     <div className="container max-w-3xl py-12">
-      <Link to="/" className="text-sm text-primary hover:underline">
+      <Link
+        to="/"
+        className="text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+      >
         ← Back to home
       </Link>
 
       <div className="mt-6 mb-2">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          <Link to="/course-map" className="hover:text-primary hover:underline transition-colors">
-            {unit ? unit.title : mod.unitId.replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
-          </Link>
-        </p>
+        <Link
+          to="/course-map"
+          className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+        >
+          {unit ? unit.title : mod.unitId.replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+        </Link>
         <h1 className="mt-1 font-display text-3xl font-bold text-foreground">{mod.title}</h1>
         <p className="mt-2 text-muted-foreground">{mod.shortGoal}</p>
       </div>

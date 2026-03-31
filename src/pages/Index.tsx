@@ -9,15 +9,23 @@ const Index = () => (
         NeuroRoute
       </h1>
       <p className="mt-4 text-lg text-muted-foreground">
-        Experience a phenomenon, trace the neural pathway, and see a concise explanation —
-        an interactive way to learn neuroscience.
+        Experience a phenomenon, trace the neural pathway, and read a concise explanation —
+        an interactive way to learn neuroscience for NBB302.
       </p>
-      <Link
-        to="/course-map"
-        className="mt-8 inline-flex items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-      >
-        View Course Map
-      </Link>
+      <div className="mt-8 flex items-center justify-center gap-3">
+        <Link
+          to="/course-map"
+          className="inline-flex items-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Course Map
+        </Link>
+        <Link
+          to="/about"
+          className="inline-flex items-center rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          About
+        </Link>
+      </div>
     </section>
 
     <section className="mx-auto mt-20 max-w-4xl">

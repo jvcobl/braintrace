@@ -14,13 +14,13 @@ const subheads: { key: keyof ExplainContent; label: string }[] = [
 const ExplainSection = ({ explain }: ExplainSectionProps) => (
   <section>
     <h2 className="font-display text-2xl font-semibold text-foreground">Explain</h2>
-    <div className="mt-4 space-y-6">
+    <div className="mt-4 space-y-5">
       {subheads.map(({ key, label }) => (
-        <div key={key} className="rounded-lg border border-border bg-card p-5">
-          <h3 className="text-sm font-semibold uppercase tracking-wide text-accent-foreground">
+        <div key={key}>
+          <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             {label}
           </h3>
-          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{explain[key]}</p>
+          <p className="mt-1.5 text-sm text-foreground/80 leading-relaxed">{explain[key]}</p>
         </div>
       ))}
     </div>

@@ -15,7 +15,7 @@ const ModuleCard = ({ id, title, description, unitId, index }: ModuleCardProps) 
   return (
     <Link
       to={`/module/${id}`}
-      className="group flex flex-col rounded-lg border border-border bg-card p-6 transition-shadow hover:shadow-md"
+      className="group flex flex-col rounded-lg border border-border bg-card p-5 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       <div className="mb-2 flex items-center gap-2">
         <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-medium text-accent-foreground">
@@ -27,10 +27,10 @@ const ModuleCard = ({ id, title, description, unitId, index }: ModuleCardProps) 
           </span>
         )}
       </div>
-      <h3 className="mb-1 font-display text-lg font-semibold text-card-foreground">
+      <h3 className="mb-1 font-display text-base font-semibold text-card-foreground leading-snug">
         {title}
       </h3>
-      <p className="text-sm text-muted-foreground">{description}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
     </Link>
   );
 };
