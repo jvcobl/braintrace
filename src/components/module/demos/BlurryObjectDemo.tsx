@@ -117,9 +117,10 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       if (hasGuessed) return;
       setGuess(option);
       setGuessStage(blurStage);
+      if (!hasInteracted) setHasInteracted(true);
       if (option === current.name) setCorrectCount((c) => c + 1);
     },
-    [hasGuessed, blurStage, current.name]
+    [hasGuessed, blurStage, current.name, hasInteracted]
   );
 
   const handleNext = useCallback(() => {
