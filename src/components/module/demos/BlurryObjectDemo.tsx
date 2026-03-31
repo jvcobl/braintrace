@@ -72,7 +72,7 @@ const BlurryObjectDemo = () => {
             coarse shapes and contrast — to generate a top-down prediction.
           </p>
           <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
-            Continue to the <strong>Trace</strong> tab to see the neural pathway involved.
+            Continue to <strong>Trace</strong> to see the neural pathway involved.
           </p>
           <button
             onClick={handleRestart}
