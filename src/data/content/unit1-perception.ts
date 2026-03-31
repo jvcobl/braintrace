@@ -467,7 +467,7 @@ export const unit1CaseNotes = [
     title: "Chess Expertise and the FFA",
     content:
       "The fusiform face area is likely not exclusively a 'face area' but a general expertise-recognition area. Evidence: the FFA lights up in chess masters viewing chessboard configurations. This suggests the FFA specializes in rapid, expert-level pattern recognition for any domain where deep familiarity has been developed, not just for faces.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u1-cn-04",
