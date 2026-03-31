@@ -8,6 +8,7 @@ import HPAAxisBuilderDemo from "@/components/module/demos/HPAAxisBuilderDemo";
 import MultistablePerceptionDemo from "@/components/module/demos/MultistablePerceptionDemo";
 import PFCRoleMatcherDemo from "@/components/module/demos/PFCRoleMatcherDemo";
 import FearAnxietySorterDemo from "@/components/module/demos/FearAnxietySorterDemo";
+import EmotionArousalSorterDemo from "@/components/module/demos/EmotionArousalSorterDemo";
 
 interface ExperienceSectionProps {
   module: Module;
@@ -23,6 +24,7 @@ const demos: Record<string, React.ComponentType> = {
   "mod-7": MultistablePerceptionDemo,
   "mod-8": PFCRoleMatcherDemo,
   "mod-9": FearAnxietySorterDemo,
+  "mod-10": EmotionArousalSorterDemo,
 };
 
 const ExperienceSection = ({ module }: ExperienceSectionProps) => {

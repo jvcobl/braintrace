@@ -81,6 +81,7 @@ export const lessonMappings: LessonMapping[] = [
   { moduleId: "mod-8", unitId: "unit-2", title: "PFC Role Matcher" },
   { moduleId: "mod-3", unitId: "unit-3", title: "Sudden Noise Reaction" },
   { moduleId: "mod-9", unitId: "unit-3", title: "Fear vs. Anxiety Sorter" },
+  { moduleId: "mod-10", unitId: "unit-3", title: "Emotion vs. Arousal Sorter" },
   { moduleId: "mod-4", unitId: "unit-4", title: "Fear Cue and Extinction" },
   { moduleId: "mod-6", unitId: "unit-5", title: "HPA Axis Builder" },
 ];
