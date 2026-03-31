@@ -314,7 +314,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
           {/* FeedbackCard below interaction area */}
           {step === "feedback" && prediction && (
             <div className="mt-5">
-              <FeedbackCard feedback={getFeedback(trial.stage, prediction)} onBridgeClick={onNavigate ? () => { const b = {getFeedback(trial.stage, prediction)}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
+              <FeedbackCard feedback={getFeedback(trial.stage, prediction)} />
               <div className="mt-4 flex justify-center">
                 <button
                   onClick={advance}

@@ -268,7 +268,7 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
 
         {signalKey && (
           <div className="mt-5">
-            <FeedbackCard feedback={signalFeedback[signalKey]} onBridgeClick={onNavigate ? () => { const b = {signalFeedback[signalKey]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
+            <FeedbackCard feedback={signalFeedback[signalKey]} />
             <div className="mt-4 flex justify-center">
               <button
                 onClick={handleNext}

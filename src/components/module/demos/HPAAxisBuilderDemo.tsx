@@ -302,7 +302,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {/* Sequence feedback */}
           {phase === "sequence-result" && seqResult && (
             <div>
-              <FeedbackCard feedback={sequenceFeedback[seqResult]} onBridgeClick={onNavigate ? () => { const b = {sequenceFeedback[seqResult]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
+              <FeedbackCard feedback={sequenceFeedback[seqResult]} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"
@@ -357,7 +357,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {phase === "feedback-loop-result" && fbResult && (
             <div>
-              <FeedbackCard feedback={feedbackLoopFeedback[fbResult]} onBridgeClick={onNavigate ? () => { const b = {feedbackLoopFeedback[fbResult]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
+              <FeedbackCard feedback={feedbackLoopFeedback[fbResult]} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"
@@ -412,7 +412,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {phase === "override-result" && ovResult && (
             <div>
-              <FeedbackCard feedback={overrideFeedback[ovResult]} onBridgeClick={onNavigate ? () => { const b = {overrideFeedback[ovResult]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
+              <FeedbackCard feedback={overrideFeedback[ovResult]} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"

@@ -348,7 +348,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               </div>
               {expectAnswer && (
                 <div className="mt-5">
-                  <FeedbackCard feedback={expectationFeedback[expectAnswer]} onBridgeClick={onNavigate ? () => { const b = {expectationFeedback[expectAnswer]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
+                  <FeedbackCard feedback={expectationFeedback[expectAnswer]} />
                   <div className="mt-4 flex justify-center">
                     <button
                       onClick={() => setPhase({ kind: "reflect", step: "priming" })}
@@ -391,7 +391,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               </div>
               {primingAnswer && (
                 <div className="mt-5">
-                  <FeedbackCard feedback={primingFeedback[primingAnswer]} onBridgeClick={onNavigate ? () => { const b = {primingFeedback[primingAnswer]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
+                  <FeedbackCard feedback={primingFeedback[primingAnswer]} />
                   <div className="mt-4 flex justify-center">
                     <button
                       onClick={() => setPhase({ kind: "reflect", step: "context" })}
@@ -411,7 +411,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               <p className="text-sm font-medium text-foreground mb-3">
                 Now consider: would the same interruption feel different in a dark room alone vs. a bright classroom?
               </p>
-              <FeedbackCard feedback={contextFeedback} onBridgeClick={onNavigate ? () => { const b = {contextFeedback}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
+              <FeedbackCard feedback={contextFeedback} />
               <div className="mt-4 flex justify-center">
                 <button
                   onClick={() => setPhase({ kind: "done" })}
