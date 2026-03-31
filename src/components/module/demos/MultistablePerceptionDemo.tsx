@@ -67,10 +67,10 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
         Experience
       </h2>
       <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
-        Each figure below is genuinely ambiguous — it supports two valid
-        interpretations at once. For each one, report what you see first, then
-        try to switch. The image never changes; only your brain's reading of it
-        does.
+        This gallery contains two classic examples of perceptual ambiguity.
+        For each one, report what you see first, then try to switch your
+        interpretation. The image never changes; only your brain's reading of
+        it does.
       </p>
 
       {/* Progress indicator */}
