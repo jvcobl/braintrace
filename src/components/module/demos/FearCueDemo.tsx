@@ -335,6 +335,15 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
           )}
         </div>
       )}
+
+      {/* Prediction & Outcome bridge */}
+      <div className="mt-6">
+        <PredictionOutcome
+          visible={hasInteracted}
+          {...predictionOutcomeContent["fear-cue"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      </div>
     </ExperienceShell>
   );
 };

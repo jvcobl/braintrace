@@ -401,6 +401,14 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
             </div>
           </div>
         )}
+        {/* Prediction & Outcome bridge */}
+        <div className="mt-6">
+          <PredictionOutcome
+            visible={hasInteracted}
+            {...predictionOutcomeContent["memory-under-load"]}
+            onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+          />
+        </div>
       </div>
     </ExperienceShell>
   );

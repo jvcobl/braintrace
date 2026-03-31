@@ -283,6 +283,14 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
             </div>
           </div>
         )}
+        {/* Prediction & Outcome bridge */}
+        <div className="mt-6">
+          <PredictionOutcome
+            visible={hasInteracted}
+            {...predictionOutcomeContent["face-or-not"]}
+            onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+          />
+        </div>
       </div>
     </ExperienceShell>
   );

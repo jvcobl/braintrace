@@ -428,6 +428,15 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
           )}
         </div>
       )}
+
+      {/* Prediction & Outcome bridge */}
+      <div className="mt-6">
+        <PredictionOutcome
+          visible={hasInteracted}
+          {...predictionOutcomeContent["sudden-noise"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      </div>
     </ExperienceShell>
   );
 };
