@@ -67,10 +67,10 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
         Experience
       </h2>
       <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
-        Each figure below is genuinely ambiguous — it supports two valid
-        interpretations at once. For each one, report what you see first, then
-        try to switch. The image never changes; only your brain's reading of it
-        does.
+        This gallery contains two classic examples of perceptual ambiguity.
+        For each one, report what you see first, then try to switch your
+        interpretation. The image never changes; only your brain's reading of
+        it does.
       </p>
 
       {/* Progress indicator */}
@@ -114,7 +114,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
         <div className="mt-4 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 space-y-2">
           <p className="text-sm text-foreground leading-relaxed">
             <span className="font-medium">Gallery complete.</span>{" "}
-            You've experienced three types of multistable perception — figure–ground, illumination, and depth reversal.
+            You've experienced two types of multistable perception — figure–ground ambiguity and color constancy. In both cases, the image stayed the same; only your brain's interpretation changed.
           </p>
           {onNavigate && (
             <button
@@ -166,7 +166,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
 
         <div className="px-5 py-6 md:px-8 md:py-8">
           {/* Figure */}
-          <div className="mx-auto" style={{ maxWidth: 220 }}>
+          <div className="mx-auto" style={{ maxWidth: 280 }}>
             {Figure ? (
               <Figure highlighted={highlighted} assist={assist} />
             ) : (
