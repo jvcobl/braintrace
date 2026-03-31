@@ -188,7 +188,7 @@ export const unit5ConceptCards = [
     definition:
       "Suicidal behavior maps to depletion of serotonin and noradrenaline. Post-mortem studies show decreased serotonin transporter binding and increased 5-HT receptor binding specifically in the prefrontal cortex. This represents a neurobiological basis for the condition, not a moral or character failing.",
     structures: ["PFC"],
-    sensitivity: "high",
+    sensitivity: "high" as const,
     sensitivityNote:
       "This material is presented as a factual neurobiology study card. It is included because it appears in the course notes. If you or someone you know is struggling, please reach out to the 988 Suicide and Crisis Lifeline (call or text 988).",
   },
@@ -363,21 +363,21 @@ export const unit5CaseNotes = [
     title: "Chronic Stress and Neural Atrophy",
     content:
       "Chronic allostatic overload causes measurable physical degradation in the brain. Dendritic branching shrinks specifically in the hippocampus (CA3 region and dentate gyrus) and the prefrontal cortex. This means chronic stress does not just feel bad — it physically reduces the complexity of the neural structures needed for memory, learning, executive control, and emotion regulation. The damage creates a vicious cycle: stress impairs the brain systems responsible for managing stress.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u5-cn-02",
     title: "Resilience vs. Risky Coping",
     content:
       "Resilient and vulnerable brains show vastly different patterns of vmPFC activation. Resilient coping is associated with stronger vmPFC function — better top-down regulation of stress circuits and more effective recovery from allostatic overload. Risky coping patterns correlate with weaker vmPFC activation. This is not a moral judgment — it is a neural measurement. Interventions (pharmaceutical, cognitive, and combinatorial) can shift the brain toward more resilient patterns.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u5-cn-03",
     title: "Suicide Neurobiology",
     content:
       "Post-mortem studies of individuals who died by suicide reveal specific neurobiological markers: decreased serotonin transporter binding and increased 5-HT receptor binding in the prefrontal cortex, alongside depletion of serotonin and noradrenaline. Suicidal behavior has a neurobiological basis — it maps to measurable changes in brain chemistry. This does not diminish the role of environmental factors, but it establishes that the condition involves genuine dysfunction in the brain systems responsible for mood regulation and executive control.",
-    sensitivity: "high",
+    sensitivity: "high" as const,
     sensitivityNote:
       "This material is included because it is part of the NBB302 course notes. It is presented as factual neurobiology, not as an interactive experience. If you or someone you know is in crisis, contact the 988 Suicide and Crisis Lifeline (call or text 988).",
   },
