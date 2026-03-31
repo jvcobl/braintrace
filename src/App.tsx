@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "./components/layout/Layout";
 import Index from "./pages/Index";
 import ModulePage from "./pages/ModulePage";
+import UnitHub from "./pages/UnitHub";
 import CourseMap from "./pages/CourseMap";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
+            <Route path="/unit/:unitId" element={<UnitHub />} />
             <Route path="/module/:id" element={<ModulePage />} />
             <Route path="/course-map" element={<CourseMap />} />
             <Route path="/about" element={<About />} />
