@@ -13,8 +13,8 @@ const Index = () => {
           NeuroRoute
         </h1>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          An interactive study companion for NBB302 — experience a phenomenon,
-          trace the neural pathway, then read the science.
+          Experience a phenomenon, trace the neural pathway, understand the
+          mechanism — an interactive approach to learning neuroscience.
         </p>
         <div className="mt-8 flex items-center justify-center gap-3">
           <Link

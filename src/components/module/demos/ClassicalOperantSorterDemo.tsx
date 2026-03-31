@@ -222,7 +222,7 @@ const ClassicalOperantSorterDemo = () => {
             {/* Explain */}
             <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
               <p className="text-sm text-foreground leading-relaxed">
-                <span className="font-semibold">NBB302 connection:</span> This
+                <span className="font-semibold">Why it matters:</span> This
                 unit distinguishes the two major learning paradigms. Classical
                 conditioning — the basis of fear conditioning — involves
                 automatic CS-US association through amygdala circuitry. Operant

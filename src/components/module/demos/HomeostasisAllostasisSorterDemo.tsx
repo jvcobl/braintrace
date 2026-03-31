@@ -223,7 +223,7 @@ const HomeostasisAllostasisSorterDemo = () => {
             {/* Explain */}
             <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
               <p className="text-sm text-foreground leading-relaxed">
-                <span className="font-semibold">NBB302 connection:</span>{" "}
+                <span className="font-semibold">Why it matters:</span>{" "}
                 Homeostasis and allostasis are the two regulatory frameworks
                 this unit is built on. Homeostasis is reactive — negative
                 feedback correcting deviations from a fixed set point.

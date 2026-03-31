@@ -208,7 +208,7 @@ const FearAnxietySorterDemo = () => {
             {/* Explain */}
             <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
               <p className="text-sm text-foreground leading-relaxed">
-                <span className="font-semibold">NBB302 connection:</span> The
+                <span className="font-semibold">Why it matters:</span> The
                 fear–anxiety distinction is central to understanding amygdala
                 function. The amygdala is not simply a "fear center" — it is a
                 salience center that stamps importance onto events. Fear and
