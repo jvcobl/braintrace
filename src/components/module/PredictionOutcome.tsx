@@ -15,37 +15,10 @@ interface PredictionOutcomeProps extends PredictionOutcomeData {
   onNavigateTrace?: () => void;
 }
 
-const ROW_META: { key: keyof Pick<PredictionOutcomeData, "prediction" | "outcome" | "update">; label: string; icon: ReactNode }[] = [
-  {
-    key: "prediction",
-    label: "Prediction",
-    icon: (
-      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0" aria-hidden>
-        <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M7 4v3l2 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    key: "outcome",
-    label: "Outcome",
-    icon: (
-      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0" aria-hidden>
-        <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M5 7l1.5 1.5L9 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    key: "update",
-    label: "Update",
-    icon: (
-      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0" aria-hidden>
-        <path d="M11.5 7A4.5 4.5 0 1 1 7 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M7 2.5L9 4.5 7 6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
+const ROW_META: { key: keyof Pick<PredictionOutcomeData, "prediction" | "outcome" | "update">; label: string }[] = [
+  { key: "prediction", label: "Prediction" },
+  { key: "outcome", label: "Outcome" },
+  { key: "update", label: "Update" },
 ];
 
 /**
@@ -66,48 +39,43 @@ const PredictionOutcome = ({
 
   return (
     <div
-      className="rounded-lg border-l-2 border-l-primary/30 border border-border/40 bg-card/60 px-4 py-4 sm:px-5 sm:py-4 space-y-3 animate-in fade-in slide-in-from-bottom-2 duration-500"
+      className="rounded-md border-l-2 border-l-primary/25 bg-muted/30 px-4 py-3 sm:px-5 animate-in fade-in slide-in-from-bottom-1 duration-400"
       role="region"
       aria-label="Prediction and outcome"
     >
-      {/* Header — tight single line */}
-      <div className="flex items-center gap-2 min-w-0">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground">
-          Prediction &amp; Outcome
+      {/* Header */}
+      <div className="flex items-center gap-2 mb-2.5">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground/70">
+          Lesson Insight
         </span>
         {structureChip && (
-          <span className="inline-flex items-center rounded-full bg-primary/8 px-2 py-px text-[10px] font-medium text-primary/60 truncate">
+          <span className="inline-flex items-center rounded-full bg-primary/[0.06] px-1.5 py-px text-[9px] font-medium text-primary/50 tracking-wide">
             {structureChip}
           </span>
         )}
       </div>
 
-      {/* Rows — compact, no background boxes */}
-      <div className="space-y-1.5">
-        {ROW_META.map(({ key, label, icon }) => (
-          <div key={key} className="flex items-baseline gap-2.5 text-[13px] leading-snug">
-            <span className="flex items-center gap-1.5 shrink-0 text-muted-foreground/60 mt-px">
-              {icon}
-              <span className="text-[10px] font-semibold uppercase tracking-wider w-[60px]">
-                {label}
-              </span>
+      {/* Rows */}
+      <div className="space-y-1">
+        {ROW_META.map(({ key, label }) => (
+          <div key={key} className="flex items-baseline gap-2 text-[13px] leading-relaxed">
+            <span className="text-[9px] font-semibold uppercase tracking-widest text-muted-foreground/50 w-[52px] shrink-0 pt-[2px]">
+              {label}
             </span>
-            <p className="text-foreground/80 min-w-0">
-              {rows[key]}
-            </p>
+            <p className="text-foreground/75 min-w-0">{rows[key]}</p>
           </div>
         ))}
       </div>
 
-      {/* Footer — simple inline link */}
+      {/* Footer link */}
       {onNavigateTrace && (
         <button
           type="button"
           onClick={onNavigateTrace}
-          className="flex items-center gap-1.5 pt-0.5 text-[12px] font-medium text-primary/60 hover:text-primary transition-colors group"
+          className="mt-2.5 flex items-center gap-1 text-[11px] text-primary/50 hover:text-primary/80 transition-colors group"
         >
-          <span>See the pathway in Trace</span>
-          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>
+          <span>Continue to Trace</span>
+          <svg width="10" height="10" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>
             <path d="M5.5 3.5L9 7l-3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
