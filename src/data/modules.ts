@@ -102,8 +102,9 @@ export const modules: Module[] = [
     title: "Fear Cue and Extinction",
     slug: "fear-cue-and-extinction",
     unitId: "unit-4",
+    hook: "Your brain learned to expect danger — then had to learn safety on top of it.",
     shortGoal: "Model how fear responses are learned and extinguished.",
-    shortDescription: "Observe a simple conditioning paradigm and trace the amygdala-based pathway for fear learning.",
+    shortDescription: "How conditioning builds predictions, and why extinction doesn't erase them.",
     introCopy: "You'll step through a simplified conditioning experiment. First, a neutral cue will be paired with an unpleasant outcome — your brain learns to predict danger. Then the cue appears without the outcome, and the fear response fades. Finally, we'll test whether that fear can come back on its own.",
     traceNodes: [
       { label: "Conditioned Cue (CS)", description: "A neutral stimulus is perceived. After repeated pairing with an unpleasant outcome (the US), the amygdala learns to treat this cue as a danger signal — classical fear conditioning." },
