@@ -5,84 +5,102 @@ type TrialKind = "face" | "ambiguous" | "non-face";
 interface Trial {
   svg: React.ReactNode;
   kind: TrialKind;
-  label: string;
 }
 
-/* Simple SVG stimuli — face-like arrangements of shapes */
-const Circle = ({ cx, cy, r, fill = "currentColor" }: { cx: number; cy: number; r: number; fill?: string }) => (
-  <circle cx={cx} cy={cy} r={r} fill={fill} />
-);
+const S = "h-36 w-36 text-foreground";
 
 const stimulusSet: Trial[] = [
-  {
-    kind: "face",
-    label: "Classic face pattern",
-    svg: (
-      <svg viewBox="0 0 100 100" className="h-32 w-32 text-foreground">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2" />
-        <Circle cx={35} cy={38} r={5} />
-        <Circle cx={65} cy={38} r={5} />
-        <path d="M 35 65 Q 50 78 65 65" fill="none" stroke="currentColor" strokeWidth="2.5" />
-      </svg>
-    ),
-  },
-  {
-    kind: "non-face",
-    label: "Scattered dots",
-    svg: (
-      <svg viewBox="0 0 100 100" className="h-32 w-32 text-foreground">
-        <Circle cx={20} cy={25} r={6} />
-        <Circle cx={75} cy={70} r={4} />
-        <Circle cx={50} cy={80} r={5} />
-        <Circle cx={80} cy={20} r={3} />
-        <Circle cx={40} cy={50} r={4} />
-      </svg>
-    ),
-  },
+  // 1 — Ambiguous: power outlet (two vertical slots + circle = classic pareidolia trigger)
   {
     kind: "ambiguous",
-    label: "Outlet pattern",
     svg: (
-      <svg viewBox="0 0 100 100" className="h-32 w-32 text-foreground">
-        <rect x="15" y="15" width="70" height="70" rx="10" fill="none" stroke="currentColor" strokeWidth="2" />
-        <ellipse cx="35" cy="42" rx="4" ry="8" fill="currentColor" />
-        <ellipse cx="65" cy="42" rx="4" ry="8" fill="currentColor" />
-        <Circle cx={50} cy={65} r={6} />
+      <svg viewBox="0 0 100 100" className={S}>
+        <rect x="18" y="18" width="64" height="64" rx="12" fill="none" stroke="currentColor" strokeWidth="2" />
+        <ellipse cx="36" cy="40" rx="3.5" ry="9" fill="currentColor" />
+        <ellipse cx="64" cy="40" rx="3.5" ry="9" fill="currentColor" />
+        <circle cx="50" cy="62" r="5" fill="currentColor" />
       </svg>
     ),
   },
+  // 2 — Non-face: concentric rings
   {
     kind: "non-face",
-    label: "Abstract lines",
     svg: (
-      <svg viewBox="0 0 100 100" className="h-32 w-32 text-foreground">
-        <line x1="10" y1="30" x2="90" y2="30" stroke="currentColor" strokeWidth="2" />
-        <line x1="10" y1="55" x2="90" y2="55" stroke="currentColor" strokeWidth="2" />
-        <line x1="10" y1="80" x2="60" y2="80" stroke="currentColor" strokeWidth="2" />
-        <Circle cx={78} cy={80} r={4} />
+      <svg viewBox="0 0 100 100" className={S}>
+        <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="50" cy="50" r="5" fill="currentColor" />
       </svg>
     ),
   },
+  // 3 — Face: minimal smiley (two dots + arc, no outline — pure face config)
   {
     kind: "face",
-    label: "Two dots and curve",
     svg: (
-      <svg viewBox="0 0 100 100" className="h-32 w-32 text-foreground">
-        <Circle cx={35} cy={35} r={7} />
-        <Circle cx={65} cy={35} r={7} />
-        <path d="M 30 62 Q 50 80 70 62" fill="none" stroke="currentColor" strokeWidth="3" />
+      <svg viewBox="0 0 100 100" className={S}>
+        <circle cx="36" cy="38" r="6" fill="currentColor" />
+        <circle cx="64" cy="38" r="6" fill="currentColor" />
+        <path d="M 32 62 Q 50 80 68 62" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
       </svg>
     ),
   },
+  // 4 — Ambiguous: three circles in a triangle (inverted triangle = eyes + mouth position)
   {
     kind: "ambiguous",
-    label: "Car front",
     svg: (
-      <svg viewBox="0 0 100 100" className="h-32 w-32 text-foreground">
-        <rect x="10" y="30" width="80" height="45" rx="8" fill="none" stroke="currentColor" strokeWidth="2" />
-        <Circle cx={30} cy={48} r={8} />
-        <Circle cx={70} cy={48} r={8} />
-        <rect x="35" y="60" width="30" height="6" rx="3" fill="currentColor" />
+      <svg viewBox="0 0 100 100" className={S}>
+        <circle cx="34" cy="36" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
+        <circle cx="66" cy="36" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
+        <circle cx="50" cy="66" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
+      </svg>
+    ),
+  },
+  // 5 — Non-face: diagonal slash marks
+  {
+    kind: "non-face",
+    svg: (
+      <svg viewBox="0 0 100 100" className={S}>
+        <line x1="20" y1="80" x2="40" y2="20" stroke="currentColor" strokeWidth="2.5" />
+        <line x1="40" y1="80" x2="60" y2="20" stroke="currentColor" strokeWidth="2.5" />
+        <line x1="60" y1="80" x2="80" y2="20" stroke="currentColor" strokeWidth="2.5" />
+      </svg>
+    ),
+  },
+  // 6 — Ambiguous: house front (two square windows + door = face-like)
+  {
+    kind: "ambiguous",
+    svg: (
+      <svg viewBox="0 0 100 100" className={S}>
+        <polygon points="50,12 10,50 90,50" fill="none" stroke="currentColor" strokeWidth="2" />
+        <rect x="10" y="50" width="80" height="42" fill="none" stroke="currentColor" strokeWidth="2" />
+        <rect x="24" y="56" width="14" height="12" rx="2" fill="currentColor" />
+        <rect x="62" y="56" width="14" height="12" rx="2" fill="currentColor" />
+        <rect x="42" y="68" width="16" height="24" rx="2" fill="none" stroke="currentColor" strokeWidth="2" />
+      </svg>
+    ),
+  },
+  // 7 — Non-face: random polygons
+  {
+    kind: "non-face",
+    svg: (
+      <svg viewBox="0 0 100 100" className={S}>
+        <polygon points="15,70 35,20 55,70" fill="none" stroke="currentColor" strokeWidth="2" />
+        <rect x="58" y="40" width="28" height="28" rx="3" fill="none" stroke="currentColor" strokeWidth="2" />
+        <circle cx="72" cy="24" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
+      </svg>
+    ),
+  },
+  // 8 — Face: tilted face in oval
+  {
+    kind: "face",
+    svg: (
+      <svg viewBox="0 0 100 100" className={S}>
+        <ellipse cx="50" cy="50" rx="32" ry="40" fill="none" stroke="currentColor" strokeWidth="2" transform="rotate(-5 50 50)" />
+        <circle cx="38" cy="40" r="4" fill="currentColor" />
+        <circle cx="60" cy="38" r="4" fill="currentColor" />
+        <line x1="44" y1="54" x2="54" y2="53" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M 38 66 Q 50 74 62 66" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -115,38 +133,47 @@ const FaceOrNotDemo = () => {
   }, []);
 
   if (done) {
-    const falseAlarms = answers.filter((a, i) => a === "face" && stimulusSet[i].kind === "non-face").length;
-    const ambiguousFaces = answers.filter((a, i) => a === "face" && stimulusSet[i].kind === "ambiguous").length;
-    const missedFaces = answers.filter((a, i) => a === "not-face" && stimulusSet[i].kind === "face").length;
+    const faceOnNonFace = answers.filter((a, i) => a === "face" && stimulusSet[i].kind === "non-face").length;
+    const faceOnAmbiguous = answers.filter((a, i) => a === "face" && stimulusSet[i].kind === "ambiguous").length;
+    const totalAmbiguous = stimulusSet.filter((t) => t.kind === "ambiguous").length;
 
     return (
       <section>
         <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-        <div className="mt-4 rounded-lg border border-border bg-card p-8 text-center">
-          <h3 className="font-display text-lg font-semibold text-foreground">Demo Complete</h3>
-          <div className="mt-4 space-y-2 text-sm text-muted-foreground max-w-md mx-auto">
-            {falseAlarms > 0 && (
-              <p>You saw faces in {falseAlarms} non-face image{falseAlarms > 1 ? "s" : ""} — a classic example of pareidolia, driven by your fusiform face area's bias toward face detection.</p>
+        <div className="mt-4 rounded-lg border border-border bg-card p-8">
+          <h3 className="font-display text-lg font-semibold text-foreground text-center">What This Shows</h3>
+          <div className="mt-4 space-y-3 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            {faceOnNonFace > 0 && (
+              <p>
+                You detected a face in {faceOnNonFace} image{faceOnNonFace > 1 ? "s" : ""} that contained no face-like arrangement at all.
+                This is <strong>pareidolia</strong> — your fusiform face area firing for a non-face stimulus.
+              </p>
             )}
-            {ambiguousFaces > 0 && (
-              <p>You called "face" on {ambiguousFaces} ambiguous image{ambiguousFaces > 1 ? "s" : ""} — your FFA responded to the face-like configuration even though the stimulus wasn't a real face.</p>
+            {faceOnAmbiguous > 0 && (
+              <p>
+                You saw faces in {faceOnAmbiguous} of {totalAmbiguous} ambiguous image{totalAmbiguous > 1 ? "s" : ""}.
+                These had face-like spatial layouts (two elements above one element) but weren't actual faces.
+                Your FFA's bias toward the basic face configuration — two eyes above a nose/mouth — made them look face-like.
+              </p>
             )}
-            {missedFaces > 0 && (
-              <p>You missed {missedFaces} actual face pattern{missedFaces > 1 ? "s" : ""} — your threshold for face detection was set high.</p>
+            {faceOnNonFace === 0 && faceOnAmbiguous === 0 && (
+              <p>
+                You were cautious — you didn't call "face" on any non-face or ambiguous image.
+                Most people do see faces in at least some of the ambiguous images, because the FFA is biased to detect face configurations even when they aren't real faces.
+              </p>
             )}
-            {falseAlarms === 0 && ambiguousFaces === 0 && missedFaces === 0 && (
-              <p>You identified all the face patterns correctly with no false alarms — strong face discrimination!</p>
-            )}
-            <p className="pt-2">
-              Continue to the <strong>Trace</strong> tab to see why your brain is wired to over-detect faces.
+            <p className="pt-1">
+              Continue to <strong>Trace</strong> to see the neural pathway behind this face-detection bias.
             </p>
           </div>
-          <button
-            onClick={handleRestart}
-            className="mt-6 rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Try Again
-          </button>
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={handleRestart}
+              className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            >
+              Try Again
+            </button>
+          </div>
         </div>
       </section>
     );
@@ -157,43 +184,41 @@ const FaceOrNotDemo = () => {
     const calledFace = currentAnswer === "face";
     if (trial.kind === "face") {
       return calledFace
-        ? "Correct — this has a clear face-like pattern."
-        : "This actually has a face-like arrangement. Your FFA may have been less active for this one.";
+        ? "This one has a genuine face-like pattern — your FFA correctly detected the face configuration."
+        : "Look again — there's a face-like arrangement here (eyes-above-mouth). Your FFA may not have responded strongly to this particular layout.";
     }
     if (trial.kind === "non-face") {
       return calledFace
-        ? "This one isn't a face — your FFA responded to the arrangement anyway. That's pareidolia."
-        : "Correct — no face here.";
+        ? "There's no face-like arrangement here. Your FFA may have responded to a vague pattern — that's pareidolia in action."
+        : "Right — no face configuration in this one.";
     }
-    // ambiguous
     return calledFace
-      ? "This is ambiguous, but you saw a face — your FFA picked up on the face-like layout."
-      : "This is ambiguous. Many people see a face here because of the face-like arrangement.";
+      ? "This is ambiguous. The spatial layout resembles a face (two elements above one), so your FFA activated — but it's not an actual face. This is the pareidolia effect."
+      : "This is ambiguous — many people do see a face here because the layout loosely matches the eyes-nose-mouth configuration your FFA is tuned to detect.";
   })();
 
   return (
     <section>
       <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        For each image, decide: does it look like a face?
+      </p>
       <div className="mt-4 rounded-lg border border-border bg-card p-6">
         <p className="mb-4 text-xs text-muted-foreground">
-          Image {index + 1} of {stimulusSet.length}
+          {index + 1} of {stimulusSet.length}
         </p>
 
-        {/* Stimulus */}
-        <div className="flex items-center justify-center rounded-lg bg-secondary py-10">
+        <div className="flex items-center justify-center rounded-lg bg-secondary py-12">
           {trial?.svg}
         </div>
 
-        {/* Buttons */}
         <div className="mt-6 grid grid-cols-2 gap-3">
           {(["face", "not-face"] as const).map((opt) => {
             let style = "border border-border bg-card text-foreground hover:bg-secondary";
             if (currentAnswer) {
-              if (opt === currentAnswer) {
-                style = "border-2 border-primary bg-accent text-accent-foreground";
-              } else {
-                style = "border border-border bg-card text-muted-foreground opacity-50";
-              }
+              style = opt === currentAnswer
+                ? "border-2 border-primary bg-accent text-accent-foreground"
+                : "border border-border bg-card text-muted-foreground opacity-50";
             }
             return (
               <button
@@ -208,15 +233,14 @@ const FaceOrNotDemo = () => {
           })}
         </div>
 
-        {/* Feedback */}
         {currentAnswer && (
           <div className="mt-4 text-center">
-            <p className="text-sm text-muted-foreground">{feedbackText}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">{feedbackText}</p>
             <button
               onClick={handleNext}
               className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              {index < stimulusSet.length - 1 ? "Next Image" : "Finish"}
+              {index < stimulusSet.length - 1 ? "Next" : "See Results"}
             </button>
           </div>
         )}
