@@ -175,6 +175,7 @@ export const modules: Module[] = [
     title: "Multistable Perception Gallery",
     slug: "multistable-perception-gallery",
     unitId: "unit-1",
+    hook: "The image never changes — but what you see does.",
     shortGoal: "Experience how the brain toggles between competing interpretations of the same image.",
     shortDescription: "Work through a gallery of ambiguous figures and discover why your brain locks onto one reading before you consciously choose.",
     introCopy: "You'll view a series of genuinely ambiguous images — each can be perceived in two valid ways. For each figure, you'll identify what you see first, then try to switch. The image never changes; only your brain's interpretation does.",
