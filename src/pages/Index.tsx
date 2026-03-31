@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getUnitIds, getUnitContent } from "@/data/content/registry";
+import { getUnitIds, getUnitContent, getLessonsByUnit } from "@/data/content/registry";
 import { modules } from "@/data/modules";
 
 const Index = () => {
@@ -32,73 +32,61 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Units ── */}
-      <section className="mx-auto mt-20 max-w-3xl">
-        <div className="space-y-4">
-          {unitIds.map((uid) => {
-            const content = getUnitContent(uid);
-            if (!content) return null;
-            const num = uid.replace("unit-", "");
+      {/* ── Units with nested lessons ── */}
+      <section className="mx-auto mt-20 max-w-3xl space-y-6">
+        {unitIds.map((uid) => {
+          const content = getUnitContent(uid);
+          if (!content) return null;
+          const num = uid.replace("unit-", "");
+          const lessons = getLessonsByUnit(uid);
+          const linkedModules = lessons
+            .map((l) => modules.find((m) => m.id === l.moduleId))
+            .filter((m): m is NonNullable<typeof m> => m != null);
 
-            return (
+          return (
+            <div
+              key={uid}
+              className="rounded-lg border border-border bg-card"
+            >
+              {/* Unit link */}
               <Link
-                key={uid}
                 to={`/unit/${uid}`}
-                className="group flex items-start gap-5 rounded-lg border border-border bg-card p-5 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="group flex items-start gap-5 p-5 pb-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-t-lg"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                   {num}
                 </span>
                 <div className="min-w-0">
-                  <h3 className="font-display text-base font-semibold text-card-foreground leading-snug">
+                  <h3 className="font-display text-base font-semibold text-card-foreground leading-snug group-hover:text-primary transition-colors">
                     {content.meta.title}
                   </h3>
                   <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
                     {content.meta.subtitle}
                   </p>
-                  <div className="mt-2.5 flex flex-wrap gap-1">
-                    {content.meta.majorStructures.slice(0, 4).map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                    {content.meta.majorStructures.length > 4 && (
-                      <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground">
-                        +{content.meta.majorStructures.length - 4}
-                      </span>
-                    )}
-                  </div>
                 </div>
               </Link>
-            );
-          })}
-        </div>
-      </section>
 
-      {/* ── Lessons ── */}
-      <section className="mx-auto mt-16 max-w-3xl">
-        <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          Lessons
-        </h2>
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {modules.map((mod) => (
-            <Link
-              key={mod.id}
-              to={`/module/${mod.id}`}
-              className="rounded-lg border border-border bg-card px-4 py-3 transition-shadow hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              <h3 className="text-sm font-medium text-card-foreground leading-snug">
-                {mod.title}
-              </h3>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                Unit {mod.unitId.replace("unit-", "")}
-              </p>
-            </Link>
-          ))}
-        </div>
+              {/* Lessons nested under this unit */}
+              {linkedModules.length > 0 && (
+                <div className="px-5 pb-4 pl-20">
+                  <ul className="space-y-1">
+                    {linkedModules.map((mod) => (
+                      <li key={mod.id}>
+                        <Link
+                          to={`/module/${mod.id}`}
+                          className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+                        >
+                          <span className="text-xs text-muted-foreground" aria-hidden="true">→</span>
+                          {mod.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </section>
     </div>
   );
