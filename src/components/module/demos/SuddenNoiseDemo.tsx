@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 
-type Phase = "intro" | "waiting" | "target" | "result";
+type Phase = "ready" | "waiting" | "target" | "result";
 type TrialType = "baseline" | "interrupted";
 
 interface TrialResult {
@@ -8,14 +8,14 @@ interface TrialResult {
   reactionMs: number;
 }
 
-const TRIALS: TrialType[] = ["baseline", "baseline", "interrupted", "baseline", "interrupted"];
+const TRIALS: TrialType[] = ["baseline", "interrupted", "baseline", "interrupted"];
 
 const SuddenNoiseDemo = () => {
   const [trialIndex, setTrialIndex] = useState(0);
-  const [phase, setPhase] = useState<Phase>("intro");
+  const [phase, setPhase] = useState<Phase>("ready");
   const [reactionMs, setReactionMs] = useState<number | null>(null);
   const [results, setResults] = useState<TrialResult[]>([]);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(true);
   const [flashVisible, setFlashVisible] = useState(false);
 
   const targetTime = useRef(0);
@@ -26,7 +26,6 @@ const SuddenNoiseDemo = () => {
   const done = trialIndex >= TRIALS.length;
   const currentType = !done ? TRIALS[trialIndex] : null;
 
-  // Cleanup timers on unmount
   useEffect(() => {
     return () => {
       if (waitTimer.current) clearTimeout(waitTimer.current);
@@ -34,22 +33,22 @@ const SuddenNoiseDemo = () => {
     };
   }, []);
 
-  const playBeep = useCallback(() => {
+  const playTone = useCallback(() => {
     if (muted) return;
     try {
       if (!audioCtx.current) audioCtx.current = new AudioContext();
       const ctx = audioCtx.current;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = "square";
-      osc.frequency.value = 220;
-      gain.gain.value = 0.08; // very soft
+      osc.type = "sine";
+      osc.frequency.value = 200;
+      gain.gain.value = 0.05;
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start();
-      osc.stop(ctx.currentTime + 0.08);
+      osc.stop(ctx.currentTime + 0.06);
     } catch {
-      // Audio not available — visual-only fallback
+      // Silent fallback
     }
   }, [muted]);
 
@@ -58,23 +57,22 @@ const SuddenNoiseDemo = () => {
     setReactionMs(null);
     setFlashVisible(false);
 
-    const delay = 1500 + Math.random() * 2500; // 1.5–4s wait
+    const delay = 2000 + Math.random() * 2000;
 
     if (currentType === "interrupted") {
-      // Fire interrupt ~400ms before target
-      const interruptAt = delay - 400;
+      const interruptAt = delay - 500;
       interruptTimer.current = setTimeout(() => {
         setFlashVisible(true);
-        playBeep();
-        setTimeout(() => setFlashVisible(false), 150);
-      }, Math.max(interruptAt, 800));
+        playTone();
+        setTimeout(() => setFlashVisible(false), 120);
+      }, Math.max(interruptAt, 1000));
     }
 
     waitTimer.current = setTimeout(() => {
       targetTime.current = performance.now();
       setPhase("target");
     }, delay);
-  }, [currentType, playBeep]);
+  }, [currentType, playTone]);
 
   const handleClick = useCallback(() => {
     if (phase === "target") {
@@ -82,11 +80,10 @@ const SuddenNoiseDemo = () => {
       setReactionMs(ms);
       setPhase("result");
     } else if (phase === "waiting") {
-      // Too early — reset this trial
       if (waitTimer.current) clearTimeout(waitTimer.current);
       if (interruptTimer.current) clearTimeout(interruptTimer.current);
       setFlashVisible(false);
-      setReactionMs(-1); // indicates too early
+      setReactionMs(-1);
       setPhase("result");
     }
   }, [phase]);
@@ -96,14 +93,14 @@ const SuddenNoiseDemo = () => {
       setResults((prev) => [...prev, { type: currentType, reactionMs }]);
     }
     setTrialIndex((i) => i + 1);
-    setPhase("intro");
+    setPhase("ready");
     setReactionMs(null);
     setFlashVisible(false);
   }, [reactionMs, currentType]);
 
   const handleRestart = useCallback(() => {
     setTrialIndex(0);
-    setPhase("intro");
+    setPhase("ready");
     setReactionMs(null);
     setResults([]);
     setFlashVisible(false);
@@ -112,53 +109,42 @@ const SuddenNoiseDemo = () => {
   if (done) {
     const baselineResults = results.filter((r) => r.type === "baseline");
     const interruptedResults = results.filter((r) => r.type === "interrupted");
-    const avgBaseline = baselineResults.length > 0
-      ? Math.round(baselineResults.reduce((s, r) => s + r.reactionMs, 0) / baselineResults.length)
-      : null;
-    const avgInterrupted = interruptedResults.length > 0
-      ? Math.round(interruptedResults.reduce((s, r) => s + r.reactionMs, 0) / interruptedResults.length)
-      : null;
+    const avg = (arr: TrialResult[]) =>
+      arr.length > 0 ? Math.round(arr.reduce((s, r) => s + r.reactionMs, 0) / arr.length) : null;
+    const avgB = avg(baselineResults);
+    const avgI = avg(interruptedResults);
 
     return (
       <section>
         <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
         <div className="mt-4 rounded-lg border border-border bg-card p-8">
           <h3 className="font-display text-lg font-semibold text-foreground text-center">What This Shows</h3>
-          <div className="mt-5 grid grid-cols-2 gap-4 max-w-sm mx-auto">
+          <div className="mt-5 grid grid-cols-2 gap-4 max-w-xs mx-auto">
             <div className="rounded-lg bg-secondary p-4 text-center">
-              <p className="text-xs text-muted-foreground">Baseline Avg</p>
-              <p className="mt-1 text-2xl font-bold text-foreground">
-                {avgBaseline !== null ? `${avgBaseline}ms` : "—"}
-              </p>
+              <p className="text-xs text-muted-foreground">Calm Trials</p>
+              <p className="mt-1 text-xl font-bold text-foreground">{avgB !== null ? `${avgB}ms` : "—"}</p>
             </div>
             <div className="rounded-lg bg-secondary p-4 text-center">
-              <p className="text-xs text-muted-foreground">After Interruption</p>
-              <p className="mt-1 text-2xl font-bold text-foreground">
-                {avgInterrupted !== null ? `${avgInterrupted}ms` : "—"}
-              </p>
+              <p className="text-xs text-muted-foreground">Interrupted</p>
+              <p className="mt-1 text-xl font-bold text-foreground">{avgI !== null ? `${avgI}ms` : "—"}</p>
             </div>
           </div>
           <div className="mt-5 max-w-md mx-auto text-sm text-muted-foreground leading-relaxed space-y-2">
-            {avgBaseline !== null && avgInterrupted !== null ? (
-              avgInterrupted < avgBaseline ? (
-                <p>Your reaction was <strong>faster</strong> after the interruption. The sudden stimulus primed your motor system — your brainstem startle circuit was already activated, making you ready to respond more quickly.</p>
-              ) : avgInterrupted > avgBaseline + 30 ? (
-                <p>Your reaction was <strong>slower</strong> after the interruption. The unexpected stimulus disrupted your attention — your amygdala flagged it as salient, momentarily pulling resources away from the task.</p>
+            {avgB !== null && avgI !== null ? (
+              avgI < avgB ? (
+                <p>Your reaction was faster after the interruption — the sudden stimulus primed your brainstem startle circuit, putting your motor system on alert.</p>
+              ) : avgI > avgB + 20 ? (
+                <p>Your reaction was slower after the interruption — the unexpected stimulus captured your attention, momentarily competing with the task.</p>
               ) : (
-                <p>Your reaction times were <strong>similar</strong> across conditions. The interruption may have both primed your motor system and briefly captured attention, balancing out.</p>
+                <p>Your reaction times were similar. The interruption may have both primed your motor system and briefly captured attention.</p>
               )
             ) : (
-              <p>Not enough valid trials to compare. Try again for a clearer result.</p>
+              <p>Not enough valid trials to compare — try again.</p>
             )}
-            <p className="pt-1">
-              Continue to <strong>Trace</strong> to see the brainstem startle circuit and how the amygdala modulates it.
-            </p>
+            <p className="pt-1">Continue to <strong>Trace</strong> to see the reflex circuit and how the amygdala modulates it.</p>
           </div>
           <div className="mt-6 flex justify-center">
-            <button
-              onClick={handleRestart}
-              className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-            >
+            <button onClick={handleRestart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent">
               Try Again
             </button>
           </div>
@@ -167,99 +153,77 @@ const SuddenNoiseDemo = () => {
     );
   }
 
+  const isActive = phase === "waiting" || phase === "target";
+
   return (
     <section>
       <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-      <p className="mt-1 text-sm text-muted-foreground">
-        A simple reaction-time task. Click as fast as you can when the target appears.
-      </p>
+      <p className="mt-1 text-sm text-muted-foreground">Click as fast as you can when the circle appears.</p>
 
       <div className="mt-4 rounded-lg border border-border bg-card p-6">
-        {/* Header row */}
         <div className="mb-4 flex items-center justify-between">
-          <p className="text-xs text-muted-foreground">
-            Trial {trialIndex + 1} of {TRIALS.length}
-            {currentType === "interrupted" ? "" : ""}
-          </p>
+          <p className="text-xs text-muted-foreground">Trial {trialIndex + 1} of {TRIALS.length}</p>
           <button
             onClick={() => setMuted((m) => !m)}
             className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent"
-            aria-label={muted ? "Unmute sounds" : "Mute sounds"}
+            aria-label={muted ? "Turn sound on" : "Mute sound"}
           >
-            {muted ? "🔇 Muted" : "🔊 Sound On"}
+            {muted ? "🔇 Sound Off" : "🔊 Sound On"}
           </button>
         </div>
 
-        {/* Stimulus area */}
         <div
-          className={`relative flex min-h-[200px] items-center justify-center rounded-lg transition-colors duration-100 ${
-            flashVisible
-              ? "bg-destructive/20"
-              : phase === "target"
-              ? "bg-primary/15"
-              : "bg-secondary"
+          className={`relative flex min-h-[180px] items-center justify-center rounded-lg transition-colors duration-100 ${
+            flashVisible ? "bg-accent" : phase === "target" ? "bg-primary/10" : "bg-secondary"
           }`}
-          onClick={phase === "waiting" || phase === "target" ? handleClick : undefined}
-          role={phase === "waiting" || phase === "target" ? "button" : undefined}
-          tabIndex={phase === "waiting" || phase === "target" ? 0 : undefined}
-          style={{ cursor: phase === "waiting" || phase === "target" ? "pointer" : "default" }}
+          onClick={isActive ? handleClick : undefined}
+          onKeyDown={isActive ? (e) => { if (e.key === " " || e.key === "Enter") handleClick(); } : undefined}
+          role={isActive ? "button" : undefined}
+          tabIndex={isActive ? 0 : undefined}
+          style={{ cursor: isActive ? "pointer" : "default" }}
         >
-          {phase === "intro" && (
+          {phase === "ready" && (
             <div className="text-center">
-              <p className="text-sm text-muted-foreground mb-4">
-                {currentType === "interrupted"
-                  ? "This trial may include a sudden interruption."
-                  : "Calm trial — click when the green target appears."}
-              </p>
+              <p className="text-sm text-muted-foreground mb-4">Get ready — click when the circle appears.</p>
               <button
                 onClick={startTrial}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                Start Trial
+                Begin
               </button>
             </div>
           )}
 
           {phase === "waiting" && (
-            <p className="text-sm text-muted-foreground select-none">
-              Wait for the target…
-            </p>
+            <p className="text-sm text-muted-foreground select-none">Wait for it…</p>
           )}
 
           {phase === "target" && (
-            <div className="flex flex-col items-center gap-2 animate-pulse">
-              <div className="h-16 w-16 rounded-full bg-primary" />
-              <p className="text-sm font-medium text-foreground">Click now!</p>
+            <div className="flex flex-col items-center gap-2">
+              <div className="h-14 w-14 rounded-full bg-primary animate-pulse" />
+              <p className="text-sm font-medium text-foreground">Now!</p>
             </div>
           )}
 
           {phase === "result" && (
             <div className="text-center">
               {reactionMs === -1 ? (
-                <p className="text-sm text-destructive font-medium">Too early! Wait for the target to appear.</p>
+                <p className="text-sm font-medium text-destructive">Too early — wait for the circle.</p>
               ) : (
-                <>
-                  <p className="text-3xl font-bold text-foreground">{reactionMs}ms</p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {currentType === "interrupted"
-                      ? "This trial had a sudden interruption before the target."
-                      : "Baseline trial — no interruption."}
-                  </p>
-                </>
+                <p className="text-3xl font-bold text-foreground">{reactionMs}ms</p>
               )}
               <button
                 onClick={handleNext}
                 className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                {trialIndex < TRIALS.length - 1 ? "Next Trial" : "See Results"}
+                {trialIndex < TRIALS.length - 1 ? "Next" : "See Results"}
               </button>
             </div>
           )}
 
-          {/* Flash overlay */}
           {flashVisible && (
-            <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-destructive/10 pointer-events-none">
-              <span className="text-4xl select-none">⚡</span>
+            <div className="absolute inset-0 flex items-center justify-center rounded-lg pointer-events-none">
+              <span className="text-3xl select-none">⚡</span>
             </div>
           )}
         </div>
