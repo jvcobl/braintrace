@@ -199,6 +199,7 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<("face" | "not-face")[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<"face" | "not-face" | null>(null);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const done = index >= stimulusSet.length;
   const trial = !done ? stimulusSet[index] : null;
