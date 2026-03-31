@@ -2,13 +2,6 @@ import { Link } from "react-router-dom";
 import { courseUnits } from "@/data/courseMap";
 import { modules } from "@/data/modules";
 
-const unitAccents: Record<string, string> = {
-  "unit-1": "border-l-primary",
-  "unit-2": "border-l-accent-foreground",
-  "unit-3": "border-l-destructive",
-  "unit-4": "border-l-ring",
-};
-
 const CourseMap = () => (
   <div className="container max-w-4xl py-12 md:py-20">
     <h1 className="font-display text-3xl font-bold tracking-tight text-foreground">
@@ -23,12 +16,11 @@ const CourseMap = () => (
         const linkedModules = modules.filter((m) =>
           unit.linkedModuleIds.includes(m.id)
         );
-        const accent = unitAccents[unit.id] ?? "border-l-border";
 
         return (
           <section
             key={unit.id}
-            className={`rounded-lg border border-border border-l-4 ${accent} bg-card p-5 flex flex-col`}
+            className="flex flex-col rounded-lg border border-border bg-card p-5"
           >
             <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
               Unit {i + 1}
@@ -55,9 +47,9 @@ const CourseMap = () => (
                     <li key={mod.id}>
                       <Link
                         to={`/module/${mod.id}`}
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
                       >
-                        <span className="text-xs text-muted-foreground">→</span>
+                        <span className="text-xs text-muted-foreground" aria-hidden="true">→</span>
                         {mod.title}
                       </Link>
                     </li>

@@ -21,7 +21,7 @@ const About = () => (
     <div className="mt-6 grid gap-3 sm:grid-cols-3">
       {steps.map((s, i) => (
         <div key={s.name} className="rounded-lg border border-border bg-card p-4">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
             Step {i + 1}
           </p>
           <p className="mt-1 font-display text-sm font-semibold text-foreground">
@@ -44,13 +44,13 @@ const About = () => (
     <div className="mt-8 flex gap-3">
       <Link
         to="/"
-        className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+        className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         Browse Modules
       </Link>
       <Link
         to="/course-map"
-        className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-accent"
+        className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         Course Map
       </Link>

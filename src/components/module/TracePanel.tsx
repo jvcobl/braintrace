@@ -7,26 +7,24 @@ interface TracePanelProps {
 const TracePanel = ({ nodes }: TracePanelProps) => (
   <section>
     <h2 className="font-display text-2xl font-semibold text-foreground">Trace the Pathway</h2>
-    <div className="mt-6 space-y-0">
+    <ol className="mt-6 space-y-0" aria-label="Neural pathway steps">
       {nodes.map((node, i) => (
-        <div key={node.label} className="flex items-start gap-4">
-          {/* Connector line + dot */}
+        <li key={node.label} className="flex gap-4">
           <div className="flex flex-col items-center">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
               {i + 1}
             </div>
             {i < nodes.length - 1 && (
-              <div className="w-px flex-1 min-h-[32px] bg-border" />
+              <div className="w-px flex-1 bg-border" aria-hidden="true" />
             )}
           </div>
-          {/* Content */}
-          <div className="pb-6">
-            <p className="font-medium text-foreground">{node.label}</p>
-            <p className="mt-0.5 text-sm text-muted-foreground">{node.description}</p>
+          <div className="pb-5">
+            <p className="text-sm font-semibold text-foreground leading-snug">{node.label}</p>
+            <p className="mt-0.5 text-sm text-muted-foreground leading-relaxed">{node.description}</p>
           </div>
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   </section>
 );
 
