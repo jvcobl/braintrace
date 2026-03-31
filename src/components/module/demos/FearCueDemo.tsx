@@ -168,8 +168,9 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
   const handlePredict = useCallback((p: Prediction) => {
     setPrediction(p);
+    if (!hasInteracted) setHasInteracted(true);
     timer.current = setTimeout(() => setStep("outcome"), 500);
-  }, []);
+  }, [hasInteracted]);
 
   const handleShowFeedback = useCallback(() => {
     if (prediction && trial) {
