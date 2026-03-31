@@ -1,6 +1,7 @@
 import type { Module } from "@/data/modules";
 import BlurryObjectDemo from "@/components/module/demos/BlurryObjectDemo";
 import FaceOrNotDemo from "@/components/module/demos/FaceOrNotDemo";
+import SuddenNoiseDemo from "@/components/module/demos/SuddenNoiseDemo";
 
 interface ExperienceSectionProps {
   module: Module;
@@ -9,6 +10,7 @@ interface ExperienceSectionProps {
 const ExperienceSection = ({ module }: ExperienceSectionProps) => {
   if (module.id === "mod-1") return <BlurryObjectDemo />;
   if (module.id === "mod-2") return <FaceOrNotDemo />;
+  if (module.id === "mod-3") return <SuddenNoiseDemo />;
 
   const demoLabels: Record<string, string> = {
     interactive: "Interactive Demo",
