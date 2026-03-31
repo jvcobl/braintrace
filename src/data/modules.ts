@@ -273,6 +273,28 @@ export const modules: Module[] = [
     demoType: "interactive",
     learningObjective: "Distinguish classical from operant conditioning and explain why fear conditioning is a classical paradigm.",
   },
+  {
+    id: "mod-12",
+    title: "Homeostasis vs. Allostasis Sorter",
+    slug: "homeostasis-vs-allostasis-sorter",
+    unitId: "unit-5",
+    shortGoal: "Distinguish reactive stability from predictive adaptation.",
+    shortDescription: "Classify scenarios as homeostasis or allostasis and learn why allostatic load matters.",
+    introCopy: "You'll read short scenarios and decide whether each describes homeostasis — negative feedback restoring a fixed set point — or allostasis — the body predictively shifting its operating parameters to meet anticipated demand. Then we'll trace why chronic allostatic shifts carry a biological cost.",
+    traceNodes: [
+      { label: "Homeostasis: Fixed Set Point + Negative Feedback", description: "The body maintains a stable parameter through negative feedback. When the parameter drifts, corrective mechanisms restore the original set point." },
+      { label: "Allostasis: Stability Through Predicted Change", description: "The body anticipates future demand and shifts its operating parameters in advance. The set point itself changes — stability through change." },
+      { label: "Allostatic Load: The Cost of Adaptation", description: "When allostatic shifts persist under chronic stress, the biological cost accumulates — sustained cortisol, shifted baselines, and wear on regulatory systems." },
+    ],
+    explain: {
+      whatHappened: "You classified six scenarios as either homeostasis or allostasis based on whether the body was reactively correcting a deviation or predictively shifting its operating parameters.",
+      whatYourBrainDid: "For each scenario, you assessed whether the regulatory mechanism was reactive (negative feedback restoring a fixed set point) or predictive (anticipatory adjustment of the set point itself).",
+      keyPathway: "Homeostasis = fixed set point + negative feedback. Allostasis = stability through predicted change (set point shifts). Chronic allostasis → allostatic load → structural damage to hippocampus and PFC.",
+      nbb302Connection: "This module covers the homeostasis–allostasis framework from NBB302. The critical insight is that allostasis has a cost: when the body stays in an adapted state too long under chronic stress, the accumulated biological wear — allostatic load — damages brain structures like the hippocampus and prefrontal cortex. Understanding this distinction is essential for interpreting the HPA axis, stress resilience, and why chronic stress is qualitatively different from acute stress.",
+    },
+    demoType: "interactive",
+    learningObjective: "Distinguish homeostasis from allostasis and explain the concept of allostatic load.",
+  },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {
