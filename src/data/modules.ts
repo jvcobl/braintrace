@@ -163,6 +163,28 @@ export const modules: Module[] = [
     demoType: "interactive",
     learningObjective: "Trace the HPA axis cascade and explain how cortisol negative feedback can be overridden under extreme stress.",
   },
+  {
+    id: "mod-7",
+    title: "Multistable Perception Toggle",
+    slug: "multistable-perception-toggle",
+    unitId: "unit-1",
+    shortGoal: "Experience how the brain toggles between two valid interpretations of one image.",
+    shortDescription: "View an ambiguous figure and discover why your brain picks one interpretation before you consciously choose.",
+    introCopy: "You'll look at a single ambiguous image that can be seen as two different things. Your brain will pick one interpretation instantly — a cognitive heuristic. Then you'll try to switch and trace the circuit that toggles between them.",
+    traceNodes: [
+      { label: "Ambiguous Visual Input", description: "The retina sends the same signal regardless of which interpretation you perceive. The image itself never changes." },
+      { label: "Visual Cortex (V1–V4)", description: "Early visual areas extract edges, contours, and figure-ground boundaries. Both interpretations are neurally plausible at this stage." },
+      { label: "PFC / Ventral Stream Toggle", description: "The prefrontal cortex and ventral stream shift which interpretation dominates conscious perception. When you 'switch,' this is the circuit changing its bias." },
+    ],
+    explain: {
+      whatHappened: "You viewed an ambiguous figure — a Rubin's vase — that can be perceived as either a central vase or two face profiles. You selected your initial interpretation, then attempted to switch to the alternative.",
+      whatYourBrainDid: "Your visual cortex processed the same edges and contours for both interpretations. The prefrontal cortex applied a cognitive heuristic — an energetic shortcut — to select one reading instantly. When you switched, communication between the visual cortex and higher-order regions like the PFC and ventral stream changed, even though the stimulus remained identical. This is multistable perception: the brain toggles between two valid readings of the same input.",
+      keyPathway: "Retina → V1–V4 (edge/contour extraction) → PFC and ventral stream (interpretation selection and toggle). The toggle occurs at the level of higher-order cortical communication, not at the retina or early visual cortex.",
+      nbb302Connection: "This module demonstrates multistable perception and cognitive heuristics from NBB302. The brain's automatic selection of one interpretation over another illustrates how heuristics operate below conscious awareness. These same shortcut mechanisms extend beyond vision to empathy, emotion, and logical reasoning.",
+    },
+    demoType: "interactive",
+    learningObjective: "Explain multistable perception and how cognitive heuristics shape initial interpretation of ambiguous stimuli.",
+  },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {
