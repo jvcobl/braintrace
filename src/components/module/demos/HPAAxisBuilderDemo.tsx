@@ -302,7 +302,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {/* Sequence feedback */}
           {phase === "sequence-result" && seqResult && (
             <div>
-              <FeedbackCard feedback={sequenceFeedback[seqResult]} />
+              <FeedbackCard onNavigate={onNavigate} feedback={sequenceFeedback[seqResult]} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"
@@ -357,7 +357,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {phase === "feedback-loop-result" && fbResult && (
             <div>
-              <FeedbackCard feedback={feedbackLoopFeedback[fbResult]} />
+              <FeedbackCard onNavigate={onNavigate} feedback={feedbackLoopFeedback[fbResult]} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"
@@ -412,7 +412,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {phase === "override-result" && ovResult && (
             <div>
-              <FeedbackCard feedback={overrideFeedback[ovResult]} />
+              <FeedbackCard onNavigate={onNavigate} feedback={overrideFeedback[ovResult]} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"
