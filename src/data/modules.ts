@@ -244,6 +244,7 @@ export const modules: Module[] = [
     title: "Emotion vs. Arousal Sorter",
     slug: "emotion-vs-arousal-sorter",
     unitId: "unit-3",
+    hook: "Excitement and terror feel completely different — but your body's activation is almost identical.",
     shortGoal: "Distinguish emotion from arousal using neurobiological definitions.",
     shortDescription: "Classify scenarios as emotion or arousal and learn why valence is the key differentiator.",
     introCopy: "You'll read short scenarios and decide whether each describes an emotion — a transient state with specific valence that motivates approach or avoidance — or arousal — physiological intensity without inherent direction. Then we'll trace why this distinction matters.",
