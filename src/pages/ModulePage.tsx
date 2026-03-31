@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getModuleById } from "@/data/modules";
+import { getUnitById } from "@/data/courseMap";
 import SectionNav, { type SectionId } from "@/components/module/SectionNav";
 import IntroSection from "@/components/module/IntroSection";
 import ExperienceSection from "@/components/module/ExperienceSection";

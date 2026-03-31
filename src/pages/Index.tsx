@@ -24,7 +24,7 @@ const Index = () => (
       <h2 className="mb-6 font-display text-2xl font-semibold text-foreground">Modules</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {modules.map((mod, i) => (
-          <ModuleCard key={mod.id} id={mod.id} title={mod.title} description={mod.shortDescription} index={i} />
+          <ModuleCard key={mod.id} id={mod.id} title={mod.title} description={mod.shortDescription} unitId={mod.unitId} index={i} />
         ))}
       </div>
     </section>
