@@ -314,7 +314,7 @@ export const unit4CaseNotes = [
     id: "u4-cn-02",
     title: "Suppression of Output Is Not Erasure of Memory",
     content:
-      "This is one of the most important principles in the unit. When ITCs inhibit the amygdala during extinction, they are suppressing the behavioral and hormonal output of fear — the freezing, the cortisol, the autonomic arousal. But the synaptic changes in the BLA that encode the original CS-US association remain intact. The brain has learned a second thing ('the cue is safe now') without unlearning the first thing ('the cue once predicted danger'). This dual-memory architecture explains spontaneous recovery, renewal effects, and why therapeutic extinction of phobias and PTSD is genuinely difficult.",
+      "This is one of the most important principles here. When ITCs inhibit the amygdala during extinction, they are suppressing the behavioral and hormonal output of fear — the freezing, the cortisol, the autonomic arousal. But the synaptic changes in the BLA that encode the original CS-US association remain intact. The brain has learned a second thing ('the cue is safe now') without unlearning the first thing ('the cue once predicted danger'). This dual-memory architecture explains spontaneous recovery, renewal effects, and why therapeutic extinction of phobias and PTSD is genuinely difficult.",
     sensitivity: "standard" as const,
   },
 ];

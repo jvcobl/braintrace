@@ -16,10 +16,10 @@ const About = () => (
     </h1>
 
     <p className="mt-6 text-[15px] text-muted-foreground leading-relaxed">
-      NeuroRoute is an interactive neuroscience learning platform organized
-      into five units — perception, attention, emotion, fear conditioning,
-      and stress. Each unit contains study material and interactive lessons
-      that follow a consistent three-step structure:
+      NeuroRoute is a free interactive neuroscience site covering five
+      areas — perception, attention, emotion, learning, and stress.
+      Each topic includes interactive lessons that follow a consistent
+      three-step structure:
     </p>
 
     <div className="mt-8 grid gap-4 sm:grid-cols-3">
@@ -49,7 +49,7 @@ const About = () => (
         to="/"
         className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        Browse Units
+        Start Exploring
       </Link>
       <Link
         to="/course-map"
