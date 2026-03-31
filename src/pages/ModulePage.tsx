@@ -39,7 +39,9 @@ const ModulePage = () => {
 
       <div className="mt-6 mb-2">
         <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-          {mod.unitId.replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+          <Link to="/course-map" className="hover:text-primary hover:underline transition-colors">
+            {unit ? unit.title : mod.unitId.replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+          </Link>
         </p>
         <h1 className="mt-1 font-display text-3xl font-bold text-foreground">{mod.title}</h1>
         <p className="mt-2 text-muted-foreground">{mod.shortGoal}</p>
