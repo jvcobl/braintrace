@@ -79,14 +79,11 @@ export const lessonMappings: LessonMapping[] = [
   { moduleId: "mod-5", unitId: "unit-2", title: "Memory Under Load" },
   { moduleId: "mod-3", unitId: "unit-3", title: "Sudden Noise Reaction" },
   { moduleId: "mod-4", unitId: "unit-4", title: "Fear Cue and Extinction" },
+  { moduleId: "mod-6", unitId: "unit-5", title: "HPA Axis Builder" },
 ];
 
-// Placeholder: Unit 5 anchor lesson for future implementation.
-export const unit5AnchorLesson: LessonMapping = {
-  moduleId: "mod-6",
-  unitId: "unit-5",
-  title: "Stress Response (coming soon)",
-};
+// Unit 5 anchor lesson mapping
+export const unit5AnchorLesson: LessonMapping | undefined = undefined;
 
 // ---------------------------------------------------------------------------
 // Helpers
