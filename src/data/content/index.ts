@@ -1,8 +1,8 @@
 // ============================================================
 // NEUROROUTE — MASTER CONTENT INDEX
 // ============================================================
-// All content sourced strictly from NBB302 lecture notes.
-// No external sources. No internet-derived information.
+// All content sourced from neuroscience literature.
+// No internet-derived information.
 //
 // This file exports all unit content and provides
 // a summary of what exists for each unit.
