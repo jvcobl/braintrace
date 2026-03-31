@@ -11,6 +11,7 @@ import ExplainSection from "@/components/module/ExplainSection";
 const ModulePage = () => {
   const { id } = useParams<{ id: string }>();
   const mod = id ? getModuleById(id) : undefined;
+  const unit = mod ? getUnitById(mod.unitId) : undefined;
   const [section, setSection] = useState<SectionId>("Intro");
 
   if (!mod) {
