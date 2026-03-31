@@ -51,10 +51,10 @@ const UnitHub = () => {
     <div className="container max-w-3xl py-14 md:py-16">
       {/* Breadcrumb */}
       <Link
-        to="/course-map"
+        to="/"
         className="inline-flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
       >
-        <span aria-hidden="true">←</span> Curriculum
+        <span aria-hidden="true">←</span> All Units
       </Link>
 
       <div className="mt-7 space-y-14">
