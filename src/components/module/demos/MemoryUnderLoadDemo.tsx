@@ -156,6 +156,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
   const [distractorInput, setDistractorInput] = useState("");
   const [results, setResults] = useState<RoundResult[]>([]);
   const [lastCorrectCount, setLastCorrectCount] = useState(0);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   const done = roundIndex >= ROUNDS.length;
