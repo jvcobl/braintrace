@@ -379,7 +379,7 @@ export const unit5CaseNotes = [
       "Post-mortem studies of individuals who died by suicide reveal specific neurobiological markers: decreased serotonin transporter binding and increased 5-HT receptor binding in the prefrontal cortex, alongside depletion of serotonin and noradrenaline. Suicidal behavior has a neurobiological basis — it maps to measurable changes in brain chemistry. This does not diminish the role of environmental factors, but it establishes that the condition involves genuine dysfunction in the brain systems responsible for mood regulation and executive control.",
     sensitivity: "high" as const,
     sensitivityNote:
-      "This material is included because it is part of the neuroscience curriculum. It is presented as factual neurobiology, not as an interactive experience. If you or someone you know is in crisis, contact the 988 Suicide and Crisis Lifeline (call or text 988).",
+      "This material is included because it covers real neurobiology. It is presented as factual content, not as an interactive experience. If you or someone you know is in crisis, contact the 988 Suicide and Crisis Lifeline (call or text 988).",
   },
 ];
 
@@ -391,7 +391,7 @@ export const unit5Review = [
   {
     id: "u5-rq-01",
     question:
-      "Why is stress defined as a physiological state rather than an emotion in this course?",
+      "Why is stress defined as a physiological state rather than an emotion?",
     hint: "Think about the definitions from the emotion unit. What does stress lack that emotions have?",
   },
   {
