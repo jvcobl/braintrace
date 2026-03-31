@@ -56,8 +56,9 @@ export const modules: Module[] = [
     title: "Face or Not?",
     slug: "face-or-not",
     unitId: "unit-1",
+    hook: "You keep seeing faces where there aren't any — and there's a reason.",
     shortGoal: "Investigate the brain's bias toward detecting faces.",
-    shortDescription: "Decide whether ambiguous images contain faces and learn about the fusiform face area.",
+    shortDescription: "Why the brain is biased to detect faces, even in noise.",
     introCopy: "You'll view a series of images and decide if each one contains a face. We'll then explore why your brain is so eager to find faces everywhere.",
     traceNodes: [
       { label: "Visual Input", description: "The image enters the visual system, where early processing extracts edges, contrast patterns, and basic shapes — features that could belong to a face or any other object." },
