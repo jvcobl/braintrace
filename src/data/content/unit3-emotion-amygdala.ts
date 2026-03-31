@@ -469,14 +469,14 @@ export const unit3CaseNotes = [
     title: "Phineas Gage",
     content:
       "A railroad foreman who survived a tamping iron destroying a hemisphere of his prefrontal cortex. After the injury, he transformed from a responsible, respected leader into someone described as obstinate, impulsive, capricious, and rude. This case is a foundational example of hypofrontality — the total loss of vmPFC emotional regulation. The PFC mediates between the emotional limbic system and rational cognition; without it, subcortical impulses go unchecked.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u3-cn-02",
     title: "Klüver-Bucy Syndrome",
     content:
       "Caused by bilateral temporal lobe and amygdala damage, historically resulting from severe epilepsy surgeries. Symptoms include visual agnosia (inability to recognize objects), loss of normal fear and anger responses, hyperorality (putting inappropriate objects in the mouth), and hypersexuality. This syndrome demonstrates what happens when the amygdala's salience-stamping function is completely removed — the brain can no longer mark anything as important, dangerous, or socially inappropriate.",
-    sensitivity: "high",
+    sensitivity: "high" as const,
     sensitivityNote:
       "This is clinical study material. It demonstrates the consequences of amygdala loss and should be presented as an informational case card, not simulated.",
   },
@@ -485,7 +485,7 @@ export const unit3CaseNotes = [
     title: "Patient SM (Urbach-Wiethe Disease)",
     content:
       "Patient SM has a rare genetic disorder (Urbach-Wiethe disease) that caused a calcified, completely nonfunctional amygdala. She has a complete loss of physiological fear impulses and emotional braking — she cannot feel fear in her body. However, she retains full cognitive understanding of danger (she knows a train track is deadly). This dissociation proves that knowing something is dangerous and feeling afraid of it depend on different brain systems: cognitive awareness resides in the cortex, while the visceral fear response depends on the amygdala.",
-    sensitivity: "high",
+    sensitivity: "high" as const,
     sensitivityNote:
       "Present as clinical reference material demonstrating the amygdala's role in fear physiology.",
   },
@@ -494,14 +494,14 @@ export const unit3CaseNotes = [
     title: "Sleep Deprivation as Amygdala Primer",
     content:
       "Sleep deprivation and disrupted circadian rhythms (often caused by blue light exposure) directly prime amygdala activity, making it more reactive to subsequent stimuli. This can lead to nightmares, disrupted 'work sleep,' and heightened emotional reactivity during waking hours. The amygdala becomes over-responsive because its normal reset during sleep does not occur.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u3-cn-05",
     title: "Social Isolation and PFC Reduction",
     content:
       "Social isolation and withdrawal physically reduce the volume of the prefrontal cortex (gray matter) in both humans and animal models — and this can occur within just one week. This highlights the necessity of a social support network for maintaining healthy brain function. Reduced PFC volume means weakened top-down control over the amygdala and limbic system.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
 ];
 

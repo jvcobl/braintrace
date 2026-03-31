@@ -311,21 +311,21 @@ export const unit2CaseNotes = [
     title: "Judges and Lunch-Break Decisions",
     content:
       "A 2011 study of Israeli parole judges found that favorable rulings dropped steadily to near 0% as judges became hungry and fatigued during the day, then spiked immediately back to approximately 65% after a lunch break. This demonstrates that judicial decision-making — which should be purely rational — is directly affected by the metabolic state of the PFC. Hunger and fatigue deplete the same executive resources needed for careful, individualized judgment.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u2-cn-02",
     title: "Self-Control Depletion and Cheating",
     content:
       "A 2009 study showed that when subjects' self-control resources were experimentally depleted by a prior effortful task, they became drastically more likely to behave dishonestly and cheat for monetary gain. This illustrates that honesty and self-regulation are not purely moral traits — they depend on available PFC resources. When those resources are consumed, restraint fails.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u2-cn-03",
     title: "Illness Reducing Cognitive Resources",
     content:
       "When the body fights an infection, the immune system — particularly microglia releasing cytokines — demands massive metabolic energy. This energy is drawn from the same pool that fuels the PFC. The result is reduced capacity for executive function, clear thinking, and self-control during illness. Being sick does not just feel bad — it measurably impairs cognition.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
 ];
 

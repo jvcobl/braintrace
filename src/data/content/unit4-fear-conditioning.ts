@@ -308,14 +308,14 @@ export const unit4CaseNotes = [
     title: "Why Fear Returns After Extinction",
     content:
       "Spontaneous recovery demonstrates that the original fear memory is never truly erased. During extinction, the vmPFC (specifically the prelimbic cortex) activates inhibitory ITCs to suppress amygdala output. A new 'safety' memory is formed that competes with the original fear memory. But because both memories coexist, the original fear can resurface — sometimes after a time delay, sometimes after a context change. This is why a person who has overcome a phobia might suddenly feel the fear return in an unexpected moment.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u4-cn-02",
     title: "Suppression of Output Is Not Erasure of Memory",
     content:
       "This is one of the most important principles in the unit. When ITCs inhibit the amygdala during extinction, they are suppressing the behavioral and hormonal output of fear — the freezing, the cortisol, the autonomic arousal. But the synaptic changes in the BLA that encode the original CS-US association remain intact. The brain has learned a second thing ('the cue is safe now') without unlearning the first thing ('the cue once predicted danger'). This dual-memory architecture explains spontaneous recovery, renewal effects, and why therapeutic extinction of phobias and PTSD is genuinely difficult.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
 ];
 
