@@ -20,6 +20,7 @@ const demos: Record<string, React.ComponentType> = {
   "mod-5": MemoryUnderLoadDemo,
   "mod-6": HPAAxisBuilderDemo,
   "mod-7": MultistablePerceptionDemo,
+  "mod-8": PFCRoleMatcherDemo,
 };
 
 const ExperienceSection = ({ module }: ExperienceSectionProps) => {
