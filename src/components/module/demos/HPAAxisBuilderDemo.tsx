@@ -100,7 +100,7 @@ function shuffle<T>(arr: T[]): T[] {
 
 type DemoPhase = "sequence" | "sequence-result" | "feedback-loop" | "feedback-loop-result" | "override" | "override-result" | "done";
 
-const HPAAxisBuilderDemo = () => {
+const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
   const [phase, setPhase] = useState<DemoPhase>("sequence");
   const [available, setAvailable] = useState(() => shuffle(CORRECT_SEQUENCE));
   const [placed, setPlaced] = useState<CascadeStep[]>([]);
@@ -181,6 +181,7 @@ const HPAAxisBuilderDemo = () => {
 
   return (
     <ExperienceShell
+      onNavigate={onNavigate}
       instructions="Build the HPA stress response in three parts: the cascade order, the shutdown mechanism, and what happens when shutdown fails under extreme stress."
       done={done}
       summary={getSummary(seqResult === "correct", fbResult === "correct", ovResult === "understood")}
@@ -301,7 +302,7 @@ const HPAAxisBuilderDemo = () => {
           {/* Sequence feedback */}
           {phase === "sequence-result" && seqResult && (
             <div>
-              <FeedbackCard feedback={sequenceFeedback[seqResult]} />
+              <FeedbackCard feedback={sequenceFeedback[seqResult]} onBridgeClick={onNavigate ? () => { const b = {sequenceFeedback[seqResult]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"
@@ -356,7 +357,7 @@ const HPAAxisBuilderDemo = () => {
 
           {phase === "feedback-loop-result" && fbResult && (
             <div>
-              <FeedbackCard feedback={feedbackLoopFeedback[fbResult]} />
+              <FeedbackCard feedback={feedbackLoopFeedback[fbResult]} onBridgeClick={onNavigate ? () => { const b = {feedbackLoopFeedback[fbResult]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"
@@ -411,7 +412,7 @@ const HPAAxisBuilderDemo = () => {
 
           {phase === "override-result" && ovResult && (
             <div>
-              <FeedbackCard feedback={overrideFeedback[ovResult]} />
+              <FeedbackCard feedback={overrideFeedback[ovResult]} onBridgeClick={onNavigate ? () => { const b = {overrideFeedback[ovResult]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
               <div className="mt-4 flex justify-center">
                 <button
                   type="button"

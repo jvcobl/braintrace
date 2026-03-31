@@ -94,7 +94,7 @@ function getSummary(correctCount: number, total: number): ExperienceSummary {
 
 /* ── Component ── */
 
-const BlurryObjectDemo = () => {
+const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
   const [round, setRound] = useState(0);
   const [blurStage, setBlurStage] = useState(0);
   const [guess, setGuess] = useState<string | null>(null);
@@ -147,6 +147,7 @@ const BlurryObjectDemo = () => {
 
   return (
     <ExperienceShell
+      onNavigate={onNavigate}
       instructions="Each object starts heavily blurred. Try to identify it as early as you can, or sharpen the image first. Your timing reveals how your brain balances speed against accuracy."
       done={done}
       summary={getSummary(correctCount, stimuli.length)}
@@ -215,7 +216,7 @@ const BlurryObjectDemo = () => {
         {/* Feedback */}
         {outcome && (
           <div className="mt-5">
-            <FeedbackCard feedback={trialFeedback[outcome]} />
+            <FeedbackCard feedback={trialFeedback[outcome]} onBridgeClick={onNavigate ? () => { const b = {trialFeedback[outcome]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
             <div className="mt-4 flex justify-center">
               <button
                 onClick={handleNext}

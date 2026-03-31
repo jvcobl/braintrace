@@ -66,7 +66,7 @@ const TRIAL_SEQUENCE: ("baseline" | "interrupted")[] = ["baseline", "interrupted
 
 /* ── Component ── */
 
-const SuddenNoiseDemo = () => {
+const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
   const [phase, setPhase] = useState<DemoPhase>({ kind: "trial", trial: "ready" });
   const [trialIndex, setTrialIndex] = useState(0);
   const [results, setResults] = useState<TrialResult[]>([]);
@@ -180,6 +180,7 @@ const SuddenNoiseDemo = () => {
 
   return (
     <ExperienceShell
+      onNavigate={onNavigate}
       instructions="You'll complete two reaction-time trials: one calm baseline, one with an unexpected interruption. Afterward, you'll reflect on what you noticed. This is not about speed — it's about what the startle reflex reveals."
       done={done}
       summary={summaryData}
@@ -347,7 +348,7 @@ const SuddenNoiseDemo = () => {
               </div>
               {expectAnswer && (
                 <div className="mt-5">
-                  <FeedbackCard feedback={expectationFeedback[expectAnswer]} />
+                  <FeedbackCard feedback={expectationFeedback[expectAnswer]} onBridgeClick={onNavigate ? () => { const b = {expectationFeedback[expectAnswer]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
                   <div className="mt-4 flex justify-center">
                     <button
                       onClick={() => setPhase({ kind: "reflect", step: "priming" })}
@@ -390,7 +391,7 @@ const SuddenNoiseDemo = () => {
               </div>
               {primingAnswer && (
                 <div className="mt-5">
-                  <FeedbackCard feedback={primingFeedback[primingAnswer]} />
+                  <FeedbackCard feedback={primingFeedback[primingAnswer]} onBridgeClick={onNavigate ? () => { const b = {primingFeedback[primingAnswer]}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
                   <div className="mt-4 flex justify-center">
                     <button
                       onClick={() => setPhase({ kind: "reflect", step: "context" })}
@@ -410,7 +411,7 @@ const SuddenNoiseDemo = () => {
               <p className="text-sm font-medium text-foreground mb-3">
                 Now consider: would the same interruption feel different in a dark room alone vs. a bright classroom?
               </p>
-              <FeedbackCard feedback={contextFeedback} />
+              <FeedbackCard feedback={contextFeedback} onBridgeClick={onNavigate ? () => { const b = {contextFeedback}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
               <div className="mt-4 flex justify-center">
                 <button
                   onClick={() => setPhase({ kind: "done" })}

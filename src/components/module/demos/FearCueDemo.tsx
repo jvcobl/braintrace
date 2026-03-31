@@ -151,7 +151,7 @@ function getSummary(predictions: { stage: Stage; prediction: Prediction }[]): Ex
 
 /* ── Component ── */
 
-const FearCueDemo = () => {
+const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
   const [index, setIndex] = useState(0);
   const [step, setStep] = useState<"predict" | "outcome" | "feedback">("predict");
   const [prediction, setPrediction] = useState<Prediction | null>(null);
@@ -198,6 +198,7 @@ const FearCueDemo = () => {
 
   return (
     <ExperienceShell
+      onNavigate={onNavigate}
       instructions="Step through a simplified conditioning experiment. At each trial, the cue (◆) appears and you predict what follows. Your predictions track how the association forms, is suppressed, and potentially returns."
       done={done}
       summary={getSummary(predictions)}
@@ -313,7 +314,7 @@ const FearCueDemo = () => {
           {/* FeedbackCard below interaction area */}
           {step === "feedback" && prediction && (
             <div className="mt-5">
-              <FeedbackCard feedback={getFeedback(trial.stage, prediction)} />
+              <FeedbackCard feedback={getFeedback(trial.stage, prediction)} onBridgeClick={onNavigate ? () => { const b = {getFeedback(trial.stage, prediction)}; const t = b.bridge?.toLowerCase(); onNavigate(t?.includes("trace") ? "Trace" : "Explain"); } : undefined} />
               <div className="mt-4 flex justify-center">
                 <button
                   onClick={advance}
