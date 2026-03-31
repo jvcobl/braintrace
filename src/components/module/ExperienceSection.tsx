@@ -7,6 +7,7 @@ import MemoryUnderLoadDemo from "@/components/module/demos/MemoryUnderLoadDemo";
 import HPAAxisBuilderDemo from "@/components/module/demos/HPAAxisBuilderDemo";
 import MultistablePerceptionDemo from "@/components/module/demos/MultistablePerceptionDemo";
 import PFCRoleMatcherDemo from "@/components/module/demos/PFCRoleMatcherDemo";
+import FearAnxietySorterDemo from "@/components/module/demos/FearAnxietySorterDemo";
 
 interface ExperienceSectionProps {
   module: Module;
