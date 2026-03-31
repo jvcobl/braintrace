@@ -6,9 +6,9 @@
 export const unit5Meta = {
   id: "unit-5",
   title: "Stress and Homeostasis",
-  subtitle: "What stress actually is and what it does to the brain",
+  subtitle: "The stress response is built to prepare you for demand.",
   overview:
-    "This unit covers why stress is a physiological state rather than an emotion, how the body maintains stability through homeostasis and allostasis, how the HPA axis produces and regulates cortisol, what happens when chronic stress overwhelms the system, how resilience and vulnerability map to brain function, and the categories of intervention that can restore balance.",
+    "These lessons explore how that system activates, when it shuts down, and what happens when it doesn't. You'll see why stress is a physiological state rather than an emotion, how the body maintains stability through homeostasis and allostasis, how the HPA axis produces and regulates cortisol, what happens when chronic stress overwhelms the system, and how resilience and vulnerability map to brain function.",
   majorStructures: [
     "Hypothalamus",
     "Pituitary gland (anterior)",

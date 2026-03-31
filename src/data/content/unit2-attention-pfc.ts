@@ -6,9 +6,9 @@
 export const unit2Meta = {
   id: "unit-2",
   title: "Attention, Cognitive Load, and the PFC",
-  subtitle: "Why your brain's executive controller has limits",
+  subtitle: "Focus isn't free.",
   overview:
-    "This unit covers how attention is controlled and directed, why thinking is metabolically expensive, how the prefrontal cortex is divided into functionally distinct regions, and how top-down cognitive control breaks down under overload, fatigue, hunger, and illness.",
+    "These lessons explore how the prefrontal cortex maintains control under pressure — and what happens when that control runs out. You'll see how attention is directed, why thinking is metabolically expensive, how the prefrontal cortex is divided into functionally distinct regions, and how top-down cognitive control breaks down under overload, fatigue, hunger, and illness.",
   majorStructures: [
     "Dorsolateral PFC (dlPFC)",
     "Ventromedial PFC (vmPFC)",
