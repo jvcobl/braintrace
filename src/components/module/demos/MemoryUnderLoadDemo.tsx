@@ -1,19 +1,35 @@
 import { useState, useCallback, useRef, useEffect } from "react";
+import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
+import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
+
+/* ── Types ── */
 
 type Phase = "intro" | "show" | "distractor" | "recall" | "feedback";
-type Difficulty = "low" | "high";
+type LoadLevel = "low" | "medium" | "high";
 
 interface RoundConfig {
-  difficulty: Difficulty;
+  load: LoadLevel;
   sequenceLength: number;
   hasDistractor: boolean;
+  label: string;
+  description: string;
 }
 
+interface RoundResult {
+  load: LoadLevel;
+  correct: number;
+  total: number;
+}
+
+/* ── Round configs: 2 per load level ── */
+
 const ROUNDS: RoundConfig[] = [
-  { difficulty: "low", sequenceLength: 3, hasDistractor: false },
-  { difficulty: "low", sequenceLength: 3, hasDistractor: false },
-  { difficulty: "high", sequenceLength: 7, hasDistractor: true },
-  { difficulty: "high", sequenceLength: 7, hasDistractor: true },
+  { load: "low", sequenceLength: 3, hasDistractor: false, label: "Low Load", description: "3 letters, no distraction" },
+  { load: "low", sequenceLength: 3, hasDistractor: false, label: "Low Load", description: "3 letters, no distraction" },
+  { load: "medium", sequenceLength: 5, hasDistractor: true, label: "Medium Load", description: "5 letters + math distractor" },
+  { load: "medium", sequenceLength: 5, hasDistractor: true, label: "Medium Load", description: "5 letters + math distractor" },
+  { load: "high", sequenceLength: 7, hasDistractor: true, label: "High Load", description: "7 letters + math distractor" },
+  { load: "high", sequenceLength: 7, hasDistractor: true, label: "High Load", description: "7 letters + math distractor" },
 ];
 
 const LETTERS = "BCDFGHJKLMNPQRSTVWXYZ".split("");
@@ -29,6 +45,106 @@ function generateDistractor(): { question: string; answer: number } {
   return { question: `${a} × ${b} = ?`, answer: a * b };
 }
 
+/* ── Trial feedback (from pasted spec) ── */
+
+type FeedbackKey =
+  | "lowCorrect" | "lowIncorrect"
+  | "mediumCorrect" | "mediumIncorrect"
+  | "highCorrect" | "highIncorrect";
+
+const trialFeedback: Record<FeedbackKey, ExperienceFeedback> = {
+  lowCorrect: {
+    primary: "You held the information at low load.",
+    secondary: "At this level, working memory and distractor suppression can both run without competing for resources. The dlPFC has surplus capacity.",
+    bridge: "Trace shows the PFC role map.",
+    structure: "dlPFC (working memory)",
+  },
+  lowIncorrect: {
+    primary: "Even at low load, the task was challenging.",
+    secondary: "Baseline working memory capacity varies by individual and by state — fatigue, hunger, stress, and time of day all affect available dlPFC resources at any given moment.",
+    bridge: "Explain covers why PFC capacity is not fixed.",
+    structure: "dlPFC (baseline variation)",
+  },
+  mediumCorrect: {
+    primary: "You maintained accuracy under moderate load.",
+    secondary: "The PFC is working harder here. The shared resource pool is being split between holding information and suppressing distractors, but still has enough capacity for both.",
+    bridge: "Trace shows how overload disrupts this balance.",
+    structure: "dlPFC (shared resource pool)",
+  },
+  mediumIncorrect: {
+    primary: "Performance dropped as load increased.",
+    secondary: "This fits the cognitive load pattern: working memory and distractor suppression draw from the same finite PFC pool. At medium load, that pool is strained and errors begin to appear — not from lack of effort, but from resource competition.",
+    bridge: "Trace shows the overload → control failure pathway.",
+    structure: "dlPFC (resource competition)",
+  },
+  highCorrect: {
+    primary: "You held accuracy under heavy load.",
+    secondary: "At this level, most people show significant decline. Maintaining performance here reflects strong momentary PFC capacity, though the same person under different conditions (tired, hungry, stressed) might fail at this load.",
+    bridge: "Explain covers why the same system fails under depletion.",
+    structure: "dlPFC (sustained under strain)",
+  },
+  highIncorrect: {
+    primary: "The load exceeded available capacity.",
+    secondary: "This is where nearly everyone fails. The PFC's finite metabolic resources are exhausted — working memory, distractor suppression, and self-regulation all compete for the same pool, and at high load there is simply not enough to go around.",
+    bridge: "Explain connects this to real-world depletion effects.",
+    structure: "dlPFC (capacity exceeded)",
+  },
+};
+
+function classifyTrial(load: LoadLevel, correct: boolean): FeedbackKey {
+  if (load === "low") return correct ? "lowCorrect" : "lowIncorrect";
+  if (load === "medium") return correct ? "mediumCorrect" : "mediumIncorrect";
+  return correct ? "highCorrect" : "highIncorrect";
+}
+
+/* ── Summary tiers (from pasted spec) ── */
+
+function getSummary(results: RoundResult[]): ExperienceSummary {
+  const totalCorrect = results.reduce((s, r) => s + r.correct, 0);
+  const totalItems = results.reduce((s, r) => s + r.total, 0);
+  const overallPct = totalItems > 0 ? totalCorrect / totalItems : 0;
+
+  const lowResults = results.filter((r) => r.load === "low");
+  const lowPct = lowResults.length > 0
+    ? lowResults.reduce((s, r) => s + r.correct, 0) / lowResults.reduce((s, r) => s + r.total, 0)
+    : 1;
+
+  // Struggled early: low-load accuracy < 50%
+  if (lowPct < 0.5) {
+    return {
+      heading: "What This Shows",
+      body: "Working memory capacity at any moment depends on current state: fatigue, hunger, stress, illness, and time of day all affect available PFC resources. One snapshot does not define baseline capacity — the same system performs differently under different metabolic conditions.",
+      bridge: "Explain covers state-dependent PFC performance.",
+    };
+  }
+
+  // Performed well: overall accuracy >= 75%
+  if (overallPct >= 0.75) {
+    return {
+      heading: "What This Shows",
+      body: "Performance held longer than typical, but notice the pattern: even strong performance degrades as load increases. This demonstrates the fundamental capacity limit of the PFC. The same mechanism explains why judges make worse parole decisions before lunch and why illness impairs cognition — it is all the same resource pool.",
+      bridge: "Explain covers the full range of depletion effects from the course.",
+    };
+  }
+
+  // Degraded normally: the default/typical pattern
+  return {
+    heading: "What This Shows",
+    body: "Early trials are easy because the PFC has surplus capacity. As load grows, working memory and distractor suppression compete for the same finite resources, and errors appear. This is not a personal limitation — it is a structural constraint of the prefrontal cortex that affects everyone from students to judges to chess grandmasters.",
+    bridge: "Trace shows the PFC overload pathway.",
+  };
+}
+
+/* ── Load-level label styling ── */
+
+const loadColors: Record<LoadLevel, string> = {
+  low: "text-primary",
+  medium: "text-amber-500",
+  high: "text-destructive",
+};
+
+/* ── Component ── */
+
 const MemoryUnderLoadDemo = () => {
   const [roundIndex, setRoundIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>("intro");
@@ -36,7 +152,8 @@ const MemoryUnderLoadDemo = () => {
   const [userInput, setUserInput] = useState("");
   const [distractor, setDistractor] = useState<{ question: string; answer: number } | null>(null);
   const [distractorInput, setDistractorInput] = useState("");
-  const [results, setResults] = useState<{ difficulty: Difficulty; correct: number; total: number }[]>([]);
+  const [results, setResults] = useState<RoundResult[]>([]);
+  const [lastCorrectCount, setLastCorrectCount] = useState(0);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   const done = roundIndex >= ROUNDS.length;
@@ -66,7 +183,8 @@ const MemoryUnderLoadDemo = () => {
     sequence.forEach((letter, i) => {
       if (entered[i]?.toUpperCase() === letter) correct++;
     });
-    setResults((prev) => [...prev, { difficulty: round!.difficulty, correct, total: sequence.length }]);
+    setLastCorrectCount(correct);
+    setResults((prev) => [...prev, { load: round!.load, correct, total: sequence.length }]);
     setPhase("feedback");
   }, [userInput, sequence, round]);
 
@@ -74,6 +192,7 @@ const MemoryUnderLoadDemo = () => {
     setRoundIndex((i) => i + 1);
     setPhase("intro");
     setDistractor(null);
+    setUserInput("");
   }, []);
 
   const handleRestart = useCallback(() => {
@@ -82,93 +201,81 @@ const MemoryUnderLoadDemo = () => {
     setResults([]);
     setDistractor(null);
     setUserInput("");
+    setLastCorrectCount(0);
   }, []);
 
-  if (done) {
-    const lowResults = results.filter((r) => r.difficulty === "low");
-    const highResults = results.filter((r) => r.difficulty === "high");
-    const pct = (arr: typeof results) => {
-      if (arr.length === 0) return null;
-      const c = arr.reduce((s, r) => s + r.correct, 0);
-      const t = arr.reduce((s, r) => s + r.total, 0);
-      return Math.round((c / t) * 100);
-    };
-    const lowPct = pct(lowResults);
-    const highPct = pct(highResults);
+  // Is this the first round of a new load level?
+  const isLoadTransition =
+    roundIndex > 0 && round && ROUNDS[roundIndex - 1].load !== round.load && phase === "intro";
 
-    return (
-      <section>
-        <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-        <div className="mt-4 rounded-lg border border-border bg-card p-8">
-          <h3 className="font-display text-lg font-semibold text-foreground text-center">What This Shows</h3>
-          <div className="mt-5 grid grid-cols-2 gap-4 max-w-sm mx-auto">
-            <div className="rounded-lg bg-secondary p-4 text-center">
-              <p className="text-xs text-muted-foreground">Low Load</p>
-              <p className="text-[10px] text-muted-foreground">3 letters, no distraction</p>
-              <p className="mt-1 text-xl font-bold text-foreground">{lowPct !== null ? `${lowPct}%` : "—"}</p>
-            </div>
-            <div className="rounded-lg bg-secondary p-4 text-center">
-              <p className="text-xs text-muted-foreground">High Load</p>
-              <p className="text-[10px] text-muted-foreground">7 letters + math distractor</p>
-              <p className="mt-1 text-xl font-bold text-foreground">{highPct !== null ? `${highPct}%` : "—"}</p>
-            </div>
-          </div>
-          <div className="mt-5 max-w-md mx-auto text-sm text-muted-foreground leading-relaxed space-y-2">
-            {lowPct !== null && highPct !== null && highPct < lowPct ? (
-              <p>Your accuracy dropped under high load. The same dlPFC was doing the work in both conditions — but with 7 items and a competing math task, its capacity was exceeded. Top-down control weakened, distractor interference increased, and items were lost. This is cognitive overload.</p>
-            ) : lowPct !== null && highPct !== null ? (
-              <p>You held up under load — but it likely felt harder. Your dlPFC was consuming more energy to maintain 7 items while suppressing the math distractor. In sustained or more complex tasks, this cost accumulates and performance eventually degrades.</p>
-            ) : null}
-            <p className="pt-1">Continue to <strong>Trace</strong> to see why the dlPFC breaks down under overload.</p>
-          </div>
-          <div className="mt-6 flex justify-center">
-            <button onClick={handleRestart} className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-              Try Again
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  const isLow = round?.difficulty === "low";
-  const phaseTransition = roundIndex === 2 && phase === "intro";
+  const feedbackKey =
+    phase === "feedback" && round
+      ? classifyTrial(round.load, lastCorrectCount === sequence.length)
+      : null;
 
   return (
-    <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Memorize the letters, then recall them in order.
-      </p>
-
-      <div className="mt-4 rounded-lg border border-border bg-card p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <div>
-            <span className={`text-xs font-semibold uppercase tracking-wide ${isLow ? "text-primary" : "text-destructive"}`}>
-              {isLow ? "Low Load" : "High Load"}
-            </span>
-            <span className="ml-2 text-xs text-muted-foreground">Round {roundIndex + 1} of {ROUNDS.length}</span>
+    <ExperienceShell
+      instructions="You'll memorize letter sequences at three difficulty levels. As load increases, a math distractor competes for the same PFC resources. Watch how your accuracy changes — that pattern reveals the capacity limit."
+      done={done}
+      summary={getSummary(results)}
+      onRestart={handleRestart}
+    >
+      <div className="rounded-lg border border-border bg-card p-6">
+        {/* Header */}
+        {round && (
+          <div className="mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className={`text-xs font-semibold uppercase tracking-wide ${loadColors[round.load]}`}>
+                {round.label}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                Round {roundIndex + 1} of {ROUNDS.length}
+              </span>
+            </div>
+            <span className="text-xs text-muted-foreground">{round.description}</span>
           </div>
-          <span className="text-xs text-muted-foreground">
-            {round?.sequenceLength} letters{round?.hasDistractor ? " + distractor" : ""}
-          </span>
-        </div>
+        )}
 
-        <div className="flex min-h-[180px] items-center justify-center rounded-lg bg-secondary">
-          {phase === "intro" && (
+        {/* Load progress bar */}
+        {round && (
+          <div className="mb-4 flex gap-1">
+            {ROUNDS.map((r, i) => (
+              <div
+                key={i}
+                className={`h-1 flex-1 rounded-full transition-colors ${
+                  i < roundIndex
+                    ? "bg-primary/60"
+                    : i === roundIndex
+                      ? "bg-primary"
+                      : "bg-border"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="flex min-h-[200px] items-center justify-center rounded-lg bg-secondary">
+          {/* Intro */}
+          {phase === "intro" && round && (
             <div className="text-center max-w-sm px-4">
-              {phaseTransition ? (
+              {isLoadTransition ? (
                 <>
-                  <p className="text-sm font-medium text-foreground mb-2">Now: High Load</p>
+                  <p className={`text-sm font-semibold mb-2 ${loadColors[round.load]}`}>
+                    Increasing to {round.label}
+                  </p>
                   <p className="text-sm text-muted-foreground mb-4">
-                    The sequence is longer (7 letters) and a math problem will interrupt you before recall. This forces your dlPFC to maintain more items while handling a competing task.
+                    {round.load === "medium"
+                      ? "Now: 5 letters plus a math distractor. Your dlPFC must hold more items while handling a competing task."
+                      : "Now: 7 letters plus a math distractor. This pushes the PFC's shared resource pool to its limit."}
                   </p>
                 </>
               ) : (
                 <p className="text-sm text-muted-foreground mb-4">
-                  {isLow
+                  {round.load === "low"
                     ? "You'll see 3 letters briefly, then recall them. A manageable load for your dlPFC."
-                    : "7 letters + a math distractor. Same task — much higher demand on working memory."}
+                    : round.load === "medium"
+                      ? "5 letters + a math distractor. Same task — more demand on working memory."
+                      : "7 letters + a math distractor. Maximum demand on the same PFC resource pool."}
                 </p>
               )}
               <button
@@ -180,6 +287,7 @@ const MemoryUnderLoadDemo = () => {
             </div>
           )}
 
+          {/* Show sequence */}
           {phase === "show" && (
             <div className="text-center">
               <p className="text-xs text-muted-foreground mb-3">Memorize:</p>
@@ -196,6 +304,7 @@ const MemoryUnderLoadDemo = () => {
             </div>
           )}
 
+          {/* Distractor */}
           {phase === "distractor" && distractor && (
             <div className="text-center">
               <p className="text-xs text-muted-foreground mb-1">Distractor — solve this while holding the letters:</p>
@@ -219,16 +328,21 @@ const MemoryUnderLoadDemo = () => {
             </div>
           )}
 
+          {/* Recall */}
           {phase === "recall" && (
             <div className="text-center w-full max-w-sm px-4">
               <p className="text-sm text-muted-foreground mb-3">
-                Now type the {sequence.length} letters in order (spaces between):
+                Type the {sequence.length} letters in order (spaces between):
               </p>
               <input
                 type="text"
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
-                placeholder={isLow ? "e.g. B K M" : "e.g. B K M T P R N"}
+                placeholder={
+                  round?.load === "low" ? "e.g. B K M" :
+                  round?.load === "medium" ? "e.g. B K M T P" :
+                  "e.g. B K M T P R N"
+                }
                 className="w-full rounded-md border border-border bg-card px-3 py-2 text-center text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 autoFocus
                 onKeyDown={(e) => e.key === "Enter" && handleRecallSubmit()}
@@ -242,10 +356,11 @@ const MemoryUnderLoadDemo = () => {
             </div>
           )}
 
+          {/* Feedback — letter grid only */}
           {phase === "feedback" && (
             <div className="text-center">
-              <p className="text-xs text-muted-foreground mb-1">Correct sequence:</p>
-              <div className="flex gap-1.5 justify-center flex-wrap mb-3">
+              <p className="text-xs text-muted-foreground mb-2">Correct sequence:</p>
+              <div className="flex gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => {
                   const entered = userInput.toUpperCase().trim().split(/[\s,]+/);
                   const isCorrect = entered[i]?.toUpperCase() === letter;
@@ -263,22 +378,26 @@ const MemoryUnderLoadDemo = () => {
                   );
                 })}
               </div>
-              <p className="text-sm text-muted-foreground max-w-xs mx-auto">
-                {isLow
-                  ? "Low load — your dlPFC maintained these items without significant effort."
-                  : "High load — your dlPFC had to hold 7 items while suppressing a math distractor. Any errors reflect the cost of cognitive overload on executive control."}
-              </p>
+            </div>
+          )}
+        </div>
+
+        {/* FeedbackCard below the interaction area */}
+        {feedbackKey && (
+          <div className="mt-5">
+            <FeedbackCard feedback={trialFeedback[feedbackKey]} />
+            <div className="mt-4 flex justify-center">
               <button
                 onClick={handleNext}
-                className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 {roundIndex < ROUNDS.length - 1 ? "Next" : "See Results"}
               </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-    </section>
+    </ExperienceShell>
   );
 };
 
