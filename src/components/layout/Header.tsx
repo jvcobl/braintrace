@@ -11,18 +11,18 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-card/80 backdrop-blur-sm">
-      <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="font-display text-xl font-bold tracking-tight text-foreground">
+      <div className="container flex h-14 items-center justify-between">
+        <Link to="/" className="font-display text-lg font-bold tracking-tight text-foreground">
           NeuroRoute
         </Link>
-        <nav className="flex items-center gap-1" aria-label="Main navigation">
+        <nav className="flex items-center gap-0.5" aria-label="Main navigation">
           {navLinks.map(({ to, label }) => {
-            const isActive = pathname === to;
+            const isActive = pathname === to || (to !== "/" && pathname.startsWith(to));
             return (
               <Link
                 key={to}
                 to={to}
-                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-accent text-accent-foreground"
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground"
