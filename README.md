@@ -1,6 +1,6 @@
 # NeuroRoute
 
-Interactive neuroscience learning app for NBB302. Each module lets you experience a perceptual or cognitive phenomenon, trace the neural pathway, and read a concise explanation.
+Interactive neuroscience learning platform. Each module lets you experience a perceptual or cognitive phenomenon, trace the neural pathway, and read a concise explanation.
 
 Fully client-side — no backend, no API keys, no environment variables.
 
