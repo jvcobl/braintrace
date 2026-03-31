@@ -166,7 +166,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
 
         <div className="px-5 py-6 md:px-8 md:py-8">
           {/* Figure */}
-          <div className="mx-auto" style={{ maxWidth: 220 }}>
+          <div className="mx-auto" style={{ maxWidth: 280 }}>
             {Figure ? (
               <Figure highlighted={highlighted} assist={assist} />
             ) : (
