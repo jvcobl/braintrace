@@ -147,14 +147,15 @@ const Index = () => {
         <div className="container mx-auto max-w-5xl py-20 md:py-24">
           <div className="max-w-2xl">
             <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-              Curriculum
+              What You'll Explore
             </p>
             <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Five units covering core neuroscience
+              Six interactive lessons across five areas
             </h2>
             <p className="mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
-              The curriculum moves from sensory processing through higher
-              cognition to neuroendocrine stress systems.
+              Perception, attention, emotion, learning, and stress. Each lesson
+              is built around a real phenomenon you can feel, not just read
+              about.
             </p>
           </div>
 
