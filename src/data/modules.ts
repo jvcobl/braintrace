@@ -126,9 +126,10 @@ export const modules: Module[] = [
     title: "Memory Under Load",
     slug: "memory-under-load",
     unitId: "unit-2",
+    hook: "Your focus collapsed when the task got crowded — and your brain knows why.",
     shortGoal: "Test how cognitive load affects working memory capacity.",
-    shortDescription: "Try a short memory task under varying levels of distraction and explore the limits of working memory.",
-    introCopy: "You'll try to remember a sequence of items. First with a light load, then with more items and distractors. Watch how your performance changes — that's your dlPFC reaching its limits.",
+    shortDescription: "How the prefrontal cortex loses control under cognitive load.",
+    introCopy: "You'll try to remember a sequence of items. First with a light load, then with more items and distractors. Watch how your performance changes — that's your prefrontal cortex reaching its limits.",
     traceNodes: [
       { label: "Incoming Task Demands", description: "Sensory information and task instructions arrive. The items you need to remember compete with distractors for limited processing resources." },
       { label: "dlPFC: Working Memory & Executive Control", description: "The dorsolateral prefrontal cortex (dlPFC) actively maintains task-relevant items in working memory and coordinates executive control — deciding what to hold, what to ignore, and how to respond. This is metabolically expensive." },
