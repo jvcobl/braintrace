@@ -19,48 +19,52 @@ import {
 // Unit content bundles
 // ---------------------------------------------------------------------------
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// The content files use untyped string literals for sensitivity fields.
+// We cast to UnitContent at the bundle level to avoid modifying the source files.
 export const unitContent: Record<string, UnitContent> = {
   "unit-1": {
     meta: unit1Meta,
-    conceptCards: unit1ConceptCards,
+    conceptCards: unit1ConceptCards as any,
     pathways: unit1Pathways,
     distinctions: unit1Distinctions,
-    caseNotes: unit1CaseNotes,
+    caseNotes: unit1CaseNotes as any,
     review: unit1Review,
   },
   "unit-2": {
     meta: unit2Meta,
-    conceptCards: unit2ConceptCards,
+    conceptCards: unit2ConceptCards as any,
     pathways: unit2Pathways,
     distinctions: unit2Distinctions,
-    caseNotes: unit2CaseNotes,
+    caseNotes: unit2CaseNotes as any,
     review: unit2Review,
   },
   "unit-3": {
     meta: unit3Meta,
-    conceptCards: unit3ConceptCards,
+    conceptCards: unit3ConceptCards as any,
     pathways: unit3Pathways,
     distinctions: unit3Distinctions,
-    caseNotes: unit3CaseNotes,
+    caseNotes: unit3CaseNotes as any,
     review: unit3Review,
   },
   "unit-4": {
     meta: unit4Meta,
-    conceptCards: unit4ConceptCards,
+    conceptCards: unit4ConceptCards as any,
     pathways: unit4Pathways,
     distinctions: unit4Distinctions,
-    caseNotes: unit4CaseNotes,
+    caseNotes: unit4CaseNotes as any,
     review: unit4Review,
   },
   "unit-5": {
     meta: unit5Meta,
-    conceptCards: unit5ConceptCards,
+    conceptCards: unit5ConceptCards as any,
     pathways: unit5Pathways,
     distinctions: unit5Distinctions,
-    caseNotes: unit5CaseNotes,
+    caseNotes: unit5CaseNotes as any,
     review: unit5Review,
   },
 };
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 // ---------------------------------------------------------------------------
 // Lesson → Unit mapping
