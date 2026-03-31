@@ -83,6 +83,7 @@ export const lessonMappings: LessonMapping[] = [
   { moduleId: "mod-9", unitId: "unit-3", title: "Fear vs. Anxiety Sorter" },
   { moduleId: "mod-10", unitId: "unit-3", title: "Emotion vs. Arousal Sorter" },
   { moduleId: "mod-4", unitId: "unit-4", title: "Fear Cue and Extinction" },
+  { moduleId: "mod-11", unitId: "unit-4", title: "Classical vs. Operant Sorter" },
   { moduleId: "mod-6", unitId: "unit-5", title: "HPA Axis Builder" },
 ];
 

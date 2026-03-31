@@ -251,6 +251,28 @@ export const modules: Module[] = [
     demoType: "interactive",
     learningObjective: "Distinguish emotion from arousal and explain the role of valence in creating directional emotional states.",
   },
+  {
+    id: "mod-11",
+    title: "Classical vs. Operant Sorter",
+    slug: "classical-vs-operant-sorter",
+    unitId: "unit-4",
+    shortGoal: "Distinguish the two major learning paradigms from NBB302.",
+    shortDescription: "Classify scenarios as classical or operant conditioning and learn why fear conditioning is strictly classical.",
+    introCopy: "You'll read short scenarios and decide whether each describes classical conditioning — where a neutral stimulus is paired with an unconditioned stimulus to produce an automatic response — or operant conditioning — where a voluntary behavior is shaped by its consequences. Then we'll trace why this distinction matters for understanding fear.",
+    traceNodes: [
+      { label: "Classical: Automatic Association", description: "A neutral CS is paired with a US. The learned response forms automatically — the organism does not choose to respond. Relies on amygdala circuitry, particularly the BLA." },
+      { label: "Operant: Voluntary Action → Consequence", description: "The organism's own behavior determines the outcome. Relies on nucleus accumbens and dopamine signaling." },
+      { label: "Key Differentiator: Agency", description: "In classical conditioning, the organism is passive. In operant conditioning, the organism's action is the critical variable." },
+    ],
+    explain: {
+      whatHappened: "You classified six scenarios as either classical or operant conditioning based on whether the learned response was automatic (stimulus-driven) or voluntary (action-driven).",
+      whatYourBrainDid: "For each scenario, you assessed whether the organism passively acquired an association or actively changed behavior based on consequences. This mirrors the distinction the course draws between Pavlovian and Skinnerian paradigms.",
+      keyPathway: "Classical conditioning: CS + US → automatic CR, mediated by amygdala (BLA → CeA). Operant conditioning: voluntary action → consequence, mediated by nucleus accumbens and dopamine. Fear conditioning is strictly classical.",
+      nbb302Connection: "This module covers the two learning paradigms from NBB302. Fear conditioning — the core mechanism of Unit 4 — is strictly classical: the organism does not choose to become afraid. The CS-US association forms automatically through BLA circuitry. Understanding this distinction is essential for grasping why extinction is new learning (vmPFC inhibiting the original trace) rather than erasure, and why fear can spontaneously return.",
+    },
+    demoType: "interactive",
+    learningObjective: "Distinguish classical from operant conditioning and explain why fear conditioning is a classical paradigm.",
+  },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {
