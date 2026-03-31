@@ -25,8 +25,13 @@ const CourseMap = () => (
             <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
               Unit {i + 1}
             </p>
-            <h2 className="mt-1 font-display text-base font-semibold text-foreground leading-snug">
-              {unit.title.replace(/^Unit \d+:\s*/, "")}
+            <h2 className="mt-1 font-display text-base font-semibold leading-snug">
+              <Link
+                to={`/unit/${unit.id}`}
+                className="text-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+              >
+                {unit.title.replace(/^Unit \d+:\s*/, "")}
+              </Link>
             </h2>
 
             <div className="mt-3 flex flex-wrap gap-1.5">
