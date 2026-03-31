@@ -1,18 +1,6 @@
 import { Link } from "react-router-dom";
-import { getUnitIds, getUnitContent, getLessonsByUnit } from "@/data/content/registry";
+import { getUnitIds, getUnitContent } from "@/data/content/registry";
 import { modules } from "@/data/modules";
-
-const unitContentCounts = (unitId: string) => {
-  const c = getUnitContent(unitId);
-  if (!c) return null;
-  return {
-    concepts: c.conceptCards.length,
-    pathways: c.pathways.length,
-    distinctions: c.distinctions.length,
-    caseNotes: c.caseNotes.length,
-    review: c.review.length,
-  };
-};
 
 const Index = () => {
   const unitIds = getUnitIds();
@@ -25,8 +13,8 @@ const Index = () => {
           NeuroRoute
         </h1>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          An interactive study companion for NBB302. Five units, six lessons,
-          and over 200 study items — all sourced from your lecture notes.
+          An interactive study companion for NBB302 — experience a phenomenon,
+          trace the neural pathway, then read the science.
         </p>
         <div className="mt-8 flex items-center justify-center gap-3">
           <Link
@@ -44,122 +32,72 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── Unit Hubs ── */}
-      <section className="mx-auto mt-20 max-w-4xl">
-        <h2 className="mb-6 font-display text-2xl font-semibold text-foreground">
-          Units
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* ── Units ── */}
+      <section className="mx-auto mt-20 max-w-3xl">
+        <div className="space-y-4">
           {unitIds.map((uid) => {
             const content = getUnitContent(uid);
             if (!content) return null;
             const num = uid.replace("unit-", "");
-            const counts = unitContentCounts(uid);
-            const lessonCount = getLessonsByUnit(uid).length;
 
             return (
               <Link
                 key={uid}
                 to={`/unit/${uid}`}
-                className="group flex flex-col rounded-lg border border-border bg-card p-5 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="group flex items-start gap-5 rounded-lg border border-border bg-card p-5 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                <span className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-                  Unit {num}
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                  {num}
                 </span>
-                <h3 className="font-display text-base font-semibold text-card-foreground leading-snug">
-                  {content.meta.title}
-                </h3>
-                <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                  {content.meta.subtitle}
-                </p>
-
-                {/* Structures preview */}
-                <div className="mt-3 flex flex-wrap gap-1">
-                  {content.meta.majorStructures.slice(0, 3).map((s) => (
-                    <span
-                      key={s}
-                      className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                  {content.meta.majorStructures.length > 3 && (
-                    <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground">
-                      +{content.meta.majorStructures.length - 3}
-                    </span>
-                  )}
-                </div>
-
-                {/* Coverage line */}
-                {counts && (
-                  <p className="mt-3 text-[11px] text-muted-foreground/70">
-                    {counts.concepts} concepts · {counts.pathways} pathways · {lessonCount === 1 ? "1 lesson" : `${lessonCount} lessons`}
+                <div className="min-w-0">
+                  <h3 className="font-display text-base font-semibold text-card-foreground leading-snug">
+                    {content.meta.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                    {content.meta.subtitle}
                   </p>
-                )}
+                  <div className="mt-2.5 flex flex-wrap gap-1">
+                    {content.meta.majorStructures.slice(0, 4).map((s) => (
+                      <span
+                        key={s}
+                        className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                    {content.meta.majorStructures.length > 4 && (
+                      <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] text-muted-foreground">
+                        +{content.meta.majorStructures.length - 4}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </Link>
             );
           })}
         </div>
       </section>
 
-      {/* ── Featured Lessons ── */}
-      <section className="mx-auto mt-16 max-w-4xl">
-        <h2 className="mb-6 font-display text-2xl font-semibold text-foreground">
-          Featured Lessons
+      {/* ── Lessons ── */}
+      <section className="mx-auto mt-16 max-w-3xl">
+        <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          Lessons
         </h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {modules.map((mod) => (
             <Link
               key={mod.id}
               to={`/module/${mod.id}`}
-              className="group flex flex-col rounded-lg border border-border bg-card px-4 py-3.5 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="rounded-lg border border-border bg-card px-4 py-3 transition-shadow hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-primary/70">
-                Unit {mod.unitId.replace("unit-", "")}
-              </span>
-              <h3 className="mt-1 text-sm font-semibold text-card-foreground leading-snug">
+              <h3 className="text-sm font-medium text-card-foreground leading-snug">
                 {mod.title}
               </h3>
-              <p className="mt-1 text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                {mod.shortGoal}
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Unit {mod.unitId.replace("unit-", "")}
               </p>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* ── Study Pattern ── */}
-      <section className="mx-auto mt-16 max-w-2xl text-center">
-        <h2 className="font-display text-xl font-semibold text-foreground">
-          How It Works
-        </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Every lesson follows the same three-part pattern.
-        </p>
-        <div className="mt-6 flex items-center justify-center gap-4 text-sm">
-          <div className="flex flex-col items-center gap-1.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-              1
-            </span>
-            <span className="font-medium text-foreground">Experience</span>
-            <span className="text-xs text-muted-foreground">Try a demo</span>
-          </div>
-          <span className="text-muted-foreground/40 text-lg" aria-hidden="true">→</span>
-          <div className="flex flex-col items-center gap-1.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-              2
-            </span>
-            <span className="font-medium text-foreground">Trace</span>
-            <span className="text-xs text-muted-foreground">Follow the pathway</span>
-          </div>
-          <span className="text-muted-foreground/40 text-lg" aria-hidden="true">→</span>
-          <div className="flex flex-col items-center gap-1.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-              3
-            </span>
-            <span className="font-medium text-foreground">Explain</span>
-            <span className="text-xs text-muted-foreground">Read the science</span>
-          </div>
         </div>
       </section>
     </div>
