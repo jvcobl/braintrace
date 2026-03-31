@@ -114,7 +114,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
         <div className="mt-4 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 space-y-2">
           <p className="text-sm text-foreground leading-relaxed">
             <span className="font-medium">Gallery complete.</span>{" "}
-            You've experienced three types of multistable perception — figure–ground, illumination, and depth reversal.
+            You've experienced two types of multistable perception — figure–ground ambiguity and color constancy. In both cases, the image stayed the same; only your brain's interpretation changed.
           </p>
           {onNavigate && (
             <button
