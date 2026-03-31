@@ -6,9 +6,9 @@
 export const unit3Meta = {
   id: "unit-3",
   title: "Emotion, Limbic System, and Amygdala",
-  subtitle: "How the brain detects what matters",
+  subtitle: "Your brain flags what matters before you've fully interpreted it.",
   overview:
-    "This unit covers the architecture of emotion, how the limbic system and hypothalamus regulate survival responses, the precise definitions that distinguish emotion from arousal and fear from anxiety, how the amygdala functions as a salience center rather than a simple fear center, the anatomy of startle circuitry, and what happens when amygdala function is disrupted.",
+    "These lessons explore how salience, surprise, and rapid emotional processing shape automatic responses. You'll see the architecture of emotion, how the limbic system and hypothalamus regulate survival responses, the precise definitions that distinguish emotion from arousal and fear from anxiety, how the amygdala functions as a salience center, and the anatomy of startle circuitry.",
   majorStructures: [
     "Hypothalamus",
     "Basolateral amygdala (BLA)",

@@ -6,9 +6,9 @@
 export const unit4Meta = {
   id: "unit-4",
   title: "Learning and Fear Conditioning",
-  subtitle: "How fear is learned, suppressed, and why it returns",
+  subtitle: "The brain doesn't just react — it learns what to expect next.",
   overview:
-    "This unit covers the two major learning paradigms, how the brain acquires conditioned fear through CS-US pairing, the vmPFC circuitry that controls extinction, why extinction is new learning rather than erasure of the original memory, and why fear can spontaneously return even after successful extinction.",
+    "These lessons explore how cues become predictions, and how those predictions change over time. You'll see the two major learning paradigms, how the brain acquires conditioned fear through CS-US pairing, the vmPFC circuitry that controls extinction, why extinction is new learning rather than erasure, and why fear can spontaneously return even after successful extinction.",
   majorStructures: [
     "Basolateral amygdala (BLA)",
     "Central amygdala (CeA)",

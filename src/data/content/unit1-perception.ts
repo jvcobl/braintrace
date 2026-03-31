@@ -6,9 +6,9 @@
 export const unit1Meta = {
   id: "unit-1",
   title: "Perception and Object Recognition",
-  subtitle: "How the brain constructs what you see",
+  subtitle: "Your brain builds what you see before the picture is complete.",
   overview:
-    "This unit covers how raw sensory input becomes conscious perception, why the brain relies on shortcuts and context to interpret the world, how objects and faces are recognized through parallel visual streams, and how top-down predictions from the prefrontal cortex shape what you see before you are even aware of it.",
+    "These lessons explore how the visual system predicts identity and detects social signals from minimal input. You'll see how raw sensory input becomes conscious perception, why the brain relies on shortcuts and context to interpret the world, how objects and faces are recognized through parallel visual streams, and how top-down predictions shape what you see before you are even aware of it.",
   majorStructures: [
     "Visual cortex (V1–V5, V8)",
     "Superior colliculus",
