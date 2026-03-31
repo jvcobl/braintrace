@@ -227,7 +227,7 @@ export const modules: Module[] = [
       nbb302Connection: "The fear–anxiety distinction is central to understanding the amygdala. The amygdala is not a simple fear center — it is a salience center that stamps importance onto events. Fear and anxiety both engage it, but through different circuits. This distinction matters clinically because anxiety disorders involve overgeneralized threat prediction, not an overactive fear response to present stimuli.",
     },
     demoType: "interactive",
-    learningObjective: "Distinguish fear from anxiety using the neurobiological definitions from the course.",
+    learningObjective: "Distinguish fear from anxiety using their neurobiological definitions.",
   },
   {
     id: "mod-10",
