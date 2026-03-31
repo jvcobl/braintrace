@@ -173,7 +173,7 @@ const SuddenNoiseDemo = () => {
         </div>
 
         <div
-          className={`relative flex min-h-[180px] items-center justify-center rounded-lg transition-colors duration-100 ${
+          className={`relative flex min-h-[180px] items-center justify-center rounded-lg transition-colors duration-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
             flashVisible ? "bg-accent" : phase === "target" ? "bg-primary/10" : "bg-secondary"
           }`}
           onClick={isActive ? handleClick : undefined}
