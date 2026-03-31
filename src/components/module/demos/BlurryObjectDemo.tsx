@@ -1,4 +1,6 @@
 import { useState, useCallback } from "react";
+import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
+import type { ExperienceFeedback } from "@/components/module/experience";
 
 interface StimulusItem {
   name: string;
@@ -14,6 +16,49 @@ const stimuli: StimulusItem[] = [
 
 const BLUR_STAGES = [20, 10, 4, 0];
 
+/** Derive feedback from the outcome using the shared schema. */
+function getFeedback(
+  correct: boolean,
+  guessStage: number
+): ExperienceFeedback {
+  const early = guessStage < BLUR_STAGES.length - 2;
+
+  if (correct && early) {
+    return {
+      primary: "You identified it before fine detail arrived.",
+      secondary:
+        "This reflects the OFC shortcut: coarse, low spatial frequency information — broad shapes and contrast — was enough to generate a correct prediction. The guess reached the IT cortex before detailed processing through the ventral stream was complete.",
+      bridge: "See how this pathway works in Trace.",
+      structure: "LSF → OFC → IT cortex",
+    };
+  }
+  if (!correct && early) {
+    return {
+      primary: "You guessed early, but the coarse information was misleading.",
+      secondary:
+        "This mirrors the trade-off of top-down prediction. The OFC generated a fast guess from rough shape and contrast cues, but the low spatial frequency information pointed to the wrong object. Speed costs accuracy — this is the inherent risk of heuristic processing.",
+      bridge: "Trace shows where the prediction forms and where it gets corrected.",
+      structure: "OFC prediction → IT cortex override",
+    };
+  }
+  if (correct) {
+    return {
+      primary: "You waited for enough detail to confirm the object.",
+      secondary:
+        "This fits the standard ventral-stream pathway. Higher spatial frequency information built up through V1 → V2 → V4 → IT cortex, giving the visual system enough detail for a confident match.",
+      bridge: "Trace shows the full recognition pathway.",
+      structure: "V1 → V2 → V4 → IT cortex",
+    };
+  }
+  return {
+    primary: "Even with more detail, the object was ambiguous enough to mislead.",
+    secondary:
+      "This reflects how expectation shapes perception. Prior guesses or contextual assumptions can bias IT cortex matching even when spatial frequency information is available.",
+    bridge: "Explain discusses how expectations interact with bottom-up signals.",
+    structure: "V1 → V4 → IT cortex (expectation bias)",
+  };
+}
+
 const BlurryObjectDemo = () => {
   const [round, setRound] = useState(0);
   const [blurStage, setBlurStage] = useState(0);
@@ -26,9 +71,7 @@ const BlurryObjectDemo = () => {
   const blurPx = BLUR_STAGES[blurStage];
 
   const handleSharpen = useCallback(() => {
-    if (blurStage < BLUR_STAGES.length - 1) {
-      setBlurStage((s) => s + 1);
-    }
+    if (blurStage < BLUR_STAGES.length - 1) setBlurStage((s) => s + 1);
   }, [blurStage]);
 
   const handleGuess = useCallback(
@@ -41,11 +84,10 @@ const BlurryObjectDemo = () => {
   );
 
   const handleNext = useCallback(() => {
-    const nextRound = round + 1;
-    if (nextRound >= stimuli.length) {
+    if (round + 1 >= stimuli.length) {
       setDone(true);
     } else {
-      setRound(nextRound);
+      setRound((r) => r + 1);
       setBlurStage(0);
       setGuess(null);
       setGuessStage(null);
@@ -60,36 +102,18 @@ const BlurryObjectDemo = () => {
     setDone(false);
   }, []);
 
-  if (done) {
-    return (
-      <section>
-        <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-        <div className="mt-4 rounded-lg border border-border bg-card p-8 text-center">
-          <h3 className="font-display text-lg font-semibold text-foreground">What This Shows</h3>
-          <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
-            Notice how your brain tried to identify each object before the image was fully clear.
-            That early guess came from your orbitofrontal cortex using low spatial frequency cues —
-            coarse shapes and contrast — to generate a top-down prediction.
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
-            Continue to <strong>Trace</strong> to see the neural pathway involved.
-          </p>
-          <button
-            onClick={handleRestart}
-            className="mt-6 rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            Try Again
-          </button>
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
-
-      <div className="mt-4 rounded-lg border border-border bg-card p-6">
+    <ExperienceShell
+      instructions="Each object starts heavily blurred. Try to identify it as early as you can — or sharpen the image first. Your timing reveals how your brain balances speed against accuracy."
+      done={done}
+      summary={{
+        heading: "What This Shows",
+        body: "Your brain tried to identify each object before the image was fully clear. That early guess came from your orbitofrontal cortex using low spatial frequency cues — coarse shapes and contrast — to generate a top-down prediction.",
+        bridge: "Continue to Trace to see the neural pathway involved.",
+      }}
+      onRestart={handleRestart}
+    >
+      <div className="rounded-lg border border-border bg-card p-6">
         <p className="mb-4 text-xs text-muted-foreground">
           Object {round + 1} of {stimuli.length}
         </p>
@@ -105,7 +129,7 @@ const BlurryObjectDemo = () => {
           </span>
         </div>
 
-        {/* Sharpen button */}
+        {/* Sharpen */}
         {!hasGuessed && (
           <div className="mt-4 flex justify-center">
             <button
@@ -149,27 +173,27 @@ const BlurryObjectDemo = () => {
           </div>
         </div>
 
-        {/* Feedback */}
+        {/* Feedback — using shared FeedbackCard */}
         {hasGuessed && (
-          <div className="mt-4 text-center">
-            <p className="text-sm font-medium text-foreground">
-              {guess === current.name ? "✓ Correct!" : `✗ It was ${current.name}.`}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              {(guessStage ?? BLUR_STAGES.length - 1) < BLUR_STAGES.length - 2
-                ? "You identified it while still blurry — your OFC made a top-down prediction from low spatial frequency cues."
-                : "You needed more detail — your ventral stream and IT cortex required higher spatial frequency input to confirm the object."}
-            </p>
-            <button
-              onClick={handleNext}
-              className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              {round < stimuli.length - 1 ? "Next Object" : "Finish"}
-            </button>
+          <div className="mt-5">
+            <FeedbackCard
+              feedback={getFeedback(
+                guess === current.name,
+                guessStage ?? BLUR_STAGES.length - 1
+              )}
+            />
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={handleNext}
+                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                {round < stimuli.length - 1 ? "Next Object" : "Finish"}
+              </button>
+            </div>
           </div>
         )}
       </div>
-    </section>
+    </ExperienceShell>
   );
 };
 
