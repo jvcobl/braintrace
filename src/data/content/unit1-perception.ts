@@ -1,6 +1,6 @@
 // ============================================================
 // UNIT 1 — Perception and Object Recognition
-// All content sourced strictly from NBB302 lecture notes
+// All content sourced from neuroscience literature on perception
 // ============================================================
 
 export const unit1Meta = {

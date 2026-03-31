@@ -1,6 +1,6 @@
 # NeuroRoute
 
-Interactive neuroscience learning app for NBB302. Each module lets you experience a perceptual or cognitive phenomenon, trace the neural pathway, and read a concise explanation.
+Interactive neuroscience learning platform. Each module lets you experience a perceptual or cognitive phenomenon, trace the neural pathway, and read a concise explanation.
 
 Fully client-side — no backend, no API keys, no environment variables.
 
@@ -10,7 +10,7 @@ Fully client-side — no backend, no API keys, no environment variables.
 |------|------|
 | `/` | Home — module grid and entry point |
 | `/module/:id` | Module page with four tabs: Intro, Experience, Trace, Explain |
-| `/course-map` | NBB302 units with key topics and linked modules |
+| `/course-map` | Unit overview with key topics and linked modules |
 | `/about` | Product description and three-step format overview |
 | `*` | 404 — not found |
 
@@ -36,7 +36,7 @@ src/
     ui/                  shadcn/ui primitives (not project-specific)
   data/
     modules.ts           All module content — intro copy, trace nodes, explain sections
-    courseMap.ts          NBB302 unit definitions and module-to-unit mappings
+    courseMap.ts          Unit definitions and module-to-unit mappings
 ```
 
 Each module follows the same four-tab flow: **Intro → Experience → Trace → Explain**.

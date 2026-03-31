@@ -221,7 +221,7 @@ const EmotionArousalSorterDemo = () => {
             {/* Explain */}
             <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
               <p className="text-sm text-foreground leading-relaxed">
-                <span className="font-semibold">NBB302 connection:</span> The
+                <span className="font-semibold">Why it matters:</span> The
                 emotion–arousal distinction is foundational to this unit.
                 Arousal is physiological intensity without direction — it tells
                 you how activated the body is, not whether the experience is

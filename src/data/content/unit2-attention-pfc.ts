@@ -1,6 +1,6 @@
 // ============================================================
 // UNIT 2 — Attention, Cognitive Load, and the PFC
-// All content sourced strictly from NBB302 lecture notes
+// All content sourced from neuroscience literature on attention and the PFC
 // ============================================================
 
 export const unit2Meta = {

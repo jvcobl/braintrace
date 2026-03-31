@@ -4,7 +4,7 @@ const steps = [
   { name: "Intro", desc: "The learning objective and what you'll encounter in this lesson." },
   { name: "Experience", desc: "A short interactive demo that lets you observe the phenomenon firsthand." },
   { name: "Trace", desc: "A simplified neural pathway showing which brain regions are involved." },
-  { name: "Explain", desc: "A concise write-up connecting the demo to NBB302 course material." },
+  { name: "Explain", desc: "A concise write-up connecting the demo to the underlying neuroscience." },
 ];
 
 const About = () => (
@@ -14,10 +14,10 @@ const About = () => (
     </h1>
 
     <p className="mt-4 text-muted-foreground leading-relaxed">
-      NeuroRoute is an interactive neuroscience learning app built for NBB302.
-      The course is organized into five units — perception, attention, emotion,
-      fear conditioning, and stress. Each unit contains study material and
-      interactive lessons that walk you through a phenomenon in four steps:
+      NeuroRoute is an interactive neuroscience learning platform organized
+      into five units — perception, attention, emotion, fear conditioning,
+      and stress. Each unit contains study material and interactive lessons
+      that walk you through a phenomenon in four steps:
     </p>
 
     <div className="mt-6 grid gap-3 sm:grid-cols-2">
