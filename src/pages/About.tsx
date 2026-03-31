@@ -55,7 +55,7 @@ const About = () => (
         to="/course-map"
         className="inline-flex items-center rounded-lg border border-border bg-card px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-secondary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        Curriculum
+        Course Map
       </Link>
     </div>
   </div>
