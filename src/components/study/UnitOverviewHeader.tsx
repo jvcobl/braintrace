@@ -38,7 +38,7 @@ const UnitOverviewHeader = ({ unitNumber, meta }: UnitOverviewHeaderProps) => (
     {meta.lectureTopics.length > 0 && (
       <div className="mt-6">
         <h2 className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-          Topics Covered
+          Core Topics
         </h2>
         <ul className="mt-3 space-y-1.5">
           {meta.lectureTopics.map((t) => (
