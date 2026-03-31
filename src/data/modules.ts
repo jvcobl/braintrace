@@ -80,8 +80,9 @@ export const modules: Module[] = [
     title: "Sudden Noise Reaction",
     slug: "sudden-noise-reaction",
     unitId: "unit-3",
+    hook: "Your body reacted before you knew what happened.",
     shortGoal: "Examine the startle reflex and rapid brainstem responses.",
-    shortDescription: "Experience a sudden auditory stimulus and trace the fast neural circuit behind your reaction.",
+    shortDescription: "How surprise triggers a response faster than conscious thought.",
     introCopy: "You'll do a short reaction-time task. Some trials will include a gentle interruption — a brief visual flash and optional soft tone. Afterward, we'll trace the brainstem reflex circuit and how the amygdala can amplify it. Sound is off by default; you can toggle it on if you'd like.",
     traceNodes: [
       { label: "Reflex Path: Sudden Stimulus → Cochlear Root Neurons → PnC → Motor Output", description: "The core acoustic startle circuit is one of the fastest in the nervous system. A sudden stimulus reaches cochlear root neurons, which project directly to the pontine reticular nucleus (PnC). The PnC then drives spinal and facial motor neurons to produce the startle flinch — all within two to three synapses, before conscious awareness." },
