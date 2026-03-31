@@ -18,6 +18,7 @@ const demos: Record<string, React.ComponentType> = {
   "mod-4": FearCueDemo,
   "mod-5": MemoryUnderLoadDemo,
   "mod-6": HPAAxisBuilderDemo,
+  "mod-7": MultistablePerceptionDemo,
 };
 
 const ExperienceSection = ({ module }: ExperienceSectionProps) => {
