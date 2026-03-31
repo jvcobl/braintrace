@@ -453,7 +453,7 @@ export const unit1CaseNotes = [
     title: "Visual Migraine Auras",
     content:
       "Visual migraine auras demonstrate both loss and gain of function in the visual system. Scotomas (blind spots) show reduced BOLD response in V1–V4, likely linked to cortical spreading depression. Scintillating scotomas produce visual artifacts like 'ants and snow' or color pixels with increased BOLD response. Loss and gain can occur simultaneously. The extreme variability between individuals makes these auras notoriously difficult to study with fMRI.",
-    sensitivity: "standard",
+    sensitivity: "standard" as const,
   },
   {
     id: "u1-cn-02",
