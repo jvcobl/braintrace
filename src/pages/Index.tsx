@@ -108,14 +108,16 @@ const Index = () => {
         <div className="container mx-auto max-w-5xl py-20 md:py-24">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-              Study Method
+              How It Works
             </p>
             <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Each lesson follows three steps
+              Every lesson follows the same loop
             </h2>
-            <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground leading-relaxed">
-              The same structure repeats across every lesson — first-person
-              experience, then pathway anatomy, then written explanation.
+            <p className="mx-auto mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
+              You experience something — a blurry image, a sudden sound, a
+              memory task. Then you see what your brain predicted, what actually
+              happened, and which pathways were involved. Experience first, then
+              explanation.
             </p>
           </div>
 
