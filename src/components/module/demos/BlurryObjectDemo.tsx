@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
-import type { ExperienceFeedback } from "@/components/module/experience";
+import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
 
 interface StimulusItem {
   name: string;
@@ -16,48 +16,83 @@ const stimuli: StimulusItem[] = [
 
 const BLUR_STAGES = [20, 10, 4, 0];
 
-/** Derive feedback from the outcome using the shared schema. */
-function getFeedback(
-  correct: boolean,
-  guessStage: number
-): ExperienceFeedback {
-  const early = guessStage < BLUR_STAGES.length - 2;
+/* ── Feedback states (from pasted spec) ── */
 
-  if (correct && early) {
+type OutcomeKey = "earlyCorrect" | "lateCorrect" | "earlyIncorrect" | "incorrectAfterReveal";
+
+const trialFeedback: Record<OutcomeKey, ExperienceFeedback> = {
+  earlyCorrect: {
+    primary: "You identified it before fine detail arrived.",
+    secondary:
+      "This reflects the OFC shortcut: coarse, low spatial frequency information — broad shapes and contrast — was enough to generate a correct prediction. The guess reached the IT cortex before detailed processing through the ventral stream was complete.",
+    bridge: "See how this pathway works in Trace.",
+    structure: "LSF → OFC → IT cortex",
+  },
+  lateCorrect: {
+    primary: "You got it right, but needed more detail first.",
+    secondary:
+      "This fits ventral stream processing rather than the fast OFC shortcut. As finer detail arrived through the ventral stream, the IT cortex built a complete representation and confirmed the identity. The slower route is more accurate but takes longer.",
+    bridge: "Compare the OFC shortcut to the full ventral stream path in Trace.",
+    structure: "Ventral stream → IT cortex",
+  },
+  earlyIncorrect: {
+    primary: "You guessed early, but the coarse information was misleading.",
+    secondary:
+      "This mirrors the trade-off of top-down prediction. The OFC generated a fast guess from rough shape and contrast cues, but the low spatial frequency information pointed to the wrong object. Speed costs accuracy — this is the inherent risk of heuristic processing.",
+    bridge: "Trace shows where the prediction forms and where it gets corrected.",
+    structure: "OFC prediction → IT cortex override",
+  },
+  incorrectAfterReveal: {
+    primary: "The object was hard to identify even with full detail.",
+    secondary:
+      "When the image is unfamiliar or lacks strong distinguishing features, both the fast OFC shortcut and the detailed ventral stream analysis can struggle. Object constancy depends on prior experience — the brain fills gaps with what it already knows, and unfamiliar objects offer fewer cues to match.",
+    bridge: "Explain covers why prior experience shapes recognition.",
+    structure: "IT cortex (limited prior representation)",
+  },
+};
+
+function classifyOutcome(correct: boolean, guessStage: number): OutcomeKey {
+  const early = guessStage < BLUR_STAGES.length - 2; // guessed while still blurry
+  const fullyRevealed = guessStage >= BLUR_STAGES.length - 1;
+
+  if (correct && early) return "earlyCorrect";
+  if (correct) return "lateCorrect";
+  if (!correct && !fullyRevealed) return "earlyIncorrect";
+  return "incorrectAfterReveal";
+}
+
+/* ── Summary tiers (from pasted spec) ── */
+
+function getSummary(correctCount: number, total: number): ExperienceSummary {
+  if (correctCount === total) {
     return {
-      primary: "You identified it before fine detail arrived.",
-      secondary:
-        "This reflects the OFC shortcut: coarse, low spatial frequency information — broad shapes and contrast — was enough to generate a correct prediction. The guess reached the IT cortex before detailed processing through the ventral stream was complete.",
-      bridge: "See how this pathway works in Trace.",
-      structure: "LSF → OFC → IT cortex",
+      heading: "What This Shows",
+      body: "Low spatial frequency cues — broad shapes, contrast boundaries — were distinctive enough to support correct OFC predictions each time. This reflects efficient top-down processing where the fast route and the detailed route converged on the same answer.",
+      bridge: "Trace walks through the full OFC shortcut pathway.",
     };
   }
-  if (!correct && early) {
+  if (correctCount === 0) {
     return {
-      primary: "You guessed early, but the coarse information was misleading.",
-      secondary:
-        "This mirrors the trade-off of top-down prediction. The OFC generated a fast guess from rough shape and contrast cues, but the low spatial frequency information pointed to the wrong object. Speed costs accuracy — this is the inherent risk of heuristic processing.",
-      bridge: "Trace shows where the prediction forms and where it gets corrected.",
-      structure: "OFC prediction → IT cortex override",
+      heading: "What This Shows",
+      body: "The images were chosen to be ambiguous at low spatial frequencies. The OFC generated confident guesses from coarse input, and every guess pointed to the wrong identity. This illustrates both the power and the cost of the top-down prediction system: the same mechanism that enables millisecond recognition also produces confident wrong answers.",
+      bridge: "Explain covers the cost of heuristics in detail.",
     };
   }
-  if (correct) {
+  if (correctCount >= total / 2) {
     return {
-      primary: "You waited for enough detail to confirm the object.",
-      secondary:
-        "This fits the standard ventral-stream pathway. Higher spatial frequency information built up through V1 → V2 → V4 → IT cortex, giving the visual system enough detail for a confident match.",
-      bridge: "Trace shows the full recognition pathway.",
-      structure: "V1 → V2 → V4 → IT cortex",
+      heading: "What This Shows",
+      body: "The OFC shortcut works well when coarse cues are distinctive, but misfires when shapes and color profiles overlap between objects. The system trades accuracy for speed, and the trade-off shows up in ambiguous cases.",
+      bridge: "Explain breaks down why heuristics are fast but fallible.",
     };
   }
   return {
-    primary: "Even with more detail, the object was ambiguous enough to mislead.",
-    secondary:
-      "This reflects how expectation shapes perception. Prior guesses or contextual assumptions can bias IT cortex matching even when spatial frequency information is available.",
-    bridge: "Explain discusses how expectations interact with bottom-up signals.",
-    structure: "V1 → V4 → IT cortex (expectation bias)",
+    heading: "What This Shows",
+    body: "The low spatial frequency cues were not distinctive enough to support accurate guesses. This is not a failure of the visual system — it is a demonstration of what happens when heuristic processing encounters genuinely ambiguous input. The OFC shortcut is optimized for speed in typical conditions, not accuracy in unusual ones.",
+    bridge: "Trace shows where predictions form and where they get overridden.",
   };
 }
+
+/* ── Component ── */
 
 const BlurryObjectDemo = () => {
   const [round, setRound] = useState(0);
@@ -65,6 +100,7 @@ const BlurryObjectDemo = () => {
   const [guess, setGuess] = useState<string | null>(null);
   const [guessStage, setGuessStage] = useState<number | null>(null);
   const [done, setDone] = useState(false);
+  const [correctCount, setCorrectCount] = useState(0);
 
   const current = stimuli[round];
   const hasGuessed = guess !== null;
@@ -79,8 +115,9 @@ const BlurryObjectDemo = () => {
       if (hasGuessed) return;
       setGuess(option);
       setGuessStage(blurStage);
+      if (option === current.name) setCorrectCount((c) => c + 1);
     },
-    [hasGuessed, blurStage]
+    [hasGuessed, blurStage, current.name]
   );
 
   const handleNext = useCallback(() => {
@@ -99,18 +136,20 @@ const BlurryObjectDemo = () => {
     setBlurStage(0);
     setGuess(null);
     setGuessStage(null);
+    setCorrectCount(0);
     setDone(false);
   }, []);
 
+  const outcome =
+    hasGuessed
+      ? classifyOutcome(guess === current.name, guessStage ?? BLUR_STAGES.length - 1)
+      : null;
+
   return (
     <ExperienceShell
-      instructions="Each object starts heavily blurred. Try to identify it as early as you can — or sharpen the image first. Your timing reveals how your brain balances speed against accuracy."
+      instructions="Each object starts heavily blurred. Try to identify it as early as you can, or sharpen the image first. Your timing reveals how your brain balances speed against accuracy."
       done={done}
-      summary={{
-        heading: "What This Shows",
-        body: "Your brain tried to identify each object before the image was fully clear. That early guess came from your orbitofrontal cortex using low spatial frequency cues — coarse shapes and contrast — to generate a top-down prediction.",
-        bridge: "Continue to Trace to see the neural pathway involved.",
-      }}
+      summary={getSummary(correctCount, stimuli.length)}
       onRestart={handleRestart}
     >
       <div className="rounded-lg border border-border bg-card p-6">
@@ -173,15 +212,10 @@ const BlurryObjectDemo = () => {
           </div>
         </div>
 
-        {/* Feedback — using shared FeedbackCard */}
-        {hasGuessed && (
+        {/* Feedback */}
+        {outcome && (
           <div className="mt-5">
-            <FeedbackCard
-              feedback={getFeedback(
-                guess === current.name,
-                guessStage ?? BLUR_STAGES.length - 1
-              )}
-            />
+            <FeedbackCard feedback={trialFeedback[outcome]} />
             <div className="mt-4 flex justify-center">
               <button
                 onClick={handleNext}
