@@ -19,57 +19,53 @@ import {
 // Unit content bundles
 // ---------------------------------------------------------------------------
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// The content files use untyped string literals for sensitivity fields.
-// We cast to UnitContent at the bundle level to avoid modifying the source files.
 export const unitContent: Record<string, UnitContent> = {
   "unit-1": {
     meta: unit1Meta,
-    conceptCards: unit1ConceptCards as any,
+    conceptCards: unit1ConceptCards,
     pathways: unit1Pathways,
     distinctions: unit1Distinctions,
-    caseNotes: unit1CaseNotes as any,
+    caseNotes: unit1CaseNotes,
     review: unit1Review,
   },
   "unit-2": {
     meta: unit2Meta,
-    conceptCards: unit2ConceptCards as any,
+    conceptCards: unit2ConceptCards,
     pathways: unit2Pathways,
     distinctions: unit2Distinctions,
-    caseNotes: unit2CaseNotes as any,
+    caseNotes: unit2CaseNotes,
     review: unit2Review,
   },
   "unit-3": {
     meta: unit3Meta,
-    conceptCards: unit3ConceptCards as any,
+    conceptCards: unit3ConceptCards,
     pathways: unit3Pathways,
     distinctions: unit3Distinctions,
-    caseNotes: unit3CaseNotes as any,
+    caseNotes: unit3CaseNotes,
     review: unit3Review,
   },
   "unit-4": {
     meta: unit4Meta,
-    conceptCards: unit4ConceptCards as any,
+    conceptCards: unit4ConceptCards,
     pathways: unit4Pathways,
     distinctions: unit4Distinctions,
-    caseNotes: unit4CaseNotes as any,
+    caseNotes: unit4CaseNotes,
     review: unit4Review,
   },
   "unit-5": {
     meta: unit5Meta,
-    conceptCards: unit5ConceptCards as any,
+    conceptCards: unit5ConceptCards,
     pathways: unit5Pathways,
     distinctions: unit5Distinctions,
-    caseNotes: unit5CaseNotes as any,
+    caseNotes: unit5CaseNotes,
     review: unit5Review,
   },
 };
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 // ---------------------------------------------------------------------------
 // Lesson → Unit mapping
 // ---------------------------------------------------------------------------
-// Maps existing module IDs from src/data/modules.ts to their parent unit.
+// Maps existing module IDs from src/data/modules.ts to their parent units.
 
 export interface LessonMapping {
   moduleId: string;
@@ -85,7 +81,7 @@ export const lessonMappings: LessonMapping[] = [
   { moduleId: "mod-4", unitId: "unit-4", title: "Fear Cue and Extinction" },
 ];
 
-// Placeholder: Unit 5 has no interactive lesson yet.
+// Placeholder: Unit 5 anchor lesson for future implementation.
 export const unit5AnchorLesson: LessonMapping = {
   moduleId: "mod-6",
   unitId: "unit-5",

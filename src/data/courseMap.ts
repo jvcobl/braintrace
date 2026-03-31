@@ -1,5 +1,11 @@
-import { unitContent, lessonMappings, unit5AnchorLesson, getUnitContent, getLessonsByUnit } from "./content/registry";
-import type { UnitContent } from "./content/types";
+// ============================================================
+// NEUROROUTE — COURSE MAP
+// ============================================================
+// Derives unit listings from the canonical content layer while
+// preserving the CourseUnit shape consumed by existing pages.
+// ============================================================
+
+import { getUnitContent, getLessonsByUnit } from "./content/registry";
 
 export interface CourseUnit {
   id: string;
@@ -8,10 +14,17 @@ export interface CourseUnit {
   linkedModuleIds: string[];
 }
 
-/**
- * Build the course units list from the canonical content layer.
- * Lesson mappings come from the registry; key topics from unit meta.
- */
+// Key topics per unit — curated pedagogical topics matching the original
+// course map display. These are intentionally hand-written rather than
+// auto-derived from majorStructures so the Course Map page stays readable.
+const unitKeyTopics: Record<string, string[]> = {
+  "unit-1": ["Top-down processing", "Object recognition", "Face perception", "Fusiform face area"],
+  "unit-2": ["Working memory", "Cognitive load", "Prefrontal cortex", "Capacity limits"],
+  "unit-3": ["Startle reflex", "Brainstem circuits", "Auditory processing", "Rapid motor responses"],
+  "unit-4": ["Fear conditioning", "Extinction", "Amygdala", "Prefrontal regulation"],
+  "unit-5": ["HPA axis", "Cortisol", "Allostatic load", "Resilience"],
+};
+
 function buildCourseUnits(): CourseUnit[] {
   const unitIds = ["unit-1", "unit-2", "unit-3", "unit-4", "unit-5"];
 
@@ -21,18 +34,16 @@ function buildCourseUnits(): CourseUnit[] {
       return { id: uid, title: uid, keyTopics: [], linkedModuleIds: [] };
     }
 
+    // Only link modules that actually exist (mod-1 through mod-5).
+    // Unit 5's placeholder (mod-6) is registered in the content layer
+    // but not linked here since there's no lesson page for it yet.
     const lessons = getLessonsByUnit(uid);
-    // Include Unit 5 placeholder
-    const allLessons =
-      uid === "unit-5"
-        ? [...lessons, unit5AnchorLesson]
-        : lessons;
 
     return {
       id: uid,
       title: `Unit ${uid.replace("unit-", "")}: ${content.meta.title}`,
-      keyTopics: content.meta.majorStructures.slice(0, 4),
-      linkedModuleIds: allLessons.map((l) => l.moduleId),
+      keyTopics: unitKeyTopics[uid] ?? [],
+      linkedModuleIds: lessons.map((l) => l.moduleId),
     };
   });
 }
@@ -42,7 +53,3 @@ export const courseUnits: CourseUnit[] = buildCourseUnits();
 export function getUnitById(id: string): CourseUnit | undefined {
   return courseUnits.find((u) => u.id === id);
 }
-
-// Re-export content layer for convenience
-export { unitContent, getUnitContent, getLessonsByUnit } from "./content/registry";
-export type { UnitContent } from "./content/types";
