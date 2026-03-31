@@ -9,6 +9,10 @@ import DistinctionSection from "@/components/study/DistinctionSection";
 import CaseNoteSection from "@/components/study/CaseNoteSection";
 import ReviewSection from "@/components/study/ReviewSection";
 
+const SectionDivider = () => (
+  <div className="border-t border-border" aria-hidden="true" />
+);
+
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
   const content = unitId ? getUnitContent(unitId) : undefined;
@@ -52,22 +56,39 @@ const UnitHub = () => {
         ← Course Map
       </Link>
 
-      <div className="mt-6 space-y-10">
+      <div className="mt-6 space-y-12">
+        {/* 1. Unit overview */}
         <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
 
+        {/* 2. Featured lessons */}
         <FeaturedLessonCards
           linkedModules={linkedModules}
           placeholder={isUnit5 ? unit5AnchorLesson : undefined}
         />
 
+        <SectionDivider />
+
+        {/* 3. Key concepts */}
         <ConceptCardGrid cards={content.conceptCards} />
 
+        <SectionDivider />
+
+        {/* 4. Pathways */}
         <PathwaySection pathways={content.pathways} />
 
+        <SectionDivider />
+
+        {/* 5. Distinctions */}
         <DistinctionSection distinctions={content.distinctions} />
 
+        <SectionDivider />
+
+        {/* 6. Case notes */}
         <CaseNoteSection caseNotes={content.caseNotes} />
 
+        <SectionDivider />
+
+        {/* 7. Review */}
         <ReviewSection questions={content.review} />
       </div>
 
