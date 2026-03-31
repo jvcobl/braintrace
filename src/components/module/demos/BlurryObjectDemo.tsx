@@ -65,7 +65,7 @@ const BlurryObjectDemo = () => {
       <section>
         <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
         <div className="mt-4 rounded-lg border border-border bg-card p-8 text-center">
-          <h3 className="font-display text-lg font-semibold text-foreground">Demo Complete</h3>
+          <h3 className="font-display text-lg font-semibold text-foreground">What This Shows</h3>
           <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
             Notice how your brain tried to identify each object before the image was fully clear.
             That early guess came from your orbitofrontal cortex using low spatial frequency cues —
