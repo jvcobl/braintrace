@@ -165,12 +165,12 @@ export const modules: Module[] = [
   },
   {
     id: "mod-7",
-    title: "Multistable Perception Toggle",
-    slug: "multistable-perception-toggle",
+    title: "Multistable Perception Gallery",
+    slug: "multistable-perception-gallery",
     unitId: "unit-1",
-    shortGoal: "Experience how the brain toggles between two valid interpretations of one image.",
-    shortDescription: "View an ambiguous figure and discover why your brain picks one interpretation before you consciously choose.",
-    introCopy: "You'll look at a single ambiguous image that can be seen as two different things. Your brain will pick one interpretation instantly — a cognitive heuristic. Then you'll try to switch and trace the circuit that toggles between them.",
+    shortGoal: "Experience how the brain toggles between competing interpretations of the same image.",
+    shortDescription: "Work through a gallery of ambiguous figures and discover why your brain locks onto one reading before you consciously choose.",
+    introCopy: "You'll view a series of genuinely ambiguous images — each can be perceived in two valid ways. For each figure, you'll identify what you see first, then try to switch. The image never changes; only your brain's interpretation does.",
     traceNodes: [
       { label: "Ambiguous Visual Input", description: "The retina sends the same signal regardless of which interpretation you perceive. The image itself never changes." },
       { label: "Visual Cortex (V1–V4)", description: "Early visual areas extract edges, contours, and figure-ground boundaries. Both interpretations are neurally plausible at this stage." },
