@@ -185,6 +185,28 @@ export const modules: Module[] = [
     demoType: "interactive",
     learningObjective: "Explain multistable perception and how cognitive heuristics shape initial interpretation of ambiguous stimuli.",
   },
+  {
+    id: "mod-8",
+    title: "PFC Role Matcher",
+    slug: "pfc-role-matcher",
+    unitId: "unit-2",
+    shortGoal: "Learn the functional divisions of the prefrontal cortex.",
+    shortDescription: "Match cognitive scenarios to the correct PFC region and trace why the executive system has distinct subdivisions.",
+    introCopy: "You'll read short scenarios describing things the prefrontal cortex does — logic, emotion regulation, predictions — and assign each to the correct PFC subregion: dlPFC, vmPFC, or OFC. Then we'll trace the functional map.",
+    traceNodes: [
+      { label: "dlPFC — Logic and Working Memory", description: "Handles unsentimental calculations, abstract reasoning, and active maintenance of task-relevant information. The rational analysis center — the 'Spock' of the brain." },
+      { label: "vmPFC — Emotion Regulation", description: "Regulates emotional subcortical input — avoidance signals from the amygdala and reward signals from the nucleus accumbens. Balances emotion with executive judgment." },
+      { label: "OFC — Categorization and Expectations", description: "Sets predictions about what should happen next, categorizes stimuli, and generates contextual expectations that guide perception and decision-making." },
+    ],
+    explain: {
+      whatHappened: "You matched six cognitive scenarios to three PFC subdivisions — dorsolateral PFC, ventromedial PFC, and orbitofrontal cortex — based on each region's functional specialization.",
+      whatYourBrainDid: "To sort each scenario, your own PFC was actively engaged — using working memory (dlPFC) to hold the region definitions, emotional reasoning (vmPFC) to evaluate scenarios involving threat and reward, and categorical expectations (OFC) to predict which label fit. The task itself exercised the system it was asking you to learn about.",
+      keyPathway: "dlPFC (logic, working memory, cost-benefit analysis) ↔ vmPFC (amygdala regulation, reward balancing) ↔ OFC (categorization, contextual prediction). These three generally collaborate but can compete for control over decision-making.",
+      nbb302Connection: "This module covers the PFC functional map from NBB302 — how the prefrontal cortex is not a single monolithic controller but a set of specialized subdivisions that collaborate and sometimes compete. Understanding this map is essential for the cognitive load material: when the PFC is depleted by fatigue, hunger, or illness, all three regions lose capacity simultaneously.",
+    },
+    demoType: "interactive",
+    learningObjective: "Distinguish the functional roles of the dlPFC, vmPFC, and OFC within the prefrontal cortex.",
+  },
 ];
 
 export function getModuleBySlug(slug: string): Module | undefined {

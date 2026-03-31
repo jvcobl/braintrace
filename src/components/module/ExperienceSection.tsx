@@ -6,6 +6,7 @@ import FearCueDemo from "@/components/module/demos/FearCueDemo";
 import MemoryUnderLoadDemo from "@/components/module/demos/MemoryUnderLoadDemo";
 import HPAAxisBuilderDemo from "@/components/module/demos/HPAAxisBuilderDemo";
 import MultistablePerceptionDemo from "@/components/module/demos/MultistablePerceptionDemo";
+import PFCRoleMatcherDemo from "@/components/module/demos/PFCRoleMatcherDemo";
 
 interface ExperienceSectionProps {
   module: Module;
@@ -19,6 +20,7 @@ const demos: Record<string, React.ComponentType> = {
   "mod-5": MemoryUnderLoadDemo,
   "mod-6": HPAAxisBuilderDemo,
   "mod-7": MultistablePerceptionDemo,
+  "mod-8": PFCRoleMatcherDemo,
 };
 
 const ExperienceSection = ({ module }: ExperienceSectionProps) => {
