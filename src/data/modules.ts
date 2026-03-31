@@ -147,11 +147,12 @@ export const modules: Module[] = [
   },
   {
     id: "mod-6",
-    title: "HPA Axis Builder",
+    title: "Stress Response Builder",
     slug: "hpa-axis-builder",
     unitId: "unit-5",
+    hook: "Your stress response was built to protect you — but it doesn't always know when to stop.",
     shortGoal: "Learn the order of the HPA axis and what happens when cortisol feedback fails.",
-    shortDescription: "Build the stress response cascade step by step and trace how chronic stress overrides the shutdown mechanism.",
+    shortDescription: "How the HPA axis prepares the body for demand — and what happens when shutdown fails.",
     introCopy: "You'll assemble the HPA axis in the correct order — from the hypothalamus releasing CRH through cortisol negative feedback. Then we'll trace what happens when extreme stress from the central amygdala and PFC prevents the system from shutting down.",
     traceNodes: [
       { label: "Hypothalamus → CRH", description: "The hypothalamus detects a stressor and releases corticotropin-releasing hormone (CRH) into the portal blood system connecting it to the anterior pituitary." },
