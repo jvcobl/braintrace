@@ -10,6 +10,7 @@ import PFCRoleMatcherDemo from "@/components/module/demos/PFCRoleMatcherDemo";
 import FearAnxietySorterDemo from "@/components/module/demos/FearAnxietySorterDemo";
 import EmotionArousalSorterDemo from "@/components/module/demos/EmotionArousalSorterDemo";
 import ClassicalOperantSorterDemo from "@/components/module/demos/ClassicalOperantSorterDemo";
+import HomeostasisAllostasisSorterDemo from "@/components/module/demos/HomeostasisAllostasisSorterDemo";
 
 interface ExperienceSectionProps {
   module: Module;
