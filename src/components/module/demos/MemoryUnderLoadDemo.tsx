@@ -189,6 +189,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
     setLastCorrectCount(correct);
     setResults((prev) => [...prev, { load: round!.load, correct, total: sequence.length }]);
     setPhase("feedback");
+    if (!hasInteracted) setHasInteracted(true);
   }, [userInput, sequence, round]);
 
   const handleNext = useCallback(() => {
