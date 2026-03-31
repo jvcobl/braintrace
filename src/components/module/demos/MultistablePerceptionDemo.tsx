@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import examples from "./gallery/multistableExamples";
 import figureRegistry from "./gallery/figures";
 
@@ -12,6 +12,7 @@ interface ExampleState {
 const MultistablePerceptionDemo = () => {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [states, setStates] = useState<Record<string, ExampleState>>({});
+  const [assist, setAssist] = useState<"none" | "a" | "b">("none");
 
   const example = examples[currentIdx];
   const state: ExampleState = states[example.id] ?? { phase: "choose", choice: null };
@@ -21,6 +22,7 @@ const MultistablePerceptionDemo = () => {
       ...prev,
       [example.id]: { ...state, ...patch },
     }));
+    setAssist("none");
   };
 
   const Figure = figureRegistry[example.id];
@@ -39,9 +41,17 @@ const MultistablePerceptionDemo = () => {
     setExampleState({ phase: "choose", choice: null });
   };
 
+  const flashAssist = useCallback((target: "a" | "b") => {
+    setAssist(target);
+    setTimeout(() => setAssist("none"), 1200);
+  }, []);
+
   const completedCount = Object.values(states).filter(
     (s) => s.phase === "result"
   ).length;
+
+  const choiceIdx = state.choice === "a" ? 0 : 1;
+  const otherIdx = state.choice === "a" ? 1 : 0;
 
   return (
     <section>
@@ -63,7 +73,7 @@ const MultistablePerceptionDemo = () => {
             <button
               key={ex.id}
               type="button"
-              onClick={() => setCurrentIdx(i)}
+              onClick={() => { setCurrentIdx(i); setAssist("none"); }}
               aria-label={`Go to ${ex.title}${done ? " (completed)" : ""}`}
               className={`
                 h-2 rounded-full transition-all
@@ -88,7 +98,7 @@ const MultistablePerceptionDemo = () => {
             <button
               type="button"
               disabled={currentIdx === 0}
-              onClick={() => setCurrentIdx((i) => i - 1)}
+              onClick={() => { setCurrentIdx((i) => i - 1); setAssist("none"); }}
               className="rounded-md border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Previous example"
             >
@@ -97,7 +107,7 @@ const MultistablePerceptionDemo = () => {
             <button
               type="button"
               disabled={currentIdx === examples.length - 1}
-              onClick={() => setCurrentIdx((i) => i + 1)}
+              onClick={() => { setCurrentIdx((i) => i + 1); setAssist("none"); }}
               className="rounded-md border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent disabled:opacity-30 disabled:cursor-not-allowed"
               aria-label="Next example"
             >
@@ -107,9 +117,9 @@ const MultistablePerceptionDemo = () => {
         </div>
 
         {/* Figure */}
-        <div className="mt-5 mx-auto" style={{ maxWidth: 220 }}>
+        <div className="mt-5 mx-auto" style={{ maxWidth: 240 }}>
           {Figure ? (
-            <Figure highlighted={highlighted} />
+            <Figure highlighted={highlighted} assist={assist} />
           ) : (
             <div className="aspect-square rounded-lg bg-secondary flex items-center justify-center text-xs text-muted-foreground">
               Figure not available
@@ -119,6 +129,7 @@ const MultistablePerceptionDemo = () => {
 
         {/* Interaction area */}
         <div className="mt-6">
+          {/* Phase 1: Choose */}
           {state.phase === "choose" && (
             <div className="text-center space-y-4">
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -143,26 +154,34 @@ const MultistablePerceptionDemo = () => {
             </div>
           )}
 
-          {state.phase === "switch" && (
+          {/* Phase 2: Switch */}
+          {state.phase === "switch" && state.choice && (
             <div className="text-center space-y-4 max-w-sm mx-auto">
               <p className="text-sm text-foreground leading-relaxed">
-                You saw{" "}
-                <span className="font-medium">
-                  {state.choice === "a"
-                    ? example.interpretations[0].toLowerCase()
-                    : example.interpretations[1].toLowerCase()}
-                </span>{" "}
-                first. Now try to see{" "}
-                <span className="font-medium">
-                  {state.choice === "a"
-                    ? example.interpretations[1].toLowerCase()
-                    : example.interpretations[0].toLowerCase()}
-                </span>
-                .
+                {example.switchFeedback[choiceIdx]}
               </p>
-              <p className="text-xs text-muted-foreground">
-                Take your time — the switch can be subtle.
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                {example.switchHint[choiceIdx]}
               </p>
+
+              {/* Assist buttons */}
+              <div className="flex flex-wrap justify-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => flashAssist(state.choice === "a" ? "b" : "a")}
+                  className="rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                >
+                  Highlight {example.interpretations[otherIdx].toLowerCase()}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => flashAssist(state.choice!)}
+                  className="rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                >
+                  Highlight {example.interpretations[choiceIdx].toLowerCase()}
+                </button>
+              </div>
+
               <button
                 type="button"
                 onClick={handleConfirmSwitch}
@@ -173,13 +192,27 @@ const MultistablePerceptionDemo = () => {
             </div>
           )}
 
-          {state.phase === "result" && (
+          {/* Phase 3: Result */}
+          {state.phase === "result" && state.choice && (
             <div className="space-y-4 max-w-md mx-auto">
+              {/* Choice-specific feedback */}
               <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
+                <p className="text-sm text-foreground leading-relaxed">
+                  {example.resultFeedback[choiceIdx]}
+                </p>
+              </div>
+
+              {/* General explanation */}
+              <div className="rounded-lg border border-border bg-secondary/40 px-4 py-3">
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1">
+                  What's happening
+                </p>
                 <p className="text-sm text-foreground leading-relaxed">
                   {example.explanation}
                 </p>
               </div>
+
+              {/* Neuroscience note */}
               <div className="rounded-lg border border-primary/15 bg-primary/5 px-4 py-3">
                 <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 mb-1">
                   Neuroscience
@@ -188,6 +221,7 @@ const MultistablePerceptionDemo = () => {
                   {example.neuroscienceNote}
                 </p>
               </div>
+
               <div className="flex justify-center gap-3">
                 <button
                   type="button"
@@ -199,7 +233,7 @@ const MultistablePerceptionDemo = () => {
                 {currentIdx < examples.length - 1 && (
                   <button
                     type="button"
-                    onClick={() => setCurrentIdx((i) => i + 1)}
+                    onClick={() => { setCurrentIdx((i) => i + 1); setAssist("none"); }}
                     className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                   >
                     Next Example →
