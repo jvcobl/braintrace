@@ -104,16 +104,33 @@ const PredictionOutcome = ({
         ))}
       </div>
 
-      {/* Footer link */}
+      {/* Bridge footer — connects to Trace */}
       {onNavigateTrace && (
-        <button
-          type="button"
-          onClick={onNavigateTrace}
-          className="inline-flex items-center gap-1.5 text-[12px] font-medium text-primary/70 hover:text-primary transition-colors group"
-        >
-          <span>See the pathway in Trace</span>
-          <span className="text-primary/30 group-hover:text-primary/50 transition-colors" aria-hidden>→</span>
-        </button>
+        <div className="flex items-center gap-3 pt-1">
+          {/* Thin connector line */}
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+
+          <button
+            type="button"
+            onClick={onNavigateTrace}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-[12px] font-medium text-primary/80 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all group"
+          >
+            {structureChip && (
+              <span className="text-[10px] text-primary/50 group-hover:text-primary/70 transition-colors hidden sm:inline">
+                {structureChip}
+              </span>
+            )}
+            {structureChip && (
+              <span className="h-3 w-px bg-primary/20 hidden sm:block" aria-hidden />
+            )}
+            <span>See the pathway in Trace</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>
+              <path d="M5.5 3.5L9 7l-3.5 3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+        </div>
       )}
     </div>
   );
