@@ -2,24 +2,24 @@ import type { ExperienceFeedback } from "./types";
 
 interface FeedbackCardProps {
   feedback: ExperienceFeedback;
-  /** Called when the user clicks the bridge line. */
-  onBridgeClick?: () => void;
+  /** Navigate to Trace or Explain. Bridge text auto-detects target. */
+  onNavigate?: (target: "Trace" | "Explain") => void;
 }
 
 /** Detect which section the bridge text references. */
-function bridgeTarget(bridge: string): "Trace" | "Explain" | null {
+function bridgeTarget(bridge: string): "Trace" | "Explain" {
   const lower = bridge.toLowerCase();
   if (lower.includes("trace")) return "Trace";
-  if (lower.includes("explain") || lower.includes("review")) return "Explain";
-  return null;
+  return "Explain";
 }
 
 /**
  * Renders a single feedback state using the NeuroRoute schema:
  * primary → secondary → bridge → structure.
  */
-const FeedbackCard = ({ feedback, onBridgeClick }: FeedbackCardProps) => {
+const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
   const target = bridgeTarget(feedback.bridge);
+  const handleNavigate = onNavigate ? () => onNavigate(target) : undefined;
 
   return (
     <div className="space-y-3 max-w-md mx-auto">
@@ -40,23 +40,23 @@ const FeedbackCard = ({ feedback, onBridgeClick }: FeedbackCardProps) => {
         </p>
       </div>
 
-      {/* Structure — pathway reference */}
+      {/* Structure — pathway reference (clickable if navigable) */}
       {feedback.structure && (
         <div
-          className={`rounded-lg border px-4 py-3 ${
-            onBridgeClick
-              ? "border-primary/20 bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors"
+          className={`rounded-lg border px-4 py-3 transition-colors ${
+            handleNavigate
+              ? "border-primary/20 bg-primary/5 cursor-pointer hover:bg-primary/10"
               : "border-primary/15 bg-primary/5"
           }`}
-          onClick={target === "Trace" && onBridgeClick ? onBridgeClick : undefined}
-          role={target === "Trace" && onBridgeClick ? "button" : undefined}
-          tabIndex={target === "Trace" && onBridgeClick ? 0 : undefined}
-          onKeyDown={target === "Trace" && onBridgeClick ? (e) => { if (e.key === "Enter" || e.key === " ") onBridgeClick(); } : undefined}
+          onClick={handleNavigate}
+          role={handleNavigate ? "button" : undefined}
+          tabIndex={handleNavigate ? 0 : undefined}
+          onKeyDown={handleNavigate ? (e) => { if (e.key === "Enter" || e.key === " ") handleNavigate(); } : undefined}
         >
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 mb-1.5">
             Pathway
-            {target === "Trace" && onBridgeClick && (
-              <span className="ml-1.5 text-primary/40">→ view in Trace</span>
+            {handleNavigate && (
+              <span className="ml-1.5 text-primary/40">→ view in {target}</span>
             )}
           </p>
           <p className="text-[13px] font-mono text-foreground/70 leading-relaxed">
@@ -65,11 +65,11 @@ const FeedbackCard = ({ feedback, onBridgeClick }: FeedbackCardProps) => {
         </div>
       )}
 
-      {/* Bridge — next step as clickable link */}
-      {onBridgeClick ? (
+      {/* Bridge — clickable transition */}
+      {handleNavigate ? (
         <button
           type="button"
-          onClick={onBridgeClick}
+          onClick={handleNavigate}
           className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors pt-1 flex items-center justify-center gap-1.5 group"
         >
           <span>{feedback.bridge}</span>
