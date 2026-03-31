@@ -165,7 +165,7 @@ const SuddenNoiseDemo = () => {
           <p className="text-xs text-muted-foreground">Trial {trialIndex + 1} of {TRIALS.length}</p>
           <button
             onClick={() => setMuted((m) => !m)}
-            className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent"
+            className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             aria-label={muted ? "Turn sound on" : "Mute sound"}
           >
             {muted ? "🔇 Sound Off" : "🔊 Sound On"}
