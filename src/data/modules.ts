@@ -1,5 +1,17 @@
 export type DemoType = "interactive" | "observation" | "recall" | "response";
 
+export interface TraceNode {
+  label: string;
+  description: string;
+}
+
+export interface ExplainContent {
+  whatHappened: string;
+  whatYourBrainDid: string;
+  keyPathway: string;
+  nbb302Connection: string;
+}
+
 export interface Module {
   id: string;
   title: string;
@@ -8,8 +20,8 @@ export interface Module {
   shortGoal: string;
   shortDescription: string;
   introCopy: string;
-  traceLabel: string;
-  explanationLabel: string;
+  traceNodes: TraceNode[];
+  explain: ExplainContent;
   demoType: DemoType;
   learningObjective: string;
 }
@@ -23,8 +35,19 @@ export const modules: Module[] = [
     shortGoal: "Explore how the brain resolves ambiguous visual input.",
     shortDescription: "Guess what a blurry image is and discover how top-down processing shapes perception.",
     introCopy: "You'll see a blurry image and try to identify it. Then we'll trace the pathway your brain uses to make sense of incomplete information.",
-    traceLabel: "Pathway trace content will go here.",
-    explanationLabel: "Scientific explanation will go here.",
+    traceNodes: [
+      { label: "Retina", description: "Light enters and is converted to neural signals." },
+      { label: "LGN", description: "Signals relay through the lateral geniculate nucleus." },
+      { label: "V1", description: "Primary visual cortex begins edge and shape processing." },
+      { label: "Inferotemporal Cortex", description: "Higher-order object recognition occurs." },
+      { label: "Prefrontal Cortex", description: "Top-down expectations refine the percept." },
+    ],
+    explain: {
+      whatHappened: "Explanation content will be added.",
+      whatYourBrainDid: "Explanation content will be added.",
+      keyPathway: "Explanation content will be added.",
+      nbb302Connection: "Explanation content will be added.",
+    },
     demoType: "interactive",
     learningObjective: "Understand the role of top-down processing in visual perception.",
   },
@@ -36,8 +59,19 @@ export const modules: Module[] = [
     shortGoal: "Investigate the brain's bias toward detecting faces.",
     shortDescription: "Decide whether ambiguous images contain faces and learn about the fusiform face area.",
     introCopy: "You'll view a series of images and decide if each one contains a face. We'll then explore why your brain is so eager to find faces everywhere.",
-    traceLabel: "Pathway trace content will go here.",
-    explanationLabel: "Scientific explanation will go here.",
+    traceNodes: [
+      { label: "Retina", description: "Visual input is captured." },
+      { label: "V1", description: "Early feature detection begins." },
+      { label: "FFA (Fusiform Face Area)", description: "Specialized region processes face-like patterns." },
+      { label: "Amygdala", description: "Emotional significance is evaluated." },
+      { label: "Prefrontal Cortex", description: "Conscious decision about the stimulus." },
+    ],
+    explain: {
+      whatHappened: "Explanation content will be added.",
+      whatYourBrainDid: "Explanation content will be added.",
+      keyPathway: "Explanation content will be added.",
+      nbb302Connection: "Explanation content will be added.",
+    },
     demoType: "observation",
     learningObjective: "Identify the neural basis of face perception and pareidolia.",
   },
@@ -49,8 +83,19 @@ export const modules: Module[] = [
     shortGoal: "Examine the startle reflex and rapid brainstem responses.",
     shortDescription: "Experience a sudden auditory stimulus and trace the fast neural circuit behind your reaction.",
     introCopy: "A sudden sound will play and we'll look at how quickly your body responds — before your conscious mind even catches up.",
-    traceLabel: "Pathway trace content will go here.",
-    explanationLabel: "Scientific explanation will go here.",
+    traceNodes: [
+      { label: "Cochlea", description: "Sound waves are transduced into neural signals." },
+      { label: "Cochlear Nucleus", description: "First brainstem relay for auditory input." },
+      { label: "Reticular Formation", description: "Rapid alerting response is triggered." },
+      { label: "Motor Neurons", description: "Startle muscles contract involuntarily." },
+      { label: "Auditory Cortex", description: "Conscious awareness of the sound follows." },
+    ],
+    explain: {
+      whatHappened: "Explanation content will be added.",
+      whatYourBrainDid: "Explanation content will be added.",
+      keyPathway: "Explanation content will be added.",
+      nbb302Connection: "Explanation content will be added.",
+    },
     demoType: "response",
     learningObjective: "Describe the neural circuit underlying the acoustic startle reflex.",
   },
@@ -62,8 +107,19 @@ export const modules: Module[] = [
     shortGoal: "Model how fear responses are learned and extinguished.",
     shortDescription: "Observe a simple conditioning paradigm and trace the amygdala-based pathway for fear learning.",
     introCopy: "You'll watch a cue become associated with an aversive outcome, then see what happens when that association is removed.",
-    traceLabel: "Pathway trace content will go here.",
-    explanationLabel: "Scientific explanation will go here.",
+    traceNodes: [
+      { label: "Sensory Input", description: "The conditioned stimulus is perceived." },
+      { label: "Thalamus", description: "Quick relay to the amygdala (low road)." },
+      { label: "Amygdala", description: "Fear association is formed and expressed." },
+      { label: "Hypothalamus", description: "Autonomic fear responses are initiated." },
+      { label: "vmPFC", description: "Inhibitory control enables extinction learning." },
+    ],
+    explain: {
+      whatHappened: "Explanation content will be added.",
+      whatYourBrainDid: "Explanation content will be added.",
+      keyPathway: "Explanation content will be added.",
+      nbb302Connection: "Explanation content will be added.",
+    },
     demoType: "observation",
     learningObjective: "Explain the roles of the amygdala and prefrontal cortex in fear conditioning and extinction.",
   },
@@ -75,8 +131,19 @@ export const modules: Module[] = [
     shortGoal: "Test how cognitive load affects working memory capacity.",
     shortDescription: "Try a short memory task under varying levels of distraction and explore the limits of working memory.",
     introCopy: "You'll attempt to remember items while handling a secondary task. We'll see how your performance changes as load increases.",
-    traceLabel: "Pathway trace content will go here.",
-    explanationLabel: "Scientific explanation will go here.",
+    traceNodes: [
+      { label: "Sensory Cortex", description: "Stimulus information is initially encoded." },
+      { label: "Prefrontal Cortex", description: "Items are maintained in working memory." },
+      { label: "Parietal Cortex", description: "Attentional resources are allocated." },
+      { label: "Basal Ganglia", description: "Gating of relevant vs. irrelevant information." },
+      { label: "Hippocampus", description: "Supports binding when load exceeds capacity." },
+    ],
+    explain: {
+      whatHappened: "Explanation content will be added.",
+      whatYourBrainDid: "Explanation content will be added.",
+      keyPathway: "Explanation content will be added.",
+      nbb302Connection: "Explanation content will be added.",
+    },
     demoType: "recall",
     learningObjective: "Understand working memory capacity limits and the prefrontal contributions to maintenance under load.",
   },
