@@ -111,7 +111,7 @@ const BlurryObjectDemo = () => {
             <button
               onClick={handleSharpen}
               disabled={blurStage >= BLUR_STAGES.length - 1}
-              className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed"
+              className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Sharpen
             </button>
