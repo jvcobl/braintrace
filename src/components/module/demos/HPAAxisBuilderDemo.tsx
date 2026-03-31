@@ -132,6 +132,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
     const isCorrect = placed.every((p, i) => p.id === CORRECT_SEQUENCE[i].id);
     setSeqResult(isCorrect ? "correct" : "orderError");
     setPhase("sequence-result");
+    if (!hasInteracted) setHasInteracted(true);
   }, [placed]);
 
   const handleContinueToFeedback = useCallback(() => {
