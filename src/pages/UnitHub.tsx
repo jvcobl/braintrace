@@ -1,6 +1,13 @@
 import { useParams, Link } from "react-router-dom";
 import { getUnitContent, getLessonsByUnit, getUnitIds, unit5AnchorLesson } from "@/data/content/registry";
 import { modules } from "@/data/modules";
+import UnitOverviewHeader from "@/components/study/UnitOverviewHeader";
+import FeaturedLessonCards from "@/components/study/FeaturedLessonCards";
+import ConceptCardGrid from "@/components/study/ConceptCardGrid";
+import PathwaySection from "@/components/study/PathwaySection";
+import DistinctionSection from "@/components/study/DistinctionSection";
+import CaseNoteSection from "@/components/study/CaseNoteSection";
+import ReviewSection from "@/components/study/ReviewSection";
 
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
@@ -23,14 +30,13 @@ const UnitHub = () => {
     );
   }
 
-  const { meta } = content;
   const unitNumber = unitId.replace("unit-", "");
   const lessons = getLessonsByUnit(unitId);
   const isUnit5 = unitId === "unit-5";
 
   const linkedModules = lessons
     .map((l) => modules.find((m) => m.id === l.moduleId))
-    .filter(Boolean);
+    .filter((m): m is NonNullable<typeof m> => m != null);
 
   const allIds = getUnitIds();
   const idx = allIds.indexOf(unitId);
@@ -46,79 +52,24 @@ const UnitHub = () => {
         ← Course Map
       </Link>
 
-      <div className="mt-6">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-          Unit {unitNumber}
-        </p>
-        <h1 className="mt-1 font-display text-3xl font-bold text-foreground">{meta.title}</h1>
-        <p className="mt-2 text-muted-foreground">{meta.subtitle}</p>
+      <div className="mt-6 space-y-10">
+        <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
+
+        <FeaturedLessonCards
+          linkedModules={linkedModules}
+          placeholder={isUnit5 ? unit5AnchorLesson : undefined}
+        />
+
+        <ConceptCardGrid cards={content.conceptCards} />
+
+        <PathwaySection pathways={content.pathways} />
+
+        <DistinctionSection distinctions={content.distinctions} />
+
+        <CaseNoteSection caseNotes={content.caseNotes} />
+
+        <ReviewSection questions={content.review} />
       </div>
-
-      <section className="mt-8">
-        <p className="text-sm text-foreground/80 leading-relaxed">{meta.overview}</p>
-      </section>
-
-      {/* Structures */}
-      <section className="mt-8">
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          Major Structures
-        </h2>
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {meta.majorStructures.map((s) => (
-            <span
-              key={s}
-              className="rounded-full bg-secondary px-2.5 py-0.5 text-xs text-muted-foreground"
-            >
-              {s}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* Lectures */}
-      <section className="mt-6">
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          Lecture Topics
-        </h2>
-        <ul className="mt-2 space-y-1">
-          {meta.lectureTopics.map((t) => (
-            <li key={t} className="text-sm text-foreground/80">{t}</li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Lessons */}
-      <section className="mt-10">
-        <h2 className="font-display text-lg font-semibold text-foreground">Lessons</h2>
-        {linkedModules.length > 0 ? (
-          <div className="mt-3 space-y-3">
-            {linkedModules.map((mod) =>
-              mod ? (
-                <Link
-                  key={mod.id}
-                  to={`/module/${mod.id}`}
-                  className="group flex flex-col rounded-lg border border-border bg-card p-5 transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  <h3 className="font-display text-base font-semibold text-card-foreground leading-snug">
-                    {mod.title}
-                  </h3>
-                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                    {mod.shortDescription}
-                  </p>
-                </Link>
-              ) : null,
-            )}
-          </div>
-        ) : isUnit5 ? (
-          <div className="mt-3 rounded-lg border border-dashed border-border bg-card p-5 text-center">
-            <p className="text-sm font-medium text-muted-foreground">
-              {unit5AnchorLesson.title}
-            </p>
-          </div>
-        ) : (
-          <p className="mt-3 text-sm text-muted-foreground italic">No lessons yet</p>
-        )}
-      </section>
 
       {/* Prev / Next */}
       <nav className="mt-12 flex items-center justify-between border-t border-border pt-6">
