@@ -33,8 +33,9 @@ export const modules: Module[] = [
     title: "Blurry Object Guess",
     slug: "blurry-object-guess",
     unitId: "unit-1",
+    hook: "Your brain starts guessing before the image is even clear.",
     shortGoal: "Explore how the brain resolves ambiguous visual input.",
-    shortDescription: "Guess what a blurry image is and discover how top-down processing shapes perception.",
+    shortDescription: "How the visual system predicts identity from minimal input.",
     introCopy: "You'll see a blurry image and try to identify it. Then we'll trace the pathway your brain uses to make sense of incomplete information.",
     traceNodes: [
       { label: "Low Spatial Frequency Input", description: "The visual system receives coarse, blurry information first — broad shapes and contrast patterns that carry low spatial frequency data before fine edges and textures arrive." },
