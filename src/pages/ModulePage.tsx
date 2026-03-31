@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getModuleById } from "@/data/modules";
+import { getModuleById, modules } from "@/data/modules";
 import { getUnitById } from "@/data/courseMap";
+import { getLessonsByUnit } from "@/data/content/registry";
 import SectionNav, { type SectionId } from "@/components/module/SectionNav";
 import IntroSection from "@/components/module/IntroSection";
 import ExperienceSection from "@/components/module/ExperienceSection";
@@ -31,6 +32,15 @@ const ModulePage = () => {
     );
   }
 
+  // Sibling lessons in the same unit (excluding self)
+  const siblingLessons = getLessonsByUnit(mod.unitId)
+    .filter((l) => l.moduleId !== mod.id)
+    .map((l) => {
+      const m = modules.find((x) => x.id === l.moduleId);
+      return m ? { id: m.id, title: m.title } : null;
+    })
+    .filter((x): x is NonNullable<typeof x> => x != null);
+
   return (
     <div className="container max-w-3xl py-12">
       <Link
@@ -59,6 +69,28 @@ const ModulePage = () => {
         {section === "Trace" && <TracePanel nodes={mod.traceNodes} />}
         {section === "Explain" && <ExplainSection explain={mod.explain} />}
       </div>
+
+      {/* Related lessons in this unit */}
+      {siblingLessons.length > 0 && (
+        <div className="mt-12 border-t border-border pt-6">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            More in this unit
+          </h2>
+          <ul className="mt-3 space-y-1.5">
+            {siblingLessons.map((s) => (
+              <li key={s.id}>
+                <Link
+                  to={`/module/${s.id}`}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+                >
+                  <span className="text-xs text-muted-foreground" aria-hidden="true">→</span>
+                  {s.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
