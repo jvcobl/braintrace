@@ -164,7 +164,7 @@ const FearCueDemo = () => {
           {step === "note" && (
             <div className="text-center max-w-sm px-2">
               <p className="text-sm text-muted-foreground leading-relaxed">{noteText}</p>
-              <button onClick={advance} className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+              <button onClick={advance} className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
                 {index < TRIALS.length - 1 ? "Next" : "See Summary"}
               </button>
             </div>

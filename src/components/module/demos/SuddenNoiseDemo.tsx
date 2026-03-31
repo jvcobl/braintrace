@@ -214,7 +214,7 @@ const SuddenNoiseDemo = () => {
               )}
               <button
                 onClick={handleNext}
-                className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 {trialIndex < TRIALS.length - 1 ? "Next" : "See Results"}
               </button>
