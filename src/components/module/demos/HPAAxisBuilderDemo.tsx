@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
+import { ExperienceShell } from "@/components/module/experience";
 
-// The correct HPA axis sequence
+/* ── Correct HPA axis sequence ── */
+
 const CORRECT_ORDER = [
   {
     id: "hypothalamus",
@@ -36,7 +38,6 @@ const CORRECT_ORDER = [
 
 type Phase = "build" | "result";
 
-// Shuffle helper
 function shuffle<T>(arr: T[]): T[] {
   const copy = [...arr];
   for (let i = copy.length - 1; i > 0; i--) {
@@ -67,9 +68,7 @@ const HPAAxisBuilderDemo = () => {
     [],
   );
 
-  const handleCheck = useCallback(() => {
-    setPhase("result");
-  }, []);
+  const handleCheck = useCallback(() => setPhase("result"), []);
 
   const handleReset = useCallback(() => {
     setPhase("build");
@@ -82,17 +81,17 @@ const HPAAxisBuilderDemo = () => {
     placed.every((p, i) => p.id === CORRECT_ORDER[i].id);
 
   return (
-    <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
-        Experience
-      </h2>
-      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-        Build the HPA axis in order. Select each step from the pool and place it
-        into the sequence. Then check whether your order matches the actual
-        neuroendocrine cascade.
-      </p>
-
-      <div className="mt-6 space-y-6">
+    <ExperienceShell
+      instructions="Build the HPA axis in order. Select each step from the pool and place it into the sequence. Then check whether your order matches the actual neuroendocrine cascade."
+      done={phase === "result" && isCorrect}
+      summary={{
+        heading: "What This Shows",
+        body: "You traced the full HPA axis: Hypothalamus → CRH → Pituitary → ACTH → Adrenal cortex → Cortisol → Negative feedback → and the override mechanism under extreme stress. This is the same neuroendocrine cascade that activates during any significant stressor.",
+        bridge: "Continue to Trace to see each structure's role in the pathway.",
+      }}
+      onRestart={handleReset}
+    >
+      <div className="space-y-6">
         {/* Placed sequence */}
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
@@ -116,7 +115,7 @@ const HPAAxisBuilderDemo = () => {
                       key={item.id}
                       className={`flex items-start gap-3 rounded-md border px-3 py-2 text-sm transition-colors ${
                         correctAtPosition
-                          ? "border-green-600/30 bg-green-50/50 dark:bg-green-950/20"
+                          ? "border-primary/30 bg-primary/5"
                           : wrongAtPosition
                             ? "border-destructive/30 bg-destructive/5"
                             : "border-border bg-secondary/40"
@@ -130,9 +129,11 @@ const HPAAxisBuilderDemo = () => {
                           {item.structure}
                         </span>
                         <span className="text-muted-foreground">
-                          {" "}
-                          — {item.action}
+                          {" "}— {item.action}
                         </span>
+                        {phase === "result" && (
+                          <p className="mt-0.5 text-xs text-muted-foreground">{item.detail}</p>
+                        )}
                       </div>
                       {phase === "build" && (
                         <button
@@ -184,54 +185,26 @@ const HPAAxisBuilderDemo = () => {
               Check Order
             </button>
           )}
-          {phase === "result" && (
-            <button
-              type="button"
-              onClick={handleReset}
-              className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              Try Again
-            </button>
+          {phase === "result" && !isCorrect && (
+            <>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                Try Again
+              </button>
+              <div className="rounded-lg border border-border bg-accent/40 px-4 py-3 text-sm flex-1">
+                <p className="font-medium text-foreground">Not quite — compare your order to the correct sequence above.</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Each step's detail is now visible. The cascade flows from CRH through cortisol, then feeds back to shut itself down — unless extreme stress overrides that feedback.
+                </p>
+              </div>
+            </>
           )}
         </div>
-
-        {/* Result feedback */}
-        {phase === "result" && (
-          <div
-            className={`rounded-lg border px-4 py-3 text-sm ${
-              isCorrect
-                ? "border-green-600/30 bg-green-50/50 dark:bg-green-950/20 text-foreground"
-                : "border-border bg-accent/40 text-foreground"
-            }`}
-          >
-            {isCorrect ? (
-              <p>
-                <span className="font-semibold">Correct.</span> You traced the
-                full HPA axis: Hypothalamus → CRH → Pituitary → ACTH → Adrenal
-                cortex → Cortisol → Negative feedback → and the override
-                mechanism under extreme stress.
-              </p>
-            ) : (
-              <div>
-                <p className="font-semibold">Not quite — here's the correct order:</p>
-                <ol className="mt-2 space-y-1.5">
-                  {CORRECT_ORDER.map((step, i) => (
-                    <li key={step.id} className="flex gap-2">
-                      <span className="shrink-0 font-medium text-primary">
-                        {i + 1}.
-                      </span>
-                      <span>
-                        <span className="font-medium">{step.structure}</span> — {step.detail}
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-          </div>
-        )}
       </div>
-    </section>
+    </ExperienceShell>
   );
 };
 
