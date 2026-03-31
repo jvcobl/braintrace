@@ -267,6 +267,7 @@ export const modules: Module[] = [
     title: "Classical vs. Operant Sorter",
     slug: "classical-vs-operant-sorter",
     unitId: "unit-4",
+    hook: "You didn't choose to flinch — and that's the whole point.",
     shortGoal: "Distinguish the two major associative learning paradigms.",
     shortDescription: "Classify scenarios as classical or operant conditioning and learn why fear conditioning is strictly classical.",
     introCopy: "You'll read short scenarios and decide whether each describes classical conditioning — where a neutral stimulus is paired with an unconditioned stimulus to produce an automatic response — or operant conditioning — where a voluntary behavior is shaped by its consequences. Then we'll trace why this distinction matters for understanding fear.",
