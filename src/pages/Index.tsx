@@ -9,19 +9,19 @@ const STUDY_METHOD = [
     step: "01",
     name: "Experience",
     description:
-      "Each lesson opens with an interactive demo. You observe or participate in a perceptual, cognitive, or physiological phenomenon before encountering any explanation.",
+      "Each lesson starts with something you do — a blurry image, a sudden sound, a memory task. You encounter the phenomenon before any explanation.",
   },
   {
     step: "02",
     name: "Trace",
     description:
-      "A pathway diagram maps the brain regions and circuits involved — showing how the signal moves from input to output.",
+      "Then you see what your brain predicted, what actually happened, and which neural pathways were involved.",
   },
   {
     step: "03",
     name: "Explain",
     description:
-      "A focused write-up connects the demo to the neuroscience: what your brain did, which structures were active, and why the pathway matters.",
+      "A focused write-up connects the experience to the neuroscience — what your brain did, which structures were active, and why the pathway matters.",
   },
 ];
 
@@ -38,11 +38,11 @@ const APPROACH_POINTS = [
   },
   {
     title: "Active retrieval built in",
-    body: "Sorting, classifying, and predicting during lessons engage the same prefrontal mechanisms you're studying. Each interaction doubles as a retrieval opportunity.",
+    body: "Sorting, classifying, and predicting during lessons engage the same prefrontal mechanisms you're learning about. Each interaction doubles as a retrieval opportunity.",
   },
   {
     title: "Dense and precise",
-    body: "Explanations are written to be complete in a few paragraphs. No filler, no repetition — the kind of writing you'd want the night before an exam.",
+    body: "Explanations are written to be complete in a few paragraphs. No filler, no repetition — the kind of clarity you'd want when you actually want to understand something.",
   },
 ];
 
@@ -72,19 +72,16 @@ const Index = () => {
         />
 
         <div className="container relative mx-auto max-w-3xl py-24 text-center md:py-36">
-          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-            Interactive Neuroscience Study Platform
-          </p>
-
-          <h1 className="mt-6 font-display text-[2.5rem] leading-[1.15] tracking-tight text-foreground md:text-[3.25rem] lg:text-[3.75rem]">
-            Perception, Cognition, Emotion,
+          <h1 className="font-display text-[2.5rem] leading-[1.15] tracking-tight text-foreground md:text-[3.25rem] lg:text-[3.75rem]">
+            Your brain is predicting what happens next
             <br className="hidden sm:block" />
-            Conditioning, and Stress
+            — before you even realize it.
           </h1>
 
-          <p className="mx-auto mt-7 max-w-lg text-[1.05rem] leading-relaxed text-muted-foreground">
-            Five units. Interactive lessons that let you experience a neural
-            phenomenon, trace the pathway, and understand the mechanism.
+          <p className="mx-auto mt-7 max-w-xl text-[1.05rem] leading-relaxed text-muted-foreground">
+            NeuroRoute is a free interactive neuroscience site. Experience a
+            phenomenon, trace the neural pathway, and understand what your brain
+            was actually doing.
           </p>
 
           <div className="mt-11 flex items-center justify-center gap-4">
@@ -92,13 +89,13 @@ const Index = () => {
               to={`/unit/${unitIds[0]}`}
               className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Begin with Unit 1
+              Start Exploring
             </Link>
             <Link
               to="/course-map"
               className="inline-flex items-center rounded-lg border border-border bg-card px-7 py-3.5 text-sm font-semibold text-foreground shadow-sm transition-all hover:bg-secondary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Browse All Units
+              Browse All Lessons
             </Link>
           </div>
         </div>
@@ -111,14 +108,16 @@ const Index = () => {
         <div className="container mx-auto max-w-5xl py-20 md:py-24">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-              Study Method
+              How It Works
             </p>
             <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Each lesson follows three steps
+              Every lesson follows the same loop
             </h2>
-            <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground leading-relaxed">
-              The same structure repeats across every lesson — first-person
-              experience, then pathway anatomy, then written explanation.
+            <p className="mx-auto mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
+              You experience something — a blurry image, a sudden sound, a
+              memory task. Then you see what your brain predicted, what actually
+              happened, and which pathways were involved. Experience first, then
+              explanation.
             </p>
           </div>
 
@@ -148,14 +147,15 @@ const Index = () => {
         <div className="container mx-auto max-w-5xl py-20 md:py-24">
           <div className="max-w-2xl">
             <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-              Curriculum
+              What You'll Explore
             </p>
             <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Five units covering core neuroscience
+              Six interactive lessons across five areas
             </h2>
             <p className="mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
-              The curriculum moves from sensory processing through higher
-              cognition to neuroendocrine stress systems.
+              Perception, attention, emotion, learning, and stress. Each lesson
+              is built around a real phenomenon you can feel, not just read
+              about.
             </p>
           </div>
 
@@ -210,11 +210,11 @@ const Index = () => {
               Where to Start
             </p>
             <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Recommended lessons
+              Try one of these
             </h2>
             <p className="mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
-              These four lessons span different units and demonstrate the range
-              of topics and interaction types across the platform.
+              These four lessons span different topics and show the range of
+              phenomena and interactions across the site.
             </p>
           </div>
 
@@ -285,18 +285,18 @@ const Index = () => {
       <section>
         <div className="container mx-auto max-w-2xl py-20 text-center md:py-28">
           <h2 className="font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-            Start with any unit or pick a lesson
+            Pick a lesson and see what your brain does
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground leading-relaxed">
-            The units are sequential but each lesson is self-contained — work
-            through them in order or jump to a specific topic.
+            Each lesson is self-contained — start anywhere, or work through
+            the units in order.
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
             <Link
               to={`/unit/${unitIds[0]}`}
               className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Begin with Unit 1
+              Start Exploring
             </Link>
             <Link
               to="/about"
