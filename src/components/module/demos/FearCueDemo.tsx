@@ -84,7 +84,7 @@ const FearCueDemo = () => {
           <p className="mt-3 text-sm text-muted-foreground max-w-sm mx-auto">
             In a real experiment, hours or days pass. The extinction memory — "the cue is safe" — can weaken during this gap, allowing the original fear memory to re-emerge.
           </p>
-          <button onClick={advance} className="mt-6 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+          <button onClick={advance} className="mt-6 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
             Continue to Test
           </button>
         </div>
