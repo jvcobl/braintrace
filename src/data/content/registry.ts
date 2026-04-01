@@ -1,5 +1,5 @@
 // ============================================================
-// NEUROROUTE — COURSE REGISTRY
+// BRAINTRACE — COURSE REGISTRY
 // ============================================================
 // Central registry mapping all 5 units to their content bundles
 // and linking existing lesson modules to their parent units.

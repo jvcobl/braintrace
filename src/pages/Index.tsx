@@ -274,7 +274,7 @@ const Index = () => {
               to="/about"
               className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
             >
-              About NeuroRoute
+              About BrainTrace
             </Link>
           </div>
         </div>

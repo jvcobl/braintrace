@@ -1,5 +1,5 @@
 // ============================================================
-// NEUROROUTE — MASTER CONTENT INDEX
+// BRAINTRACE — MASTER CONTENT INDEX
 // ============================================================
 // All content sourced from neuroscience literature.
 // No internet-derived information.
