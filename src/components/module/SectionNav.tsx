@@ -15,8 +15,9 @@ const SectionNav = ({ current, onSelect }: SectionNavProps) => (
     {sections.map((s) => (
       <button
         key={s}
+        type="button"
         onClick={() => onSelect(s)}
-        className={`flex-1 rounded-lg px-2 py-2 sm:px-3 sm:py-2.5 text-[12px] sm:text-[13px] font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
+        className={`flex-1 rounded-lg px-2 py-2.5 sm:px-3 sm:py-2.5 text-[12px] sm:text-[13px] font-medium transition-all min-h-[44px] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
           current === s
             ? "bg-primary text-primary-foreground shadow-sm"
             : "text-muted-foreground hover:bg-secondary hover:text-foreground"

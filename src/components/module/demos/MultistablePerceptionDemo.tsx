@@ -85,12 +85,13 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
               onClick={() => { setCurrentIdx(i); setAssist("none"); }}
               aria-label={`${ex.title}${done ? " (completed)" : active ? " (current)" : ""}`}
               className={`
-                flex items-center gap-1.5 rounded-full transition-all px-2.5 py-1
+                flex items-center gap-1.5 rounded-full transition-all px-2.5 py-1.5 min-h-[36px]
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
                 ${active
                   ? "bg-primary/10 border border-primary/25"
                   : done
                     ? "bg-accent/50 border border-border"
-                    : "bg-secondary/50 border border-border/50"
+                    : "bg-secondary/50 border border-border/50 hover:bg-secondary"
                 }
               `}
             >
@@ -120,7 +121,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
             <button
               type="button"
               onClick={() => onNavigate("Trace")}
-              className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1.5 group"
+              className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
             >
               <span>See the neural pathway in Trace</span>
               <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
@@ -132,7 +133,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
       {/* Active example card */}
       <div className="mt-5 rounded-xl border border-border bg-card overflow-hidden">
         {/* Card header */}
-        <div className="flex items-center justify-between gap-3 border-b border-border/60 px-5 py-3 md:px-6">
+        <div className="flex items-center justify-between gap-3 border-b border-border/60 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2.5">
             <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary/50">
               {example.category}
@@ -147,7 +148,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
               type="button"
               disabled={currentIdx === 0}
               onClick={() => { setCurrentIdx((i) => i - 1); setAssist("none"); }}
-              className="rounded-md border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent disabled:opacity-30 disabled:cursor-not-allowed"
+              className="rounded-md border border-border bg-card px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               aria-label="Previous example"
             >
               ←
@@ -156,7 +157,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
               type="button"
               disabled={currentIdx === examples.length - 1}
               onClick={goToNext}
-              className="rounded-md border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent disabled:opacity-30 disabled:cursor-not-allowed"
+              className="rounded-md border border-border bg-card px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               aria-label="Next example"
             >
               →
@@ -188,14 +189,14 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
                   <button
                     type="button"
                     onClick={() => handleChoice("a")}
-                    className="rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="rounded-lg border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     {example.interpretations[0]}
                   </button>
                   <button
                     type="button"
                     onClick={() => handleChoice("b")}
-                    className="rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="rounded-lg border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     {example.interpretations[1]}
                   </button>
@@ -218,14 +219,14 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
                   <button
                     type="button"
                     onClick={() => flashAssist(state.choice === "a" ? "b" : "a")}
-                    className="rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                    className="rounded-md border border-border bg-secondary/60 px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     Show {example.interpretations[otherIdx].toLowerCase()}
                   </button>
                   <button
                     type="button"
                     onClick={() => flashAssist(state.choice!)}
-                    className="rounded-md border border-border bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                    className="rounded-md border border-border bg-secondary/60 px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     Show {example.interpretations[choiceIdx].toLowerCase()}
                   </button>
@@ -234,7 +235,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
                 <button
                   type="button"
                   onClick={handleConfirmSwitch}
-                  className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   I can see both
                 </button>
@@ -286,7 +287,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+                    className="rounded-lg border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
                     Try Again
                   </button>
@@ -294,7 +295,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
                     <button
                       type="button"
                       onClick={goToNext}
-                      className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                      className="rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                       Next: {examples[currentIdx + 1].title} →
                     </button>

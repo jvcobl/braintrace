@@ -13,13 +13,6 @@ function bridgeTarget(bridge: string): "Trace" | "Explain" {
   return "Explain";
 }
 
-/**
- * Renders a single feedback state using the NeuroRoute schema:
- * primary → secondary → bridge → structure.
- *
- * Visually: rounded borders, bg fills, no left-accent — keeps it
- * distinct from Prediction & Outcome (border-l) and Explain (border-l).
- */
 const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
   const target = bridgeTarget(feedback.bridge);
   const handleNavigate = onNavigate ? () => onNavigate(target) : undefined;
@@ -46,7 +39,7 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
       {/* Structure — pathway reference */}
       {feedback.structure && (
         <div
-          className={`rounded-lg border px-3.5 py-2.5 sm:px-4 sm:py-3 transition-colors ${
+          className={`rounded-lg border px-3.5 py-2.5 sm:px-4 sm:py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
             handleNavigate
               ? "border-primary/15 bg-primary/[0.03] cursor-pointer hover:bg-primary/[0.06]"
               : "border-primary/10 bg-primary/[0.03]"
@@ -54,7 +47,8 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
           onClick={handleNavigate}
           role={handleNavigate ? "button" : undefined}
           tabIndex={handleNavigate ? 0 : undefined}
-          onKeyDown={handleNavigate ? (e) => { if (e.key === "Enter" || e.key === " ") handleNavigate(); } : undefined}
+          aria-label={handleNavigate ? `View ${feedback.structure} pathway in ${target}` : undefined}
+          onKeyDown={handleNavigate ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleNavigate(); } } : undefined}
         >
           <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/50 mb-1 sm:mb-1.5">
             Pathway
@@ -73,7 +67,7 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
         <button
           type="button"
           onClick={handleNavigate}
-          className="w-full text-center text-[11px] sm:text-xs text-primary/60 hover:text-primary/80 transition-colors pt-0.5 sm:pt-1 flex items-center justify-center gap-1.5 group"
+          className="w-full text-center text-[11px] sm:text-xs text-primary/60 hover:text-primary/80 transition-colors pt-0.5 sm:pt-1 flex items-center justify-center gap-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
         >
           <span>{feedback.bridge}</span>
           <span className="text-primary/30 group-hover:text-primary/50 transition-colors" aria-hidden>→</span>

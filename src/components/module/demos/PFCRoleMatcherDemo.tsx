@@ -138,7 +138,7 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                   key={r}
                   type="button"
                   onClick={() => handlePick(r)}
-                  className="flex-1 min-w-[100px] rounded-md border border-border bg-card px-4 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+                  className="flex-1 min-w-[100px] rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <span className="block font-semibold">{r}</span>
                   <span className="block text-[11px] text-muted-foreground">{REGION_LABELS[r].short}</span>
