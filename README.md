@@ -1,6 +1,6 @@
 # BrainTrace
 
-NeuroRoute is a free, interactive neuroscience site. It covers five areas — perception, attention, emotion, learning, and stress — through lessons built around real phenomena you can experience in your browser.
+BrainTrace is a free, interactive neuroscience site. It covers five areas — perception, attention, emotion, learning, and stress — through lessons built around real phenomena you can experience in your browser.
 
 Every lesson follows the same three-step structure: **Experience** a phenomenon, **Trace** the neural pathway, and **Explain** what your brain was doing.
 

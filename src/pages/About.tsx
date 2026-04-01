@@ -16,7 +16,7 @@ const About = () => (
     </h1>
 
     <p className="mt-5 sm:mt-6 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      NeuroRoute is a free interactive neuroscience site. It covers five
+      BrainTrace is a free interactive neuroscience site. It covers five
       areas — perception, attention, emotion, learning, and stress — through
       lessons built around real phenomena you can experience in your browser.
     </p>
