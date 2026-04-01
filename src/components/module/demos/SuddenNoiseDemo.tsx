@@ -192,7 +192,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
     >
       {/* ── Trial phase ── */}
       {phase.kind === "trial" && (
-        <div className="rounded-lg border border-border bg-card p-6">
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className={`text-xs font-semibold uppercase tracking-wide ${
@@ -325,7 +325,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
 
           {/* Step 1: Expectation */}
           {phase.step === "expectation" && (
-            <div className="rounded-lg border border-border bg-card p-6">
+            <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
               <p className="text-sm font-medium text-foreground mb-1">
                 During the interrupted trial, were you startled by the flash?
               </p>
@@ -368,7 +368,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
 
           {/* Step 2: Priming */}
           {phase.step === "priming" && (
-            <div className="rounded-lg border border-border bg-card p-6">
+            <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
               <p className="text-sm font-medium text-foreground mb-1">
                 Did the interruption make the circle-click feel more urgent?
               </p>
@@ -411,7 +411,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
 
           {/* Step 3: Context interpretation */}
           {phase.step === "context" && (
-            <div className="rounded-lg border border-border bg-card p-6">
+            <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
               <p className="text-sm font-medium text-foreground mb-3">
                 Now consider: would the same interruption feel different in a dark room alone vs. a bright classroom?
               </p>

@@ -231,7 +231,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Active trial */}
       {trial && trial.stage !== "pause" && (
-        <div className="rounded-lg border border-border bg-card p-6">
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
           {/* Phase header */}
           <div className="mb-4">
             <div className="flex items-center justify-between">

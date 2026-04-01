@@ -99,7 +99,7 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
 
       <div className="mt-6">
         {phase === "sort" && (
-          <div className="rounded-lg border border-border bg-card p-6 space-y-5">
+          <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-5">
             <p className="text-xs text-muted-foreground">
               {current + 1} of {items.length}
             </p>
@@ -141,7 +141,7 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
         )}
 
         {phase === "result" && (
-          <div className="rounded-lg border border-border bg-card p-6 space-y-6">
+          <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-6">
             <div className="rounded-lg bg-accent/40 px-4 py-3">
               <p className="text-sm text-foreground leading-relaxed">
                 {correctCount === items.length
