@@ -177,7 +177,7 @@ export const modules: Module[] = [
     unitId: "unit-1",
     hook: "The image never changes — but what you see does.",
     shortGoal: "Experience how the brain toggles between competing interpretations of the same image.",
-    shortDescription: "Work through a gallery of ambiguous figures and discover why your brain locks onto one reading before you consciously choose.",
+    shortDescription: "Why the brain locks onto one interpretation of an ambiguous image before you consciously choose.",
     introCopy: "You'll view a series of genuinely ambiguous images — each can be perceived in two valid ways. For each figure, you'll identify what you see first, then try to switch. The image never changes; only your brain's interpretation does.",
     traceNodes: [
       { label: "Ambiguous Visual Input", description: "The retina sends the same signal regardless of which interpretation you perceive. Whether it's a shape, a color, or a depth arrangement — the stimulus itself never changes." },
