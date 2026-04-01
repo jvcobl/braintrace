@@ -302,7 +302,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
         <div className="space-y-5">
           {/* Reaction time comparison */}
           {results.length >= 2 && (
-            <div className="rounded-lg border border-border bg-card p-5">
+            <div className="rounded-lg border border-border bg-card p-4 sm:p-5">
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
                 Your reaction times
               </p>
