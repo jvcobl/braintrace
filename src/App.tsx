@@ -20,7 +20,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
+        <ScrollToTop />
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/unit/:unitId" element={<UnitHub />} />

@@ -55,7 +55,7 @@ const ModulePage = () => {
 
       {/* Header */}
       <div className="mt-6 sm:mt-7">
-        <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.25em] text-primary/60">
+        <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60">
           {unitTitle}
         </p>
         <h1 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-[2rem]">
