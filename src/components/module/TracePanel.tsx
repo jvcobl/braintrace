@@ -7,7 +7,10 @@ interface TracePanelProps {
 const TracePanel = ({ nodes }: TracePanelProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Trace the Pathway</h2>
-    <ol className="mt-6 sm:mt-8 space-y-0" aria-label="Neural pathway steps">
+    <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground/60">
+      Follow the signal through the circuit.
+    </p>
+    <ol className="mt-5 sm:mt-6 space-y-0" aria-label="Neural pathway steps">
       {nodes.map((node, i) => (
         <li key={node.label} className="flex gap-3 sm:gap-4">
           <div className="flex flex-col items-center">
@@ -20,7 +23,7 @@ const TracePanel = ({ nodes }: TracePanelProps) => (
           </div>
           <div className="pb-5 sm:pb-6">
             <p className="text-[13px] sm:text-[14px] font-semibold text-foreground leading-snug">{node.label}</p>
-            <p className="mt-1 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">{node.description}</p>
+            <p className="mt-1 text-[12px] sm:text-[13px] text-foreground/65 leading-relaxed">{node.description}</p>
           </div>
         </li>
       ))}
