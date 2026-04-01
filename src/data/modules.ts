@@ -310,9 +310,6 @@ export const modules: Module[] = [
   },
 ];
 
-export function getModuleBySlug(slug: string): Module | undefined {
-  return modules.find((m) => m.slug === slug);
-}
 
 export function getModuleById(id: string): Module | undefined {
   return modules.find((m) => m.id === id);
