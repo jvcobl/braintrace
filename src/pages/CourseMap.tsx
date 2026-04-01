@@ -5,19 +5,27 @@ import { modules } from "@/data/modules";
 
 const CourseMap = () => (
   <div className="container max-w-4xl py-16 md:py-24">
-    <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-      Course Map
+    <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground/60">
+      Classroom Reference
     </p>
     <h1 className="mt-3 font-display text-3xl tracking-tight text-foreground md:text-4xl">
-      All lessons by topic
+      Topic Mapping
     </h1>
-    <p className="mt-4 max-w-lg text-[15px] text-muted-foreground leading-relaxed">
-      Five units from sensory processing through higher cognition to
-      neuroendocrine stress systems. Originally developed alongside Emory
-      University's NBB302 course.
+    <p className="mt-4 max-w-xl text-[15px] text-foreground/80 leading-[1.7]">
+      This page maps NeuroRoute's lessons to specific neuroscience topics,
+      organized by unit. It's designed for students or instructors who want
+      to connect each lesson to classroom material.
+    </p>
+    <p className="mt-3 max-w-xl text-[13px] text-muted-foreground leading-relaxed">
+      Originally developed alongside Emory University's NBB302 course. The
+      lessons themselves are open to anyone —{" "}
+      <Link to="/" className="font-medium text-primary hover:underline">
+        start from the homepage
+      </Link>{" "}
+      if you're exploring on your own.
     </p>
 
-    <div className="mt-12 space-y-4">
+    <div className="mt-14 space-y-4">
       {courseUnits.map((unit, i) => {
         const content = getUnitContent(unit.id);
         const linkedModules = modules.filter((m) =>
@@ -27,14 +35,14 @@ const CourseMap = () => (
         return (
           <section
             key={unit.id}
-            className="rounded-xl border border-border bg-card shadow-sm"
+            className="rounded-xl border border-border/70 bg-card"
           >
             <Link
               to={`/unit/${unit.id}`}
               className="group block p-6 pb-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-t-xl"
             >
               <div className="flex items-start gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-sm">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
                   {i + 1}
                 </span>
                 <div className="min-w-0">
@@ -74,7 +82,7 @@ const CourseMap = () => (
                         to={`/module/${mod.id}`}
                         className="inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
                       >
-                        <span className="text-xs text-muted-foreground/50" aria-hidden="true">→</span>
+                        <span className="text-xs text-muted-foreground/40" aria-hidden="true">→</span>
                         {mod.title}
                       </Link>
                     </li>
