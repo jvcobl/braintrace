@@ -44,7 +44,7 @@ const ModulePage = () => {
   const unitTitle = unitContent?.meta.title ?? unit?.title ?? mod.unitId.replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
   return (
-    <div className="container max-w-3xl py-14 md:py-16">
+    <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-16">
       {/* Breadcrumb */}
       <Link
         to={`/unit/${mod.unitId}`}
