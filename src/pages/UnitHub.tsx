@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { getUnitContent, getLessonsByUnit, getUnitIds, unit5AnchorLesson } from "@/data/content/registry";
+import { getUnitContent, getLessonsByUnit, getUnitIds } from "@/data/content/registry";
 import { modules } from "@/data/modules";
 import UnitOverviewHeader from "@/components/study/UnitOverviewHeader";
 import FeaturedLessonCards from "@/components/study/FeaturedLessonCards";
