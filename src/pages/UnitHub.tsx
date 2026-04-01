@@ -32,7 +32,6 @@ const UnitHub = () => {
 
   const unitNumber = unitId.replace("unit-", "");
   const lessons = getLessonsByUnit(unitId);
-  
 
   const linkedModules = lessons
     .map((l) => modules.find((m) => m.id === l.moduleId))

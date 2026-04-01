@@ -42,7 +42,7 @@ const ExperienceShell = ({
 
     return (
       <section>
-        <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
+        <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
           Experience
         </h2>
         <div className="mt-4 rounded-lg border border-border bg-card px-5 py-6 sm:p-8 text-center space-y-3">
@@ -87,7 +87,7 @@ const ExperienceShell = ({
 
   return (
     <section>
-      <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
+      <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
       <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
