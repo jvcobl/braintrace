@@ -1,13 +1,11 @@
 import type { Module } from "@/data/modules";
-import type { LessonMapping } from "@/data/content/registry";
 import LessonCard from "./LessonCard";
 
 interface FeaturedLessonCardsProps {
   linkedModules: Module[];
-  placeholder?: LessonMapping;
 }
 
-const FeaturedLessonCards = ({ linkedModules, placeholder }: FeaturedLessonCardsProps) => (
+const FeaturedLessonCards = ({ linkedModules }: FeaturedLessonCardsProps) => (
   <section>
     <h2 className="font-display text-xl tracking-tight text-foreground md:text-[1.35rem]">
       Interactive Lessons
@@ -21,12 +19,10 @@ const FeaturedLessonCards = ({ linkedModules, placeholder }: FeaturedLessonCards
           <LessonCard key={mod.id} module={mod} variant="full" />
         ))}
       </div>
-    ) : placeholder ? (
-      <div className="mt-6 rounded-xl border border-dashed border-border bg-card p-6 text-center">
-        <p className="text-[13px] font-medium text-muted-foreground">{placeholder.title}</p>
-      </div>
     ) : (
-      <p className="mt-6 text-[13px] text-muted-foreground italic">No lessons yet</p>
+      <p className="mt-6 text-[13px] text-muted-foreground/50">
+        Lessons coming soon
+      </p>
     )}
   </section>
 );
