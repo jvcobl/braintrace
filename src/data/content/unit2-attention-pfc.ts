@@ -6,7 +6,7 @@
 export const unit2Meta = {
   id: "unit-2",
   title: "Attention, Cognitive Load, and the PFC",
-  subtitle: "Focus isn't free.",
+  subtitle: "Focus is expensive — and your brain runs out of it.",
   overview:
     "These lessons explore how the prefrontal cortex maintains control under pressure — and what happens when that control runs out. You'll see how attention is directed, why thinking is metabolically expensive, how the prefrontal cortex is divided into functionally distinct regions, and how top-down cognitive control breaks down under overload, fatigue, hunger, and illness.",
   majorStructures: [

@@ -89,8 +89,8 @@ const CourseMap = () => (
                   ))}
                 </ul>
               ) : (
-                <p className="text-[12px] sm:text-[13px] text-muted-foreground italic">
-                  No lessons yet
+                <p className="text-[12px] sm:text-[13px] text-muted-foreground/50">
+                  Lessons coming soon
                 </p>
               )}
             </div>
