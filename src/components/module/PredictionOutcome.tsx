@@ -24,10 +24,6 @@ const ROW_META: { key: keyof Pick<PredictionOutcomeData, "prediction" | "outcome
 /**
  * Lesson-level thesis block bridging Experience feedback → Trace.
  * Compact, scannable, visually distinct from per-trial FeedbackCards.
- *
- * Visual signature: border-l-2 with primary accent + muted bg.
- * Distinct from FeedbackCard (rounded borders, no left-accent)
- * and Explain (border-l-2 but lighter accent, no bg fill).
  */
 const PredictionOutcome = ({
   prediction,
@@ -47,7 +43,7 @@ const PredictionOutcome = ({
       role="region"
       aria-label="Prediction and outcome"
     >
-      {/* Connector — subtle visual breath between FeedbackCard and this block */}
+      {/* Connector */}
       <div className="flex justify-center py-2.5 sm:py-3" aria-hidden>
         <div className="flex items-center gap-1">
           <span className="block h-px w-4 bg-border" />
@@ -70,7 +66,7 @@ const PredictionOutcome = ({
           )}
         </div>
 
-        {/* Rows — stacked on mobile, inline on sm+ */}
+        {/* Rows */}
         <div className="space-y-2.5 sm:space-y-1.5">
           {ROW_META.map(({ key, label }) => (
             <div key={key} className="sm:flex sm:items-baseline sm:gap-2 text-[12px] sm:text-[13px] leading-relaxed">
@@ -82,12 +78,12 @@ const PredictionOutcome = ({
           ))}
         </div>
 
-        {/* Footer link — visually connected to Trace */}
+        {/* Footer link */}
         {onNavigateTrace && (
           <button
             type="button"
             onClick={onNavigateTrace}
-            className="mt-3 sm:mt-4 flex items-center gap-1.5 rounded px-1.5 py-1 -mx-1.5 text-[10px] sm:text-[11px] text-primary/55 hover:text-primary/80 hover:bg-primary/[0.04] transition-colors group"
+            className="mt-3 sm:mt-4 flex items-center gap-1.5 rounded px-1.5 py-1.5 -mx-1.5 text-[10px] sm:text-[11px] text-primary/55 hover:text-primary/80 hover:bg-primary/[0.04] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <span className="font-medium">See the pathway in Trace</span>
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>

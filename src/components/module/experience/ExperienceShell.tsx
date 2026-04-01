@@ -58,7 +58,7 @@ const ExperienceShell = ({
             <button
               type="button"
               onClick={handleBridgeClick}
-              className="inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
+              className="inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-primary hover:text-primary/80 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
             >
               <span>{summary.bridge}</span>
               <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
@@ -72,8 +72,9 @@ const ExperienceShell = ({
           {onRestart && (
             <div className="pt-2">
               <button
+                type="button"
                 onClick={onRestart}
-                className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Try Again
               </button>
