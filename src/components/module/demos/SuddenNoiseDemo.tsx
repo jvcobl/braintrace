@@ -430,7 +430,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       )}
 
       {/* Prediction & Outcome bridge */}
-      <div className="mt-6">
+      <div className="mt-3">
         <PredictionOutcome
           visible={hasInteracted}
           {...predictionOutcomeContent["sudden-noise"]}

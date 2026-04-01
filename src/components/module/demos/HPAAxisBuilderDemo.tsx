@@ -432,7 +432,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
       )}
 
       {/* Prediction & Outcome bridge */}
-      <div className="mt-6">
+      <div className="mt-3">
         <PredictionOutcome
           visible={hasInteracted}
           {...predictionOutcomeContent["hpa-axis-builder"]}

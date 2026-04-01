@@ -234,7 +234,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       </div>
 
       {/* Prediction & Outcome bridge */}
-      <div className="mt-6">
+      <div className="mt-3">
         <PredictionOutcome
           visible={hasInteracted}
           {...predictionOutcomeContent["blurry-object"]}
