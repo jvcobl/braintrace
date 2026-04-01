@@ -7,34 +7,30 @@ interface UnitOverviewHeaderProps {
 
 const UnitOverviewHeader = ({ unitNumber, meta }: UnitOverviewHeaderProps) => (
   <header>
-    <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+    <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-primary/70">
       Unit {unitNumber}
     </p>
-    <h1 className="mt-2 font-display text-3xl tracking-tight text-foreground md:text-[2rem]">
+    <h1 className="mt-3 font-display text-[2rem] tracking-tight text-foreground md:text-[2.25rem] leading-[1.15]">
       {meta.title}
     </h1>
-    <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed">{meta.subtitle}</p>
+    <p className="mt-3 max-w-xl text-[15px] text-muted-foreground leading-relaxed">
+      {meta.subtitle}
+    </p>
 
-    <div className="mt-7">
-      <p className="text-[14px] text-foreground/80 leading-relaxed">{meta.overview}</p>
+    <p className="mt-8 max-w-2xl text-[14px] text-foreground/80 leading-[1.7]">
+      {meta.overview}
+    </p>
+
+    <div className="mt-8 flex flex-wrap items-center gap-2">
+      {meta.majorStructures.map((s) => (
+        <span
+          key={s}
+          className="rounded-full border border-border bg-secondary px-3 py-1 text-[11px] font-medium text-muted-foreground"
+        >
+          {s}
+        </span>
+      ))}
     </div>
-
-    <div className="mt-7">
-      <h2 className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
-        Major Structures
-      </h2>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {meta.majorStructures.map((s) => (
-          <span
-            key={s}
-            className="rounded-full bg-secondary px-3 py-1 text-xs text-muted-foreground"
-          >
-            {s}
-          </span>
-        ))}
-      </div>
-    </div>
-
   </header>
 );
 

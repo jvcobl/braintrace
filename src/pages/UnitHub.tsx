@@ -9,10 +9,6 @@ import DistinctionSection from "@/components/study/DistinctionSection";
 import CaseNoteSection from "@/components/study/CaseNoteSection";
 import ReviewSection from "@/components/study/ReviewSection";
 
-const SectionDivider = () => (
-  <div className="border-t border-border" aria-hidden="true" />
-);
-
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
   const content = unitId ? getUnitContent(unitId) : undefined;
@@ -48,7 +44,7 @@ const UnitHub = () => {
   const nextUnit = idx < allIds.length - 1 ? allIds[idx + 1] : null;
 
   return (
-    <div className="container max-w-3xl py-14 md:py-16">
+    <div className="container max-w-3xl py-14 md:py-20">
       {/* Breadcrumb */}
       <Link
         to="/"
@@ -57,44 +53,46 @@ const UnitHub = () => {
         <span aria-hidden="true">←</span> All Units
       </Link>
 
-      <div className="mt-7 space-y-14">
-        {/* 1. Unit overview */}
+      {/* ── Hero: Unit intro ── */}
+      <div className="mt-8">
         <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
+      </div>
 
-        {/* 2. Featured lessons */}
+      {/* ── Interactive lessons — primary call to action ── */}
+      <div className="mt-16">
         <FeaturedLessonCards
           linkedModules={linkedModules}
           placeholder={isUnit5 ? unit5AnchorLesson : undefined}
         />
+      </div>
 
-        <SectionDivider />
+      {/* ── Reference sections ── */}
+      <div className="mt-20 space-y-16">
+        <div>
+          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+            Reference
+          </p>
+          <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">
+            Key ideas, neural pathways, and clinical connections explored in this unit.
+          </p>
+        </div>
 
-        {/* 3. Key concepts */}
         <ConceptCardGrid cards={content.conceptCards} />
 
-        <SectionDivider />
-
-        {/* 4. Pathways */}
         <PathwaySection pathways={content.pathways} />
 
-        <SectionDivider />
-
-        {/* 5. Distinctions */}
         <DistinctionSection distinctions={content.distinctions} />
 
-        <SectionDivider />
-
-        {/* 6. Case notes */}
         <CaseNoteSection caseNotes={content.caseNotes} />
+      </div>
 
-        <SectionDivider />
-
-        {/* 7. Review */}
+      {/* ── Review — end of page ── */}
+      <div className="mt-20">
         <ReviewSection questions={content.review} />
       </div>
 
       {/* Prev / Next */}
-      <nav className="mt-14 flex items-center justify-between border-t border-border pt-8">
+      <nav className="mt-16 flex items-center justify-between border-t border-border pt-8">
         {prevUnit ? (
           <Link
             to={`/unit/${prevUnit}`}
