@@ -42,14 +42,14 @@ const ExperienceShell = ({
 
     return (
       <section>
-        <h2 className="font-display text-2xl font-semibold text-foreground">
+        <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
           Experience
         </h2>
-        <div className="mt-4 rounded-lg border border-border bg-card p-8 text-center space-y-3">
-          <h3 className="font-display text-lg font-semibold text-foreground">
+        <div className="mt-4 rounded-lg border border-border bg-card px-5 py-6 sm:p-8 text-center space-y-3">
+          <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
             {summary.heading}
           </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
+          <p className="text-[13px] sm:text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
             {summary.body}
           </p>
 
@@ -58,7 +58,7 @@ const ExperienceShell = ({
             <button
               type="button"
               onClick={handleBridgeClick}
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
+              className="inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
             >
               <span>{summary.bridge}</span>
               <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
@@ -86,10 +86,10 @@ const ExperienceShell = ({
 
   return (
     <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
+      <h2 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+      <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
         {instructions}
       </p>
       <div className="mt-4">{children}</div>

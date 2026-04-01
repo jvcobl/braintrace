@@ -24,9 +24,6 @@ const ROW_META: { key: keyof Pick<PredictionOutcomeData, "prediction" | "outcome
 /**
  * Lesson-level thesis block bridging Experience feedback → Trace.
  * Compact, scannable, visually distinct from per-trial FeedbackCards.
- *
- * Includes a subtle top connector and a prominent Trace footer link
- * to create flow from trial feedback through concept to mechanism.
  */
 const PredictionOutcome = ({
   prediction,
@@ -47,7 +44,7 @@ const PredictionOutcome = ({
       aria-label="Prediction and outcome"
     >
       {/* Connector — subtle visual breath between FeedbackCard and this block */}
-      <div className="flex justify-center py-3" aria-hidden>
+      <div className="flex justify-center py-2.5 sm:py-3" aria-hidden>
         <div className="flex items-center gap-1">
           <span className="block h-px w-4 bg-border" />
           <span className="block h-1 w-1 rounded-full bg-muted-foreground/25" />
@@ -69,11 +66,11 @@ const PredictionOutcome = ({
           )}
         </div>
 
-        {/* Rows */}
-        <div className="space-y-0.5 sm:space-y-1">
+        {/* Rows — stacked on mobile, inline on sm+ */}
+        <div className="space-y-2 sm:space-y-1">
           {ROW_META.map(({ key, label, icon }) => (
-            <div key={key} className="flex items-baseline gap-1.5 sm:gap-2 text-[12px] sm:text-[13px] leading-relaxed">
-              <span className="text-[8px] sm:text-[9px] font-semibold uppercase tracking-widest text-muted-foreground/50 w-[44px] sm:w-[52px] shrink-0 pt-[2px] flex items-center gap-0.5">
+            <div key={key} className="sm:flex sm:items-baseline sm:gap-2 text-[12px] sm:text-[13px] leading-relaxed">
+              <span className="flex items-center gap-0.5 text-[8px] sm:text-[9px] font-semibold uppercase tracking-widest text-muted-foreground/50 sm:w-[52px] shrink-0 mb-0.5 sm:mb-0 sm:pt-[2px]">
                 <span className="text-muted-foreground/30" aria-hidden>{icon}</span>
                 {label}
               </span>
@@ -87,7 +84,7 @@ const PredictionOutcome = ({
           <button
             type="button"
             onClick={onNavigateTrace}
-            className="mt-3 sm:mt-3.5 flex items-center gap-1.5 rounded px-1.5 py-1 -mx-1.5 text-[10px] sm:text-[11px] text-primary/60 hover:text-primary hover:bg-primary/[0.04] transition-colors group"
+            className="mt-2.5 sm:mt-3.5 flex items-center gap-1.5 rounded px-1.5 py-1 -mx-1.5 text-[10px] sm:text-[11px] text-primary/60 hover:text-primary hover:bg-primary/[0.04] transition-colors group"
           >
             <span className="font-medium">See the pathway in Trace</span>
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>
