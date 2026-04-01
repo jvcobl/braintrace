@@ -48,7 +48,7 @@ const UnitHub = () => {
       {/* Breadcrumb */}
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
       >
         <span aria-hidden="true">←</span> All Units
       </Link>
@@ -68,15 +68,6 @@ const UnitHub = () => {
 
       {/* ── Reference sections ── */}
       <div className="mt-16 sm:mt-20 space-y-12 sm:space-y-16">
-        <div>
-          <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Reference
-          </p>
-          <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
-            Key ideas, neural pathways, and clinical connections explored in this unit.
-          </p>
-        </div>
-
         <ConceptCardGrid cards={content.conceptCards} />
 
         <PathwaySection pathways={content.pathways} />
@@ -96,7 +87,7 @@ const UnitHub = () => {
         {prevUnit ? (
           <Link
             to={`/unit/${prevUnit}`}
-            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">←</span>
             {(() => {
@@ -110,7 +101,7 @@ const UnitHub = () => {
         {nextUnit ? (
           <Link
             to={`/unit/${nextUnit}`}
-            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
             {(() => {
               const nc = getUnitContent(nextUnit);

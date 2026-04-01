@@ -15,18 +15,18 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
 
   return (
     <section>
-      <div className="flex items-baseline justify-between gap-4">
-        <h3 className="font-display text-lg tracking-tight text-foreground">Key Concepts</h3>
-        <span className="text-[11px] text-muted-foreground/60">{cards.length} concepts</span>
-      </div>
+      <h3 className="font-display text-lg tracking-tight text-foreground">Key Concepts</h3>
+      <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
+        {cards.length} terms and definitions covered in this unit.
+      </p>
       <div className="mt-5 space-y-3">
         {visible.map((card) => (
           <div
             key={card.id}
-            className="rounded-xl border border-border/70 bg-card p-5"
+            className="rounded-xl border border-border/70 bg-card p-4 sm:p-5"
           >
             <div className="flex items-baseline justify-between gap-3">
-              <h4 className="text-[14px] font-semibold text-card-foreground leading-snug">
+              <h4 className="text-[13px] sm:text-[14px] font-semibold text-card-foreground leading-snug">
                 {card.term}
               </h4>
               {card.structures.length > 0 && (
@@ -34,7 +34,7 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
                   {card.structures.slice(0, 3).map((s) => (
                     <span
                       key={s}
-                      className="rounded-full bg-accent px-2.5 py-0.5 text-[10px] text-accent-foreground whitespace-nowrap"
+                      className="rounded-full bg-accent px-2 sm:px-2.5 py-0.5 text-[10px] text-accent-foreground whitespace-nowrap"
                     >
                       {s}
                     </span>
@@ -47,7 +47,7 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
                 </div>
               )}
             </div>
-            <p className="mt-2.5 text-[13px] text-foreground/80 leading-relaxed">{card.definition}</p>
+            <p className="mt-2 sm:mt-2.5 text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">{card.definition}</p>
             {card.sensitivity === "high" && <SensitivityBadge note={card.sensitivityNote} />}
           </div>
         ))}
@@ -56,9 +56,9 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
         <button
           type="button"
           onClick={() => setExpanded(!expanded)}
-          className="mt-5 w-full rounded-xl border border-dashed border-border py-3 text-[13px] font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="mt-4 w-full rounded-xl border border-border/70 bg-card py-3 text-[12px] sm:text-[13px] font-medium text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
-          {expanded ? "Show fewer" : `Show all ${cards.length} concepts`}
+          {expanded ? "Show fewer" : `Show all ${cards.length}`}
         </button>
       )}
     </section>

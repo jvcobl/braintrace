@@ -48,7 +48,7 @@ const ModulePage = () => {
       {/* Breadcrumb */}
       <Link
         to={`/unit/${mod.unitId}`}
-        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
       >
         <span aria-hidden="true">←</span> {unitTitle}
       </Link>
@@ -87,7 +87,7 @@ const ModulePage = () => {
               <li key={s.id}>
                 <Link
                   to={`/module/${s.id}`}
-                  className="inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+                  className="inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
                 >
                   <span className="text-xs text-muted-foreground/50" aria-hidden="true">→</span>
                   {s.title}
