@@ -14,7 +14,7 @@ Fully client-side. No accounts, no backend, no tracking.
 | `/unit/:unitId`   | Unit hub — overview, lesson cards, concept cards, pathways, review   |
 | `/module/:id`     | Lesson page — Intro → Experience → Trace → Explain                  |
 | `/course-map`     | Topic mapping — connects lessons to classroom topics                 |
-| `/about`          | About page — what NeuroRoute is and how lessons work                 |
+| `/about`          | About page — what BrainTrace is and how lessons work                 |
 | `*`               | 404                                                                  |
 
 ## Units
