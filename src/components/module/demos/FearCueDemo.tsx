@@ -210,7 +210,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
     >
       {/* Pause interlude */}
       {trial?.stage === "pause" && (
-        <div className="rounded-lg border border-border bg-card p-8 text-center">
+        <div className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center">
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-2">
             Time Passes
           </p>
@@ -231,7 +231,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Active trial */}
       {trial && trial.stage !== "pause" && (
-        <div className="rounded-lg border border-border bg-card p-6">
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
           {/* Phase header */}
           <div className="mb-4">
             <div className="flex items-center justify-between">

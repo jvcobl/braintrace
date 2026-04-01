@@ -225,7 +225,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
       summary={getSummary(results)}
       onRestart={handleRestart}
     >
-      <div className="rounded-lg border border-border bg-card p-6">
+      <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
         {/* Header */}
         {round && (
           <div className="mb-4 flex items-center justify-between">

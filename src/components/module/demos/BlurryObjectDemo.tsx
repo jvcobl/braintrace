@@ -157,7 +157,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       summary={getSummary(correctCount, stimuli.length)}
       onRestart={handleRestart}
     >
-      <div className="rounded-lg border border-border bg-card p-6">
+      <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
         <p className="mb-4 text-xs text-muted-foreground">
           Object {round + 1} of {stimuli.length}
         </p>

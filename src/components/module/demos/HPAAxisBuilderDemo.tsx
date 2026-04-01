@@ -211,7 +211,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       {/* ── Phase 1: Sequence building ── */}
       {(phase === "sequence" || phase === "sequence-result") && (
-        <div className="rounded-lg border border-border bg-card p-6 space-y-5">
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-5">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary mb-1">
               Part 1 — HPA Cascade
@@ -323,7 +323,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       {/* ── Phase 2: Feedback loop ── */}
       {(phase === "feedback-loop" || phase === "feedback-loop-result") && (
-        <div className="rounded-lg border border-border bg-card p-6 space-y-5">
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-5">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-1">
               Part 2 — Negative Feedback
@@ -378,7 +378,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       {/* ── Phase 3: Override ── */}
       {(phase === "override" || phase === "override-result") && (
-        <div className="rounded-lg border border-border bg-card p-6 space-y-5">
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-5">
           <div>
             <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-destructive mb-1">
               Part 3 — Override Under Extreme Stress

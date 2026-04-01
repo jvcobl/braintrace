@@ -239,7 +239,7 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
       summary={getSummary(answers, stimulusSet)}
       onRestart={handleRestart}
     >
-      <div className="rounded-lg border border-border bg-card p-6">
+      <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
         <p className="mb-4 text-xs text-muted-foreground">
           {index + 1} of {stimulusSet.length}
         </p>
