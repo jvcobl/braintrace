@@ -58,17 +58,6 @@ const About = () => (
       </Link>
     </div>
 
-    {/* Secondary: classroom context */}
-    <div className="mt-12 sm:mt-16 border-t border-border/50 pt-6 sm:pt-8">
-      <p className="text-[12px] sm:text-[13px] text-muted-foreground/60 leading-relaxed">
-        NeuroRoute was originally developed alongside Emory University's
-        NBB302 course. If you're using it in a classroom setting, the{" "}
-        <Link to="/course-map" className="font-medium text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors">
-          topic mapping page
-        </Link>{" "}
-        connects each lesson to specific lecture topics.
-      </p>
-    </div>
   </div>
 );
 
