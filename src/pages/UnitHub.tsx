@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { getUnitContent, getLessonsByUnit, getUnitIds, unit5AnchorLesson } from "@/data/content/registry";
+import { getUnitContent, getLessonsByUnit, getUnitIds } from "@/data/content/registry";
 import { modules } from "@/data/modules";
 import UnitOverviewHeader from "@/components/study/UnitOverviewHeader";
 import FeaturedLessonCards from "@/components/study/FeaturedLessonCards";
@@ -32,7 +32,7 @@ const UnitHub = () => {
 
   const unitNumber = unitId.replace("unit-", "");
   const lessons = getLessonsByUnit(unitId);
-  const isUnit5 = unitId === "unit-5";
+  
 
   const linkedModules = lessons
     .map((l) => modules.find((m) => m.id === l.moduleId))
@@ -62,7 +62,6 @@ const UnitHub = () => {
       <div className="mt-14 sm:mt-16">
         <FeaturedLessonCards
           linkedModules={linkedModules}
-          placeholder={isUnit5 ? unit5AnchorLesson : undefined}
         />
       </div>
 

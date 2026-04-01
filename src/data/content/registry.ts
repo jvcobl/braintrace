@@ -88,8 +88,6 @@ export const lessonMappings: LessonMapping[] = [
   { moduleId: "mod-12", unitId: "unit-5", title: "Homeostasis vs. Allostasis Sorter" },
 ];
 
-// Unit 5 anchor lesson mapping
-export const unit5AnchorLesson: LessonMapping | undefined = undefined;
 
 // ---------------------------------------------------------------------------
 // Helpers
