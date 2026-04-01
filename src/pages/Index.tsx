@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { getUnitIds, getUnitContent, getLessonsByUnit } from "@/data/content/registry";
 import { modules } from "@/data/modules";
+import LessonCard from "@/components/study/LessonCard";
 
 /* ── Static data ── */
 
