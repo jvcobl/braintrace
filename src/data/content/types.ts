@@ -1,5 +1,5 @@
 // ============================================================
-// NEUROROUTE — SHARED CONTENT TYPES
+// BRAINTRACE — SHARED CONTENT TYPES
 // ============================================================
 // Canonical type definitions for all content.
 // Every unit file conforms to these shapes.

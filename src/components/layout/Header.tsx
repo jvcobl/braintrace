@@ -12,7 +12,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 border-b border-border bg-card/90 backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="font-display text-xl tracking-tight text-foreground">
-          NeuroRoute
+          BrainTrace
         </Link>
         <nav className="flex items-center gap-1" aria-label="Main navigation">
           {navLinks.map(({ to, label }) => {

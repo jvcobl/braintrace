@@ -12,7 +12,7 @@ const CourseMap = () => (
       Topic Mapping
     </h1>
     <p className="mt-3.5 sm:mt-4 max-w-xl text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      This page maps NeuroRoute's lessons to specific neuroscience topics,
+      This page maps BrainTrace's lessons to specific neuroscience topics,
       organized by unit. It's designed for students or instructors who want
       to connect each lesson to classroom material.
     </p>

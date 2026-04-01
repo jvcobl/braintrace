@@ -1,5 +1,5 @@
 // ============================================================
-// NEUROROUTE — COURSE MAP
+// BRAINTRACE — COURSE MAP
 // ============================================================
 // Derives unit listings from the canonical content layer while
 // preserving the CourseUnit shape consumed by existing pages.
