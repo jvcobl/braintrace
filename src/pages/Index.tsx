@@ -108,7 +108,7 @@ const Index = () => {
               How Each Lesson Works
             </p>
             <h2 className="mt-3 font-display text-xl sm:text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Experience, trace, explain
+              Experience, Trace, Explain
             </h2>
           </div>
 
