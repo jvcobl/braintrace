@@ -303,7 +303,7 @@ export const modules: Module[] = [
       whatHappened: "You classified six scenarios as either homeostasis or allostasis based on whether the body was reactively correcting a deviation or predictively shifting its operating parameters.",
       whatYourBrainDid: "For each scenario, you assessed whether the regulatory mechanism was reactive (negative feedback restoring a fixed set point) or predictive (anticipatory adjustment of the set point itself).",
       keyPathway: "Homeostasis = fixed set point + negative feedback. Allostasis = stability through predicted change (set point shifts). Chronic allostasis → allostatic load → structural damage to hippocampus and PFC.",
-      whyItMatters: "This module covers the homeostasis–allostasis framework. The critical insight is that allostasis has a cost: when the body stays in an adapted state too long under chronic stress, the accumulated biological wear — allostatic load — damages brain structures like the hippocampus and prefrontal cortex. Understanding this distinction is essential for interpreting the HPA axis, stress resilience, and why chronic stress is qualitatively different from acute stress.",
+      whyItMatters: "Allostasis has a cost: when the body stays in an adapted state too long under chronic stress, the accumulated biological wear — allostatic load — damages brain structures like the hippocampus and prefrontal cortex. This framework explains why chronic stress is qualitatively different from acute stress. It is not just more of the same — it is a fundamentally different physiological process with structural consequences.",
     },
     demoType: "interactive",
     learningObjective: "Distinguish homeostasis from allostasis and explain the concept of allostatic load.",
