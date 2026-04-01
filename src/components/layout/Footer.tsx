@@ -13,15 +13,6 @@ const Footer = () => (
         </Link>
       </nav>
     </div>
-    <div className="container px-4 sm:px-6 mt-4 sm:mt-5 pt-3.5 sm:pt-4 border-t border-border/40">
-      <p className="text-[10px] sm:text-[11px] text-muted-foreground/35 text-center max-w-md mx-auto leading-relaxed">
-        Originally developed alongside Emory University's NBB302 course.{" "}
-        <Link to="/course-map" className="underline underline-offset-2 hover:text-muted-foreground/50 transition-colors">
-          Topic mapping
-        </Link>{" "}
-        is available for classroom use.
-      </p>
-    </div>
   </footer>
 );
 
