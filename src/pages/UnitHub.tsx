@@ -62,7 +62,6 @@ const UnitHub = () => {
       <div className="mt-14 sm:mt-16">
         <FeaturedLessonCards
           linkedModules={linkedModules}
-          placeholder={isUnit5 ? unit5AnchorLesson : undefined}
         />
       </div>
 
