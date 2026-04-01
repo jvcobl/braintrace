@@ -141,7 +141,7 @@ const Index = () => {
               Five Areas of Neuroscience
             </p>
             <h2 className="mt-3 font-display text-2xl tracking-tight text-foreground md:text-[1.75rem]">
-              Explore the full curriculum
+              Explore all five areas
             </h2>
             <p className="mt-3 max-w-lg text-sm text-muted-foreground leading-relaxed">
               Perception, attention, emotion, learning, and stress — each built
