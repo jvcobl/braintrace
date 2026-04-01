@@ -246,7 +246,7 @@ export const modules: Module[] = [
     unitId: "unit-3",
     hook: "Excitement and terror feel completely different — but your body's activation is almost identical.",
     shortGoal: "Distinguish emotion from arousal using neurobiological definitions.",
-    shortDescription: "Classify scenarios as emotion or arousal and learn why valence is the key differentiator.",
+    shortDescription: "Why excitement and terror produce nearly identical physiology — and what makes them feel so different.",
     introCopy: "You'll read short scenarios and decide whether each describes an emotion — a transient state with specific valence that motivates approach or avoidance — or arousal — physiological intensity without inherent direction. Then we'll trace why this distinction matters.",
     traceNodes: [
       { label: "Arousal: Intensity Without Direction", description: "The magnitude of physiological activation — cortisol release, heart rate, pupil dilation. Arousal has no valence; high arousal accompanies both terror and excitement equally." },
