@@ -292,7 +292,7 @@ export const modules: Module[] = [
     unitId: "unit-5",
     hook: "Your body doesn't just react to stress — it tries to predict it.",
     shortGoal: "Distinguish reactive stability from predictive adaptation.",
-    shortDescription: "Classify scenarios as homeostasis or allostasis and learn why allostatic load matters.",
+    shortDescription: "How the body maintains stability at rest versus how it adapts under sustained demand — and what happens when that adaptation becomes costly.",
     introCopy: "You'll read short scenarios and decide whether each describes homeostasis — negative feedback restoring a fixed set point — or allostasis — the body predictively shifting its operating parameters to meet anticipated demand. Then we'll trace why chronic allostatic shifts carry a biological cost.",
     traceNodes: [
       { label: "Homeostasis: Fixed Set Point + Negative Feedback", description: "The body maintains a stable parameter through negative feedback. When the parameter drifts, corrective mechanisms restore the original set point." },
