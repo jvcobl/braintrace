@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { getUnitIds, getUnitContent, getLessonsByUnit } from "@/data/content/registry";
 import { modules } from "@/data/modules";
+import LessonCard from "@/components/study/LessonCard";
 
 /* ── Static data ── */
 
@@ -210,24 +211,12 @@ const Index = () => {
             {featuredModules.map((mod) => {
               const unitContent = getUnitContent(mod.unitId);
               return (
-                <Link
+                <LessonCard
                   key={mod.id}
-                  to={`/module/${mod.id}`}
-                  className="group flex flex-col rounded-xl border border-border/70 bg-card p-5 transition-all hover:border-primary/25 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground/60">
-                    {unitContent?.meta.title ?? "Lesson"}
-                  </p>
-                  <h3 className="mt-1.5 font-display text-[1rem] text-foreground leading-snug group-hover:text-primary transition-colors">
-                    {mod.title}
-                  </h3>
-                  <p className="mt-2 text-[13px] text-foreground/60 leading-relaxed italic">
-                    {mod.hook}
-                  </p>
-                  <p className="mt-4 text-[11px] font-medium text-muted-foreground/50 group-hover:text-primary transition-colors">
-                    Open lesson →
-                  </p>
-                </Link>
+                  module={mod}
+                  contextLabel={unitContent?.meta.title}
+                  variant="compact"
+                />
               );
             })}
           </div>

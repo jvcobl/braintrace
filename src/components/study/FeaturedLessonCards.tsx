@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import type { Module } from "@/data/modules";
 import type { LessonMapping } from "@/data/content/registry";
+import LessonCard from "./LessonCard";
 
 interface FeaturedLessonCardsProps {
   linkedModules: Module[];
@@ -18,29 +18,7 @@ const FeaturedLessonCards = ({ linkedModules, placeholder }: FeaturedLessonCards
     {linkedModules.length > 0 ? (
       <div className="mt-6 space-y-3">
         {linkedModules.map((mod) => (
-          <Link
-            key={mod.id}
-            to={`/module/${mod.id}`}
-            className="group flex items-start gap-5 rounded-xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            <div className="min-w-0 flex-1">
-              <h3 className="font-display text-[1rem] text-card-foreground leading-snug group-hover:text-primary transition-colors">
-                {mod.title}
-              </h3>
-              <p className="mt-1.5 text-[13px] text-foreground/60 leading-relaxed italic">
-                {mod.hook}
-              </p>
-              <p className="mt-1 text-[13px] text-muted-foreground leading-relaxed">
-                {mod.shortDescription}
-              </p>
-            </div>
-            <span
-              className="mt-1 shrink-0 text-lg text-muted-foreground/25 transition-all group-hover:translate-x-0.5 group-hover:text-primary"
-              aria-hidden="true"
-            >
-              →
-            </span>
-          </Link>
+          <LessonCard key={mod.id} module={mod} variant="full" />
         ))}
       </div>
     ) : placeholder ? (
