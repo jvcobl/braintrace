@@ -68,15 +68,6 @@ const UnitHub = () => {
 
       {/* ── Reference sections ── */}
       <div className="mt-16 sm:mt-20 space-y-12 sm:space-y-16">
-        <div>
-          <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Reference
-          </p>
-          <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
-            Key ideas, neural pathways, and clinical connections explored in this unit.
-          </p>
-        </div>
-
         <ConceptCardGrid cards={content.conceptCards} />
 
         <PathwaySection pathways={content.pathways} />

@@ -87,7 +87,7 @@ const ModulePage = () => {
               <li key={s.id}>
                 <Link
                   to={`/module/${s.id}`}
-                  className="inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+                  className="inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
                 >
                   <span className="text-xs text-muted-foreground/50" aria-hidden="true">→</span>
                   {s.title}
