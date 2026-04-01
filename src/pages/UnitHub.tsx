@@ -69,7 +69,7 @@ const UnitHub = () => {
       {/* ── Reference sections ── */}
       <div className="mt-20 space-y-16">
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+          <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
             Reference
           </p>
           <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">
