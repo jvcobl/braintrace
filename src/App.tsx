@@ -21,6 +21,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/unit/:unitId" element={<UnitHub />} />
