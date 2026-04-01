@@ -223,7 +223,7 @@ export const modules: Module[] = [
     unitId: "unit-3",
     hook: "Fear responds to what's in front of you. Anxiety responds to what your brain predicts might happen.",
     shortGoal: "Distinguish fear from anxiety using neurobiological definitions.",
-    shortDescription: "Classify scenarios as fear or anxiety and trace why the distinction matters neurobiologically.",
+    shortDescription: "Why fear and anxiety engage overlapping circuits but represent fundamentally different processes.",
     introCopy: "You'll read short scenarios and decide whether each describes fear — a response to an imminent, tangible threat — or anxiety — the anticipation of a future, predicted threat. Then we'll trace the different circuits involved.",
     traceNodes: [
       { label: "Fear: Tangible Threat → Amygdala → Immediate Response", description: "Fear is the emotional appraisal of an imminent threat that is present and identifiable. Sensory input reaches the amygdala via the fast subcortical low road, driving an immediate defensive response." },
