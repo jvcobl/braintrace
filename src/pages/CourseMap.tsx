@@ -16,14 +16,6 @@ const CourseMap = () => (
       organized by unit. It's designed for students or instructors who want
       to connect each lesson to classroom material.
     </p>
-    <p className="mt-2.5 sm:mt-3 max-w-xl text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
-      Originally developed alongside Emory University's NBB302 course. The
-      lessons themselves are open to anyone —{" "}
-      <Link to="/" className="font-medium text-primary hover:underline">
-        start from the homepage
-      </Link>{" "}
-      if you're exploring on your own.
-    </p>
 
     <div className="mt-10 sm:mt-14 space-y-3 sm:space-y-4">
       {courseUnits.map((unit, i) => {
