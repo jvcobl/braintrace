@@ -6,7 +6,7 @@ interface ConceptCardGridProps {
   cards: ConceptCard[];
 }
 
-const INITIAL_VISIBLE = 8;
+const INITIAL_VISIBLE = 6;
 
 const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
   const [expanded, setExpanded] = useState(false);
@@ -16,19 +16,19 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
   return (
     <section>
       <div className="flex items-baseline justify-between gap-4">
-        <h2 className="font-display text-lg tracking-tight text-foreground">Key Concepts</h2>
-        <span className="text-[11px] text-muted-foreground">{cards.length} concepts</span>
+        <h3 className="font-display text-lg tracking-tight text-foreground">Key Concepts</h3>
+        <span className="text-[11px] text-muted-foreground/60">{cards.length} concepts</span>
       </div>
       <div className="mt-5 space-y-3">
         {visible.map((card) => (
           <div
             key={card.id}
-            className="rounded-xl border border-border bg-card p-5 shadow-sm"
+            className="rounded-xl border border-border/70 bg-card p-5"
           >
             <div className="flex items-baseline justify-between gap-3">
-              <h3 className="text-[14px] font-semibold text-card-foreground leading-snug">
+              <h4 className="text-[14px] font-semibold text-card-foreground leading-snug">
                 {card.term}
-              </h3>
+              </h4>
               {card.structures.length > 0 && (
                 <div className="flex shrink-0 flex-wrap justify-end gap-1.5">
                   {card.structures.slice(0, 3).map((s) => (
