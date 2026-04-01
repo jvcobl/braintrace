@@ -7,60 +7,60 @@ const steps = [
 ];
 
 const About = () => (
-  <div className="container max-w-2xl py-16 md:py-24">
-    <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-primary/70">
+  <div className="container max-w-2xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
+    <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/70">
       About
     </p>
-    <h1 className="mt-3 font-display text-3xl tracking-tight text-foreground md:text-4xl">
-      What is NeuroRoute?
+    <h1 className="mt-3 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-4xl">
+      NeuroRoute
     </h1>
 
-    <p className="mt-6 text-[15px] text-foreground/80 leading-[1.7]">
+    <p className="mt-5 sm:mt-6 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
       NeuroRoute is a free interactive neuroscience site. It covers five
       areas — perception, attention, emotion, learning, and stress — through
       lessons built around real phenomena you can experience in your browser.
     </p>
 
-    <p className="mt-4 text-[15px] text-foreground/80 leading-[1.7]">
-      The goal is to give you a concrete, first-person encounter with each
-      concept before you study the underlying neuroscience. Every lesson
-      follows the same three-step structure:
+    <p className="mt-3.5 sm:mt-4 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
+      Every lesson follows the same three-step structure: you encounter a
+      phenomenon first, then trace the neural pathway, then read a focused
+      explanation of what your brain was doing.
     </p>
 
-    <div className="mt-8 grid gap-4 sm:grid-cols-3">
+    <div className="mt-7 sm:mt-8 grid gap-3 sm:gap-4 sm:grid-cols-3">
       {steps.map((s, i) => (
-        <div key={s.name} className="rounded-xl border border-border/70 bg-card p-5">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+        <div key={s.name} className="rounded-xl border border-border/70 bg-card p-4 sm:p-5">
+          <span className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-primary text-[10px] sm:text-xs font-bold text-primary-foreground">
             {i + 1}
           </span>
-          <p className="mt-3 font-display text-[15px] text-foreground">
+          <p className="mt-2.5 sm:mt-3 font-display text-[14px] sm:text-[15px] text-foreground">
             {s.name}
           </p>
-          <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">
+          <p className="mt-1 sm:mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
             {s.desc}
           </p>
         </div>
       ))}
     </div>
 
-    <p className="mt-8 text-[15px] text-foreground/80 leading-[1.7]">
-      NeuroRoute runs entirely in your browser — no accounts, no saved data,
+    <p className="mt-7 sm:mt-8 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
+      Everything runs in your browser — no accounts, no saved data,
       no tracking. Anyone curious about how the brain works can use it.
     </p>
 
     {/* Primary CTA */}
-    <div className="mt-10">
+    <div className="mt-8 sm:mt-10">
       <Link
         to="/"
-        className="inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="inline-flex items-center rounded-lg bg-primary px-7 py-3 sm:py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         Start Exploring
       </Link>
     </div>
 
     {/* Secondary: classroom context */}
-    <div className="mt-16 border-t border-border/50 pt-8">
-      <p className="text-[13px] text-muted-foreground/70 leading-relaxed">
+    <div className="mt-12 sm:mt-16 border-t border-border/50 pt-6 sm:pt-8">
+      <p className="text-[12px] sm:text-[13px] text-muted-foreground/60 leading-relaxed">
         NeuroRoute was originally developed alongside Emory University's
         NBB302 course. If you're using it in a classroom setting, the{" "}
         <Link to="/course-map" className="font-medium text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors">

@@ -16,8 +16,8 @@ const UnitHub = () => {
   if (!content || !unitId) {
     return (
       <div className="container flex flex-col items-center justify-center py-32 text-center">
-        <h1 className="font-display text-4xl text-foreground">Unit Not Found</h1>
-        <p className="mt-4 text-[15px] text-muted-foreground">
+        <h1 className="font-display text-3xl sm:text-4xl text-foreground">Unit Not Found</h1>
+        <p className="mt-4 text-[14px] sm:text-[15px] text-muted-foreground">
           The unit you're looking for doesn't exist.
         </p>
         <Link
@@ -44,22 +44,22 @@ const UnitHub = () => {
   const nextUnit = idx < allIds.length - 1 ? allIds[idx + 1] : null;
 
   return (
-    <div className="container max-w-3xl py-14 md:py-20">
+    <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-20">
       {/* Breadcrumb */}
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
       >
         <span aria-hidden="true">←</span> All Units
       </Link>
 
       {/* ── Hero: Unit intro ── */}
-      <div className="mt-8">
+      <div className="mt-6 sm:mt-8">
         <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
       </div>
 
       {/* ── Interactive lessons — primary call to action ── */}
-      <div className="mt-16">
+      <div className="mt-14 sm:mt-16">
         <FeaturedLessonCards
           linkedModules={linkedModules}
           placeholder={isUnit5 ? unit5AnchorLesson : undefined}
@@ -67,12 +67,12 @@ const UnitHub = () => {
       </div>
 
       {/* ── Reference sections ── */}
-      <div className="mt-20 space-y-16">
+      <div className="mt-16 sm:mt-20 space-y-12 sm:space-y-16">
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-muted-foreground">
+          <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Reference
           </p>
-          <p className="mt-1.5 text-[13px] text-muted-foreground leading-relaxed">
+          <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
             Key ideas, neural pathways, and clinical connections explored in this unit.
           </p>
         </div>
@@ -87,16 +87,16 @@ const UnitHub = () => {
       </div>
 
       {/* ── Review — end of page ── */}
-      <div className="mt-20">
+      <div className="mt-16 sm:mt-20">
         <ReviewSection questions={content.review} />
       </div>
 
       {/* Prev / Next */}
-      <nav className="mt-16 flex items-center justify-between border-t border-border pt-8">
+      <nav className="mt-12 sm:mt-16 flex items-center justify-between border-t border-border pt-6 sm:pt-8">
         {prevUnit ? (
           <Link
             to={`/unit/${prevUnit}`}
-            className="group inline-flex items-center gap-2 text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">←</span>
             {(() => {
@@ -110,7 +110,7 @@ const UnitHub = () => {
         {nextUnit ? (
           <Link
             to={`/unit/${nextUnit}`}
-            className="group inline-flex items-center gap-2 text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
           >
             {(() => {
               const nc = getUnitContent(nextUnit);

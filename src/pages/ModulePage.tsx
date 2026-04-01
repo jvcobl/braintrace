@@ -19,8 +19,8 @@ const ModulePage = () => {
   if (!mod) {
     return (
       <div className="container flex flex-col items-center justify-center py-32 text-center">
-        <h1 className="font-display text-4xl text-foreground">Lesson Not Found</h1>
-        <p className="mt-4 text-[15px] text-muted-foreground">
+        <h1 className="font-display text-3xl sm:text-4xl text-foreground">Lesson Not Found</h1>
+        <p className="mt-4 text-[14px] sm:text-[15px] text-muted-foreground">
           The lesson you're looking for doesn't exist.
         </p>
         <Link
@@ -48,27 +48,27 @@ const ModulePage = () => {
       {/* Breadcrumb */}
       <Link
         to={`/unit/${mod.unitId}`}
-        className="inline-flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
+        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 rounded-sm"
       >
         <span aria-hidden="true">←</span> {unitTitle}
       </Link>
 
       {/* Header */}
-      <div className="mt-7">
-        <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary/60">
+      <div className="mt-6 sm:mt-7">
+        <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.25em] text-primary/60">
           {unitTitle}
         </p>
-        <h1 className="mt-2 font-display text-3xl tracking-tight text-foreground md:text-[2rem]">
+        <h1 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-[2rem]">
           {mod.title}
         </h1>
-        <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed">{mod.shortGoal}</p>
+        <p className="mt-2.5 sm:mt-3 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed">{mod.shortGoal}</p>
       </div>
 
       {/* Section nav + content */}
-      <div className="mt-10">
+      <div className="mt-8 sm:mt-10">
         <SectionNav current={section} onSelect={setSection} />
 
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8">
           {section === "Intro" && <IntroSection module={mod} />}
           {section === "Experience" && <ExperienceSection module={mod} onNavigate={setSection} />}
           {section === "Trace" && <TracePanel nodes={mod.traceNodes} />}
@@ -78,11 +78,11 @@ const ModulePage = () => {
 
       {/* Sibling lessons */}
       {siblingLessons.length > 0 && (
-        <div className="mt-14 border-t border-border pt-8">
-          <h2 className="text-[11px] font-medium uppercase tracking-[0.25em] text-muted-foreground">
+        <div className="mt-12 sm:mt-14 border-t border-border pt-6 sm:pt-8">
+          <h2 className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             More in this unit
           </h2>
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-3 sm:mt-4 space-y-2">
             {siblingLessons.map((s) => (
               <li key={s.id}>
                 <Link
