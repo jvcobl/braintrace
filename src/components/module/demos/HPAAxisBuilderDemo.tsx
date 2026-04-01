@@ -257,7 +257,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                           <button
                             type="button"
                             onClick={() => handleRemove(item)}
-                            className="shrink-0 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                            className="shrink-0 flex h-7 w-7 items-center justify-center rounded-md text-xs text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                             aria-label={`Remove ${item.structure}`}
                           >
                             ✕

@@ -21,7 +21,7 @@ const Header = () => {
               <Link
                 key={to}
                 to={to}
-                className={`rounded-lg px-3.5 py-2 text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
+                className={`rounded-lg px-3.5 py-2.5 text-[13px] font-medium transition-colors min-h-[44px] inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                   isActive
                     ? "bg-accent text-accent-foreground"
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground"
