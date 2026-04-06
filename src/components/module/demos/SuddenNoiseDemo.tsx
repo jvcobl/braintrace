@@ -132,8 +132,10 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
     }
 
     waitTimer.current = setTimeout(() => {
-      targetTime.current = performance.now();
       setPhase({ kind: "trial", trial: "target" });
+      requestAnimationFrame(() => {
+        targetTime.current = performance.now();
+      });
     }, delay);
   }, [currentTrialType, playTone]);
 

@@ -8,6 +8,7 @@ import SectionNav, { type SectionId } from "@/components/module/SectionNav";
 import IntroSection from "@/components/module/IntroSection";
 import ExperienceSection from "@/components/module/ExperienceSection";
 import TracePanel from "@/components/module/TracePanel";
+import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
 
 const ModulePage = () => {
@@ -72,7 +73,12 @@ const ModulePage = () => {
         <div className="mt-6 sm:mt-8">
           {section === "Intro" && <IntroSection module={mod} />}
           {section === "Experience" && <ExperienceSection module={mod} onNavigate={setSection} />}
-          {section === "Trace" && <TracePanel nodes={mod.traceNodes} />}
+          {section === "Trace" && (() => {
+            const modDef = moduleDefinitions[mod.slug];
+            return modDef?.tracePathway
+              ? <TracePathwaySVG pathway={modDef.tracePathway} />
+              : <TracePanel nodes={mod.traceNodes} />;
+          })()}
           {section === "Explain" && (() => {
             const modDef = moduleDefinitions[mod.slug];
             return (
