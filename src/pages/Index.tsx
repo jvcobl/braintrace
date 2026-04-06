@@ -9,18 +9,21 @@ const STUDY_METHOD = [
   {
     step: "01",
     name: "Experience",
+    short: "Try an interactive neuroscience demo",
     description:
       "Each lesson starts with something you do — a blurry image, a sudden sound, a memory task. You encounter the phenomenon before any explanation.",
   },
   {
     step: "02",
     name: "Trace",
+    short: "Follow the signal through your brain",
     description:
       "Then you see what your brain predicted, what actually happened, and which neural pathways were involved.",
   },
   {
     step: "03",
     name: "Explain",
+    short: "Understand the prediction behind the behavior",
     description:
       "A focused write-up connects the experience to the neuroscience — what your brain did, which structures were active, and why the pathway matters.",
   },
