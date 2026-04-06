@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getUnitIds, getUnitContent, getLessonsByUnit } from "@/data/content/registry";
+import { getUnitIds } from "@/data/content/registry";
 
 /* ── Static data ── */
 
@@ -9,13 +9,13 @@ const STUDY_METHOD = [
   { name: "Explain", short: "Understand the prediction behind the behavior" },
 ];
 
-const UNIT_ACCENTS: Record<string, string> = {
-  "unit-1": "#7F77DD",
-  "unit-2": "#7F77DD",
-  "unit-3": "#D85A30",
-  "unit-4": "#1D9E75",
-  "unit-5": "#1D9E75",
-};
+const TOPICS = [
+  { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD", count: 3 },
+  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", count: 2 },
+  { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", count: 3 },
+  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", count: 2 },
+  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", count: 2 },
+];
 
 /* ── Component ── */
 
@@ -99,39 +99,29 @@ const Index = () => {
           </p>
 
           <div className="mt-8 space-y-2">
-            {unitIds.map((uid) => {
-              const content = getUnitContent(uid);
-              if (!content) return null;
-              const lessons = getLessonsByUnit(uid);
-              const accent = UNIT_ACCENTS[uid] || "#888";
-
-              return (
-                <Link
-                  key={uid}
-                  to={`/unit/${uid}`}
-                  className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white border-l-4 p-4 sm:p-5 transition-all hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                  style={{ borderLeftColor: accent }}
+            {TOPICS.map((t) => (
+              <Link
+                key={t.slug}
+                to={`/topics/${t.slug}`}
+                className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white border-l-4 p-4 sm:p-5 transition-all hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                style={{ borderLeftColor: t.accent }}
+              >
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-base text-foreground group-hover:text-primary transition-colors">
+                    {t.title}
+                  </h3>
+                </div>
+                <span className="text-xs text-muted-foreground/40 shrink-0">
+                  {t.count} {t.count === 1 ? "module" : "modules"}
+                </span>
+                <span
+                  className="text-muted-foreground/25 transition-all group-hover:translate-x-0.5 group-hover:text-primary"
+                  aria-hidden="true"
                 >
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-display text-base text-foreground group-hover:text-primary transition-colors">
-                      {content.meta.title}
-                    </h3>
-                    <p className="mt-0.5 text-sm text-muted-foreground truncate">
-                      {content.meta.subtitle}
-                    </p>
-                  </div>
-                  <span className="text-xs text-muted-foreground/40 shrink-0">
-                    {lessons.length} {lessons.length === 1 ? "lesson" : "lessons"}
-                  </span>
-                  <span
-                    className="text-muted-foreground/25 transition-all group-hover:translate-x-0.5 group-hover:text-primary"
-                    aria-hidden="true"
-                  >
-                    →
-                  </span>
-                </Link>
-              );
-            })}
+                  →
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

@@ -3,112 +3,25 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import ModuleLink from "@/components/ModuleLink";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 
-/* ------------------------------------------------------------------ */
-/* Interactive: Trust Prior vs Trust Input                             */
-/* ------------------------------------------------------------------ */
+/* ── Scenario data (text only, no slider) ── */
 
-interface Scenario {
-  id: string;
-  title: string;
-  moduleId: string;
-  priorLabel: string;
-  inputLabel: string;
-  priorHigh: string;
-  inputHigh: string;
-  balanced: string;
-}
-
-const scenarios: Scenario[] = [
+const scenarios = [
   {
-    id: "blurry",
     title: "Blurry Object Guess",
     moduleId: "blurry-object-guess",
-    priorLabel: "OFC's early guess",
-    inputLabel: "Sharpening visual detail",
-    priorHigh:
-      "Your OFC's contextual guess dominates perception. You 'see' the object before the image is clear — even if the guess is wrong.",
-    inputHigh:
-      "You wait for the ventral stream to deliver sharp detail. Perception is slower but more accurate — the image overrides any premature guess.",
-    balanced:
-      "Your brain blends its early guess with incoming detail. The OFC prediction shapes what you expect, but sharp evidence can still correct it.",
+    body: "When an image is blurry, sensory input is low-precision. Your OFC compensates by increasing the weight of its contextual guess — a high-precision prior generated from coarse, low-spatial-frequency information. If the prior is strong enough, you 'see' the object before the image sharpens. If it's wrong, you experience the correction as a prediction error when detailed input from the ventral stream overrides the guess.",
   },
   {
-    id: "face",
     title: "Face or Not?",
     moduleId: "face-or-not",
-    priorLabel: "Top-down face bias",
-    inputLabel: "Actual visual evidence",
-    priorHigh:
-      "The PFC/OFC face-detection bias overwhelms weak evidence. You see faces in clouds, outlets, and toast — classic pareidolia.",
-    inputHigh:
-      "You rely on what the FFA actually detects. Ambiguous patterns are correctly rejected as non-faces, but you might also be slower to spot real faces.",
-    balanced:
-      "Your face bias helps you detect real faces quickly, but strong contradictory evidence from the FFA and PFC can override false alarms.",
+    body: "Your brain assigns extremely high precision to the face-detection prior — the PFC/OFC bias that primes the FFA to detect face-like patterns. When sensory input is ambiguous (low precision), this strong prior dominates. The result is pareidolia: seeing faces in clouds, wall outlets, or random shapes. The signal didn't look like a face — but the prior was weighted so heavily that weak evidence was enough to trigger the percept.",
   },
   {
-    id: "load",
     title: "Memory Under Load",
     moduleId: "memory-under-load",
-    priorLabel: "dlPFC top-down control",
-    inputLabel: "Distractors and noise",
-    priorHigh:
-      "Your dlPFC successfully maintains the memory set and suppresses distractors. Performance stays high — the control signal is strong enough.",
-    inputHigh:
-      "Distractors flood in. The dlPFC can't maintain its control signal against the noise, and irrelevant items intrude into working memory.",
-    balanced:
-      "Your dlPFC holds its own at moderate load, but as demand increases, the balance tips — distractor suppression weakens and errors creep in.",
+    body: "The dlPFC maintains working memory by keeping task-relevant signals high-precision and suppressing distractors (low-precision noise). As cognitive load increases, the control signal weakens — the precision gap between targets and distractors narrows. Eventually, distractors leak through because the brain can no longer reliably distinguish what matters from what doesn't. The failure isn't about the stimuli; it's about the precision weights assigned to them.",
   },
 ];
-
-function PrecisionSlider({ scenario }: { scenario: Scenario }) {
-  const [value, setValue] = useState(50);
-
-  const zone = value < 35 ? "input" : value > 65 ? "prior" : "balanced";
-  const description =
-    zone === "prior"
-      ? scenario.priorHigh
-      : zone === "input"
-        ? scenario.inputHigh
-        : scenario.balanced;
-
-  return (
-    <div className="bg-card border border-border rounded-xl p-5">
-      <div className="flex items-center justify-between mb-1">
-        <h4 className="text-sm font-medium text-foreground">{scenario.title}</h4>
-        <ModuleLink moduleId={scenario.moduleId} />
-      </div>
-
-      {/* Slider */}
-      <div className="mt-4">
-        <input
-          type="range"
-          min={0}
-          max={100}
-          value={value}
-          onChange={(e) => setValue(Number(e.target.value))}
-          className="w-full accent-primary h-2 rounded-full cursor-pointer"
-        />
-        <div className="flex justify-between mt-1.5">
-          <span className="text-xs text-muted-foreground">
-            Trust input — <span className="text-foreground font-medium">{scenario.inputLabel}</span>
-          </span>
-          <span className="text-xs text-muted-foreground">
-            Trust prior — <span className="text-foreground font-medium">{scenario.priorLabel}</span>
-          </span>
-        </div>
-      </div>
-
-      {/* Outcome */}
-      <div className="mt-4 bg-muted/40 rounded-lg px-4 py-3">
-        <p className="text-[13px] text-foreground leading-relaxed">{description}</p>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Module cross-links                                                  */
-/* ------------------------------------------------------------------ */
 
 const crossLinks = [
   {
@@ -125,17 +38,15 @@ const crossLinks = [
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/* Page                                                                */
-/* ------------------------------------------------------------------ */
+/* ── Page ── */
 
 const ConceptPrecision = () => {
   const [deeperOpen, setDeeperOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
-      {/* ---- 1. Intro ---- */}
+
       <h1 className="text-3xl font-semibold text-foreground">Precision &amp; Attention</h1>
       <p className="mt-3 text-lg text-muted-foreground max-w-2xl leading-relaxed">
         Your brain doesn't trust every signal equally. It assigns a confidence
@@ -145,7 +56,7 @@ const ConceptPrecision = () => {
         overridden.
       </p>
 
-      {/* ---- 2. The volume knob ---- */}
+      {/* ── The volume knob ── */}
       <h2 className="text-xl font-medium text-foreground mt-12">The volume knob</h2>
       <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-2xl">
         Think of precision as a volume knob on each signal your brain processes.
@@ -169,22 +80,31 @@ const ConceptPrecision = () => {
         how much your brain trusts each source of information.
       </p>
 
-      {/* ---- 3. Interactive block ---- */}
-      <h2 id="precision-slider" className="text-xl font-medium text-foreground mt-12 mb-1">
-        Try it: trust prior vs. trust input
+      {/* ── Precision in action ── */}
+      <h2 id="precision-slider" className="text-xl font-medium text-foreground mt-12">
+        Precision in action
       </h2>
-      <p className="text-sm text-muted-foreground mb-5 max-w-2xl">
-        Drag the slider to shift the balance between trusting your brain's prior
-        expectation and trusting the incoming sensory evidence. Watch how
-        perception and performance change in each scenario.
+      <p className="text-sm text-muted-foreground mt-2 mb-6 max-w-2xl">
+        Each BrainTrace module demonstrates a different balance between
+        prior precision and input precision. Here's how the weighting plays out
+        in three scenarios.
       </p>
-      <div className="space-y-5">
+
+      <div className="space-y-6">
         {scenarios.map((s) => (
-          <PrecisionSlider key={s.id} scenario={s} />
+          <div key={s.moduleId}>
+            <h3 className="text-base font-medium text-foreground">{s.title}</h3>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              {s.body}
+            </p>
+            <div className="mt-3 max-w-sm">
+              <ModuleLink moduleId={s.moduleId} />
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* ---- 4. See it in BrainTrace ---- */}
+      {/* ── See it in BrainTrace ── */}
       <h2 id="precision-modules" className="text-xl font-medium text-foreground mt-12 mb-4">
         See it in BrainTrace
       </h2>
@@ -194,7 +114,7 @@ const ConceptPrecision = () => {
             <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
             <div>
               <p className="text-sm text-muted-foreground leading-relaxed">{link.note}</p>
-              <div className="mt-1.5">
+              <div className="mt-1.5 max-w-sm">
                 <ModuleLink moduleId={link.id} />
               </div>
             </div>
@@ -202,11 +122,11 @@ const ConceptPrecision = () => {
         ))}
       </div>
 
-      {/* ---- 5. Go Deeper (expandable) ---- */}
-      <div className="mt-12 border border-border rounded-xl overflow-hidden">
+      {/* ── Go Deeper ── */}
+      <div className="mt-12 border border-gray-200 rounded-xl overflow-hidden">
         <button
           onClick={() => setDeeperOpen(!deeperOpen)}
-          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/30 transition-colors"
+          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
         >
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary" />
@@ -215,9 +135,9 @@ const ConceptPrecision = () => {
             </span>
           </div>
           {deeperOpen ? (
-            <ChevronUp className="w-4 h-4 text-muted-foreground" />
+            <ChevronUp className="w-4 h-4 text-gray-400" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-muted-foreground" />
+            <ChevronDown className="w-4 h-4 text-gray-400" />
           )}
         </button>
 
