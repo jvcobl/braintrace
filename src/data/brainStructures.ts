@@ -16,6 +16,8 @@ export type BrainStructureId =
   | "itc"
   | "brainstem-startle"
   | "auditory-cortex"
+  | "auditory-input"
+  | "conditioned-cue"
   | "hippocampus"
   | "retina"
   | "lgn"
@@ -137,5 +139,17 @@ export const brainStructures: Record<BrainStructureId, BrainStructure> = {
     name: "Dorsal Stream",
     shortDescription: "The 'where/how' pathway — spatial location and action guidance.",
     nbb302Unit: 1,
+  },
+  "auditory-input": {
+    id: "auditory-input",
+    name: "Auditory Input",
+    shortDescription: "Sensory entry point for auditory stimuli; pre-cortical signal reaching brainstem and thalamus.",
+    nbb302Unit: 2,
+  },
+  "conditioned-cue": {
+    id: "conditioned-cue",
+    name: "Conditioned Cue (CS)",
+    shortDescription: "A previously neutral stimulus that has acquired predictive value through conditioning.",
+    nbb302Unit: 4,
   },
 };
