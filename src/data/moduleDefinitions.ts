@@ -197,7 +197,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "The absence of the expected aversive event created a prediction error: your brain predicted danger, but received safety.",
       whatPathwayHandledIt: "Conditioned cue → Amygdala (BLA → CeA) for initial fear learning. vmPFC → ITC → CeA inhibition pathway for extinction learning. Hippocampus for contextual modulation.",
       howBrainUpdated: "Extinction did not erase the original fear memory. Instead, your brain formed a new competing association: 'this cue is now safe in this context.' The original fear trace remains, which is why fear can return (spontaneous recovery).",
-      nbb302Connection: "Classical conditioning, CS-US pairing, fear acquisition, extinction as new learning, vmPFC/ITC inhibition, spontaneous recovery (Unit 4).",
+      nbb302Connection: "Classical conditioning, CS-US pairing, fear acquisition, extinction as new learning, vmPFC/ITC inhibition, spontaneous recovery. Covered in Learning 101 (Behaviorism and Plasticity) + The Push & Pull (Fear and Anxiety).",
     },
     tracePathway: {
       title: "The Fear Learning Pathway",
