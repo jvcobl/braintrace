@@ -7,9 +7,6 @@ const Footer = () => (
         <p className="font-display text-base text-foreground">
           BrainTrace — An interactive neuroscience learning experience
         </p>
-        <p className="text-xs text-gray-300 mt-1">
-          Built for NBB302 at Emory University
-        </p>
       </div>
       <Link to="/about" className="text-sm text-gray-400 hover:text-foreground transition-colors">
         About
