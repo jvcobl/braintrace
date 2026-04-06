@@ -5,7 +5,7 @@ import FaceOrNotDemo from "@/components/module/demos/FaceOrNotDemo";
 import SuddenNoiseDemo from "@/components/module/demos/SuddenNoiseDemo";
 import FearCueDemo from "@/components/module/demos/FearCueDemo";
 import MemoryUnderLoadDemo from "@/components/module/demos/MemoryUnderLoadDemo";
-import HPAAxisBuilderDemo from "@/components/module/demos/HPAAxisBuilderDemo";
+import StressResponseDemo from "@/components/module/demos/StressResponseDemo";
 import MultistablePerceptionDemo from "@/components/module/demos/MultistablePerceptionDemo";
 import PFCRoleMatcherDemo from "@/components/module/demos/PFCRoleMatcherDemo";
 import FearAnxietySorterDemo from "@/components/module/demos/FearAnxietySorterDemo";
@@ -28,7 +28,7 @@ const demos: Record<string, React.ComponentType<DemoProps>> = {
   "mod-3": SuddenNoiseDemo,
   "mod-4": FearCueDemo,
   "mod-5": MemoryUnderLoadDemo,
-  "mod-6": HPAAxisBuilderDemo,
+  "mod-6": StressResponseDemo,
   "mod-7": MultistablePerceptionDemo,
   "mod-8": PFCRoleMatcherDemo,
   "mod-9": FearAnxietySorterDemo,
