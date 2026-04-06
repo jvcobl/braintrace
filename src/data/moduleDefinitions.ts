@@ -18,7 +18,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "If your early guess was wrong, the sharpening image created a prediction error — your brain's initial model didn't match the incoming detail.",
       whatPathwayHandledIt: "Low spatial frequency shortcut → OFC/PFC for early prediction → ventral stream and IT cortex for detailed recognition.",
       howBrainUpdated: "As higher-resolution input arrived through the ventral stream, your brain either confirmed its guess or revised its object model to fit the new evidence.",
-      nbb302Connection: "Top-down prediction, low spatial frequency processing, OFC contextual shortcuts, ventral stream object recognition (Unit 1).",
+      nbb302Connection: "Top-down prediction, low spatial frequency processing, OFC contextual shortcuts, ventral stream object recognition. Covered in Sensation, Perception, and Inklings of Awareness + Object Recognition and Decision-making.",
     },
     tracePathway: {
       title: "The Fast Guess Pathway",
