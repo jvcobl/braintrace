@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import SearchBar from "./SearchBar";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -38,17 +39,21 @@ const Header = () => {
               {label}
             </Link>
           ))}
+          <SearchBar />
         </nav>
 
-        {/* Mobile hamburger */}
-        <button
-          type="button"
-          className="sm:hidden inline-flex items-center justify-center rounded-lg p-2.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-        >
-          {menuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        {/* Mobile: search + hamburger */}
+        <div className="flex sm:hidden items-center gap-1">
+          <SearchBar />
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-lg p-2.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile drawer */}
