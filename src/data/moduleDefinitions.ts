@@ -72,7 +72,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "When a non-face pattern triggered face perception, the mismatch was between the strong top-down face prior and the weak actual evidence — a false positive driven by over-weighted prediction.",
       whatPathwayHandledIt: "PFC/OFC top-down face bias → ventral stream → FFA (face-specialized recognition) → PFC confirms or suppresses the percept.",
       howBrainUpdated: "With more careful inspection, the system either confirmed the face percept or suppressed the false positive — but the initial bias shows how strongly top-down priors shape perception.",
-      nbb302Connection: "Pareidolia, FFA specialization, top-down processing, visual heuristics, expertise effects on recognition (Unit 1).",
+      nbb302Connection: "Pareidolia, FFA specialization, top-down processing, visual heuristics, expertise effects on recognition. Covered in Sensation, Perception, and Inklings of Awareness + Object Recognition and Decision-making.",
     },
     tracePathway: {
       title: "The Face Bias Pathway",
