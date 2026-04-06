@@ -114,26 +114,25 @@ const Index = () => {
         <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-20 md:py-24">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              How Each Lesson Works
+              How BrainTrace Works
             </p>
             <h2 className="mt-3 font-display text-xl sm:text-2xl tracking-tight text-foreground md:text-[1.75rem]">
               Experience, Trace, Explain
             </h2>
           </div>
 
-          <div className="mx-auto mt-10 sm:mt-14 grid max-w-4xl gap-4 sm:gap-5 sm:grid-cols-3">
-            {STUDY_METHOD.map((s) => (
-              <div
-                key={s.step}
-                className="relative rounded-xl border border-border/70 bg-card p-5 sm:p-6"
-              >
-                <span className="font-display text-2xl text-primary/25">{s.step}</span>
-                <h3 className="mt-2 text-[13px] sm:text-[14px] font-semibold text-foreground">
-                  {s.name}
-                </h3>
-                <p className="mt-2 sm:mt-2.5 text-[12px] sm:text-[13px] leading-relaxed text-muted-foreground">
-                  {s.description}
-                </p>
+          <div className="mx-auto mt-10 sm:mt-14 flex max-w-4xl flex-col sm:flex-row items-stretch gap-3">
+            {STUDY_METHOD.map((s, i) => (
+              <div key={s.step} className="flex flex-1 items-center gap-3">
+                <div className="flex-1 rounded-xl bg-muted/40 p-4 sm:p-5">
+                  <h3 className="text-[14px] font-semibold text-foreground">{s.name}</h3>
+                  <p className="mt-1 text-[12px] sm:text-[13px] leading-relaxed text-muted-foreground">
+                    {s.short}
+                  </p>
+                </div>
+                {i < STUDY_METHOD.length - 1 && (
+                  <span className="hidden sm:block text-lg text-muted-foreground/30" aria-hidden="true">→</span>
+                )}
               </div>
             ))}
           </div>
