@@ -165,6 +165,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
   const startShow = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
     const seq = pickRandom(LETTERS, round!.sequenceLength);
     setSequence(seq);
     setUserInput("");

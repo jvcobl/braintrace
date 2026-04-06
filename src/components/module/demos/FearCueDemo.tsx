@@ -186,6 +186,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   }, []);
 
   const restart = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
     setIndex(0);
     setStep("predict");
     setPrediction(null);
