@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
 
 const Footer = () => (
-  <footer className="border-t border-border py-8">
-    <div className="container px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
-      <p>BrainTrace — An interactive neuroscience learning experience</p>
-      <Link to="/about" className="hover:text-foreground transition-colors">
+  <footer className="border-t border-gray-200 py-10">
+    <div className="container px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="text-center sm:text-left">
+        <p className="font-display text-base text-foreground">
+          BrainTrace — An interactive neuroscience learning experience
+        </p>
+        <p className="text-xs text-gray-300 mt-1">
+          Built for NBB302 at Emory University
+        </p>
+      </div>
+      <Link to="/about" className="text-sm text-gray-400 hover:text-foreground transition-colors">
         About
       </Link>
     </div>

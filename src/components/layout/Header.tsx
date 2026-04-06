@@ -17,22 +17,22 @@ const Header = () => {
     pathname === to || (to !== "/" && pathname.startsWith(to));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-card/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white backdrop-blur-md">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="font-display text-xl tracking-tight text-foreground">
+        <Link to="/" className="font-display text-xl text-foreground">
           BrainTrace
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden sm:flex items-center gap-1" aria-label="Main navigation">
+        <nav className="hidden sm:flex items-center gap-6" aria-label="Main navigation">
           {navLinks.map(({ to, label }) => (
             <Link
               key={to}
               to={to}
-              className={`rounded-lg px-3.5 py-2.5 text-[13px] font-medium transition-colors min-h-[44px] inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+              className={`relative py-5 text-sm font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                 isActive(to)
-                  ? "bg-accent text-accent-foreground"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary"
+                  : "text-gray-400 hover:text-gray-600"
               }`}
               aria-current={isActive(to) ? "page" : undefined}
             >
@@ -47,7 +47,7 @@ const Header = () => {
           <SearchBar />
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-lg p-2.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex items-center justify-center rounded-full p-2.5 text-gray-400 hover:bg-gray-100 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
@@ -58,16 +58,16 @@ const Header = () => {
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <nav className="sm:hidden border-t border-border bg-card px-4 pb-4 pt-2 space-y-1" aria-label="Mobile navigation">
+        <nav className="sm:hidden border-t border-gray-200/60 bg-white px-4 pb-4 pt-2 space-y-1" aria-label="Mobile navigation">
           {navLinks.map(({ to, label }) => (
             <Link
               key={to}
               to={to}
               onClick={() => setMenuOpen(false)}
-              className={`block rounded-lg px-3.5 py-3 text-sm font-medium transition-colors ${
+              className={`block px-3.5 py-3 text-sm font-medium uppercase tracking-wide transition-colors ${
                 isActive(to)
-                  ? "bg-accent text-accent-foreground"
-                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  ? "text-foreground"
+                  : "text-gray-400 hover:text-gray-600"
               }`}
               aria-current={isActive(to) ? "page" : undefined}
             >

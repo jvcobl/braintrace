@@ -9,7 +9,7 @@ interface SectionNavProps {
 
 const SectionNav = ({ current, onSelect }: SectionNavProps) => (
   <nav
-    className="flex gap-0.5 sm:gap-1 rounded-xl border border-border bg-card p-0.5 sm:p-1 shadow-sm"
+    className="flex gap-6 border-b border-gray-200"
     aria-label="Lesson sections"
   >
     {sections.map((s) => (
@@ -17,10 +17,10 @@ const SectionNav = ({ current, onSelect }: SectionNavProps) => (
         key={s}
         type="button"
         onClick={() => onSelect(s)}
-        className={`flex-1 rounded-lg px-2 py-2.5 sm:px-3 sm:py-2.5 text-[12px] sm:text-[13px] font-medium transition-all min-h-[44px] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+        className={`relative pb-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
           current === s
-            ? "bg-primary text-primary-foreground shadow-sm"
-            : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+            ? "text-gray-900 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary"
+            : "text-gray-400 hover:text-gray-600"
         }`}
         aria-current={current === s ? "step" : undefined}
       >
