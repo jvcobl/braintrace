@@ -248,14 +248,18 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
 
   const renderedEdges = edges.filter((e) => nodeMap.has(e.from) && nodeMap.has(e.to));
 
+  const usedBadges = useMemo(
+    () => [...new Set(nodes.filter((n) => n.badge).map((n) => n.badge!))] as TraceBadge[],
+    [nodes],
+  );
+
   return (
     <section>
       <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Trace the Pathway
       </h2>
-      <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground/60">
-        {pathway.description}
-      </p>
+      <h3 className="mt-3 text-lg font-medium text-foreground">{pathway.title}</h3>
+      <p className="mt-1.5 text-sm text-gray-500 max-w-lg">{pathway.description}</p>
 
       {/* State toggle */}
       {pathway.alternateState && (
@@ -285,7 +289,12 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
 
       {/* SVG diagram */}
       {w > 0 && h > 0 && (
-        <div className="mt-5 overflow-x-auto -mx-2 px-2">
+        <div
+          key={showAlt ? "alt" : "default"}
+          className="mt-5 overflow-x-auto -mx-2 px-2"
+          style={{ animation: "tpFadeIn 200ms ease-in" }}
+        >
+          <style>{`@keyframes tpFadeIn{from{opacity:0}to{opacity:1}}`}</style>
           <svg
             viewBox={`0 0 ${w} ${h}`}
             className="w-full mx-auto"
@@ -428,19 +437,19 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
 
       {/* Legend */}
       <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5 justify-center">
-        {(["input", "prediction", "mismatch", "update"] as TraceBadge[]).map((b) => (
+        {usedBadges.map((b) => (
           <span key={b} className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: BADGE_COLOR[b] }} />
-            <span className="text-[11px] text-muted-foreground capitalize">{b}</span>
+            <span className="text-xs text-gray-400 capitalize">{b}</span>
           </span>
         ))}
         <span className="flex items-center gap-1.5">
           <span className="w-4 h-0 border-t-[1.5px] border-[#D85A30]" />
-          <span className="text-[11px] text-muted-foreground">Fast</span>
+          <span className="text-xs text-gray-400">Fast</span>
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-4 h-0 border-t-[1.5px] border-dashed border-muted-foreground/60" />
-          <span className="text-[11px] text-muted-foreground">Slow</span>
+          <span className="w-4 h-0 border-t-[1.5px] border-dashed border-gray-300" />
+          <span className="text-xs text-gray-400">Slow</span>
         </span>
       </div>
     </section>
