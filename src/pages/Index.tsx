@@ -83,16 +83,22 @@ const Index = () => {
           </h1>
 
           <p className="mx-auto mt-6 sm:mt-8 max-w-lg text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
-            Experience a phenomenon, trace the neural pathway, and understand
-            what your brain was actually doing.
+            Experience a phenomenon. Trace the pathway. Understand what your
+            brain was doing.
           </p>
 
-          <div className="mt-10 sm:mt-12 flex items-center justify-center gap-4">
+          <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Link
               to={`/unit/${unitIds[0]}`}
               className="inline-flex items-center rounded-lg bg-primary px-7 sm:px-8 py-3 sm:py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Start Exploring
+            </Link>
+            <Link
+              to="/how-your-brain-predicts"
+              className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              How Your Brain Predicts →
             </Link>
           </div>
         </div>
