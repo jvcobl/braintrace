@@ -11,6 +11,7 @@ import UnitHub from "./pages/UnitHub";
 import CourseMap from "./pages/CourseMap";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import ComponentTest from "./pages/ComponentTest";
 
 const queryClient = new QueryClient();
 
