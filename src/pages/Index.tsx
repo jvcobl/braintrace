@@ -263,6 +263,29 @@ const Index = () => {
       {/* ════════════════════════════════════════════════
           6. CLOSING
          ════════════════════════════════════════════════ */}
+      {/* ════════════════════════════════════════════════
+          THE SHARED IDEA
+         ════════════════════════════════════════════════ */}
+      <section className="border-t border-border">
+        <div className="container mx-auto max-w-3xl px-4 sm:px-6 py-14 sm:py-18">
+          <div className="rounded-xl border border-border bg-muted/30 p-6 sm:p-8 text-center">
+            <p className="text-[13px] sm:text-sm leading-relaxed text-muted-foreground">
+              Every module in BrainTrace demonstrates the same underlying process:
+              your brain predicts, checks the input, and updates its model.
+            </p>
+            <Link
+              to="/how-your-brain-predicts/loop"
+              className="mt-4 inline-flex items-center text-sm font-medium text-primary transition-colors hover:text-primary/80"
+            >
+              Learn about the prediction loop →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════
+          CLOSING
+         ════════════════════════════════════════════════ */}
       <section className="border-t border-border">
         <div className="container mx-auto max-w-2xl px-4 sm:px-6 py-16 text-center sm:py-20 md:py-24">
           <h2 className="font-display text-xl tracking-tight text-foreground md:text-2xl">
@@ -280,7 +303,7 @@ const Index = () => {
             </Link>
             <Link
               to="/about"
-              className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+              className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground rounded-sm"
             >
               About BrainTrace
             </Link>
