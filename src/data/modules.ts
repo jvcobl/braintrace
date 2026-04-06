@@ -312,7 +312,7 @@ export const modules: Module[] = [
 
 
 export function getModuleById(id: string): Module | undefined {
-  return modules.find((m) => m.id === id);
+  return modules.find((m) => m.id === id || m.slug === id);
 }
 
 export function getModulesByUnit(unitId: string): Module[] {
