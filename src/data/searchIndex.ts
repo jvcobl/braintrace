@@ -12,6 +12,23 @@ export interface SearchItem {
   keywords: string[];
 }
 
+// Build structure → module mapping from tracePathway nodes
+const structureToModule = new Map<string, string>();
+for (const [slug, def] of Object.entries(moduleDefinitions)) {
+  for (const node of def.tracePathway.nodes) {
+    if (!structureToModule.has(node.structureId)) {
+      structureToModule.set(node.structureId, slug);
+    }
+  }
+  if (def.tracePathway.alternateState) {
+    for (const node of def.tracePathway.alternateState.nodes) {
+      if (!structureToModule.has(node.structureId)) {
+        structureToModule.set(node.structureId, slug);
+      }
+    }
+  }
+}
+
 const items: SearchItem[] = [];
 
 // Modules + Go Deeper cards
@@ -38,7 +55,7 @@ for (const mod of modules) {
         title: card.title,
         description: card.explanation.slice(0, 100),
         type: "deeper",
-        url: `/module/${mod.slug}`,
+        url: `/module/${mod.slug}#deeper-${card.id}`,
         keywords: [card.title, card.explanation.slice(0, 200), ...card.keyStructures],
       });
     }
@@ -59,12 +76,17 @@ for (const page of Object.values(conceptPages)) {
 
 // Brain structures
 for (const struct of Object.values(brainStructures)) {
+  const moduleSlug = structureToModule.get(struct.id);
+  const url = moduleSlug
+    ? `/module/${moduleSlug}#trace`
+    : `/unit/unit-${struct.nbb302Unit}`;
+
   items.push({
     id: `struct-${struct.id}`,
     title: struct.name,
     description: struct.shortDescription,
     type: "structure",
-    url: `/unit/unit-${struct.nbb302Unit}`,
+    url,
     keywords: [struct.name, struct.id, struct.shortDescription],
   });
 }

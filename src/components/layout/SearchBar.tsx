@@ -19,6 +19,17 @@ const TYPE_COLOR: Record<SearchItem["type"], string> = {
 
 const GROUP_ORDER: SearchItem["type"][] = ["module", "concept", "structure", "deeper"];
 
+function scrollToHash(hash: string) {
+  setTimeout(() => {
+    const el = document.getElementById(hash);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: "smooth" });
+    el.classList.add("search-highlight");
+    setTimeout(() => el.classList.remove("search-highlight"), 1500);
+  }, 100);
+}
+
 export default function SearchBar() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -72,7 +83,15 @@ export default function SearchBar() {
   const handleSelect = useCallback(
     (url: string) => {
       setOpen(false);
-      navigate(url);
+      const hashIdx = url.indexOf("#");
+      if (hashIdx === -1) {
+        navigate(url);
+        return;
+      }
+      const path = url.slice(0, hashIdx);
+      const hash = url.slice(hashIdx + 1);
+      navigate(path);
+      scrollToHash(hash);
     },
     [navigate],
   );

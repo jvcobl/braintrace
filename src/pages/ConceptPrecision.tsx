@@ -170,7 +170,7 @@ const ConceptPrecision = () => {
       </p>
 
       {/* ---- 3. Interactive block ---- */}
-      <h2 className="text-xl font-medium text-foreground mt-12 mb-1">
+      <h2 id="precision-slider" className="text-xl font-medium text-foreground mt-12 mb-1">
         Try it: trust prior vs. trust input
       </h2>
       <p className="text-sm text-muted-foreground mb-5 max-w-2xl">
@@ -185,7 +185,7 @@ const ConceptPrecision = () => {
       </div>
 
       {/* ---- 4. See it in BrainTrace ---- */}
-      <h2 className="text-xl font-medium text-foreground mt-12 mb-4">
+      <h2 id="precision-modules" className="text-xl font-medium text-foreground mt-12 mb-4">
         See it in BrainTrace
       </h2>
       <div className="space-y-4">

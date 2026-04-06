@@ -3,6 +3,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const failures = [
   {
+    id: "failure-prior",
     title: "Too much prior",
     accent: "#7F77DD",
     explanation:
@@ -10,6 +11,7 @@ const failures = [
     modules: ["face-or-not"],
   },
   {
+    id: "failure-noise",
     title: "Too much noise",
     accent: "#D85A30",
     explanation:
@@ -17,6 +19,7 @@ const failures = [
     modules: ["sudden-noise-reaction", "fear-cue-and-extinction"],
   },
   {
+    id: "failure-overload",
     title: "Overloaded control",
     accent: "#1D9E75",
     explanation:
@@ -37,7 +40,8 @@ const ConceptFailure = () => (
     <div className="mt-10 space-y-6">
       {failures.map((f) => (
         <div
-          key={f.title}
+          key={f.id}
+          id={f.id}
           className="border border-border rounded-xl p-6 border-l-4 bg-card"
           style={{ borderLeftColor: f.accent }}
         >

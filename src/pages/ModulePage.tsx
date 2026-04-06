@@ -66,15 +66,15 @@ const ModulePage = () => {
         <SectionNav current={section} onSelect={setSection} />
 
         <div className="mt-6 sm:mt-8">
-          {section === "Intro" && <IntroSection module={mod} />}
-          {section === "Experience" && <ExperienceSection module={mod} onNavigate={setSection} />}
-          {section === "Trace" && (() => {
+          {section === "Intro" && <div id="intro"><IntroSection module={mod} /></div>}
+          {section === "Experience" && <div id="experience"><ExperienceSection module={mod} onNavigate={setSection} /></div>}
+          {section === "Trace" && <div id="trace">{(() => {
             const modDef = moduleDefinitions[mod.slug];
             return modDef?.tracePathway
               ? <TracePathwaySVG pathway={modDef.tracePathway} />
               : <TracePanel nodes={mod.traceNodes} />;
-          })()}
-          {section === "Explain" && (() => {
+          })()}</div>}
+          {section === "Explain" && <div id="explain">{(() => {
             const modDef = moduleDefinitions[mod.slug];
             return (
               <ExplainSection
@@ -84,7 +84,7 @@ const ModulePage = () => {
                 conceptLinks={modDef?.conceptLinks}
               />
             );
-          })()}
+          })()}</div>}
         </div>
       </div>
 

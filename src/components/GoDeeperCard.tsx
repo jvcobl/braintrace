@@ -4,10 +4,11 @@ import { brainStructures, type BrainStructureId } from "@/data/brainStructures";
 
 interface GoDeeperCardProps {
   data: GoDeeperCardData;
+  autoExpand?: boolean;
 }
 
-const GoDeeperCard = ({ data }: GoDeeperCardProps) => {
-  const [open, setOpen] = useState(false);
+const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
+  const [open, setOpen] = useState(autoExpand);
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">

@@ -26,7 +26,7 @@ const ConceptLoop = () => (
       update the model. Every BrainTrace module shows you one version of this loop.
     </p>
 
-    <div className="mt-10 flex flex-col sm:flex-row items-stretch gap-3">
+    <div id="loop-visualization" className="mt-10 flex flex-col sm:flex-row items-stretch gap-3">
       {steps.map((step, i) => (
         <div key={step.name} className="flex items-center gap-3 flex-1">
           <div className={`rounded-xl border-2 ${step.border} bg-card p-4 flex-1`}>
@@ -45,7 +45,7 @@ const ConceptLoop = () => (
       <span>Then the loop begins again</span>
     </div>
 
-    <h2 className="text-xl font-medium text-foreground mt-14 mb-4">See it in the modules</h2>
+    <h2 id="loop-modules" className="text-xl font-medium text-foreground mt-14 mb-4">See it in the modules</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {moduleIds.map((id) => (
         <ModuleLink key={id} moduleId={id} />

@@ -37,7 +37,7 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks }: Exp
 
     {/* Prediction Lens */}
     {predictionLens && (
-      <div className="pt-8">
+      <div id="prediction-lens" className="pt-8">
         <PredictionLens data={predictionLens} />
       </div>
     )}
@@ -48,7 +48,9 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks }: Exp
         <h3 className="text-lg font-medium text-foreground mb-3">Go deeper</h3>
         <div className="space-y-2">
           {goDeeper.map((card) => (
-            <GoDeeperCard key={card.id} data={card} />
+            <div key={card.id} id={`deeper-${card.id}`}>
+              <GoDeeperCard data={card} autoExpand={typeof window !== "undefined" && window.location.hash === `#deeper-${card.id}`} />
+            </div>
           ))}
         </div>
       </div>
@@ -56,7 +58,7 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks }: Exp
 
     {/* Related concepts */}
     {conceptLinks && conceptLinks.length > 0 && (
-      <div className="pt-8">
+      <div id="concept-links" className="pt-8">
         <h3 className="text-sm font-medium text-muted-foreground mb-2">Related concepts</h3>
         <div className="space-y-2">
           {conceptLinks.map((id) => (
