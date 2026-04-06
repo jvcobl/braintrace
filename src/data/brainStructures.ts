@@ -16,6 +16,8 @@ export type BrainStructureId =
   | "itc"
   | "brainstem-startle"
   | "auditory-cortex"
+  | "auditory-input"
+  | "conditioned-cue"
   | "hippocampus"
   | "retina"
   | "lgn"
