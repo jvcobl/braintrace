@@ -267,7 +267,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "The control system's capacity was exceeded. The mismatch was between what your dlPFC predicted it could manage and the actual load — resulting in distractor leakage and dropped items.",
       whatPathwayHandledIt: "dlPFC for working memory maintenance, attentional control, and distractor suppression.",
       howBrainUpdated: "Performance declined as load increased — not because you stopped trying, but because the top-down control signal became too weak relative to the bottom-up noise.",
-      nbb302Connection: "Working memory, cognitive load theory, dlPFC function, attention as top-down control, PFC capacity limits (Unit 3).",
+      nbb302Connection: "Working memory, cognitive load theory, dlPFC function, attention as top-down control, PFC capacity limits. Covered in Object Recognition and Decision-making (Top-down and Bottom-up Integrations).",
     },
     tracePathway: {
       title: "The Working Memory Pathway",
