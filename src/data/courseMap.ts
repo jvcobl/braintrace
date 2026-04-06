@@ -38,7 +38,7 @@ function buildCourseUnits(): CourseUnit[] {
 
     return {
       id: uid,
-      title: `Unit ${uid.replace("unit-", "")}: ${content.meta.title}`,
+      title: content.meta.title,
       keyTopics: unitKeyTopics[uid] ?? [],
       linkedModuleIds: lessons.map((l) => l.moduleId),
     };

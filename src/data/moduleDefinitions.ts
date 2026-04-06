@@ -18,7 +18,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "If your early guess was wrong, the sharpening image created a prediction error — your brain's initial model didn't match the incoming detail.",
       whatPathwayHandledIt: "Low spatial frequency shortcut → OFC/PFC for early prediction → ventral stream and IT cortex for detailed recognition.",
       howBrainUpdated: "As higher-resolution input arrived through the ventral stream, your brain either confirmed its guess or revised its object model to fit the new evidence.",
-      nbb302Connection: "Top-down prediction, low spatial frequency processing, OFC contextual shortcuts, ventral stream object recognition (Unit 1).",
+      nbb302Connection: "Top-down prediction, low spatial frequency processing, OFC contextual shortcuts, ventral stream object recognition. Covered in Sensation, Perception, and Inklings of Awareness + Object Recognition and Decision-making.",
     },
     tracePathway: {
       title: "The Fast Guess Pathway",
@@ -72,7 +72,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "When a non-face pattern triggered face perception, the mismatch was between the strong top-down face prior and the weak actual evidence — a false positive driven by over-weighted prediction.",
       whatPathwayHandledIt: "PFC/OFC top-down face bias → ventral stream → FFA (face-specialized recognition) → PFC confirms or suppresses the percept.",
       howBrainUpdated: "With more careful inspection, the system either confirmed the face percept or suppressed the false positive — but the initial bias shows how strongly top-down priors shape perception.",
-      nbb302Connection: "Pareidolia, FFA specialization, top-down processing, visual heuristics, expertise effects on recognition (Unit 1).",
+      nbb302Connection: "Pareidolia, FFA specialization, top-down processing, visual heuristics, expertise effects on recognition. Covered in Sensation, Perception, and Inklings of Awareness + Object Recognition and Decision-making.",
     },
     tracePathway: {
       title: "The Face Bias Pathway",
@@ -125,7 +125,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "The mismatch between expected silence and actual loud input triggered the fastest defensive response your brain has — the acoustic startle reflex.",
       whatPathwayHandledIt: "Auditory input → brainstem startle circuit (subcortical, ultra-fast) + amygdala salience amplification. Cortical interpretation came only on the slower route.",
       howBrainUpdated: "Your cortex later evaluated whether the sound was truly threatening. The startle response happened first; the interpretation came second.",
-      nbb302Connection: "Acoustic startle reflex, amygdala as salience center, low road vs. high road processing, fear-potentiated startle (Unit 2).",
+      nbb302Connection: "Acoustic startle reflex, amygdala as salience center, low road vs. high road processing, fear-potentiated startle. Covered in States that Prime Behavior (Arousal, Emotions).",
     },
     tracePathway: {
       title: "The Startle Pathway",
@@ -197,7 +197,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "The absence of the expected aversive event created a prediction error: your brain predicted danger, but received safety.",
       whatPathwayHandledIt: "Conditioned cue → Amygdala (BLA → CeA) for initial fear learning. vmPFC → ITC → CeA inhibition pathway for extinction learning. Hippocampus for contextual modulation.",
       howBrainUpdated: "Extinction did not erase the original fear memory. Instead, your brain formed a new competing association: 'this cue is now safe in this context.' The original fear trace remains, which is why fear can return (spontaneous recovery).",
-      nbb302Connection: "Classical conditioning, CS-US pairing, fear acquisition, extinction as new learning, vmPFC/ITC inhibition, spontaneous recovery (Unit 4).",
+      nbb302Connection: "Classical conditioning, CS-US pairing, fear acquisition, extinction as new learning, vmPFC/ITC inhibition, spontaneous recovery. Covered in Learning 101 (Behaviorism and Plasticity) + The Push & Pull (Fear and Anxiety).",
     },
     tracePathway: {
       title: "The Fear Learning Pathway",
@@ -267,7 +267,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "The control system's capacity was exceeded. The mismatch was between what your dlPFC predicted it could manage and the actual load — resulting in distractor leakage and dropped items.",
       whatPathwayHandledIt: "dlPFC for working memory maintenance, attentional control, and distractor suppression.",
       howBrainUpdated: "Performance declined as load increased — not because you stopped trying, but because the top-down control signal became too weak relative to the bottom-up noise.",
-      nbb302Connection: "Working memory, cognitive load theory, dlPFC function, attention as top-down control, PFC capacity limits (Unit 3).",
+      nbb302Connection: "Working memory, cognitive load theory, dlPFC function, attention as top-down control, PFC capacity limits. Covered in Object Recognition and Decision-making (Top-down and Bottom-up Integrations).",
     },
     tracePathway: {
       title: "The Working Memory Pathway",

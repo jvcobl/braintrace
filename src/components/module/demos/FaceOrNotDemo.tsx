@@ -128,7 +128,7 @@ const signalFeedback: Record<SignalKey, ExperienceFeedback> = {
     primary: "Correct — this was not a face.",
     secondary:
       "The FFA likely activated briefly for the face-like pattern, but higher-order processing overrode the initial detection signal. This mirrors the cortex checking the fast system's output before committing to a judgment.",
-    bridge: "Compare this to how the high road overrides the low road in Unit 3.",
+    bridge: "Compare this to how the high road overrides the low road in States that Prime Behavior.",
     structure: "FFA → cortical override",
   },
   falseAlarm: {
