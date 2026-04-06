@@ -435,7 +435,7 @@ const HPAAxisBuilderDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
       <div className="mt-3">
         <PredictionOutcome
           visible={hasInteracted}
-          {...predictionOutcomeContent["hpa-axis-builder"]}
+          {...predictionOutcomeContent["stress-response-builder"]}
           onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
         />
       </div>

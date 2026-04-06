@@ -148,7 +148,7 @@ export const modules: Module[] = [
   {
     id: "mod-6",
     title: "Stress Response Builder",
-    slug: "hpa-axis-builder",
+    slug: "stress-response-builder",
     unitId: "unit-5",
     hook: "Your stress response was built to protect you — but it doesn't always know when to stop.",
     shortGoal: "Learn the order of the HPA axis and what happens when cortisol feedback fails.",

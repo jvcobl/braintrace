@@ -35,7 +35,7 @@ export const predictionOutcomeContent: Record<string, PredictionOutcomeData> = {
     outcome: "As the load increased, that control model became harder to maintain and errors became more likely.",
     update: "This lesson shows that prediction-based control depends on limited PFC resources — when the system is overloaded, performance drops.",
   },
-  "hpa-axis-builder": {
+  "stress-response-builder": {
     structureChip: "HPA axis",
     prediction: "Your stress system prepared the body for continuing demand by activating a coordinated hormone cascade.",
     outcome: "That cascade either shut down through negative feedback or kept running when the shutdown signal failed.",

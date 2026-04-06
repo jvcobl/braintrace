@@ -22,7 +22,12 @@ export type BrainStructureId =
   | "retina"
   | "lgn"
   | "ventral-stream"
-  | "dorsal-stream";
+  | "dorsal-stream"
+  | "hypothalamus"
+  | "anterior-pituitary"
+  | "adrenal-cortex"
+  | "stressor-input"
+  | "cortisol-output";
 
 export interface BrainStructure {
   id: BrainStructureId;
@@ -151,5 +156,35 @@ export const brainStructures: Record<BrainStructureId, BrainStructure> = {
     name: "Conditioned Cue (CS)",
     shortDescription: "A previously neutral stimulus that has acquired predictive value through conditioning.",
     nbb302Unit: 4,
+  },
+  hypothalamus: {
+    id: "hypothalamus",
+    name: "Hypothalamus",
+    shortDescription: "Detects stressors and initiates the HPA axis by releasing CRH.",
+    nbb302Unit: 5,
+  },
+  "anterior-pituitary": {
+    id: "anterior-pituitary",
+    name: "Anterior Pituitary Gland",
+    shortDescription: "Receives CRH and releases ACTH into the bloodstream.",
+    nbb302Unit: 5,
+  },
+  "adrenal-cortex": {
+    id: "adrenal-cortex",
+    name: "Adrenal Cortex",
+    shortDescription: "Receives ACTH and releases glucocorticoids (cortisol).",
+    nbb302Unit: 5,
+  },
+  "stressor-input": {
+    id: "stressor-input",
+    name: "Stressor",
+    shortDescription: "External or internal threat that initiates the stress response.",
+    nbb302Unit: 5,
+  },
+  "cortisol-output": {
+    id: "cortisol-output",
+    name: "Cortisol (Output)",
+    shortDescription: "Glucocorticoid hormone released by the adrenal cortex; the primary output of the HPA axis.",
+    nbb302Unit: 5,
   },
 };
