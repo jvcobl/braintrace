@@ -1,7 +1,14 @@
 import type { ExplainContent } from "@/data/modules";
+import type { PredictionLens as PredictionLensData, GoDeeperCard as GoDeeperCardData, ConceptPageId } from "@/data/types";
+import PredictionLens from "@/components/PredictionLens";
+import GoDeeperCard from "@/components/GoDeeperCard";
+import ConceptLink from "@/components/ConceptLink";
 
 interface ExplainSectionProps {
   explain: ExplainContent;
+  predictionLens?: PredictionLensData;
+  goDeeper?: GoDeeperCardData[];
+  conceptLinks?: ConceptPageId[];
 }
 
 const subheads: { key: keyof ExplainContent; label: string }[] = [
@@ -11,7 +18,7 @@ const subheads: { key: keyof ExplainContent; label: string }[] = [
   { key: "whyItMatters", label: "Why It Matters" },
 ];
 
-const ExplainSection = ({ explain }: ExplainSectionProps) => (
+const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks }: ExplainSectionProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Explain</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground/60">
@@ -19,7 +26,7 @@ const ExplainSection = ({ explain }: ExplainSectionProps) => (
     </p>
     <div className="mt-5 sm:mt-6 space-y-5 sm:space-y-6">
       {subheads.map(({ key, label }) => (
-        <div key={key} className="border-l-2 border-primary/10 pl-4 sm:pl-5">
+        <div key={key as string} className="border-l-2 border-primary/10 pl-4 sm:pl-5">
           <h3 className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground/70">
             {label}
           </h3>
@@ -27,6 +34,37 @@ const ExplainSection = ({ explain }: ExplainSectionProps) => (
         </div>
       ))}
     </div>
+
+    {/* Prediction Lens */}
+    {predictionLens && (
+      <div className="mt-8 sm:mt-10">
+        <PredictionLens data={predictionLens} />
+      </div>
+    )}
+
+    {/* Go Deeper */}
+    {goDeeper && goDeeper.length > 0 && (
+      <div className="mt-8 sm:mt-10">
+        <h3 className="text-lg font-medium text-gray-900 mb-3">Go deeper</h3>
+        <div className="space-y-2">
+          {goDeeper.map((card) => (
+            <GoDeeperCard key={card.id} data={card} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {/* Related concepts */}
+    {conceptLinks && conceptLinks.length > 0 && (
+      <div className="mt-8 sm:mt-10">
+        <h3 className="text-sm font-medium text-gray-400 mb-2">Related concepts</h3>
+        <div className="space-y-2">
+          {conceptLinks.map((id) => (
+            <ConceptLink key={id} conceptPageId={id} />
+          ))}
+        </div>
+      </div>
+    )}
   </section>
 );
 

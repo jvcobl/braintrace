@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getModuleById, modules } from "@/data/modules";
+import { moduleDefinitions } from "@/data/moduleDefinitions";
 import { getUnitById } from "@/data/courseMap";
 import { getUnitContent, getLessonsByUnit } from "@/data/content/registry";
 import SectionNav, { type SectionId } from "@/components/module/SectionNav";
@@ -72,7 +73,17 @@ const ModulePage = () => {
           {section === "Intro" && <IntroSection module={mod} />}
           {section === "Experience" && <ExperienceSection module={mod} onNavigate={setSection} />}
           {section === "Trace" && <TracePanel nodes={mod.traceNodes} />}
-          {section === "Explain" && <ExplainSection explain={mod.explain} />}
+          {section === "Explain" && (() => {
+            const modDef = moduleDefinitions[mod.slug];
+            return (
+              <ExplainSection
+                explain={mod.explain}
+                predictionLens={modDef?.predictionLens}
+                goDeeper={modDef?.goDeeper}
+                conceptLinks={modDef?.conceptLinks}
+              />
+            );
+          })()}
         </div>
       </div>
 
