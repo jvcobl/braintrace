@@ -148,7 +148,44 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
     });
   }
 
-  return { items, w, h, backEdgeKeys };
+  // ── Resolve edge-through-node collisions for multi-layer edges ──
+  const itemById = new Map(items.map((n) => [n.id, n]));
+  const CLEARANCE = NW * 0.65;
+
+  for (const e of edges) {
+    const src = itemById.get(e.from);
+    const tgt = itemById.get(e.to);
+    if (!src || !tgt) continue;
+    const fl = layerOf.get(e.from)!;
+    const tl = layerOf.get(e.to)!;
+    if (backEdgeKeys.has(`${e.from}->${e.to}`)) continue;
+    if (tl - fl <= 1) continue;
+
+    for (let l = fl + 1; l < tl; l++) {
+      const t = (l - fl) / (tl - fl);
+      const edgeX = src.cx + t * (tgt.cx - src.cx);
+
+      for (const node of items) {
+        if (layerOf.get(node.id) !== l) continue;
+        const dist = Math.abs(node.cx - edgeX);
+        if (dist >= CLEARANCE) continue;
+        const nudge = CLEARANCE - dist;
+        node.cx += node.cx <= edgeX ? -nudge : nudge;
+      }
+    }
+  }
+
+  // Re-normalize: keep all nodes in bounds and recompute width
+  const minCx = Math.min(...items.map((n) => n.cx));
+  const desiredMin = PAD + NW / 2;
+  if (minCx < desiredMin) {
+    const shift = desiredMin - minCx;
+    for (const n of items) n.cx += shift;
+  }
+  const maxCx = Math.max(...items.map((n) => n.cx));
+  const finalW = maxCx + NW / 2 + PAD + (hasBack ? 80 : 0);
+
+  return { items, w: finalW, h, backEdgeKeys };
 }
 
 /* ── Edge path + label position ── */
