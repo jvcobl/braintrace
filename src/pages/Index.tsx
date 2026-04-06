@@ -9,18 +9,21 @@ const STUDY_METHOD = [
   {
     step: "01",
     name: "Experience",
+    short: "Try an interactive neuroscience demo",
     description:
       "Each lesson starts with something you do — a blurry image, a sudden sound, a memory task. You encounter the phenomenon before any explanation.",
   },
   {
     step: "02",
     name: "Trace",
+    short: "Follow the signal through your brain",
     description:
       "Then you see what your brain predicted, what actually happened, and which neural pathways were involved.",
   },
   {
     step: "03",
     name: "Explain",
+    short: "Understand the prediction behind the behavior",
     description:
       "A focused write-up connects the experience to the neuroscience — what your brain did, which structures were active, and why the pathway matters.",
   },
@@ -83,16 +86,22 @@ const Index = () => {
           </h1>
 
           <p className="mx-auto mt-6 sm:mt-8 max-w-lg text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
-            Experience a phenomenon, trace the neural pathway, and understand
-            what your brain was actually doing.
+            Experience a phenomenon. Trace the pathway. Understand what your
+            brain was doing.
           </p>
 
-          <div className="mt-10 sm:mt-12 flex items-center justify-center gap-4">
+          <div className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Link
               to={`/unit/${unitIds[0]}`}
               className="inline-flex items-center rounded-lg bg-primary px-7 sm:px-8 py-3 sm:py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Start Exploring
+            </Link>
+            <Link
+              to="/how-your-brain-predicts"
+              className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              How Your Brain Predicts →
             </Link>
           </div>
         </div>
@@ -105,26 +114,25 @@ const Index = () => {
         <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-20 md:py-24">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              How Each Lesson Works
+              How BrainTrace Works
             </p>
             <h2 className="mt-3 font-display text-xl sm:text-2xl tracking-tight text-foreground md:text-[1.75rem]">
               Experience, Trace, Explain
             </h2>
           </div>
 
-          <div className="mx-auto mt-10 sm:mt-14 grid max-w-4xl gap-4 sm:gap-5 sm:grid-cols-3">
-            {STUDY_METHOD.map((s) => (
-              <div
-                key={s.step}
-                className="relative rounded-xl border border-border/70 bg-card p-5 sm:p-6"
-              >
-                <span className="font-display text-2xl text-primary/25">{s.step}</span>
-                <h3 className="mt-2 text-[13px] sm:text-[14px] font-semibold text-foreground">
-                  {s.name}
-                </h3>
-                <p className="mt-2 sm:mt-2.5 text-[12px] sm:text-[13px] leading-relaxed text-muted-foreground">
-                  {s.description}
-                </p>
+          <div className="mx-auto mt-10 sm:mt-14 flex max-w-4xl flex-col sm:flex-row items-stretch gap-3">
+            {STUDY_METHOD.map((s, i) => (
+              <div key={s.step} className="flex flex-1 items-center gap-3">
+                <div className="flex-1 rounded-xl bg-muted/40 p-4 sm:p-5">
+                  <h3 className="text-[14px] font-semibold text-foreground">{s.name}</h3>
+                  <p className="mt-1 text-[12px] sm:text-[13px] leading-relaxed text-muted-foreground">
+                    {s.short}
+                  </p>
+                </div>
+                {i < STUDY_METHOD.length - 1 && (
+                  <span className="hidden sm:block text-lg text-muted-foreground/30" aria-hidden="true">→</span>
+                )}
               </div>
             ))}
           </div>
@@ -255,6 +263,29 @@ const Index = () => {
       {/* ════════════════════════════════════════════════
           6. CLOSING
          ════════════════════════════════════════════════ */}
+      {/* ════════════════════════════════════════════════
+          THE SHARED IDEA
+         ════════════════════════════════════════════════ */}
+      <section className="border-t border-border">
+        <div className="container mx-auto max-w-3xl px-4 sm:px-6 py-14 sm:py-18">
+          <div className="rounded-xl border border-border bg-muted/30 p-6 sm:p-8 text-center">
+            <p className="text-[13px] sm:text-sm leading-relaxed text-muted-foreground">
+              Every module in BrainTrace demonstrates the same underlying process:
+              your brain predicts, checks the input, and updates its model.
+            </p>
+            <Link
+              to="/how-your-brain-predicts/loop"
+              className="mt-4 inline-flex items-center text-sm font-medium text-primary transition-colors hover:text-primary/80"
+            >
+              Learn about the prediction loop →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════
+          CLOSING
+         ════════════════════════════════════════════════ */}
       <section className="border-t border-border">
         <div className="container mx-auto max-w-2xl px-4 sm:px-6 py-16 text-center sm:py-20 md:py-24">
           <h2 className="font-display text-xl tracking-tight text-foreground md:text-2xl">
@@ -272,7 +303,7 @@ const Index = () => {
             </Link>
             <Link
               to="/about"
-              className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+              className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground rounded-sm"
             >
               About BrainTrace
             </Link>
