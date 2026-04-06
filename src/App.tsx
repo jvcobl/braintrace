@@ -28,6 +28,7 @@ const App = () => (
             <Route path="/module/:id" element={<ModulePage />} />
             <Route path="/course-map" element={<CourseMap />} />
             <Route path="/about" element={<About />} />
+            
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
