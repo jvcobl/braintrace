@@ -1,7 +1,41 @@
 import { Link } from "react-router-dom";
-import { courseUnits } from "@/data/courseMap";
-import { getUnitContent } from "@/data/content/registry";
 import { modules } from "@/data/modules";
+
+/* ------------------------------------------------------------------ */
+/* Course-topic → BrainTrace module mapping                           */
+/* ------------------------------------------------------------------ */
+
+interface TopicArea {
+  title: string;
+  subtitle: string;
+  keyTopics: string[];
+  moduleIds: string[];
+}
+
+const topicAreas: TopicArea[] = [
+  {
+    title: "Sensation, Perception, and Inklings of Awareness + Object Recognition and Decision-making",
+    subtitle: "How raw sensory input becomes conscious perception — and how the brain predicts identity before the picture is complete.",
+    keyTopics: ["Top-down processing", "Object recognition", "Face perception", "Fusiform face area", "Working memory", "Cognitive load", "Prefrontal cortex"],
+    moduleIds: ["mod-1", "mod-2", "mod-5"],
+  },
+  {
+    title: "States that Prime Behavior",
+    subtitle: "Arousal, emotion, and the rapid subcortical circuits that shape automatic responses before conscious evaluation.",
+    keyTopics: ["Emotion vs. arousal", "Amygdala", "Startle reflex", "Fear-potentiated startle"],
+    moduleIds: ["mod-3"],
+  },
+  {
+    title: "Learning 101 + The Push & Pull",
+    subtitle: "How cues become predictions, how fear is acquired through conditioning, and why extinction is new learning — not forgetting.",
+    keyTopics: ["Fear conditioning", "Extinction", "CS-US pairing", "vmPFC circuitry", "Spontaneous recovery"],
+    moduleIds: ["mod-4"],
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/* Page                                                                */
+/* ------------------------------------------------------------------ */
 
 const CourseMap = () => (
   <div className="container max-w-4xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
@@ -12,48 +46,37 @@ const CourseMap = () => (
       Topic Mapping
     </h1>
     <p className="mt-3.5 sm:mt-4 max-w-xl text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      This page maps BrainTrace's lessons to specific neuroscience topics,
-      organized by unit. It's designed for students or instructors who want
-      to connect each lesson to classroom material.
+      This page maps BrainTrace's interactive lessons to the course topics they
+      cover. Use it to connect each lesson to classroom material.
     </p>
 
     <div className="mt-10 sm:mt-14 space-y-3 sm:space-y-4">
-      {courseUnits.map((unit, i) => {
-        const content = getUnitContent(unit.id);
+      {topicAreas.map((area) => {
         const linkedModules = modules.filter((m) =>
-          unit.linkedModuleIds.includes(m.id)
+          area.moduleIds.includes(m.id)
         );
 
         return (
           <section
-            key={unit.id}
+            key={area.title}
             className="rounded-xl border border-border/70 bg-card"
           >
-            <Link
-              to={`/unit/${unit.id}`}
-              className="group block p-4 sm:p-6 pb-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-t-xl"
-            >
-              <div className="flex items-start gap-3 sm:gap-4">
-                <span className="flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-primary text-xs sm:text-sm font-bold text-primary-foreground">
-                  {i + 1}
-                </span>
-                <div className="min-w-0">
-                  <h2 className="font-display text-base sm:text-lg text-foreground group-hover:text-primary transition-colors leading-snug">
-                    {unit.title.replace(/^Unit \d+:\s*/, "")}
-                  </h2>
-                  {content && (
-                    <p className="mt-1 sm:mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
-                      {content.meta.subtitle}
-                    </p>
-                  )}
-                </div>
+            {/* Header */}
+            <div className="p-4 sm:p-6 pb-0">
+              <div className="min-w-0">
+                <h2 className="font-display text-base sm:text-lg text-foreground leading-snug">
+                  {area.title}
+                </h2>
+                <p className="mt-1 sm:mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
+                  {area.subtitle}
+                </p>
               </div>
-            </Link>
+            </div>
 
             {/* Key topics */}
-            <div className="px-4 sm:px-6 pt-3 sm:pt-4 pl-[3.25rem] sm:pl-[4.5rem]">
+            <div className="px-4 sm:px-6 pt-3 sm:pt-4">
               <div className="flex flex-wrap gap-1.5">
-                {unit.keyTopics.map((topic) => (
+                {area.keyTopics.map((topic) => (
                   <span
                     key={topic}
                     className="rounded-full bg-secondary px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-[11px] text-muted-foreground"
@@ -65,13 +88,13 @@ const CourseMap = () => (
             </div>
 
             {/* Lessons */}
-            <div className="p-4 sm:p-6 pt-3 sm:pt-4 pl-[3.25rem] sm:pl-[4.5rem]">
+            <div className="p-4 sm:p-6 pt-3 sm:pt-4">
               {linkedModules.length > 0 ? (
                 <ul className="space-y-1.5">
                   {linkedModules.map((mod) => (
                     <li key={mod.id}>
                       <Link
-                        to={`/module/${mod.id}`}
+                        to={`/module/${mod.slug}`}
                         className="inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
                       >
                         <span className="text-[10px] sm:text-xs text-muted-foreground/40" aria-hidden="true">→</span>
