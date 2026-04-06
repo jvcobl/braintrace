@@ -125,7 +125,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatMismatchMattered: "The mismatch between expected silence and actual loud input triggered the fastest defensive response your brain has — the acoustic startle reflex.",
       whatPathwayHandledIt: "Auditory input → brainstem startle circuit (subcortical, ultra-fast) + amygdala salience amplification. Cortical interpretation came only on the slower route.",
       howBrainUpdated: "Your cortex later evaluated whether the sound was truly threatening. The startle response happened first; the interpretation came second.",
-      nbb302Connection: "Acoustic startle reflex, amygdala as salience center, low road vs. high road processing, fear-potentiated startle (Unit 2).",
+      nbb302Connection: "Acoustic startle reflex, amygdala as salience center, low road vs. high road processing, fear-potentiated startle. Covered in States that Prime Behavior (Arousal, Emotions).",
     },
     tracePathway: {
       title: "The Startle Pathway",
