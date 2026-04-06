@@ -172,7 +172,7 @@ const Index = () => {
                   className="group flex items-start gap-4 sm:gap-5 rounded-xl border border-border bg-card p-5 sm:p-7 shadow-sm transition-all hover:border-primary/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <span className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full bg-primary text-xs sm:text-sm font-bold text-primary-foreground shadow-sm">
-                    {num}
+                    {String.fromCharCode(64 + Number(num))}
                   </span>
                   <div className="min-w-0 flex-1">
                     <h3 className="font-display text-[1rem] sm:text-[1.1rem] text-foreground leading-snug group-hover:text-primary transition-colors">
