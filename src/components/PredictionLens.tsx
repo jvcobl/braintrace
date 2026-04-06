@@ -38,11 +38,11 @@ function PathwayPills({ text }: { text: string }) {
 
 const PredictionLens = ({ data }: PredictionLensProps) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl px-6 py-5">
+    <div className="bg-white border border-gray-200 border-l-2 border-l-blue-400 rounded-xl px-6 py-5">
       {/* Header */}
       <div className="flex items-center gap-2 mb-5">
         <span className="w-2 h-2 rounded-full bg-blue-500" />
-        <span className="text-xs uppercase tracking-wider font-medium text-gray-400">
+        <span className="text-[11px] uppercase tracking-widest font-medium text-gray-400">
           Prediction Lens
         </span>
       </div>

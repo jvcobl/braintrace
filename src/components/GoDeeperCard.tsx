@@ -11,7 +11,7 @@ const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
   const [open, setOpen] = useState(autoExpand);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+    <div className={`bg-white border border-gray-200 rounded-xl overflow-hidden transition-colors ${open ? "border-l-2 border-l-primary" : ""}`}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -35,7 +35,7 @@ const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
                 return (
                   <span
                     key={id}
-                    className="bg-blue-50 text-blue-700 text-[11px] px-2 py-0.5 rounded"
+                    className="bg-blue-50 text-blue-700 text-[11px] font-medium px-2 py-0.5 rounded"
                   >
                     {label}
                   </span>

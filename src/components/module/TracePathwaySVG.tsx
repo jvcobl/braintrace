@@ -263,23 +263,23 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
 
       {/* State toggle */}
       {pathway.alternateState && (
-        <div className="mt-4 inline-flex rounded-lg bg-secondary p-1">
+        <div className="mt-4 inline-flex rounded-full bg-gray-100 p-0.5">
           <button
             onClick={() => setShowAlt(false)}
-            className={`rounded-md px-4 py-2 text-xs font-medium transition-colors ${
+            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
               !showAlt
-                ? "bg-background text-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-white text-foreground shadow-sm"
+                : "text-gray-400 hover:text-gray-600"
             }`}
           >
             {pathway.title}
           </button>
           <button
             onClick={() => setShowAlt(true)}
-            className={`rounded-md px-4 py-2 text-xs font-medium transition-colors ${
+            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
               showAlt
-                ? "bg-background text-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-white text-foreground shadow-sm"
+                : "text-gray-400 hover:text-gray-600"
             }`}
           >
             {pathway.alternateState.label}
@@ -291,7 +291,7 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
       {w > 0 && h > 0 && (
         <div
           key={showAlt ? "alt" : "default"}
-          className="mt-5 overflow-x-auto -mx-2 px-2"
+          className="mt-5 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/50 p-6"
           style={{ animation: "tpFadeIn 200ms ease-in" }}
         >
           <style>{`@keyframes tpFadeIn{from{opacity:0}to{opacity:1}}`}</style>
