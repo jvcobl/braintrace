@@ -37,15 +37,15 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks }: Exp
 
     {/* Prediction Lens */}
     {predictionLens && (
-      <div className="mt-8 sm:mt-10">
+      <div className="pt-8">
         <PredictionLens data={predictionLens} />
       </div>
     )}
 
     {/* Go Deeper */}
     {goDeeper && goDeeper.length > 0 && (
-      <div className="mt-8 sm:mt-10">
-        <h3 className="text-lg font-medium text-gray-900 mb-3">Go deeper</h3>
+      <div className="pt-8">
+        <h3 className="text-lg font-medium text-foreground mb-3">Go deeper</h3>
         <div className="space-y-2">
           {goDeeper.map((card) => (
             <GoDeeperCard key={card.id} data={card} />
@@ -56,8 +56,8 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks }: Exp
 
     {/* Related concepts */}
     {conceptLinks && conceptLinks.length > 0 && (
-      <div className="mt-8 sm:mt-10">
-        <h3 className="text-sm font-medium text-gray-400 mb-2">Related concepts</h3>
+      <div className="pt-8">
+        <h3 className="text-sm font-medium text-muted-foreground mb-2">Related concepts</h3>
         <div className="space-y-2">
           {conceptLinks.map((id) => (
             <ConceptLink key={id} conceptPageId={id} />
