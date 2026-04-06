@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getModuleById, modules } from "@/data/modules";
 import { moduleDefinitions } from "@/data/moduleDefinitions";
@@ -17,7 +17,28 @@ const ModulePage = () => {
   const mod = id ? getModuleById(id) : undefined;
   const unit = mod ? getUnitById(mod.unitId) : undefined;
   const unitContent = mod ? getUnitContent(mod.unitId) : undefined;
-  const [section, setSection] = useState<SectionId>("Intro");
+  const [section, setSection] = useState<SectionId>(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return "Intro";
+    if (hash === "trace") return "Trace";
+    if (hash === "experience") return "Experience";
+    if (hash.startsWith("deeper-") || hash === "prediction-lens" || hash === "concept-links" || hash === "explain") return "Explain";
+    return "Intro";
+  });
+
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    const timer = setTimeout(() => {
+      const el = document.getElementById(hash);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: "smooth" });
+      el.classList.add("search-highlight");
+      setTimeout(() => el.classList.remove("search-highlight"), 1500);
+    }, 150);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (!mod) {
     return (
