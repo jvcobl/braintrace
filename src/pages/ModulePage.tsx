@@ -73,7 +73,17 @@ const ModulePage = () => {
           {section === "Intro" && <IntroSection module={mod} />}
           {section === "Experience" && <ExperienceSection module={mod} onNavigate={setSection} />}
           {section === "Trace" && <TracePanel nodes={mod.traceNodes} />}
-          {section === "Explain" && <ExplainSection explain={mod.explain} />}
+          {section === "Explain" && (() => {
+            const modDef = moduleDefinitions[mod.slug];
+            return (
+              <ExplainSection
+                explain={mod.explain}
+                predictionLens={modDef?.predictionLens}
+                goDeeper={modDef?.goDeeper}
+                conceptLinks={modDef?.conceptLinks}
+              />
+            );
+          })()}
         </div>
       </div>
 
