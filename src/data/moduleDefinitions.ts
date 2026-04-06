@@ -1,0 +1,295 @@
+// ============================================================
+// BRAINTRACE — MODULE DEFINITIONS (New Schema)
+// ============================================================
+
+import type { ModuleDefinition } from "./types";
+
+export const moduleDefinitions: Record<string, ModuleDefinition> = {
+  "blurry-object-guess": {
+    id: "blurry-object-guess",
+    title: "Blurry Object Guess",
+    slug: "blurry-object-guess",
+    tagline: "Your brain guesses before it sees.",
+    nbb302Units: [1],
+    predictionLens: {
+      whatHappened: "You saw a blurry image and tried to identify it before it sharpened.",
+      whatBrainPredicted: "Your OFC and PFC generated a rapid contextual guess from coarse, low-spatial-frequency visual information — before the full image was available.",
+      whatInputArrived: "A degraded visual signal with low spatial detail, processed through the fast magnocellular pathway.",
+      whatMismatchMattered: "If your early guess was wrong, the sharpening image created a prediction error — your brain's initial model didn't match the incoming detail.",
+      whatPathwayHandledIt: "Low spatial frequency shortcut → OFC/PFC for early prediction → ventral stream and IT cortex for detailed recognition.",
+      howBrainUpdated: "As higher-resolution input arrived through the ventral stream, your brain either confirmed its guess or revised its object model to fit the new evidence.",
+      nbb302Connection: "Top-down prediction, low spatial frequency processing, OFC contextual shortcuts, ventral stream object recognition (Unit 1).",
+    },
+    tracePathway: {
+      title: "The Fast Guess Pathway",
+      description: "Your brain doesn't wait for full detail. Coarse visual input travels a fast route to the OFC, which generates an early prediction. The ventral stream then confirms or corrects it.",
+      nodes: [
+        { structureId: "retina", label: "Retina", badge: "input", active: true },
+        { structureId: "lgn", label: "LGN", active: true },
+        { structureId: "v1", label: "V1", active: true },
+        { structureId: "ofc", label: "OFC", badge: "prediction", active: true },
+        { structureId: "ventral-stream", label: "Ventral Stream", active: true },
+        { structureId: "it-cortex", label: "IT Cortex", badge: "update", active: true },
+      ],
+      edges: [
+        { from: "retina", to: "lgn", route: "primary" },
+        { from: "lgn", to: "v1", route: "primary" },
+        { from: "v1", to: "ofc", route: "fast", label: "Low spatial freq" },
+        { from: "ofc", to: "ventral-stream", route: "fast", label: "Top-down prediction" },
+        { from: "v1", to: "ventral-stream", route: "slow", label: "Full detail" },
+        { from: "ventral-stream", to: "it-cortex", route: "primary" },
+      ],
+    },
+    goDeeper: [
+      {
+        id: "lsf-shortcut",
+        title: "The Low Spatial Frequency Shortcut",
+        explanation: "Your retina sends two kinds of visual information: fine detail (high spatial frequency) and coarse shape (low spatial frequency). The coarse channel reaches the OFC faster, giving your brain a head start on guessing what you're looking at — before the sharp details arrive.",
+        keyStructures: ["retina", "ofc", "v1"],
+        whyItMattersHere: "This is why you could form a guess from the blurry image. Your brain used the coarse channel to make a rapid prediction.",
+      },
+      {
+        id: "ventral-what",
+        title: "The Ventral Stream: Identifying What You See",
+        explanation: "The ventral stream runs from V1 through the temporal lobe to IT cortex. It specializes in object identity — shape, color, category. It's the pathway that ultimately confirms or overrides your early OFC guess.",
+        keyStructures: ["v1", "ventral-stream", "it-cortex"],
+        whyItMattersHere: "When the image sharpened and you recognized the object, that recognition came from ventral stream processing catching up to your OFC prediction.",
+      },
+    ],
+    conceptLinks: ["loop", "precision-attention"],
+  },
+
+  "face-or-not": {
+    id: "face-or-not",
+    title: "Face or Not?",
+    slug: "face-or-not",
+    tagline: "Your brain sees faces everywhere — even when they aren't there.",
+    nbb302Units: [1],
+    predictionLens: {
+      whatHappened: "You classified ambiguous patterns as faces or non-faces.",
+      whatBrainPredicted: "Your visual system applied a strong face-detection prior — a top-down bias toward interpreting patterns as faces, driven by the fusiform face area.",
+      whatInputArrived: "Ambiguous visual patterns with varying degrees of face-like features.",
+      whatMismatchMattered: "When a non-face pattern triggered face perception, the mismatch was between the strong face prior and the weak actual evidence — a false positive driven by over-weighted prediction.",
+      whatPathwayHandledIt: "Top-down processing from PFC + specialized face recognition in the fusiform face area (FFA) within the ventral stream.",
+      howBrainUpdated: "With more careful inspection, the system either confirmed the face percept or suppressed the false positive — but the initial bias shows how strongly priors shape perception.",
+      nbb302Connection: "Pareidolia, FFA specialization, top-down processing, visual heuristics, expertise effects on recognition (Unit 1).",
+    },
+    tracePathway: {
+      title: "The Face Bias Pathway",
+      description: "Your brain has a built-in bias toward detecting faces. The FFA activates rapidly for face-like patterns, even when the evidence is weak.",
+      nodes: [
+        { structureId: "retina", label: "Retina", badge: "input", active: true },
+        { structureId: "v1", label: "V1", active: true },
+        { structureId: "ventral-stream", label: "Ventral Stream", active: true },
+        { structureId: "ffa", label: "FFA", badge: "prediction", active: true },
+        { structureId: "pfc", label: "PFC", badge: "update", active: true },
+      ],
+      edges: [
+        { from: "retina", to: "v1", route: "primary" },
+        { from: "v1", to: "ventral-stream", route: "primary" },
+        { from: "ventral-stream", to: "ffa", route: "primary", label: "Face-like features" },
+        { from: "pfc", to: "ffa", route: "fast", label: "Top-down face bias" },
+        { from: "ffa", to: "pfc", route: "primary", label: "Confirm or suppress" },
+      ],
+    },
+    goDeeper: [
+      {
+        id: "ffa-expertise",
+        title: "The Fusiform Face Area and Expertise",
+        explanation: "The FFA doesn't just respond to faces — it responds to any category you've become expert at distinguishing. Car experts show FFA activation for cars. Bird experts for birds. But faces are the universal expertise: every human is a face expert from infancy.",
+        keyStructures: ["ffa"],
+        whyItMattersHere: "Your strong tendency to see faces in ambiguous patterns reflects a lifetime of face-expertise training in your FFA.",
+      },
+      {
+        id: "pareidolia",
+        title: "Pareidolia: When Priors Overpower Input",
+        explanation: "Pareidolia — seeing faces in clouds, toast, or power outlets — is a prediction error in reverse. Your face-detection prior is so strong that it fires even when the incoming sensory evidence is weak. The brain treats 'might be a face' as 'probably a face' because the cost of missing a real face is higher than the cost of a false alarm.",
+        keyStructures: ["ffa", "pfc"],
+        whyItMattersHere: "Every false positive you made in this module is pareidolia in action — your brain's face prior overwhelming the actual evidence.",
+      },
+    ],
+    conceptLinks: ["loop", "precision-attention", "failure"],
+  },
+
+  "sudden-noise-reaction": {
+    id: "sudden-noise-reaction",
+    title: "Sudden Noise Reaction",
+    slug: "sudden-noise-reaction",
+    tagline: "You react before you understand.",
+    nbb302Units: [2],
+    predictionLens: {
+      whatHappened: "You heard a sudden noise and your body reacted before you could think about it.",
+      whatBrainPredicted: "Your brain's default prediction in a quiet environment is 'nothing abrupt will happen.' The sudden sound violated that prediction instantly.",
+      whatInputArrived: "A rapid, high-intensity auditory signal.",
+      whatMismatchMattered: "The mismatch between expected silence and actual loud input triggered the fastest defensive response your brain has — the acoustic startle reflex.",
+      whatPathwayHandledIt: "Brainstem startle circuit (subcortical, ultra-fast) + amygdala salience amplification. Cortical interpretation came after the reflex.",
+      howBrainUpdated: "Your cortex later evaluated whether the sound was truly threatening. The startle response happened first; the interpretation came second.",
+      nbb302Connection: "Acoustic startle reflex, amygdala as salience center, low road vs. high road processing, fear-potentiated startle (Unit 2).",
+    },
+    tracePathway: {
+      title: "The Startle Pathway",
+      description: "Sudden sounds bypass conscious evaluation. The brainstem fires a startle reflex in milliseconds; the amygdala amplifies the response if threat context is present; the cortex only catches up afterward.",
+      nodes: [
+        { structureId: "auditory-cortex", label: "Auditory Input", badge: "input", active: true },
+        { structureId: "brainstem-startle", label: "Brainstem Startle", badge: "mismatch", active: true },
+        { structureId: "amygdala", label: "Amygdala", badge: "prediction", active: true },
+        { structureId: "pfc", label: "PFC", badge: "update", active: true },
+      ],
+      edges: [
+        { from: "auditory-cortex", to: "brainstem-startle", route: "fast", label: "Fast subcortical route" },
+        { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification" },
+        { from: "auditory-cortex", to: "pfc", route: "slow", label: "Slower cortical route" },
+        { from: "amygdala", to: "pfc", route: "primary", label: "Threat evaluation" },
+      ],
+      alternateState: {
+        label: "With Threat Priming (Fear-Potentiated Startle)",
+        nodes: [
+          { structureId: "auditory-cortex", label: "Auditory Input", badge: "input", active: true },
+          { structureId: "brainstem-startle", label: "Brainstem Startle", badge: "mismatch", active: true },
+          { structureId: "amygdala", label: "Amygdala", badge: "prediction", active: true },
+          { structureId: "pfc", label: "PFC", badge: "update", active: true },
+          { structureId: "amygdala-cea", label: "CeA Output", active: true },
+        ],
+        edges: [
+          { from: "auditory-cortex", to: "brainstem-startle", route: "fast", label: "Fast subcortical route" },
+          { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification" },
+          { from: "auditory-cortex", to: "pfc", route: "slow", label: "Slower cortical route" },
+          { from: "amygdala", to: "pfc", route: "primary", label: "Threat evaluation" },
+          { from: "amygdala", to: "amygdala-cea", route: "fast", label: "Amplified output" },
+        ],
+      },
+    },
+    goDeeper: [
+      {
+        id: "low-road-high-road",
+        title: "Low Road vs. High Road",
+        explanation: "The 'low road' sends sensory input directly to the amygdala via the thalamus — fast but imprecise. The 'high road' routes through cortex for careful evaluation — slower but accurate. Your startle reflex used the low road. Your later realization that the sound was harmless used the high road.",
+        keyStructures: ["amygdala", "pfc"],
+        whyItMattersHere: "Your reaction time in this demo reflects the low road. The moment you realized you were safe reflects the high road catching up.",
+      },
+      {
+        id: "fear-potentiated-startle",
+        title: "Fear-Potentiated Startle",
+        explanation: "When the amygdala is already primed by a threatening context, startle responses become larger. This is fear-potentiated startle — the amygdala amplifies the brainstem reflex because the system is already predicting danger.",
+        keyStructures: ["amygdala", "amygdala-cea", "brainstem-startle"],
+        whyItMattersHere: "If you felt more jumpy after a warning cue, that's your amygdala increasing the gain on your startle circuit.",
+        clinicalNote: "Exaggerated fear-potentiated startle is a marker of PTSD and anxiety disorders — the system stays primed even when the threat context is no longer present.",
+      },
+    ],
+    conceptLinks: ["loop", "failure"],
+  },
+
+  "fear-cue-and-extinction": {
+    id: "fear-cue-and-extinction",
+    title: "Fear Cue and Extinction",
+    slug: "fear-cue-and-extinction",
+    tagline: "Your brain learns fear fast — and unlearns it differently than you'd expect.",
+    nbb302Units: [4],
+    predictionLens: {
+      whatHappened: "You learned to associate a cue with something aversive, then experienced the cue without the aversive outcome — and your fear response gradually decreased.",
+      whatBrainPredicted: "After conditioning, your amygdala predicted that the conditioned stimulus (CS) meant danger. During extinction, the expected threat repeatedly failed to appear.",
+      whatInputArrived: "The CS appeared without the unconditioned stimulus (US) — the predicted threat didn't happen.",
+      whatMismatchMattered: "The absence of the expected aversive event created a prediction error: your brain predicted danger, but received safety.",
+      whatPathwayHandledIt: "Amygdala (BLA → CeA) for initial fear learning. vmPFC → ITC → CeA inhibition pathway for extinction learning. Hippocampus for context encoding.",
+      howBrainUpdated: "Extinction did not erase the original fear memory. Instead, your brain formed a new competing association: 'this cue is now safe in this context.' The original fear trace remains, which is why fear can return (spontaneous recovery).",
+      nbb302Connection: "Classical conditioning, CS-US pairing, fear acquisition, extinction as new learning, vmPFC/ITC inhibition, spontaneous recovery (Unit 4).",
+    },
+    tracePathway: {
+      title: "The Fear Learning Pathway",
+      description: "Fear conditioning wires a cue to a threat response through the amygdala. Extinction doesn't delete that wiring — it builds a new inhibitory pathway through vmPFC and ITCs.",
+      nodes: [
+        { structureId: "amygdala-bla", label: "BLA", badge: "prediction", active: true },
+        { structureId: "amygdala-cea", label: "CeA", badge: "mismatch", active: true },
+        { structureId: "vmpfc", label: "vmPFC", active: false },
+        { structureId: "itc", label: "ITCs", active: false },
+        { structureId: "hippocampus", label: "Hippocampus", badge: "input", active: true },
+      ],
+      edges: [
+        { from: "amygdala-bla", to: "amygdala-cea", route: "primary", label: "CS → fear response" },
+        { from: "hippocampus", to: "amygdala-bla", route: "primary", label: "Context input" },
+      ],
+      alternateState: {
+        label: "During Extinction",
+        nodes: [
+          { structureId: "amygdala-bla", label: "BLA", badge: "prediction", active: true },
+          { structureId: "amygdala-cea", label: "CeA", badge: "mismatch", active: true },
+          { structureId: "vmpfc", label: "vmPFC", badge: "update", active: true },
+          { structureId: "itc", label: "ITCs", badge: "mismatch", active: true },
+          { structureId: "hippocampus", label: "Hippocampus", badge: "input", active: true },
+        ],
+        edges: [
+          { from: "amygdala-bla", to: "amygdala-cea", route: "primary", label: "Original fear trace still exists" },
+          { from: "vmpfc", to: "itc", route: "fast", label: "Safety signal" },
+          { from: "itc", to: "amygdala-cea", route: "fast", label: "Inhibits fear output" },
+          { from: "hippocampus", to: "vmpfc", route: "primary", label: "Context: safe now" },
+        ],
+      },
+    },
+    goDeeper: [
+      {
+        id: "bla-cea-itc",
+        title: "BLA, CeA, and ITCs: The Amygdala's Internal Circuitry",
+        explanation: "The amygdala isn't one structure — it's a complex with distinct nuclei. The BLA receives sensory input and forms associations. The CeA generates fear outputs (freezing, startle, autonomic changes). The ITCs sit between them as an inhibitory gate that can suppress fear output when activated by vmPFC.",
+        keyStructures: ["amygdala-bla", "amygdala-cea", "itc"],
+        whyItMattersHere: "Extinction works by activating the ITC gate, not by erasing the BLA association. That's why the original fear can return.",
+        clinicalNote: "Exposure therapy works on this same principle: repeated safe exposure strengthens the vmPFC → ITC pathway, building a competing safety memory.",
+      },
+      {
+        id: "extinction-not-erasure",
+        title: "Extinction Is New Learning, Not Erasure",
+        explanation: "One of the most important findings in fear neuroscience: extinction does not delete the original fear memory. It creates a new, context-dependent safety memory that competes with the old one. This is why fear can return after a change in context (renewal), passage of time (spontaneous recovery), or a single re-exposure to the US (reinstatement).",
+        keyStructures: ["vmpfc", "itc", "hippocampus"],
+        whyItMattersHere: "If your fear response partially returned after extinction trials, that's spontaneous recovery — proof that the original memory was never erased.",
+      },
+    ],
+    conceptLinks: ["loop", "failure"],
+  },
+
+  "memory-under-load": {
+    id: "memory-under-load",
+    title: "Memory Under Load",
+    slug: "memory-under-load",
+    tagline: "Your brain's control system has a breaking point.",
+    nbb302Units: [3],
+    predictionLens: {
+      whatHappened: "You tried to hold information in working memory while distractors increased — and at some point, performance dropped.",
+      whatBrainPredicted: "Your dlPFC attempted to maintain top-down control: holding task-relevant items active while suppressing irrelevant input.",
+      whatInputArrived: "Increasing distractor load and competing memory demands.",
+      whatMismatchMattered: "The control system's capacity was exceeded. The mismatch was between what your PFC predicted it could manage and the actual load — resulting in distractor leakage and dropped items.",
+      whatPathwayHandledIt: "dlPFC for working memory maintenance and attentional control. vmPFC/OFC for value-based prioritization under pressure.",
+      howBrainUpdated: "Performance declined as load increased — not because you stopped trying, but because the top-down control signal became too weak relative to the bottom-up noise.",
+      nbb302Connection: "Working memory, cognitive load theory, dlPFC function, attention as top-down control, PFC capacity limits (Unit 3).",
+    },
+    tracePathway: {
+      title: "The Working Memory Pathway",
+      description: "The dlPFC maintains task-relevant information by keeping it active and suppressing distractors. As load increases, this control signal weakens and irrelevant information leaks through.",
+      nodes: [
+        { structureId: "v1", label: "Sensory Input", badge: "input", active: true },
+        { structureId: "dlpfc", label: "dlPFC", badge: "prediction", active: true },
+        { structureId: "pfc", label: "PFC Control", badge: "update", active: true },
+      ],
+      edges: [
+        { from: "v1", to: "dlpfc", route: "primary", label: "Task-relevant + distractors" },
+        { from: "dlpfc", to: "pfc", route: "primary", label: "Maintenance & suppression" },
+        { from: "pfc", to: "v1", route: "slow", label: "Top-down control weakens under load" },
+      ],
+    },
+    goDeeper: [
+      {
+        id: "dlpfc-overload",
+        title: "dlPFC and the Limits of Top-Down Control",
+        explanation: "The dlPFC doesn't store memories permanently — it holds them in an active state through sustained firing. This takes energy and has hard capacity limits. When load exceeds capacity, the firing patterns destabilize and information is lost or confused.",
+        keyStructures: ["dlpfc"],
+        whyItMattersHere: "The moment your performance dropped wasn't a failure of motivation — it was the dlPFC hitting its biophysical ceiling.",
+      },
+      {
+        id: "cognitive-load-theory",
+        title: "Cognitive Load Theory",
+        explanation: "Cognitive load theory distinguishes between intrinsic load (the inherent difficulty of the task), extraneous load (unnecessary distraction), and germane load (effort spent on learning). When total load exceeds working memory capacity, learning breaks down.",
+        keyStructures: ["dlpfc", "pfc"],
+        whyItMattersHere: "The distractors in this demo added extraneous load. Your performance decline shows what happens when extraneous load overwhelms the control system.",
+      },
+    ],
+    conceptLinks: ["loop", "precision-attention", "failure"],
+  },
+};
