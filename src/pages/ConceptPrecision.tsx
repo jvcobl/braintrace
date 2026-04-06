@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import ModuleLink from "@/components/ModuleLink";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 
 /* ------------------------------------------------------------------ */
 /* Interactive: Trust Prior vs Trust Input                             */
@@ -133,6 +134,7 @@ const ConceptPrecision = () => {
 
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+      <Breadcrumb />
       {/* ---- 1. Intro ---- */}
       <h1 className="text-3xl font-semibold text-foreground">Precision &amp; Attention</h1>
       <p className="mt-3 text-lg text-muted-foreground max-w-2xl leading-relaxed">

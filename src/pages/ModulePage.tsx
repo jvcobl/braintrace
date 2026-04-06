@@ -4,6 +4,7 @@ import { getModuleById, modules } from "@/data/modules";
 import { moduleDefinitions } from "@/data/moduleDefinitions";
 import { getUnitById } from "@/data/courseMap";
 import { getUnitContent, getLessonsByUnit } from "@/data/content/registry";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 import SectionNav, { type SectionId } from "@/components/module/SectionNav";
 import IntroSection from "@/components/module/IntroSection";
 import ExperienceSection from "@/components/module/ExperienceSection";
@@ -47,16 +48,10 @@ const ModulePage = () => {
 
   return (
     <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-16">
-      {/* Breadcrumb */}
-      <Link
-        to={`/unit/${mod.unitId}`}
-        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
-      >
-        <span aria-hidden="true">←</span> {unitTitle}
-      </Link>
+      <Breadcrumb />
 
       {/* Header */}
-      <div className="mt-6 sm:mt-7">
+      <div>
         <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60">
           {unitTitle}
         </p>

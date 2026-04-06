@@ -1,5 +1,6 @@
 import { ArrowRight, RotateCcw } from "lucide-react";
 import ModuleLink from "@/components/ModuleLink";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const steps = [
   { name: "Predict", border: "border-[#7F77DD]", text: "text-[#7F77DD]", description: "The brain generates an expectation" },
@@ -18,6 +19,7 @@ const moduleIds = [
 
 const ConceptLoop = () => (
   <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <Breadcrumb />
     <h1 className="text-3xl font-semibold text-foreground">The Loop</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
       Your brain runs a constant cycle: predict, receive input, detect mismatch,

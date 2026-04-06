@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { conceptPages } from "@/data/conceptPages";
 import ModuleLink from "@/components/ModuleLink";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const moduleIds = [
   "blurry-object-guess",
@@ -12,6 +13,7 @@ const moduleIds = [
 
 const ConceptHub = () => (
   <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <Breadcrumb />
     <h1 className="text-3xl font-semibold text-foreground">How your brain predicts</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
       Your brain is not just reacting. It is constantly predicting what will happen next

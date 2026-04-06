@@ -1,4 +1,5 @@
 import ModuleLink from "@/components/ModuleLink";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const failures = [
   {
@@ -26,6 +27,7 @@ const failures = [
 
 const ConceptFailure = () => (
   <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <Breadcrumb />
     <h1 className="text-3xl font-semibold text-foreground">When prediction fails</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
       Prediction breaks in three ways: the brain trusts its assumptions too much,

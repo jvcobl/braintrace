@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { modules } from "@/data/modules";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 
 /* ------------------------------------------------------------------ */
 /* Course-topic → BrainTrace module mapping                           */
@@ -39,6 +40,7 @@ const topicAreas: TopicArea[] = [
 
 const CourseMap = () => (
   <div className="container max-w-4xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
+    <Breadcrumb />
     <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground/60">
       Classroom Reference
     </p>
