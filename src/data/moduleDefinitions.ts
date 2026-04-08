@@ -170,9 +170,9 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       {
         id: "low-road-high-road",
         title: "Low Road vs. High Road",
-        explanation: "The 'low road' sends sensory input directly to the amygdala via the thalamus — fast but imprecise. The 'high road' routes through cortex for careful evaluation — slower but accurate. Your startle reflex used the low road. Your later realization that the sound was harmless used the high road.",
+        explanation: "The low road is not just 'fast' — it skips cortical processing entirely. Sensory input reaches the amygdala via the thalamus in as few as 12 milliseconds, before the signal has been fully identified. The high road routes through auditory cortex and prefrontal regions, taking 100+ milliseconds but providing accurate threat assessment. The two roads are not alternatives — they run simultaneously, and the low road always wins the race.",
         keyStructures: ["amygdala", "pfc"],
-        whyItMattersHere: "Your reaction time in this demo reflects the low road. The moment you realized you were safe reflects the high road catching up.",
+        whyItMattersHere: "The startle happened before you knew what the stimulus was. That's the low road completing its circuit before the high road even started evaluating.",
       },
       {
         id: "fear-potentiated-startle",
@@ -184,7 +184,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "failure"],
-    traceBridge: "The pathway above shows two parallel routes — the fast brainstem startle and the slower cortical evaluation. Your body reacted through the fast route before the slow route could assess the threat. The Prediction Lens below explains why.",
+    traceBridge: "The pathway splits at the auditory input node: the fast coral route fires the brainstem startle in milliseconds, while the dashed slow route reaches cortex for conscious evaluation. Your reaction time in the demo measured the gap between these two routes. The Prediction Lens below breaks down the prediction error that made the startle happen.",
   },
 
   "fear-cue-and-extinction": {
@@ -269,7 +269,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       whatBrainPredicted: "Your dlPFC attempted to maintain top-down control: holding task-relevant items active while suppressing irrelevant input.",
       whatInputArrived: "Increasing distractor load and competing memory demands.",
       whatMismatchMattered: "The control system's capacity was exceeded. The mismatch was between what your dlPFC predicted it could manage and the actual load — resulting in distractor leakage and dropped items.",
-      whatPathwayHandledIt: "dlPFC for working memory maintenance, attentional control, and distractor suppression.",
+      whatPathwayHandledIt: "Sensory input (task items + distractors) → dlPFC (active maintenance via sustained firing) → PFC executive control (suppression of irrelevant signals) → top-down feedback loop back to sensory areas. Under overload, the feedback loop weakens and distractors leak through.",
       howBrainUpdated: "Performance declined as load increased — not because you stopped trying, but because the top-down control signal became too weak relative to the bottom-up noise.",
       nbb302Connection: "Working memory, cognitive load theory, dlPFC function, attention as top-down control, PFC capacity limits. Covered in Object Recognition and Decision-making (Top-down and Bottom-up Integrations).",
     },
