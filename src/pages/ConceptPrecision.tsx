@@ -9,16 +9,22 @@ const scenarios = [
   {
     title: "Blurry Object Guess",
     moduleId: "blurry-object-guess",
+    dominant: "prediction",
+    dominantColor: "#7F77DD",
     body: "When an image is blurry, sensory input is low-precision. Your OFC compensates by increasing the weight of its contextual guess — a high-precision prior generated from coarse, low-spatial-frequency information. If the prior is strong enough, you 'see' the object before the image sharpens. If it's wrong, you experience the correction as a prediction error when detailed input from the ventral stream overrides the guess.",
   },
   {
     title: "Face or Not?",
     moduleId: "face-or-not",
+    dominant: "prediction",
+    dominantColor: "#7F77DD",
     body: "Your brain assigns extremely high precision to the face-detection prior — the PFC/OFC bias that primes the FFA to detect face-like patterns. When sensory input is ambiguous (low precision), this strong prior dominates. The result is pareidolia: seeing faces in clouds, wall outlets, or random shapes. The signal didn't look like a face — but the prior was weighted so heavily that weak evidence was enough to trigger the percept.",
   },
   {
     title: "Memory Under Load",
     moduleId: "memory-under-load",
+    dominant: "input",
+    dominantColor: "#378ADD",
     body: "The dlPFC maintains working memory by keeping task-relevant signals high-precision and suppressing distractors (low-precision noise). As cognitive load increases, the control signal weakens — the precision gap between targets and distractors narrows. Eventually, distractors leak through because the brain can no longer reliably distinguish what matters from what doesn't. The failure isn't about the stimuli; it's about the precision weights assigned to them.",
   },
 ];
@@ -93,7 +99,15 @@ const ConceptPrecision = () => {
       <div className="space-y-6">
         {scenarios.map((s) => (
           <div key={s.moduleId}>
-            <h3 className="text-base font-medium text-foreground">{s.title}</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="text-base font-medium text-foreground">{s.title}</h3>
+              <span
+                className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: s.dominantColor }}
+              >
+                {s.dominant} dominates
+              </span>
+            </div>
             <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
               {s.body}
             </p>
