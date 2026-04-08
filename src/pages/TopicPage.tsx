@@ -19,7 +19,7 @@ const topics: Record<string, Topic> = {
     accent: "#7F77DD",
     description:
       "Your brain builds what you see before the picture is complete. These modules explore how the visual system uses shortcuts, prior experience, and specialized regions to recognize objects and faces — often before full sensory detail is available.",
-    moduleIds: ["blurry-object-guess", "face-or-not", "multistable-perception-gallery"],
+    moduleIds: ["blurry-object-guess", "face-or-not"],
     conceptIds: ["loop", "precision-attention"],
   },
   attention: {
@@ -27,7 +27,7 @@ const topics: Record<string, Topic> = {
     accent: "#7F77DD",
     description:
       "Focus is expensive — and your brain runs out of it. These modules explore how the prefrontal cortex maintains working memory, suppresses distraction, and what happens when cognitive load exceeds capacity.",
-    moduleIds: ["memory-under-load", "pfc-role-matcher"],
+    moduleIds: ["memory-under-load"],
     conceptIds: ["precision-attention", "failure"],
   },
   emotion: {
@@ -35,7 +35,7 @@ const topics: Record<string, Topic> = {
     accent: "#D85A30",
     description:
       "Your brain flags what matters before you've fully interpreted it. These modules explore how salience, surprise, and arousal drive fast automatic responses through the amygdala and limbic system.",
-    moduleIds: ["sudden-noise-reaction", "emotion-vs-arousal-sorter", "fear-vs-anxiety-sorter"],
+    moduleIds: ["sudden-noise-reaction"],
     conceptIds: ["loop", "failure"],
   },
   learning: {
@@ -43,7 +43,7 @@ const topics: Record<string, Topic> = {
     accent: "#1D9E75",
     description:
       "The brain doesn't just react — it learns what to expect next. These modules explore how cues become predictions, how fear is conditioned and extinguished, and why extinction is new learning, not erasure.",
-    moduleIds: ["fear-cue-and-extinction", "classical-vs-operant-sorter"],
+    moduleIds: ["fear-cue-and-extinction"],
     conceptIds: ["loop", "failure"],
   },
   stress: {
@@ -51,7 +51,7 @@ const topics: Record<string, Topic> = {
     accent: "#1D9E75",
     description:
       "The stress response is built to prepare you for demand. These modules explore how the HPA axis activates, how negative feedback normally shuts it down, and what happens under chronic stress when the shutdown fails.",
-    moduleIds: ["stress-response-builder", "homeostasis-vs-allostasis-sorter"],
+    moduleIds: ["stress-response-builder"],
     conceptIds: ["loop", "failure"],
   },
 };
@@ -62,7 +62,7 @@ const TopicPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const topic = slug ? topics[slug] : undefined;
 
-  if (!topic) return <Navigate to="/" replace />;
+  if (!topic) return <Navigate to="/topics" replace />;
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">

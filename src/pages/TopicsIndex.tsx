@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const topics = [
-  { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD", modules: 3 },
-  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", modules: 2 },
-  { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", modules: 3 },
-  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", modules: 2 },
-  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", modules: 2 },
+  { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD", modules: 2 },
+  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", modules: 1 },
+  { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", modules: 1 },
+  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", modules: 1 },
+  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", modules: 1 },
 ];
 
 const TopicsIndex = () => (
