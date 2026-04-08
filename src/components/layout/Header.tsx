@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 
 const navLinks = [
   { to: "/", label: "Home" },
+  { to: "/topics", label: "Topics" },
   { to: "/how-your-brain-predicts", label: "How Your Brain Predicts" },
   { to: "/about", label: "About" },
 ];

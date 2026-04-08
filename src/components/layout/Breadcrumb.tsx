@@ -32,16 +32,20 @@ export default function Breadcrumb() {
     if (segments[1]) {
       crumbs.push({ label: conceptSlugToTitle[segments[1]] ?? segments[1] });
     }
-  } else if (segments[0] === "topics" && segments[1]) {
-    const TOPIC_TITLES: Record<string, string> = {
-      perception: "Perception and Object Recognition",
-      attention: "Attention, Cognitive Load, and the PFC",
-      emotion: "Emotion, Limbic System, and Amygdala",
-      learning: "Learning and Fear Conditioning",
-      stress: "Stress and Homeostasis",
-    };
-    crumbs.push({ label: "Topics", to: "/" });
-    crumbs.push({ label: TOPIC_TITLES[segments[1]] ?? segments[1] });
+  } else if (segments[0] === "topics") {
+    if (segments[1]) {
+      const TOPIC_TITLES: Record<string, string> = {
+        perception: "Perception and Object Recognition",
+        attention: "Attention, Cognitive Load, and the PFC",
+        emotion: "Emotion, Limbic System, and Amygdala",
+        learning: "Learning and Fear Conditioning",
+        stress: "Stress and Homeostasis",
+      };
+      crumbs.push({ label: "Topics", to: "/topics" });
+      crumbs.push({ label: TOPIC_TITLES[segments[1]] ?? segments[1] });
+    } else {
+      crumbs.push({ label: "Topics" });
+    }
   } else if (segments[0] === "course-map") {
     crumbs.push({ label: "Course Map" });
   } else if (segments[0] === "about") {

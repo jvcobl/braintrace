@@ -16,6 +16,7 @@ import ConceptLoop from "./pages/ConceptLoop";
 import ConceptPrecision from "./pages/ConceptPrecision";
 import ConceptFailure from "./pages/ConceptFailure";
 import TopicPage from "./pages/TopicPage";
+import TopicsIndex from "./pages/TopicsIndex";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/how-your-brain-predicts/loop" element={<ConceptLoop />} />
             <Route path="/how-your-brain-predicts/precision-attention" element={<ConceptPrecision />} />
             <Route path="/how-your-brain-predicts/when-prediction-fails" element={<ConceptFailure />} />
+            <Route path="/topics" element={<TopicsIndex />} />
             <Route path="/topics/:slug" element={<TopicPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
