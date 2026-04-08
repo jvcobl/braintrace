@@ -12,7 +12,7 @@ const SectionNav = ({ current, onSelect }: SectionNavProps) => (
     className="flex gap-6 border-b border-gray-200"
     aria-label="Lesson sections"
   >
-    {sections.map((s) => (
+    {sections.map((s, i) => (
       <button
         key={s}
         type="button"
@@ -24,6 +24,7 @@ const SectionNav = ({ current, onSelect }: SectionNavProps) => (
         }`}
         aria-current={current === s ? "step" : undefined}
       >
+        <span className="text-[10px] text-gray-300 mr-1">{i + 1}</span>
         {s}
       </button>
     ))}

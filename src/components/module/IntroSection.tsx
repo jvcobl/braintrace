@@ -1,10 +1,12 @@
 import type { Module } from "@/data/modules";
+import type { SectionId } from "./SectionNav";
 
 interface IntroSectionProps {
   module: Module;
+  onAdvance?: (section: SectionId) => void;
 }
 
-const IntroSection = ({ module }: IntroSectionProps) => (
+const IntroSection = ({ module, onAdvance }: IntroSectionProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Introduction</h2>
     <p className="mt-3 text-[14px] sm:text-[15px] text-foreground/70 leading-relaxed italic">{module.hook}</p>
@@ -15,6 +17,17 @@ const IntroSection = ({ module }: IntroSectionProps) => (
       </p>
       <p className="mt-1.5 sm:mt-2 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">{module.learningObjective}</p>
     </div>
+    {onAdvance && (
+      <div className="mt-8 flex justify-center">
+        <button
+          onClick={() => onAdvance("Experience")}
+          className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Begin Experience
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    )}
   </section>
 );
 

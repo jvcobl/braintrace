@@ -228,9 +228,10 @@ function splitLabel(text: string, max = 22): string[] {
 
 interface TracePathwaySVGProps {
   pathway: TracePathway;
+  onAdvanceToExplain?: () => void;
 }
 
-export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
+export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePathwaySVGProps) {
   const [showAlt, setShowAlt] = useState(false);
 
   const nodes = showAlt && pathway.alternateState ? pathway.alternateState.nodes : pathway.nodes;
@@ -473,6 +474,18 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
           <span className="text-xs text-gray-400">Slow route</span>
         </span>
       </div>
+
+      {onAdvanceToExplain && (
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={onAdvanceToExplain}
+            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          >
+            Read the explanation
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      )}
     </section>
   );
 }

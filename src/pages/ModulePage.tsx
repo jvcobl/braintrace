@@ -55,6 +55,11 @@ const ModulePage = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleSection = (s: SectionId) => {
+    setSection(s);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   if (!mod) {
     return (
       <div className="container flex flex-col items-center justify-center py-32 text-center">
@@ -112,15 +117,15 @@ const ModulePage = () => {
 
       {/* Section nav + content */}
       <div className="mt-8 sm:mt-10">
-        <SectionNav current={section} onSelect={setSection} />
+        <SectionNav current={section} onSelect={handleSection} />
 
         <div className="mt-6 sm:mt-8">
-          {section === "Intro" && <div id="intro"><IntroSection module={mod} /></div>}
-          {section === "Experience" && <div id="experience"><ExperienceSection module={mod} onNavigate={setSection} /></div>}
+          {section === "Intro" && <div id="intro"><IntroSection module={mod} onAdvance={handleSection} /></div>}
+          {section === "Experience" && <div id="experience"><ExperienceSection module={mod} onNavigate={handleSection} /></div>}
           {section === "Trace" && <div id="trace">{(() => {
             const modDef = moduleDefinitions[mod.slug];
             return modDef?.tracePathway
-              ? <TracePathwaySVG pathway={modDef.tracePathway} />
+              ? <TracePathwaySVG pathway={modDef.tracePathway} onAdvanceToExplain={() => handleSection("Explain")} />
               : <TracePanel nodes={mod.traceNodes} />;
           })()}</div>}
           {section === "Explain" && <div id="explain">{(() => {
