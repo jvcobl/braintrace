@@ -2,20 +2,19 @@ import { Link } from "react-router-dom";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const topics = [
-  { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD" },
-  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD" },
-  { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30" },
-  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75" },
-  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75" },
+  { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD", modules: 3 },
+  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", modules: 2 },
+  { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", modules: 3 },
+  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", modules: 2 },
+  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", modules: 2 },
 ];
 
 const TopicsIndex = () => (
   <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
     <Breadcrumb />
-    <h1 className="text-3xl text-foreground">Topics</h1>
+    <h1 className="text-3xl text-foreground">Explore by topic</h1>
     <p className="mt-3 text-sm text-muted-foreground max-w-2xl">
-      Five areas of neuroscience, each built around phenomena you can experience
-      directly.
+      Choose a neuroscience topic and explore the BrainTrace modules connected to it.
     </p>
 
     <div className="mt-8 space-y-2">
@@ -29,6 +28,9 @@ const TopicsIndex = () => (
           <h2 className="font-display text-base text-foreground group-hover:text-primary transition-colors flex-1">
             {t.title}
           </h2>
+          <span className="text-xs text-muted-foreground/40 shrink-0">
+            {t.modules} {t.modules === 1 ? "module" : "modules"}
+          </span>
           <span
             className="text-muted-foreground/25 transition-all group-hover:translate-x-0.5 group-hover:text-primary"
             aria-hidden="true"
