@@ -17,11 +17,11 @@ const BADGE_LABEL: Record<TraceBadge, string> = {
   update: "UPDATE",
 };
 
-const NW = 148;
-const NH = 46;
-const LG = 90;
-const CG = 180;
-const PAD = 40;
+const NW = 152;
+const NH = 54;
+const LG = 100;
+const CG = 184;
+const PAD = 48;
 
 /* ── Layout types ── */
 
@@ -70,17 +70,14 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
   const idSet = new Set(ids);
   const backEdgeKeys = findBackEdges(ids, edges);
 
-  // Forward edges only
   const fwdEdges = edges.filter(
     (e) => idSet.has(e.from) && idSet.has(e.to) && !backEdgeKeys.has(`${e.from}->${e.to}`),
   );
 
-  // Predecessors map (forward only)
   const preds = new Map<string, string[]>();
   for (const id of ids) preds.set(id, []);
   for (const e of fwdEdges) preds.get(e.to)!.push(e.from);
 
-  // Connected nodes (any edge)
   const connected = new Set<string>();
   for (const e of edges) {
     if (idSet.has(e.from) && idSet.has(e.to)) {
@@ -89,7 +86,6 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
     }
   }
 
-  // Assign layers (longest path from roots)
   const layerOf = new Map<string, number>();
 
   function assign(id: string, seen = new Set<string>()): number {
@@ -104,7 +100,6 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
 
   for (const id of ids) assign(id);
 
-  // Push disconnected inactive nodes to bottom
   const maxConnected = Math.max(
     0,
     ...ids.filter((id) => connected.has(id)).map((id) => layerOf.get(id) ?? 0),
@@ -113,7 +108,6 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
     if (!connected.has(id)) layerOf.set(id, maxConnected + 1);
   }
 
-  // Group by layer
   const groups = new Map<number, string[]>();
   for (const [id, l] of layerOf) {
     if (!groups.has(l)) groups.set(l, []);
@@ -124,7 +118,7 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
   const maxPerLayer = Math.max(1, ...Array.from(groups.values()).map((g) => g.length));
   const hasBack = backEdgeKeys.size > 0;
 
-  const w = PAD * 2 + Math.max((maxPerLayer - 1) * CG, NW) + (hasBack ? 80 : 0);
+  const w = PAD * 2 + Math.max((maxPerLayer - 1) * CG, NW) + (hasBack ? 90 : 0);
   const h = PAD * 2 + maxLayer * LG + NH;
 
   const items: Pos[] = [];
@@ -132,7 +126,7 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
     const group = groups.get(l) || [];
     const count = group.length;
     const layerW = (count - 1) * CG;
-    const baseW = w - (hasBack ? 80 : 0);
+    const baseW = w - (hasBack ? 90 : 0);
     const startX = (baseW - layerW) / 2;
 
     group.forEach((id, i) => {
@@ -148,7 +142,7 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
     });
   }
 
-  // ── Resolve edge-through-node collisions for multi-layer edges ──
+  // Resolve edge-through-node collisions
   const itemById = new Map(items.map((n) => [n.id, n]));
   const CLEARANCE = NW * 0.65;
 
@@ -175,7 +169,6 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
     }
   }
 
-  // Re-normalize: keep all nodes in bounds and recompute width
   const minCx = Math.min(...items.map((n) => n.cx));
   const desiredMin = PAD + NW / 2;
   if (minCx < desiredMin) {
@@ -183,7 +176,7 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
     for (const n of items) n.cx += shift;
   }
   const maxCx = Math.max(...items.map((n) => n.cx));
-  const finalW = maxCx + NW / 2 + PAD + (hasBack ? 80 : 0);
+  const finalW = maxCx + NW / 2 + PAD + (hasBack ? 90 : 0);
 
   return { items, w: finalW, h, backEdgeKeys };
 }
@@ -192,10 +185,10 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
 
 function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number) {
   if (isBack) {
-    const rx = totalW - 20;
+    const rx = totalW - 24;
     return {
       d: `M ${from.cx + NW / 2} ${from.cy} C ${rx} ${from.cy}, ${rx} ${to.cy}, ${to.cx + NW / 2} ${to.cy}`,
-      lx: rx - 20,
+      lx: rx - 24,
       ly: (from.cy + to.cy) / 2,
       anchor: "end" as const,
     };
@@ -214,13 +207,13 @@ function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number) {
 
   return {
     d,
-    lx: (x1 + x2) / 2 + (dx < 5 ? 10 : 0),
+    lx: (x1 + x2) / 2 + (dx < 5 ? 12 : 0),
     ly: (y1 + y2) / 2,
     anchor: (dx < 5 ? "start" : "middle") as "start" | "middle" | "end",
   };
 }
 
-/* ── Split long labels into two lines ── */
+/* ── Split long labels ── */
 
 function splitLabel(text: string, max = 22): string[] {
   if (text.length <= max) return [text];
@@ -263,10 +256,10 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
 
       {/* State toggle */}
       {pathway.alternateState && (
-        <div className="mt-4 inline-flex rounded-full bg-gray-100 p-0.5">
+        <div className="mt-5 inline-flex rounded-full bg-gray-100 p-0.5">
           <button
             onClick={() => setShowAlt(false)}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
               !showAlt
                 ? "bg-white text-foreground shadow-sm"
                 : "text-gray-400 hover:text-gray-600"
@@ -276,7 +269,7 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
           </button>
           <button
             onClick={() => setShowAlt(true)}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
               showAlt
                 ? "bg-white text-foreground shadow-sm"
                 : "text-gray-400 hover:text-gray-600"
@@ -291,8 +284,8 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
       {w > 0 && h > 0 && (
         <div
           key={showAlt ? "alt" : "default"}
-          className="mt-5 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/50 p-6"
-          style={{ animation: "tpFadeIn 200ms ease-in" }}
+          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-8"
+          style={{ animation: "tpFadeIn 250ms ease-out" }}
         >
           <style>{`@keyframes tpFadeIn{from{opacity:0}to{opacity:1}}`}</style>
           <svg
@@ -303,27 +296,19 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
             aria-label={`Neural pathway diagram: ${pathway.title}`}
           >
             <defs>
-              <marker
-                id="arr"
-                viewBox="0 0 10 10"
-                refX={9}
-                refY={5}
-                markerWidth={6}
-                markerHeight={6}
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#999" />
+              {/* Subtle shadow for active nodes */}
+              <filter id="nodeShadow" x="-8%" y="-8%" width="116%" height="124%">
+                <feDropShadow dx="0" dy="1" stdDeviation="2.5" floodColor="#000" floodOpacity="0.06" />
+              </filter>
+              {/* Arrow markers */}
+              <marker id="arr" viewBox="0 0 10 8" refX={9} refY={4} markerWidth={8} markerHeight={7} orient="auto-start-reverse">
+                <path d="M 0 0 L 10 4 L 0 8 z" fill="#bbb" />
               </marker>
-              <marker
-                id="arr-fast"
-                viewBox="0 0 10 10"
-                refX={9}
-                refY={5}
-                markerWidth={6}
-                markerHeight={6}
-                orient="auto-start-reverse"
-              >
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#D85A30" />
+              <marker id="arr-fast" viewBox="0 0 10 8" refX={9} refY={4} markerWidth={8} markerHeight={7} orient="auto-start-reverse">
+                <path d="M 0 0 L 10 4 L 0 8 z" fill="#D85A30" />
+              </marker>
+              <marker id="arr-slow" viewBox="0 0 10 8" refX={9} refY={4} markerWidth={8} markerHeight={7} orient="auto-start-reverse">
+                <path d="M 0 0 L 10 4 L 0 8 z" fill="#ccc" />
               </marker>
             </defs>
 
@@ -334,38 +319,40 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
               const isBack = backEdgeKeys.has(`${e.from}->${e.to}`);
               const { d, lx, ly, anchor } = getEdgePath(from, to, isBack, w);
               const route = e.route || "primary";
-              const stroke = route === "fast" ? "#D85A30" : "#aaa";
-              const dash = route === "slow" ? "6 4" : undefined;
-              const marker = route === "fast" ? "arr-fast" : "arr";
-              const op = from.active && to.active ? 0.75 : 0.2;
+              const bothActive = from.active && to.active;
+
+              const stroke = route === "fast" ? "#D85A30" : route === "slow" ? "#ccc" : "#bbb";
+              const strokeW = route === "fast" ? 2 : 1.5;
+              const dash = route === "slow" ? "7 5" : undefined;
+              const marker = route === "fast" ? "arr-fast" : route === "slow" ? "arr-slow" : "arr";
               const lines = e.label ? splitLabel(e.label) : [];
 
               return (
-                <g key={`${e.from}-${e.to}-${i}`}>
+                <g key={`${e.from}-${e.to}-${i}`} opacity={bothActive ? 1 : 0.2}>
                   <path
                     d={d}
                     fill="none"
                     stroke={stroke}
-                    strokeWidth={1.5}
+                    strokeWidth={strokeW}
                     strokeDasharray={dash}
                     markerEnd={`url(#${marker})`}
-                    opacity={op}
+                    opacity={0.7}
                   />
                   {lines.length > 0 && (
                     <text
                       textAnchor={anchor}
                       fontSize={10}
-                      fill="#777"
+                      fill="#888"
                       stroke="white"
-                      strokeWidth={3.5}
+                      strokeWidth={4}
                       paintOrder="stroke"
-                      opacity={from.active && to.active ? 1 : 0.3}
+                      fontFamily="system-ui, sans-serif"
                     >
                       {lines.map((line, li) => (
                         <tspan
                           key={li}
                           x={lx}
-                          y={ly + (li - (lines.length - 1) / 2) * 13}
+                          y={ly + (li - (lines.length - 1) / 2) * 14}
                         >
                           {line}
                         </tspan>
@@ -379,52 +366,86 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
             {/* Nodes */}
             {items.map((node) => {
               const color = node.badge ? BADGE_COLOR[node.badge] : undefined;
-              const op = node.active ? 1 : 0.3;
 
+              if (!node.active) {
+                // Inactive: dashed border, muted fill, no shadow
+                return (
+                  <g
+                    key={node.id}
+                    transform={`translate(${node.cx - NW / 2}, ${node.cy - NH / 2})`}
+                  >
+                    <rect
+                      width={NW}
+                      height={NH}
+                      rx={12}
+                      fill="#f8f8f8"
+                      stroke="#ddd"
+                      strokeWidth={1}
+                      strokeDasharray="4 3"
+                    />
+                    <text
+                      x={NW / 2}
+                      y={NH / 2 + 5}
+                      textAnchor="middle"
+                      fontSize={12}
+                      fill="#bbb"
+                      fontFamily="system-ui, sans-serif"
+                    >
+                      {node.label}
+                    </text>
+                  </g>
+                );
+              }
+
+              // Active node
               return (
                 <g
                   key={node.id}
                   transform={`translate(${node.cx - NW / 2}, ${node.cy - NH / 2})`}
-                  opacity={op}
+                  filter="url(#nodeShadow)"
                 >
                   <rect
                     width={NW}
                     height={NH}
-                    rx={10}
+                    rx={12}
                     fill="white"
-                    stroke={color || "#ddd"}
+                    stroke={color || "#e0e0e0"}
                     strokeWidth={color ? 2 : 1}
                   />
+                  {/* Badge pill */}
                   {node.badge && color && (
                     <>
                       <rect
-                        x={NW / 2 - 32}
-                        y={-9}
-                        width={64}
-                        height={18}
-                        rx={9}
+                        x={NW / 2 - 34}
+                        y={-10}
+                        width={68}
+                        height={20}
+                        rx={10}
                         fill={color}
                       />
                       <text
                         x={NW / 2}
-                        y={3}
+                        y={4}
                         textAnchor="middle"
                         fontSize={8.5}
                         fontWeight={700}
                         fill="white"
-                        style={{ letterSpacing: "0.06em" }}
+                        fontFamily="system-ui, sans-serif"
+                        style={{ letterSpacing: "0.08em" }}
                       >
                         {BADGE_LABEL[node.badge]}
                       </text>
                     </>
                   )}
+                  {/* Label */}
                   <text
                     x={NW / 2}
-                    y={NH / 2 + (node.badge ? 3 : 5)}
+                    y={NH / 2 + (node.badge ? 4 : 5)}
                     textAnchor="middle"
                     fontSize={13}
                     fontWeight={600}
                     fill="#1a1a1a"
+                    fontFamily="system-ui, sans-serif"
                   >
                     {node.label}
                   </text>
@@ -436,20 +457,20 @@ export default function TracePathwaySVG({ pathway }: TracePathwaySVGProps) {
       )}
 
       {/* Legend */}
-      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5 justify-center">
+      <div className="mt-5 pt-4 border-t border-gray-100 flex flex-wrap gap-x-6 gap-y-2 justify-center">
         {usedBadges.map((b) => (
           <span key={b} className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: BADGE_COLOR[b] }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: BADGE_COLOR[b] }} />
             <span className="text-xs text-gray-400 capitalize">{b}</span>
           </span>
         ))}
         <span className="flex items-center gap-1.5">
-          <span className="w-4 h-0 border-t-[1.5px] border-[#D85A30]" />
-          <span className="text-xs text-gray-400">Fast</span>
+          <span className="w-5 h-0 border-t-2 border-[#D85A30]" />
+          <span className="text-xs text-gray-400">Fast route</span>
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-4 h-0 border-t-[1.5px] border-dashed border-gray-300" />
-          <span className="text-xs text-gray-400">Slow</span>
+          <span className="w-5 h-0 border-t-[1.5px] border-dashed border-gray-300" />
+          <span className="text-xs text-gray-400">Slow route</span>
         </span>
       </div>
     </section>
