@@ -115,7 +115,7 @@ const Index = () => {
                   {t.count} {t.count === 1 ? "module" : "modules"}
                 </span>
                 <span
-                  className="text-muted-foreground/25 transition-all group-hover:translate-x-0.5 group-hover:text-primary"
+                  className="text-gray-300 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0"
                   aria-hidden="true"
                 >
                   →

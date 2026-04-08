@@ -79,16 +79,15 @@ const TopicPage = () => {
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
 
-      <div className="border-l-4 pl-5" style={{ borderLeftColor: topic.accent }}>
+      <div className="border-l-4 rounded-r-lg pl-5" style={{ borderLeftColor: topic.accent }}>
         <h1 className="text-3xl text-foreground">{topic.title}</h1>
         <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl">
           {topic.description}
         </p>
+        <p className="mt-3 text-xs text-gray-400">
+          {topic.courseConnection}
+        </p>
       </div>
-
-      <p className="mt-4 text-xs text-gray-400 italic">
-        {topic.courseConnection}
-      </p>
 
       {/* Modules */}
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">

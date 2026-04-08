@@ -14,12 +14,13 @@ const ConceptLink = ({ conceptPageId, label }: ConceptLinkProps) => {
   return (
     <Link
       to={`/how-your-brain-predicts/${page.slug}`}
-      className="block border border-gray-100 rounded-lg p-3 hover:bg-gray-50 transition-colors"
+      className="group flex items-center gap-3 border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition-colors"
     >
-      <span className="flex items-center justify-between">
-        <span className="text-sm text-blue-600">{label ?? page.title}</span>
-        <span className="text-gray-400 text-sm">→</span>
-      </span>
+      <div className="min-w-0 flex-1">
+        <span className="text-sm font-medium text-primary">{label ?? page.title}</span>
+        <span className="block text-xs text-gray-400 mt-0.5 truncate">{page.description}</span>
+      </div>
+      <span className="text-gray-300 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" aria-hidden="true">→</span>
     </Link>
   );
 };
