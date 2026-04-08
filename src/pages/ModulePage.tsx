@@ -12,6 +12,15 @@ import TracePanel from "@/components/module/TracePanel";
 import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
 
+const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
+  "blurry-object-guess": { slug: "perception", title: "Perception and Object Recognition" },
+  "face-or-not": { slug: "perception", title: "Perception and Object Recognition" },
+  "memory-under-load": { slug: "attention", title: "Attention, Cognitive Load, and the PFC" },
+  "sudden-noise-reaction": { slug: "emotion", title: "Emotion, Limbic System, and Amygdala" },
+  "fear-cue-and-extinction": { slug: "learning", title: "Learning and Fear Conditioning" },
+  "stress-response-builder": { slug: "stress", title: "Stress and Homeostasis" },
+};
+
 const ModulePage = () => {
   const { id } = useParams<{ id: string }>();
   const mod = id ? getModuleById(id) : undefined;
@@ -73,9 +82,22 @@ const ModulePage = () => {
 
       {/* Header */}
       <div>
-        <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60">
-          {unitTitle}
-        </p>
+        <div className="flex items-center gap-2">
+          <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60">
+            {unitTitle}
+          </p>
+          {MODULE_TOPIC[mod.slug] && (
+            <>
+              <span className="text-gray-300 text-[10px]">/</span>
+              <Link
+                to={`/topics/${MODULE_TOPIC[mod.slug].slug}`}
+                className="text-[10px] sm:text-[11px] font-medium text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                {MODULE_TOPIC[mod.slug].title}
+              </Link>
+            </>
+          )}
+        </div>
         <h1 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-[2rem]">
           {mod.title}
         </h1>

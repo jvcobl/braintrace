@@ -6,7 +6,7 @@ const topics = [
   { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", modules: 1 },
   { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", modules: 1 },
   { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", modules: 1 },
-  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", modules: 1 },
+  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", modules: 0 },
 ];
 
 const TopicsIndex = () => (
@@ -29,7 +29,9 @@ const TopicsIndex = () => (
             {t.title}
           </h2>
           <span className="text-xs text-muted-foreground/40 shrink-0">
-            {t.modules} {t.modules === 1 ? "module" : "modules"}
+            {t.modules > 0
+              ? `${t.modules} ${t.modules === 1 ? "module" : "modules"}`
+              : "Coming soon"}
           </span>
           <span
             className="text-muted-foreground/25 transition-all group-hover:translate-x-0.5 group-hover:text-primary"

@@ -62,7 +62,7 @@ const topics: Record<string, Topic> = {
       "The stress response is built to prepare you for demand. The HPA axis activates a hormonal cascade, negative feedback normally shuts it down, and chronic stress overrides that shutdown — leading to structural damage.",
     courseConnection:
       "Connects to Stress & Survival — HPA Axis, HPG Axis.",
-    moduleIds: ["stress-response-builder"],
+    moduleIds: [],
     conceptIds: ["loop", "failure"],
   },
 };
@@ -94,18 +94,29 @@ const TopicPage = () => {
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
         Explore the modules
       </h2>
-      <p className="text-sm text-gray-400 mb-3">
-        Each module lets you experience the phenomenon, trace the neural pathway, and read the explanation.
-      </p>
-      <div className="space-y-2">
-        {topic.moduleIds.map((id) => (
-          <ModuleLink key={id} moduleId={id} />
-        ))}
-      </div>
-      {topic.moduleIds.length === 1 && (
-        <p className="mt-3 text-xs text-gray-300">
-          More modules for this topic area coming soon.
-        </p>
+      {topic.moduleIds.length > 0 ? (
+        <>
+          <p className="text-sm text-gray-400 mb-3">
+            Each module lets you experience the phenomenon, trace the neural pathway, and read the explanation.
+          </p>
+          <div className="space-y-2">
+            {topic.moduleIds.map((id) => (
+              <ModuleLink key={id} moduleId={id} />
+            ))}
+          </div>
+          {topic.moduleIds.length === 1 && (
+            <p className="mt-3 text-xs text-gray-300">
+              More modules for this topic area coming soon.
+            </p>
+          )}
+        </>
+      ) : (
+        <div className="mt-3 rounded-xl border border-dashed border-gray-200 bg-gray-50/50 px-5 py-6 text-center">
+          <p className="text-sm text-gray-500">Module coming soon</p>
+          <p className="mt-1 text-xs text-gray-400">
+            This topic connects to course material but does not yet have a full interactive module.
+          </p>
+        </div>
       )}
 
       {/* Related concepts */}
