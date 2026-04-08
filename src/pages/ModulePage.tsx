@@ -85,30 +85,20 @@ const ModulePage = () => {
     })
     .filter((x): x is NonNullable<typeof x> => x != null);
 
-  const unitTitle = unitContent?.meta.title ?? unit?.title ?? mod.unitId.replace("-", " ").replace(/\b\w/g, (c) => c.toUpperCase());
-
   return (
     <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-16">
       <Breadcrumb />
 
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2">
-          <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60">
-            {unitTitle}
-          </p>
-          {MODULE_TOPIC[mod.slug] && (
-            <>
-              <span className="text-gray-300 text-[10px]">/</span>
-              <Link
-                to={`/topics/${MODULE_TOPIC[mod.slug].slug}`}
-                className="text-[10px] sm:text-[11px] font-medium text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                {MODULE_TOPIC[mod.slug].title}
-              </Link>
-            </>
-          )}
-        </div>
+        {MODULE_TOPIC[mod.slug] && (
+          <Link
+            to={`/topics/${MODULE_TOPIC[mod.slug].slug}`}
+            className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 hover:text-primary transition-colors"
+          >
+            {MODULE_TOPIC[mod.slug].title}
+          </Link>
+        )}
         <h1 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-[2rem]">
           {mod.title}
         </h1>
@@ -137,6 +127,7 @@ const ModulePage = () => {
                 goDeeper={modDef?.goDeeper}
                 conceptLinks={modDef?.conceptLinks}
                 traceBridge={modDef?.traceBridge}
+                topicLink={MODULE_TOPIC[mod.slug] ? { to: `/topics/${MODULE_TOPIC[mod.slug].slug}`, label: MODULE_TOPIC[mod.slug].title } : undefined}
               />
             );
           })()}</div>}

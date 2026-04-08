@@ -11,6 +11,21 @@ const conceptSlugToTitle = Object.fromEntries(
   Object.values(conceptPages).map((p) => [p.slug, p.title]),
 );
 
+const MODULE_TO_TOPIC: Record<string, { slug: string; label: string }> = {
+  "blurry-object-guess": { slug: "perception", label: "Perception" },
+  "face-or-not": { slug: "perception", label: "Perception" },
+  "multistable-perception-gallery": { slug: "perception", label: "Perception" },
+  "memory-under-load": { slug: "attention", label: "Attention" },
+  "pfc-role-matcher": { slug: "attention", label: "Attention" },
+  "sudden-noise-reaction": { slug: "emotion", label: "Emotion" },
+  "emotion-vs-arousal-sorter": { slug: "emotion", label: "Emotion" },
+  "fear-vs-anxiety-sorter": { slug: "emotion", label: "Emotion" },
+  "fear-cue-and-extinction": { slug: "learning", label: "Learning" },
+  "classical-vs-operant-sorter": { slug: "learning", label: "Learning" },
+  "stress-response-builder": { slug: "stress", label: "Stress" },
+  "homeostasis-vs-allostasis-sorter": { slug: "stress", label: "Stress" },
+};
+
 export default function Breadcrumb() {
   const { pathname } = useLocation();
 
@@ -21,7 +36,11 @@ export default function Breadcrumb() {
 
   if (segments[0] === "module" && segments[1]) {
     const mod = modules.find((m) => m.id === segments[1] || m.slug === segments[1]);
-    crumbs.push({ label: "Modules", to: "/course-map" });
+    const topic = mod ? MODULE_TO_TOPIC[mod.slug] : undefined;
+    crumbs.push({ label: "Topics", to: "/topics" });
+    if (topic) {
+      crumbs.push({ label: topic.label, to: `/topics/${topic.slug}` });
+    }
     crumbs.push({ label: mod?.title ?? segments[1] });
   } else if (segments[0] === "how-your-brain-predicts") {
     crumbs.push(

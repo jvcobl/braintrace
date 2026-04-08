@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { ExplainContent } from "@/data/modules";
 import type { PredictionLens as PredictionLensData, GoDeeperCard as GoDeeperCardData, ConceptPageId } from "@/data/types";
 import PredictionLens from "@/components/PredictionLens";
@@ -10,6 +11,7 @@ interface ExplainSectionProps {
   goDeeper?: GoDeeperCardData[];
   conceptLinks?: ConceptPageId[];
   traceBridge?: string;
+  topicLink?: { to: string; label: string };
 }
 
 const subheads: { key: keyof ExplainContent; label: string }[] = [
@@ -19,7 +21,7 @@ const subheads: { key: keyof ExplainContent; label: string }[] = [
   { key: "whyItMatters", label: "Why It Matters" },
 ];
 
-const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, traceBridge }: ExplainSectionProps) => (
+const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, traceBridge, topicLink }: ExplainSectionProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Explain</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground/60">
@@ -71,6 +73,19 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, trace
             <ConceptLink key={id} conceptPageId={id} />
           ))}
         </div>
+      </div>
+    )}
+
+    {/* End-of-module navigation */}
+    {topicLink && (
+      <div className="pt-10 mt-10 border-t border-gray-100 text-center">
+        <Link
+          to={topicLink.to}
+          className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+        >
+          <span aria-hidden="true">←</span>
+          Back to {topicLink.label}
+        </Link>
       </div>
     )}
   </section>
