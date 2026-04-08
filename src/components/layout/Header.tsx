@@ -10,12 +10,27 @@ const navLinks = [
   { to: "/about", label: "About" },
 ];
 
+const topicItems = [
+  { slug: "perception", label: "Perception and Object Recognition" },
+  { slug: "attention", label: "Attention, Cognitive Load, and the PFC" },
+  { slug: "emotion", label: "Emotion, Limbic System, and Amygdala" },
+  { slug: "learning", label: "Learning and Fear Conditioning" },
+  { slug: "stress", label: "Stress and Homeostasis" },
+];
+
 const Header = () => {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isActive = (to: string) =>
     pathname === to || (to !== "/" && pathname.startsWith(to));
+
+  const linkClass = (to: string) =>
+    `relative py-5 text-sm font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+      isActive(to)
+        ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary"
+        : "text-gray-400 hover:text-gray-600"
+    }`;
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white backdrop-blur-md">
@@ -26,20 +41,43 @@ const Header = () => {
 
         {/* Desktop nav */}
         <nav className="hidden sm:flex items-center gap-6" aria-label="Main navigation">
-          {navLinks.map(({ to, label }) => (
-            <Link
-              key={to}
-              to={to}
-              className={`relative py-5 text-sm font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-                isActive(to)
-                  ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary"
-                  : "text-gray-400 hover:text-gray-600"
-              }`}
-              aria-current={isActive(to) ? "page" : undefined}
-            >
-              {label}
-            </Link>
-          ))}
+          {navLinks.map(({ to, label }) =>
+            to === "/topics" ? (
+              <div key={to} className="group relative">
+                <Link
+                  to={to}
+                  className={linkClass(to)}
+                  aria-current={isActive(to) ? "page" : undefined}
+                >
+                  {label}
+                </Link>
+
+                {/* Dropdown */}
+                <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-1 opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
+                  <div className="w-64 rounded-lg border border-gray-200 bg-white py-1.5 shadow-lg">
+                    {topicItems.map((item) => (
+                      <Link
+                        key={item.slug}
+                        to={`/topics/${item.slug}`}
+                        className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-foreground transition-colors normal-case tracking-normal"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={to}
+                to={to}
+                className={linkClass(to)}
+                aria-current={isActive(to) ? "page" : undefined}
+              >
+                {label}
+              </Link>
+            ),
+          )}
           <SearchBar />
         </nav>
 
