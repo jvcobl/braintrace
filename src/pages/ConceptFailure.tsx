@@ -29,8 +29,8 @@ const failures = [
     badge: "Update",
     traceNote: "In the Trace diagram, this is the update loop failing — the feedback signal is too weak to maintain the prediction.",
     explanation:
-      "When the brain's top-down control system is overwhelmed, it can no longer maintain predictions effectively. Working memory fails, distractors leak in, and performance breaks down — not from lack of effort, but from exceeding the system's capacity.",
-    modules: ["memory-under-load"],
+      "When the brain's top-down control system is overwhelmed, it can no longer maintain predictions effectively. Working memory fails under cognitive load because the dlPFC can't sustain its control signal. The HPA axis fails under chronic stress because CeA and PFC override the cortisol feedback loop. In both cases, the shutdown mechanism that should restore balance is overpowered.",
+    modules: ["memory-under-load", "stress-response-builder"],
   },
 ];
 
