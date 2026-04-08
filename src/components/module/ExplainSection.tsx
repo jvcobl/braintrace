@@ -9,6 +9,7 @@ interface ExplainSectionProps {
   predictionLens?: PredictionLensData;
   goDeeper?: GoDeeperCardData[];
   conceptLinks?: ConceptPageId[];
+  traceBridge?: string;
 }
 
 const subheads: { key: keyof ExplainContent; label: string }[] = [
@@ -18,12 +19,17 @@ const subheads: { key: keyof ExplainContent; label: string }[] = [
   { key: "whyItMatters", label: "Why It Matters" },
 ];
 
-const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks }: ExplainSectionProps) => (
+const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, traceBridge }: ExplainSectionProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Explain</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground/60">
       What the experience reveals.
     </p>
+    {traceBridge && (
+      <p className="mt-4 text-sm text-muted-foreground leading-relaxed border-l-2 border-primary/20 pl-4">
+        {traceBridge}
+      </p>
+    )}
     <div className="mt-5 sm:mt-6 space-y-5 sm:space-y-6">
       {subheads.map(({ key, label }) => (
         <div key={key as string} className="border-l-2 border-primary/10 pl-4 sm:pl-5">

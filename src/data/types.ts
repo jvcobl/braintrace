@@ -61,4 +61,5 @@ export interface ModuleDefinition {
   tracePathway: TracePathway;
   goDeeper: GoDeeperCard[];
   conceptLinks: ConceptPageId[];
+  traceBridge?: string;
 }

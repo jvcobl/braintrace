@@ -131,6 +131,7 @@ const ModulePage = () => {
                 predictionLens={modDef?.predictionLens}
                 goDeeper={modDef?.goDeeper}
                 conceptLinks={modDef?.conceptLinks}
+                traceBridge={modDef?.traceBridge}
               />
             );
           })()}</div>}
