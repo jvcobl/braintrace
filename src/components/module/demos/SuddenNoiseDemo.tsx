@@ -274,12 +274,13 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
                 {reactionMs === -1 ? (
                   <p className="text-sm font-medium text-destructive">Too early — wait for the circle.</p>
                 ) : (
-                  <>
-                    <p className="text-3xl font-bold text-foreground">{reactionMs}ms</p>
+                  <div style={{ animation: "fadeIn 300ms ease-out" }}>
+                    <style>{`@keyframes fadeIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}`}</style>
+                    <p className="text-4xl font-bold text-foreground tabular-nums">{reactionMs}<span className="text-lg text-muted-foreground ml-0.5">ms</span></p>
                     <p className="mt-1 text-xs text-muted-foreground">
                       {currentTrialType === "baseline" ? "Baseline reaction time" : "Reaction time with interruption"}
                     </p>
-                  </>
+                  </div>
                 )}
                 <button
                   onClick={handleNextTrial}

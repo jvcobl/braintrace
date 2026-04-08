@@ -296,17 +296,28 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {/* Show sequence */}
           {phase === "show" && (
             <div className="text-center">
-              <p className="text-xs text-muted-foreground mb-3">Memorize:</p>
+              <p className="text-xs text-muted-foreground mb-1">Memorize these letters:</p>
+              <p className="text-[10px] text-muted-foreground/50 mb-3">They'll disappear shortly</p>
               <div className="flex gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => (
                   <span
                     key={i}
-                    className="flex h-10 w-10 items-center justify-center rounded-md bg-card border border-border text-lg font-bold text-foreground"
+                    className="flex h-10 w-10 items-center justify-center rounded-md bg-card border border-border text-lg font-bold text-foreground animate-[fadeIn_300ms_ease-out]"
+                    style={{ animationDelay: `${i * 80}ms`, animationFillMode: "both" }}
                   >
                     {letter}
                   </span>
                 ))}
               </div>
+              <div className="mt-3 mx-auto w-24 h-0.5 rounded-full bg-primary/20 overflow-hidden">
+                <div
+                  className="h-full bg-primary rounded-full"
+                  style={{
+                    animation: `shrink ${(round?.sequenceLength ?? 3) * 500 + 1000}ms linear forwards`,
+                  }}
+                />
+              </div>
+              <style>{`@keyframes shrink{from{width:100%}to{width:0%}}@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}`}</style>
             </div>
           )}
 

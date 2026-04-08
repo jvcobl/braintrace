@@ -151,23 +151,22 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           </p>
 
           {/* Cascade slots */}
-          <div className="space-y-2 mb-6">
+          <div className="mb-6">
             {SLOTS.map((slot, i) => {
               const filled = filledSlots[i];
               const isCurrent = i === currentSlotIndex && !buildComplete;
               const isShaking = shakeSlot === i;
 
               return (
-                <div key={i} className="flex items-center gap-3">
-                  {/* Arrow connector */}
+                <div key={i}>
+                  {/* Vertical connector line */}
                   {i > 0 && (
-                    <div className="w-6 flex justify-center -my-1">
-                      <div className="text-gray-300 text-lg leading-none">↓</div>
+                    <div className="flex justify-center py-1">
+                      <div className={`w-px h-4 ${filledSlots[i - 1] ? "bg-primary/30" : "bg-gray-200"}`} />
                     </div>
                   )}
-                  {i === 0 && <div className="w-6" />}
                   <div
-                    className={`flex-1 rounded-lg border-2 px-4 py-3 transition-all ${
+                    className={`rounded-lg border-2 px-4 py-3 transition-all duration-200 ${
                       filled
                         ? "border-primary/40 bg-primary/5"
                         : isCurrent
@@ -219,7 +218,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {/* Build success */}
           {buildComplete && (
-            <div className="text-center mt-2">
+            <div className="text-center mt-4 pt-4 border-t border-gray-100">
               <p className="text-sm font-medium text-primary mb-1">
                 You built the HPA axis.
               </p>

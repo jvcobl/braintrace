@@ -274,7 +274,8 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
           <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary">
             {step === "predict" && (
               <div className="text-center">
-                <div className="text-5xl mb-4 select-none">◆</div>
+                <div className="text-5xl mb-4 select-none animate-[fadeIn_400ms_ease-out]">◆</div>
+                <style>{`@keyframes fadeIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}`}</style>
                 <p className="text-sm text-muted-foreground mb-4">
                   The cue appears. What do you expect will follow?
                 </p>
@@ -296,10 +297,10 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
             )}
 
             {step === "outcome" && (
-              <div className="text-center">
+              <div className="text-center animate-[fadeIn_300ms_ease-out]">
                 <div className="text-5xl mb-3 select-none flex items-center justify-center gap-3">
                   <span>◆</span>
-                  {trial.hasUS && <span className="text-destructive">✕</span>}
+                  {trial.hasUS && <span className="text-destructive animate-[fadeIn_200ms_ease-out]">✕</span>}
                 </div>
                 <p className="text-sm text-foreground">
                   {trial.hasUS

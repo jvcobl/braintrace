@@ -158,14 +158,30 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       onRestart={handleRestart}
     >
       <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-        <p className="mb-4 text-xs text-muted-foreground">
-          Object {round + 1} of {stimuli.length}
-        </p>
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-xs text-muted-foreground">
+            Object {round + 1} of {stimuli.length}
+          </p>
+          {/* Blur stage indicator */}
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] text-muted-foreground/50">Clarity</span>
+            <div className="flex gap-0.5">
+              {BLUR_STAGES.map((_, i) => (
+                <div
+                  key={i}
+                  className={`h-1 w-4 rounded-full transition-colors duration-300 ${
+                    i <= blurStage ? "bg-primary" : "bg-border"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Stimulus */}
         <div className="flex items-center justify-center rounded-lg bg-secondary py-12">
           <span
-            className="text-8xl transition-all duration-500 select-none"
+            className="text-8xl transition-all duration-700 ease-out select-none"
             style={{ filter: `blur(${blurPx}px)` }}
             aria-label={hasGuessed ? current.name : "Blurred object — try to guess"}
           >
@@ -181,7 +197,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
               disabled={blurStage >= BLUR_STAGES.length - 1}
               className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Sharpen
+              {blurStage >= BLUR_STAGES.length - 1 ? "Fully sharp" : "Sharpen"}
             </button>
           </div>
         )}
