@@ -10,11 +10,11 @@ const STUDY_METHOD = [
 ];
 
 const TOPICS = [
-  { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD", count: 2 },
-  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", count: 1 },
-  { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", count: 1 },
-  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", count: 1 },
-  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", count: 0 },
+  { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD", count: 3 },
+  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", count: 2 },
+  { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", count: 3 },
+  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", count: 2 },
+  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", count: 2 },
 ];
 
 /* ── Component ── */
@@ -112,9 +112,7 @@ const Index = () => {
                   </h3>
                 </div>
                 <span className="text-xs text-muted-foreground/40 shrink-0">
-                  {t.count > 0
-                    ? `${t.count} ${t.count === 1 ? "module" : "modules"}`
-                    : "Coming soon"}
+                  {t.count} {t.count === 1 ? "module" : "modules"}
                 </span>
                 <span
                   className="text-muted-foreground/25 transition-all group-hover:translate-x-0.5 group-hover:text-primary"

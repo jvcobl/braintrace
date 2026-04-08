@@ -15,10 +15,16 @@ import ExplainSection from "@/components/module/ExplainSection";
 const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
   "blurry-object-guess": { slug: "perception", title: "Perception and Object Recognition" },
   "face-or-not": { slug: "perception", title: "Perception and Object Recognition" },
+  "multistable-perception-gallery": { slug: "perception", title: "Perception and Object Recognition" },
   "memory-under-load": { slug: "attention", title: "Attention, Cognitive Load, and the PFC" },
+  "pfc-role-matcher": { slug: "attention", title: "Attention, Cognitive Load, and the PFC" },
   "sudden-noise-reaction": { slug: "emotion", title: "Emotion, Limbic System, and Amygdala" },
+  "emotion-vs-arousal-sorter": { slug: "emotion", title: "Emotion, Limbic System, and Amygdala" },
+  "fear-vs-anxiety-sorter": { slug: "emotion", title: "Emotion, Limbic System, and Amygdala" },
   "fear-cue-and-extinction": { slug: "learning", title: "Learning and Fear Conditioning" },
+  "classical-vs-operant-sorter": { slug: "learning", title: "Learning and Fear Conditioning" },
   "stress-response-builder": { slug: "stress", title: "Stress and Homeostasis" },
+  "homeostasis-vs-allostasis-sorter": { slug: "stress", title: "Stress and Homeostasis" },
 };
 
 const ModulePage = () => {

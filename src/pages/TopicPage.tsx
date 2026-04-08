@@ -22,7 +22,7 @@ const topics: Record<string, Topic> = {
       "Your brain builds what you see before the picture is complete. The visual system uses shortcuts, prior experience, and specialized regions to recognize objects and faces — often before full sensory detail is available.",
     courseConnection:
       "Connects to Sensation, Perception, and Inklings of Awareness and Object Recognition and Decision-making.",
-    moduleIds: ["blurry-object-guess", "face-or-not"],
+    moduleIds: ["blurry-object-guess", "face-or-not", "multistable-perception-gallery"],
     conceptIds: ["loop", "precision-attention"],
   },
   attention: {
@@ -32,7 +32,7 @@ const topics: Record<string, Topic> = {
       "Focus is expensive — and your brain runs out of it. The prefrontal cortex maintains working memory and suppresses distraction, but these operations share a finite resource pool that degrades under load.",
     courseConnection:
       "Connects to Object Recognition and Decision-making — Top-down and Bottom-up Integrations.",
-    moduleIds: ["memory-under-load"],
+    moduleIds: ["memory-under-load", "pfc-role-matcher"],
     conceptIds: ["precision-attention", "failure"],
   },
   emotion: {
@@ -42,7 +42,7 @@ const topics: Record<string, Topic> = {
       "Your brain flags what matters before you've fully interpreted it. Salience, surprise, and arousal drive fast automatic responses through the amygdala and limbic system — often before cortical evaluation catches up.",
     courseConnection:
       "Connects to States that Prime Behavior — Arousal, Emotions.",
-    moduleIds: ["sudden-noise-reaction"],
+    moduleIds: ["sudden-noise-reaction", "emotion-vs-arousal-sorter", "fear-vs-anxiety-sorter"],
     conceptIds: ["loop", "failure"],
   },
   learning: {
@@ -52,7 +52,7 @@ const topics: Record<string, Topic> = {
       "The brain doesn't just react — it learns what to expect next. Cues become predictions, fear is conditioned through CS-US pairing, and extinction builds a new competing memory rather than erasing the old one.",
     courseConnection:
       "Connects to Learning 101 — Behaviorism and Plasticity and The Push & Pull — Fear and Anxiety.",
-    moduleIds: ["fear-cue-and-extinction"],
+    moduleIds: ["fear-cue-and-extinction", "classical-vs-operant-sorter"],
     conceptIds: ["loop", "failure"],
   },
   stress: {
@@ -62,7 +62,7 @@ const topics: Record<string, Topic> = {
       "The stress response is built to prepare you for demand. The HPA axis activates a hormonal cascade, negative feedback normally shuts it down, and chronic stress overrides that shutdown — leading to structural damage.",
     courseConnection:
       "Connects to Stress & Survival — HPA Axis, HPG Axis.",
-    moduleIds: [],
+    moduleIds: ["stress-response-builder", "homeostasis-vs-allostasis-sorter"],
     conceptIds: ["loop", "failure"],
   },
 };
@@ -94,30 +94,14 @@ const TopicPage = () => {
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
         Explore the modules
       </h2>
-      {topic.moduleIds.length > 0 ? (
-        <>
-          <p className="text-sm text-gray-400 mb-3">
-            Each module lets you experience the phenomenon, trace the neural pathway, and read the explanation.
-          </p>
-          <div className="space-y-2">
-            {topic.moduleIds.map((id) => (
-              <ModuleLink key={id} moduleId={id} />
-            ))}
-          </div>
-          {topic.moduleIds.length === 1 && (
-            <p className="mt-3 text-xs text-gray-300">
-              More modules for this topic area coming soon.
-            </p>
-          )}
-        </>
-      ) : (
-        <div className="mt-3 rounded-xl border border-dashed border-gray-200 bg-gray-50/50 px-5 py-6 text-center">
-          <p className="text-sm text-gray-500">Module coming soon</p>
-          <p className="mt-1 text-xs text-gray-400">
-            This topic connects to course material but does not yet have a full interactive module.
-          </p>
-        </div>
-      )}
+      <p className="text-sm text-gray-400 mb-3">
+        Each module lets you experience the phenomenon, trace the neural pathway, and read the explanation.
+      </p>
+      <div className="space-y-2">
+        {topic.moduleIds.map((id) => (
+          <ModuleLink key={id} moduleId={id} />
+        ))}
+      </div>
 
       {/* Related concepts */}
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
