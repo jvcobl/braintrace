@@ -33,15 +33,14 @@ const Index = () => (
 
       <div className="container relative mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center sm:py-24 md:py-32">
         <h1 className="font-display text-[2rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.5rem] md:text-[3.25rem]">
-          See what your brain does
+          Experience how your brain
           <br className="hidden sm:block" />
-          <span className="text-primary/80"> before you're aware of it.</span>
+          <span className="text-primary/80"> predicts, reacts, and learns.</span>
         </h1>
 
-        <p className="mx-auto mt-5 sm:mt-6 max-w-md text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
-          Interactive neuroscience modules. Each one lets you experience
-          a phenomenon, trace the neural pathway, and understand the
-          prediction behind it.
+        <p className="mx-auto mt-5 sm:mt-6 max-w-lg text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
+          Interactive neuroscience modules where you experience a phenomenon,
+          trace the pathway, and understand what your brain is doing.
         </p>
 
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
