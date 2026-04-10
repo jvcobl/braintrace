@@ -265,12 +265,12 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
     tagline: "Your brain's control system has a breaking point.",
     nbb302Units: [3],
     predictionLens: {
-      whatHappened: "You tried to hold information in working memory while distractors increased — and at some point, performance dropped.",
+      whatHappened: "You tried to hold information in working memory while distractors increased. At some point, performance dropped.",
       whatBrainPredicted: "Your dlPFC attempted to maintain top-down control: holding task-relevant items active while suppressing irrelevant input.",
       whatInputArrived: "Increasing distractor load and competing memory demands.",
-      whatMismatchMattered: "The control system's capacity was exceeded. The mismatch was between what your dlPFC predicted it could manage and the actual load — resulting in distractor leakage and dropped items.",
+      whatMismatchMattered: "The control system's capacity was exceeded. The mismatch was between what your dlPFC predicted it could manage and the actual load. The result was distractor leakage and dropped items.",
       whatPathwayHandledIt: "Sensory input (task items + distractors) → dlPFC (active maintenance via sustained firing) → PFC executive control (suppression of irrelevant signals) → top-down feedback loop back to sensory areas. Under overload, the feedback loop weakens and distractors leak through.",
-      howBrainUpdated: "Performance declined as load increased — not because you stopped trying, but because the top-down control signal became too weak relative to the bottom-up noise.",
+      howBrainUpdated: "Performance declined as load increased. It wasn't that you stopped trying. The top-down control signal became too weak relative to the bottom-up noise.",
       nbb302Connection: "Working memory, cognitive load theory, dlPFC function, attention as top-down control, PFC capacity limits. Covered in Object Recognition and Decision-making (Top-down and Bottom-up Integrations).",
     },
     tracePathway: {
@@ -291,9 +291,9 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       {
         id: "dlpfc-overload",
         title: "dlPFC and the Limits of Top-Down Control",
-        explanation: "The dlPFC doesn't store memories permanently — it holds them in an active state through sustained firing. This takes energy and has hard capacity limits. When load exceeds capacity, the firing patterns destabilize and information is lost or confused.",
+        explanation: "The dlPFC doesn't store memories permanently. It holds them in an active state through sustained firing, and sustained firing takes energy. When load exceeds capacity, the firing patterns destabilize and information is lost or confused. The ceiling is biophysical, not psychological.",
         keyStructures: ["dlpfc"],
-        whyItMattersHere: "The moment your performance dropped wasn't a failure of motivation — it was the dlPFC hitting its biophysical ceiling.",
+        whyItMattersHere: "The moment your performance dropped wasn't a failure of motivation. It was the dlPFC hitting that biophysical ceiling.",
       },
       {
         id: "cognitive-load-theory",
@@ -304,22 +304,22 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "precision-attention", "failure"],
-    traceBridge: "The pathway above shows the dlPFC maintaining working memory through a feedback loop with sensory input. As load increased, that control signal weakened — the dashed feedback edge shows the loop breaking down. The Prediction Lens below maps this to the specific capacity failure you experienced.",
+    traceBridge: "The pathway above shows the dlPFC maintaining working memory through a feedback loop with sensory input. As load increased, that control signal weakened. The dashed feedback edge is the loop breaking down. The Prediction Lens below maps this to the specific capacity failure you experienced.",
   },
 
   "stress-response-builder": {
     id: "stress-response-builder",
     title: "Stress Response Builder",
     slug: "stress-response-builder",
-    tagline: "Your stress response was built to protect you — but it doesn't always know when to stop.",
+    tagline: "Your stress response was built to protect you. It doesn't always know when to stop.",
     nbb302Units: [5],
     predictionLens: {
-      whatHappened: "You built the HPA axis step by step — from stressor detection to hormone release to feedback shutdown — and then saw what happens when the shutdown fails.",
+      whatHappened: "You built the HPA axis step by step, from stressor detection through hormone release and feedback shutdown. Then you saw what happens when the shutdown fails.",
       whatBrainPredicted: "Your brain's stress system predicts that a stressor requires mobilizing energy and suppressing non-essential functions. It expects the response to shut itself off once the threat passes.",
       whatInputArrived: "A stressor activated the hypothalamus, triggering the CRH → ACTH → cortisol cascade.",
       whatMismatchMattered: "Under chronic or extreme stress, the expected shutdown (negative feedback) fails. The system predicts cortisol will turn off the response, but override signals from the CeA and PFC prevent that from happening.",
       whatPathwayHandledIt: "Hypothalamus (CRH) → Anterior Pituitary (ACTH) → Adrenal Cortex (cortisol). Negative feedback loop back to hypothalamus/pituitary. Override pathway: CeA + PFC block feedback.",
-      howBrainUpdated: "Under normal conditions, cortisol feeds back to shut the system down. Under chronic stress, the feedback loop is overridden, cortisol stays elevated, and downstream damage accumulates — hippocampal atrophy, PFC dendritic shrinkage, immune suppression.",
+      howBrainUpdated: "Under normal conditions, cortisol feeds back to shut the system down. Under chronic stress, the feedback loop is overridden. Cortisol stays elevated, and downstream damage accumulates: hippocampal atrophy, PFC dendritic shrinkage, immune suppression.",
       nbb302Connection: "HPA axis, CRH, ACTH, cortisol, negative feedback, allostatic overload, chronic stress effects on hippocampus and PFC. Covered in Stress & Survival (HPA Axis, HPG Axis).",
     },
     tracePathway: {
@@ -380,7 +380,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
         title: "When the Shutdown Fails: CeA/PFC Override",
         explanation: "Under extreme or chronic stress, the central amygdala and PFC send signals that prevent the negative feedback loop from working. The HPA axis stays active despite high cortisol. Sustained cortisol exposure leads to hippocampal atrophy in CA3 and dentate gyrus, PFC dendritic shrinkage, immune suppression, and sleep disruption.",
         keyStructures: ["amygdala-cea", "pfc", "hippocampus"],
-        whyItMattersHere: "This is the mechanism behind chronic stress damage. The system isn't broken — the shutdown is being actively overridden.",
+        whyItMattersHere: "This is the mechanism behind chronic stress damage. The system isn't broken. The shutdown is being actively overridden.",
         clinicalNote: "Chronic stress-related HPA dysregulation is implicated in depression, PTSD, and metabolic syndrome. Understanding the override mechanism is key to understanding why these conditions persist.",
       },
     ],

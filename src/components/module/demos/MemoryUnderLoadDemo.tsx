@@ -221,7 +221,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
   return (
     <ExperienceShell
       onNavigate={onNavigate}
-      instructions="You'll memorize letter sequences at three difficulty levels. As load increases, a math distractor competes for the same PFC resources. Watch how your accuracy changes — that pattern reveals the capacity limit."
+      instructions="You'll memorize letter sequences at three difficulty levels. As load increases, a math distractor competes for the same PFC resources. Watch how your accuracy changes. That pattern is the capacity limit."
       done={done}
       summary={getSummary(results)}
       onRestart={handleRestart}
