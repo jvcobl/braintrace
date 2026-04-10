@@ -14,7 +14,7 @@ const ConceptHub = () => (
     <h1 className="text-3xl font-semibold text-foreground">How your brain predicts</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
       Every BrainTrace module demonstrates the same underlying process.
-      These three pages explain the shared framework — the prediction loop,
+      These three pages explain the shared framework: the prediction loop,
       precision weighting, and what happens when the system breaks.
     </p>
 

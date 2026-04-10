@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 /* ── Static data ── */
 
 const STEPS = [
-  { name: "Experience", desc: "Do a short interactive demo — see a phenomenon in your own nervous system." },
-  { name: "Trace", desc: "Follow the neural pathway — which structures fired and why." },
+  { name: "Experience", desc: "Try a short interactive demo. You feel the phenomenon yourself before any explanation." },
+  { name: "Trace", desc: "Follow the neural pathway. See which structures fired and why." },
   { name: "Explain", desc: "Read the prediction your brain made, the mismatch it detected, and how it updated." },
 ];
 
 const TOPICS = [
   { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD", count: 3, hook: "Your brain identifies objects before the picture is complete." },
-  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", count: 2, hook: "Focus costs energy — and your prefrontal cortex runs out." },
+  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", count: 2, hook: "Focus costs energy. Your prefrontal cortex runs out of it." },
   { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", count: 3, hook: "Your body reacts before your cortex knows what happened." },
-  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", count: 2, hook: "Fear is learned fast and unlearned differently than you'd expect." },
-  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", count: 2, hook: "The stress response protects you — until it doesn't shut off." },
+  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", count: 2, hook: "Fear is learned fast, and unlearned differently than you'd expect." },
+  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", count: 2, hook: "The stress response protects you, until it can't shut off." },
 ];
 
 /* ── Component ── */
@@ -93,8 +93,8 @@ const Index = () => (
           Five areas of neuroscience
         </h2>
         <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-          Pick a topic. Each one contains interactive modules you can
-          complete in under five minutes.
+          Pick a topic. Each has a few interactive modules you can
+          finish in a few minutes.
         </p>
 
         <div className="mt-8 space-y-2">

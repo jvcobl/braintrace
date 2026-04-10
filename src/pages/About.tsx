@@ -18,13 +18,13 @@ const About = () => (
     </h1>
 
     <p className="mt-5 sm:mt-6 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      BrainTrace is a free interactive neuroscience site. It covers five
-      areas — perception, attention, emotion, learning, and stress — through
-      lessons built around real phenomena you can experience in your browser.
+      BrainTrace is a free interactive neuroscience site covering perception,
+      attention, emotion, learning, and stress. Each lesson is built around
+      a real phenomenon you can experience in your browser.
     </p>
 
     <p className="mt-3.5 sm:mt-4 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      Every lesson follows the same three-step structure: you encounter a
+      Every lesson follows the same three steps. You encounter the
       phenomenon first, then trace the neural pathway, then read a focused
       explanation of what your brain was doing.
     </p>
@@ -46,8 +46,8 @@ const About = () => (
     </div>
 
     <p className="mt-7 sm:mt-8 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      Everything runs in your browser — no accounts, no saved data,
-      no tracking. Anyone curious about how the brain works can use it.
+      Everything runs in your browser. No accounts, no saved data, no
+      tracking. Anyone curious about how the brain works can use it.
     </p>
 
     {/* Primary CTA */}

@@ -3,10 +3,10 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const topics = [
   { slug: "perception", title: "Perception and Object Recognition", accent: "#7F77DD", modules: 3, teaser: "How the visual system recognizes objects and faces before full detail arrives." },
-  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", modules: 2, teaser: "How the prefrontal cortex maintains focus — and what happens when it can't." },
+  { slug: "attention", title: "Attention, Cognitive Load, and the PFC", accent: "#7F77DD", modules: 2, teaser: "How the prefrontal cortex maintains focus, and what happens when it can't." },
   { slug: "emotion", title: "Emotion, Limbic System, and Amygdala", accent: "#D85A30", modules: 3, teaser: "How salience and arousal drive fast responses through subcortical circuits." },
-  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", modules: 2, teaser: "How cues become predictions and why extinction is new learning, not erasure." },
-  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", modules: 2, teaser: "How the HPA axis responds to demand and what happens when it can't shut down." },
+  { slug: "learning", title: "Learning and Fear Conditioning", accent: "#1D9E75", modules: 2, teaser: "How cues become predictions, and why extinction is new learning rather than erasure." },
+  { slug: "stress", title: "Stress and Homeostasis", accent: "#1D9E75", modules: 2, teaser: "How the HPA axis responds to demand, and what happens when it can't shut down." },
 ];
 
 const TopicsIndex = () => (
@@ -14,7 +14,7 @@ const TopicsIndex = () => (
     <Breadcrumb />
     <h1 className="text-3xl text-foreground">Explore by topic</h1>
     <p className="mt-4 text-sm text-muted-foreground max-w-2xl">
-      Choose a neuroscience topic and explore the BrainTrace modules connected to it.
+      Pick a topic to see the modules connected to it.
     </p>
 
     <div className="mt-10 space-y-3">
