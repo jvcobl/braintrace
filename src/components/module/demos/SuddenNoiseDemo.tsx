@@ -187,7 +187,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
   return (
     <ExperienceShell
       onNavigate={onNavigate}
-      instructions="You'll complete two reaction-time trials: one calm baseline, one with an unexpected interruption. Afterward, you'll reflect on what you noticed. This is not about speed — it's about what the startle reflex reveals."
+      instructions="You'll complete two reaction-time trials: one calm baseline, one with an unexpected interruption. Afterward, you'll reflect on what you noticed. This isn't about speed. It's about what the startle reflex reveals."
       done={done}
       summary={summaryData}
       onRestart={handleRestart}
