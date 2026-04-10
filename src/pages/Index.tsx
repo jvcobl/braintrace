@@ -136,9 +136,9 @@ const Index = () => (
                 The shared framework
               </p>
               <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                Every module demonstrates the same underlying process:
-                predict, receive input, detect mismatch, update. The concept
-                pages explain why this loop works and how it breaks.
+                Every module runs the same loop: predict, receive input,
+                detect mismatch, update. The concept pages explain how the
+                loop works and where it breaks.
               </p>
             </div>
             <Link

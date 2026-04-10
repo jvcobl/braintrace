@@ -129,8 +129,8 @@ const CourseMap = () => {
       <div className="mt-12">
         <h2 className="text-lg font-medium text-foreground mb-2">The shared framework</h2>
         <p className="text-sm text-gray-500 max-w-2xl mb-4">
-          Every module above demonstrates the same underlying process. Your brain
-          predicts, receives input, detects mismatch, and updates its model.
+          Every module above runs the same loop. Your brain predicts,
+          receives input, detects mismatch, and updates its model.
         </p>
         <div className="space-y-2 max-w-md">
           <ConceptLink conceptPageId="loop" />

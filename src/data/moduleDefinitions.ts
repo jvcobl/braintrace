@@ -131,7 +131,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
     },
     tracePathway: {
       title: "The Startle Pathway",
-      description: "Sudden sounds bypass conscious evaluation. The brainstem fires a startle reflex in milliseconds; the amygdala amplifies the response if threat context is present; the cortex only catches up afterward.",
+      description: "Sudden sounds bypass conscious evaluation. The brainstem fires a startle reflex in milliseconds. The amygdala amplifies the response if threat context is present. The cortex only catches up afterward.",
       nodes: [
         { structureId: "auditory-input", label: "Auditory Input", badge: "input", active: true },
         { structureId: "brainstem-startle", label: "Brainstem Startle", badge: "mismatch", active: true },

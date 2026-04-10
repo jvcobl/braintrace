@@ -13,9 +13,9 @@ const ConceptHub = () => (
     <Breadcrumb />
     <h1 className="text-3xl font-semibold text-foreground">How your brain predicts</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
-      Every BrainTrace module demonstrates the same underlying process.
-      These three pages explain the shared framework: the prediction loop,
-      precision weighting, and what happens when the system breaks.
+      Every BrainTrace module runs on the same prediction loop. These
+      three pages explain how that loop works, how attention shapes it,
+      and where it breaks.
     </p>
 
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">

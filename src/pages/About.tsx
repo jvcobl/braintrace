@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 const steps = [
   { name: "Experience", desc: "A short interactive demo that lets you observe the phenomenon firsthand." },
   { name: "Trace", desc: "A simplified neural pathway showing which brain regions are involved." },
-  { name: "Explain", desc: "A focused write-up connecting the demo to the underlying neuroscience." },
+  { name: "Explain", desc: "A focused write-up connecting the demo to the neuroscience behind it." },
 ];
 
 const About = () => (
