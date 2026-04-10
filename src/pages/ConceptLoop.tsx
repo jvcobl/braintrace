@@ -4,7 +4,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const steps = [
   { name: "Predict", badge: "Prediction", color: "#7F77DD", description: "The brain generates an expectation based on prior experience and context." },
-  { name: "Receive input", badge: "Input", color: "#378ADD", description: "Sensory signals arrive — what actually happened in the world." },
+  { name: "Receive input", badge: "Input", color: "#378ADD", description: "Sensory signals arrive. This is what actually happened in the world." },
   { name: "Detect mismatch", badge: "Mismatch", color: "#D85A30", description: "Expected ≠ actual creates a prediction error signal." },
   { name: "Update model", badge: "Update", color: "#1D9E75", description: "The brain revises its internal model to reduce future error." },
 ];

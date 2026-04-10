@@ -11,21 +11,21 @@ const scenarios = [
     moduleId: "blurry-object-guess",
     dominant: "prediction",
     dominantColor: "#7F77DD",
-    body: "When an image is blurry, sensory input is low-precision. Your OFC compensates by increasing the weight of its contextual guess — a high-precision prior generated from coarse, low-spatial-frequency information. If the prior is strong enough, you 'see' the object before the image sharpens. If it's wrong, you experience the correction as a prediction error when detailed input from the ventral stream overrides the guess.",
+    body: "When an image is blurry, sensory input is low-precision. Your OFC compensates by increasing the weight of its contextual guess, a high-precision prior generated from coarse, low-spatial-frequency information. If the prior is strong enough, you 'see' the object before the image sharpens. If it's wrong, you experience the correction as a prediction error when detailed input from the ventral stream overrides the guess.",
   },
   {
     title: "Face or Not?",
     moduleId: "face-or-not",
     dominant: "prediction",
     dominantColor: "#7F77DD",
-    body: "Your brain assigns extremely high precision to the face-detection prior — the PFC/OFC bias that primes the FFA to detect face-like patterns. When sensory input is ambiguous (low precision), this strong prior dominates. The result is pareidolia: seeing faces in clouds, wall outlets, or random shapes. The signal didn't look like a face — but the prior was weighted so heavily that weak evidence was enough to trigger the percept.",
+    body: "Your brain assigns extremely high precision to the face-detection prior: the PFC/OFC bias that primes the FFA to detect face-like patterns. When sensory input is ambiguous (low precision), this strong prior dominates. The result is pareidolia: seeing faces in clouds, wall outlets, or random shapes. The signal didn't look like a face. The prior was weighted so heavily that weak evidence was enough to trigger the percept.",
   },
   {
     title: "Memory Under Load",
     moduleId: "memory-under-load",
     dominant: "input",
     dominantColor: "#378ADD",
-    body: "The dlPFC maintains working memory by keeping task-relevant signals high-precision and suppressing distractors (low-precision noise). As cognitive load increases, the control signal weakens — the precision gap between targets and distractors narrows. Eventually, distractors leak through because the brain can no longer reliably distinguish what matters from what doesn't. The failure isn't about the stimuli; it's about the precision weights assigned to them.",
+    body: "The dlPFC maintains working memory by keeping task-relevant signals high-precision and suppressing distractors (low-precision noise). As cognitive load increases, the control signal weakens, and the precision gap between targets and distractors narrows. Eventually, distractors leak through because the brain can no longer reliably distinguish what matters from what doesn't. The failure isn't about the stimuli. It's about the precision weights assigned to them.",
   },
 ];
 
@@ -56,9 +56,9 @@ const ConceptPrecision = () => {
       <h1 className="text-3xl font-semibold text-foreground">Precision &amp; Attention</h1>
       <p className="mt-3 text-lg text-muted-foreground max-w-2xl leading-relaxed">
         Your brain doesn't trust every signal equally. It assigns a confidence
-        level — called <em>precision</em> — to both incoming sensory input and to
+        level, called <em>precision</em>, to both incoming sensory input and to
         its own prior expectations. Signals the brain treats as high-precision
-        dominate perception; signals treated as low-precision get ignored or
+        dominate perception. Signals treated as low-precision get ignored or
         overridden.
       </p>
 
@@ -67,7 +67,7 @@ const ConceptPrecision = () => {
       <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-2xl">
         Think of precision as a volume knob on each signal your brain processes.
         When you pay attention to something, you're turning up the precision on
-        that signal — making it louder relative to everything else. When you
+        that signal, making it louder relative to everything else. When you
         ignore something, you're turning its precision down.
       </p>
       <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-2xl">
@@ -82,7 +82,7 @@ const ConceptPrecision = () => {
       <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-2xl">
         Attention is the mechanism that adjusts these weights: turning up the
         volume on signals that matter and turning it down on noise. It's not a
-        spotlight that illuminates one thing — it's a gain control that changes
+        spotlight that illuminates one thing. It's a gain control that changes
         how much your brain trusts each source of information.
       </p>
 
@@ -165,7 +165,7 @@ const ConceptPrecision = () => {
               places on different signals.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              A high-precision signal doesn't just get noticed — it shapes what
+              A high-precision signal doesn't just get noticed. It shapes what
               you perceive. When the brain assigns high precision to a prior
               expectation (like the face-detection bias), that expectation can
               override weak sensory evidence and produce false percepts. When
@@ -179,12 +179,12 @@ const ConceptPrecision = () => {
               darkness might look like a face (high prior precision, low input
               precision), but the same shape in bright light is immediately
               recognized as a coat hook (high input precision overrides the
-              prior). The signal didn't change — the precision weights did.
+              prior). The signal didn't change. The precision weights did.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
               In BrainTrace modules, you can see precision at work whenever
               the brain's expectation competes with incoming evidence. The
-              outcome depends on which side the brain trusts more — and
+              outcome depends on which side the brain trusts more, and
               attention is the process that tips the balance.
             </p>
           </div>

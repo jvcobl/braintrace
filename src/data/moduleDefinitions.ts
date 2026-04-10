@@ -170,7 +170,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       {
         id: "low-road-high-road",
         title: "Low Road vs. High Road",
-        explanation: "The low road is not just 'fast' — it skips cortical processing entirely. Sensory input reaches the amygdala via the thalamus in as few as 12 milliseconds, before the signal has been fully identified. The high road routes through auditory cortex and prefrontal regions, taking 100+ milliseconds but providing accurate threat assessment. The two roads are not alternatives — they run simultaneously, and the low road always wins the race.",
+        explanation: "The low road is not just 'fast.' It skips cortical processing entirely. Sensory input reaches the amygdala via the thalamus in as few as 12 milliseconds, before the signal has been fully identified. The high road routes through auditory cortex and prefrontal regions, taking 100+ milliseconds but providing accurate threat assessment. The two roads are not alternatives. They run simultaneously, and the low road always wins the race.",
         keyStructures: ["amygdala", "pfc"],
         whyItMattersHere: "The startle happened before you knew what the stimulus was. That's the low road completing its circuit before the high road even started evaluating.",
       },

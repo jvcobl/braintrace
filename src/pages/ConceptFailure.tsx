@@ -9,7 +9,7 @@ const failures = [
     badge: "Prediction",
     traceNote: "In the Trace diagram, this is a prediction node overwhelming the input signal.",
     explanation:
-      "When the brain's internal model is too strong, it overrides incoming evidence. You see what you expect instead of what's there. This is why your brain detects faces in random noise — the face-detection prior overpowers weak sensory input.",
+      "When the brain's internal model is too strong, it overrides incoming evidence. You see what you expect instead of what's there. This is why your brain detects faces in random noise. The face-detection prior overpowers weak sensory input.",
     modules: ["face-or-not"],
   },
   {
@@ -27,7 +27,7 @@ const failures = [
     title: "Overloaded control",
     accent: "#1D9E75",
     badge: "Update",
-    traceNote: "In the Trace diagram, this is the update loop failing — the feedback signal is too weak to maintain the prediction.",
+    traceNote: "In the Trace diagram, this is the update loop failing. The feedback signal is too weak to maintain the prediction.",
     explanation:
       "When the brain's top-down control system is overwhelmed, it can no longer maintain predictions effectively. Working memory fails under cognitive load because the dlPFC can't sustain its control signal. The HPA axis fails under chronic stress because CeA and PFC override the cortisol feedback loop. In both cases, the shutdown mechanism that should restore balance is overpowered.",
     modules: ["memory-under-load", "stress-response-builder"],
@@ -39,7 +39,7 @@ const ConceptFailure = () => (
     <Breadcrumb />
     <h1 className="text-3xl font-semibold text-foreground">When prediction fails</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
-      Prediction breaks in three ways — each maps to a specific step in the
+      Prediction breaks in three ways. Each maps to a specific step in the
       prediction loop going wrong.
     </p>
 
