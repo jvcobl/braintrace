@@ -3,12 +3,14 @@ import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
 import PredictionOutcome from "@/components/module/PredictionOutcome";
 import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
+import { suddenNoiseContent } from "@/data/content/suddenNoiseContent";
 
 /* ── Types ── */
 
 type TrialPhase = "ready" | "waiting" | "target" | "reacted";
 type ReflectPhase = "expectation" | "priming" | "context";
 type DemoPhase =
+  | { kind: "predict" }
   | { kind: "trial"; trial: TrialPhase }
   | { kind: "reflect"; step: ReflectPhase }
   | { kind: "done" };
@@ -69,7 +71,8 @@ const TRIAL_SEQUENCE: ("baseline" | "interrupted")[] = ["baseline", "interrupted
 /* ── Component ── */
 
 const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
-  const [phase, setPhase] = useState<DemoPhase>({ kind: "trial", trial: "ready" });
+  const [phase, setPhase] = useState<DemoPhase>({ kind: "predict" });
+  const [userPrediction, setUserPrediction] = useState<"calm" | "flinch" | null>(null);
   const [trialIndex, setTrialIndex] = useState(0);
   const [results, setResults] = useState<TrialResult[]>([]);
   const [reactionMs, setReactionMs] = useState<number | null>(null);
@@ -170,8 +173,9 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
   }, [trialIndex]);
 
   const handleRestart = useCallback(() => {
+    setUserPrediction(null);
+    setPhase({ kind: "predict" });
     setTrialIndex(0);
-    setPhase({ kind: "trial", trial: "ready" });
     setReactionMs(null);
     setResults([]);
     setFlashVisible(false);
@@ -192,6 +196,37 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       summary={summaryData}
       onRestart={handleRestart}
     >
+      {/* ── Prediction commit ── */}
+      {phase.kind === "predict" && (
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <p className="text-sm font-medium text-foreground mb-4">
+            {suddenNoiseContent.predictionPrompt}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button
+              onClick={() => {
+                setUserPrediction("calm");
+                setPhase({ kind: "trial", trial: "ready" });
+                setHasInteracted(true);
+              }}
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+            >
+              {suddenNoiseContent.predictionOptionCalm}
+            </button>
+            <button
+              onClick={() => {
+                setUserPrediction("flinch");
+                setPhase({ kind: "trial", trial: "ready" });
+                setHasInteracted(true);
+              }}
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+            >
+              {suddenNoiseContent.predictionOptionFlinch}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* ── Trial phase ── */}
       {phase.kind === "trial" && (
         <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
@@ -280,6 +315,19 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
                     <p className="mt-1 text-xs text-muted-foreground">
                       {currentTrialType === "baseline" ? "Baseline reaction time" : "Reaction time with interruption"}
                     </p>
+                    {currentTrialType === "interrupted" && userPrediction && reactionMs > 0 && (
+                      <div className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto">
+                        <p>
+                          {(userPrediction === "calm"
+                            ? suddenNoiseContent.resultIfCalm
+                            : suddenNoiseContent.resultIfFlinch
+                          ).replace("{ms}", String(reactionMs))}
+                        </p>
+                        <p className="mt-2 text-xs text-primary font-medium">
+                          {suddenNoiseContent.resultBridge}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 )}
                 <button
