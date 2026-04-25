@@ -3,6 +3,7 @@ import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
 import PredictionOutcome from "@/components/module/PredictionOutcome";
 import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
+import { fearCueContent } from "@/data/content/fearCueContent";
 
 /* ── Trial structure ── */
 
@@ -23,8 +24,6 @@ const TRIALS: Trial[] = [
   { stage: "extinction-early", hasUS: false },
   { stage: "extinction-late", hasUS: false },
   { stage: "extinction-late", hasUS: false },
-  { stage: "pause", hasUS: false },
-  { stage: "test", hasUS: false },
 ];
 
 /* ── Phase display metadata ── */
@@ -135,18 +134,17 @@ function getFeedback(stage: Stage, prediction: Prediction): ExperienceFeedback {
 
 /* ── Summary tiers ── */
 
-function getSummary(predictions: { stage: Stage; prediction: Prediction }[]): ExperienceSummary {
-  const testPrediction = predictions.find((p) => p.stage === "test")?.prediction;
-  if (testPrediction === "bad") {
+function getSummary(recoveryPrediction: "extinguished" | "returns" | null): ExperienceSummary {
+  if (recoveryPrediction === "returns") {
     return {
       heading: "What This Shows",
-      body: "You experienced the full cycle: acquisition, extinction, and spontaneous recovery. This demonstrates the unit's central principle: extinction is new learning, not forgetting. The vmPFC-ITC circuit suppressed the amygdala's fear output, but the original memory persisted. When the fear returned at test, it proved the original association was intact all along. This dual-memory architecture is why treating phobias and PTSD is difficult — the old fear always exists underneath.",
+      body: "You called it. You experienced the full cycle: acquisition, extinction, and spontaneous recovery. This demonstrates the unit's central principle: extinction is new learning, not forgetting. The vmPFC-ITC circuit suppressed the amygdala's fear output, but the original memory persisted. When the fear returned, it proved the original association was intact all along. This dual-memory architecture is why treating phobias and PTSD is difficult. The old fear always exists underneath.",
       bridge: "Review covers why suppression of output is not erasure of memory.",
     };
   }
   return {
     heading: "What This Shows",
-    body: "The safety memory formed during extinction remained dominant. However, the original fear memory still exists in the BLA — spontaneous recovery could occur after a longer delay, a context shift, or a stressful event that re-primes the amygdala. The absence of recovery here means the ITCs are currently suppressing the original association, not that the association is gone.",
+    body: "Most people predict that extinction = erasure. It doesn't. The fear came back at reduced strength because the original CS-US association in the BLA was suppressed, not deleted. The vmPFC-ITC inhibition weakened overnight and the underlying fear memory resurfaced. Spontaneous recovery is the proof that extinction is new learning layered on top of old learning, not a rewrite.",
     bridge: "Explain covers why the original memory is never truly erased.",
   };
 }
@@ -159,12 +157,27 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [predictions, setPredictions] = useState<{ stage: Stage; prediction: Prediction }[]>([]);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [recoveryPhase, setRecoveryPhase] = useState<"prediction" | "timepass" | "replay" | "result" | "finished" | null>(null);
+  const [recoveryPrediction, setRecoveryPrediction] = useState<"extinguished" | "returns" | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
-  const done = index >= TRIALS.length;
-  const trial = !done ? TRIALS[index] : null;
+  // Recovery flow auto-advances
+  useEffect(() => {
+    if (recoveryPhase === "timepass") {
+      const t = setTimeout(() => setRecoveryPhase("replay"), 1800);
+      return () => clearTimeout(t);
+    }
+    if (recoveryPhase === "replay") {
+      const t = setTimeout(() => setRecoveryPhase("result"), 1500);
+      return () => clearTimeout(t);
+    }
+  }, [recoveryPhase]);
+
+  const done = recoveryPhase === "finished";
+  const inRecovery = recoveryPhase !== null;
+  const trial = index < TRIALS.length && !inRecovery ? TRIALS[index] : null;
 
   const handlePredict = useCallback((p: Prediction) => {
     setPrediction(p);
@@ -180,7 +193,13 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   }, [prediction, trial]);
 
   const advance = useCallback(() => {
-    setIndex((i) => i + 1);
+    setIndex((i) => {
+      const next = i + 1;
+      if (next >= TRIALS.length) {
+        setRecoveryPhase("prediction");
+      }
+      return next;
+    });
     setStep("predict");
     setPrediction(null);
   }, []);
@@ -191,6 +210,8 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
     setStep("predict");
     setPrediction(null);
     setPredictions([]);
+    setRecoveryPhase(null);
+    setRecoveryPrediction(null);
   }, []);
 
   // Detect phase transitions for visual emphasis
@@ -206,7 +227,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
       onNavigate={onNavigate}
       instructions="Step through a simplified conditioning experiment. At each trial, the cue (◆) appears and you predict what follows. Your predictions track how the association forms, is suppressed, and potentially returns."
       done={done}
-      summary={getSummary(predictions)}
+      summary={getSummary(recoveryPrediction)}
       onRestart={restart}
     >
       {/* Pause interlude */}
@@ -326,15 +347,118 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
                   onClick={advance}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  {index < TRIALS.length - 1
-                    ? TRIALS[index + 1]?.stage === "pause"
-                      ? "Continue"
-                      : "Next Trial"
-                    : "See Summary"}
+                  {index < TRIALS.length - 1 ? "Next Trial" : "Continue"}
                 </button>
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Recovery: prediction commit */}
+      {recoveryPhase === "prediction" && (
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+            After Extinction
+          </p>
+          <p className="text-sm font-medium text-foreground mb-4">
+            {fearCueContent.recoveryPredictionPrompt}
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <button
+              onClick={() => {
+                setRecoveryPrediction("extinguished");
+                setRecoveryPhase("timepass");
+              }}
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+            >
+              {fearCueContent.recoveryOptionExtinguished}
+            </button>
+            <button
+              onClick={() => {
+                setRecoveryPrediction("returns");
+                setRecoveryPhase("timepass");
+              }}
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+            >
+              {fearCueContent.recoveryOptionReturns}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Recovery: time advance */}
+      {recoveryPhase === "timepass" && (
+        <div className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center animate-[fadeIn_400ms_ease-out]">
+          <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-2">
+            Time Passes
+          </p>
+          <p className="font-display text-lg font-semibold text-foreground">
+            {fearCueContent.timeAdvanceLabel}
+          </p>
+        </div>
+      )}
+
+      {/* Recovery: CS replay (reuses existing trial-card pattern) */}
+      {recoveryPhase === "replay" && (
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+            Test — CS Alone
+          </p>
+          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary">
+            <div className="text-center animate-[fadeIn_400ms_ease-out]">
+              <div className="text-5xl mb-3 select-none">◆</div>
+              <p className="text-xs text-muted-foreground mb-3">
+                {fearCueContent.replayCueLabel}
+              </p>
+              <div className="mx-auto w-40 h-2 rounded-full bg-background overflow-hidden">
+                <div
+                  className="h-full bg-destructive transition-all duration-1000 ease-out"
+                  style={{ width: "65%" }}
+                />
+              </div>
+              <p className="mt-2 text-xs text-destructive font-medium">
+                {fearCueContent.replayResponseLabel}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Recovery: result */}
+      {recoveryPhase === "result" && (
+        <div className="rounded-lg border border-border bg-card p-4 sm:p-6 animate-[fadeIn_400ms_ease-out]">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+            Spontaneous Recovery
+          </p>
+          <div className="flex min-h-[120px] items-center justify-center rounded-lg bg-secondary mb-4">
+            <div className="text-center">
+              <div className="text-5xl mb-3 select-none">◆</div>
+              <div className="mx-auto w-40 h-2 rounded-full bg-background overflow-hidden">
+                <div className="h-full bg-destructive" style={{ width: "65%" }} />
+              </div>
+              <p className="mt-2 text-xs text-destructive font-medium">
+                {fearCueContent.replayResponseLabel}
+              </p>
+            </div>
+          </div>
+          <p className="text-sm font-medium text-foreground mb-3">
+            {recoveryPrediction === "extinguished"
+              ? fearCueContent.resultIfExtinguished
+              : fearCueContent.resultIfReturns}
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            {fearCueContent.resultBridge}
+          </p>
+          <div className="mt-5 flex justify-center">
+            <button
+              onClick={() => setRecoveryPhase("finished")}
+              className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              See Summary
+            </button>
+          </div>
         </div>
       )}
 
