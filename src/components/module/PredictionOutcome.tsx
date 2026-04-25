@@ -69,8 +69,8 @@ const PredictionOutcome = ({
         {/* Rows */}
         <div className="space-y-2.5 sm:space-y-1.5">
           {ROW_META.map(({ key, label }) => (
-            <div key={key} className="sm:flex sm:items-baseline sm:gap-2 text-[12px] sm:text-[13px] leading-relaxed">
-              <span className="block text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/45 sm:w-[56px] shrink-0 mb-0.5 sm:mb-0 sm:pt-[1px]">
+            <div key={key} className="sm:flex sm:items-baseline sm:gap-3 text-[12px] sm:text-[13px] leading-relaxed">
+              <span className="block text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/45 sm:w-20 shrink-0 whitespace-nowrap mb-0.5 sm:mb-0 sm:pt-[1px]">
                 {label}
               </span>
               <p className="text-foreground/70 min-w-0">{rows[key]}</p>
