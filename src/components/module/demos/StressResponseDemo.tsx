@@ -3,6 +3,8 @@ import { ExperienceShell } from "@/components/module/experience";
 import type { ExperienceSummary } from "@/components/module/experience";
 import PredictionOutcome from "@/components/module/PredictionOutcome";
 import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
+import { stressResponseContent } from "@/data/content/stressResponseContent";
+import CortisolGraph from "@/components/module/stress-response/CortisolGraph";
 
 /* ── Phase types ── */
 
@@ -15,21 +17,27 @@ interface Slot {
   correctAnswer: string;
 }
 
-const SLOTS: Slot[] = [
+const CASCADE_SLOTS: Slot[] = [
   { label: "Step 1: Detection", correctAnswer: "Hypothalamus releases CRH" },
   { label: "Step 2: Signal", correctAnswer: "Anterior Pituitary releases ACTH" },
   { label: "Step 3: Release", correctAnswer: "Adrenal Cortex releases cortisol" },
-  { label: "Step 4: Shutdown", correctAnswer: "Cortisol feeds back to shut down" },
 ];
 
-const CHIPS = [
+const FEEDBACK_SLOT: Slot = { label: "Step 4: Shutdown", correctAnswer: "Cortisol feeds back to shut down" };
+
+const SLOTS: Slot[] = [...CASCADE_SLOTS, FEEDBACK_SLOT];
+
+const CASCADE_CHIPS = [
   "Hypothalamus releases CRH",
   "Adrenal Cortex releases cortisol",
   "Amygdala detects threat",
   "Anterior Pituitary releases ACTH",
-  "Cortisol feeds back to shut down",
   "Hippocampus encodes memory",
 ];
+
+const FEEDBACK_CHIP = "Cortisol feeds back to shut down";
+
+const CHIPS = [...CASCADE_CHIPS, FEEDBACK_CHIP];
 
 /* ── Override phase ── */
 
@@ -89,7 +97,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   const [checkedConsequences, setCheckedConsequences] = useState<Set<number>>(new Set());
   const [consequencesSubmitted, setConsequencesSubmitted] = useState(false);
 
+  const inStepB = buildStep === "placing-B" || buildStep === "running-B" || buildStep === "result-B";
+  const visibleSlots = inStepB ? SLOTS : CASCADE_SLOTS;
+  const visibleChips = inStepB ? CHIPS : CASCADE_CHIPS;
   const currentSlotIndex = filledSlots.length;
+  const cascadeFilled = filledSlots.length >= CASCADE_SLOTS.length;
   const buildComplete = filledSlots.length === SLOTS.length;
   const overrideCorrect = overrideAnswer !== null && OVERRIDE_OPTIONS[overrideAnswer].correct;
   const consequenceScore = consequencesSubmitted
@@ -130,6 +142,8 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
   const handleRestart = useCallback(() => {
     setPhase("build");
+    setBuildStep("placing-A");
+    setConsequencesPrediction(null);
     setFilledSlots([]);
     setUsedChips(new Set());
     setShakeSlot(null);
@@ -153,56 +167,64 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
       {phase === "build" && (
         <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-4">
-            Build the HPA Axis
+            {inStepB ? "Add Negative Feedback" : "Build the Cascade"}
           </p>
 
-          {/* Cascade slots */}
-          <div className="mb-6">
-            {SLOTS.map((slot, i) => {
-              const filled = filledSlots[i];
-              const isCurrent = i === currentSlotIndex && !buildComplete;
-              const isShaking = shakeSlot === i;
+          {inStepB && buildStep === "placing-B" && (
+            <p className="text-sm text-muted-foreground mb-4">
+              A new component is available. Place it in the shutdown slot, then run the cascade again.
+            </p>
+          )}
 
-              return (
-                <div key={i}>
-                  {/* Vertical connector line */}
-                  {i > 0 && (
-                    <div className="flex justify-center py-1">
-                      <div className={`w-px h-4 ${filledSlots[i - 1] ? "bg-primary/30" : "bg-gray-200"}`} />
-                    </div>
-                  )}
-                  <div
-                    className={`rounded-lg border-2 px-4 py-3 transition-all duration-200 ${
-                      filled
-                        ? "border-primary/40 bg-primary/5"
-                        : isCurrent
-                          ? `border-primary/30 bg-white ${isShaking ? "animate-[shake_0.3s_ease-in-out]" : ""}`
-                          : "border-dashed border-gray-200 bg-gray-50/50"
-                    }`}
-                  >
-                    <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 mb-0.5">
-                      {slot.label}
-                    </p>
-                    {filled ? (
-                      <div className="flex items-center gap-2">
-                        <span className="text-primary text-sm">✓</span>
-                        <span className="text-sm font-medium text-gray-900">{filled}</span>
+          {/* Cascade slots — visible slots depend on sub-step */}
+          {(buildStep === "placing-A" || buildStep === "placing-B") && (
+            <div className="mb-6">
+              {visibleSlots.map((slot, i) => {
+                const filled = filledSlots[i];
+                const slotsToFill = inStepB ? SLOTS.length : CASCADE_SLOTS.length;
+                const isCurrent = i === currentSlotIndex && filledSlots.length < slotsToFill;
+                const isShaking = shakeSlot === i;
+
+                return (
+                  <div key={i}>
+                    {i > 0 && (
+                      <div className="flex justify-center py-1">
+                        <div className={`w-px h-4 ${filledSlots[i - 1] ? "bg-primary/30" : "bg-gray-200"}`} />
                       </div>
-                    ) : (
-                      <p className="text-sm text-gray-400 italic">
-                        {isCurrent ? "Select from below..." : "—"}
-                      </p>
                     )}
+                    <div
+                      className={`rounded-lg border-2 px-4 py-3 transition-all duration-200 ${
+                        filled
+                          ? "border-primary/40 bg-primary/5"
+                          : isCurrent
+                            ? `border-primary/30 bg-white ${isShaking ? "animate-[shake_0.3s_ease-in-out]" : ""}`
+                            : "border-dashed border-gray-200 bg-gray-50/50"
+                      }`}
+                    >
+                      <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 mb-0.5">
+                        {slot.label}
+                      </p>
+                      {filled ? (
+                        <div className="flex items-center gap-2">
+                          <span className="text-primary text-sm">✓</span>
+                          <span className="text-sm font-medium text-gray-900">{filled}</span>
+                        </div>
+                      ) : (
+                        <p className="text-sm text-gray-400 italic">
+                          {isCurrent ? "Select from below..." : "—"}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
 
-          {/* Chip pool */}
-          {!buildComplete && (
+          {/* Chip pool — feedback chip hidden in step A */}
+          {buildStep === "placing-A" && !cascadeFilled && (
             <div className="flex flex-wrap gap-2">
-              {CHIPS.map((chip) => {
+              {visibleChips.map((chip) => {
                 const used = usedChips.has(chip);
                 return (
                   <button
@@ -222,21 +244,99 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             </div>
           )}
 
-          {/* Build success */}
-          {buildComplete && (
+          {buildStep === "placing-B" && !buildComplete && (
+            <div className="flex flex-wrap gap-2">
+              {visibleChips.map((chip) => {
+                const used = usedChips.has(chip);
+                return (
+                  <button
+                    key={chip}
+                    onClick={() => handleChipClick(chip)}
+                    disabled={used}
+                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
+                      used
+                        ? "border-gray-100 bg-gray-50 text-gray-300 cursor-default"
+                        : "border-gray-200 bg-white text-gray-800 hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] cursor-pointer"
+                    }`}
+                  >
+                    {chip}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Step A: cascade filled → Run button */}
+          {buildStep === "placing-A" && cascadeFilled && (
             <div className="text-center mt-4 pt-4 border-t border-gray-100">
-              <p className="text-sm font-medium text-primary mb-1">
-                You built the HPA axis.
-              </p>
-              <p className="text-xs text-muted-foreground mb-4">
-                Now let's see what happens when the shutdown fails.
-              </p>
               <button
-                onClick={() => setPhase("override")}
+                onClick={() => setBuildStep("running-A")}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                Continue
+                Run the cascade
               </button>
+            </div>
+          )}
+
+          {/* Step A: running simulation */}
+          {buildStep === "running-A" && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <CortisolGraph mode="runaway" onComplete={() => setBuildStep("result-A")} />
+            </div>
+          )}
+
+          {/* Step A: result */}
+          {buildStep === "result-A" && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <CortisolGraph mode="runaway" onComplete={() => {}} className="w-full max-w-xs mx-auto opacity-60" />
+              <p className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
+                {stressResponseContent.buildStepARunningCaption}
+              </p>
+              <div className="mt-4 flex justify-center">
+                <button
+                  onClick={() => setBuildStep("placing-B")}
+                  className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  Add the missing piece
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Step B: build complete → Run button */}
+          {buildStep === "placing-B" && buildComplete && (
+            <div className="text-center mt-4 pt-4 border-t border-gray-100">
+              <button
+                onClick={() => setBuildStep("running-B")}
+                className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                Run with feedback
+              </button>
+            </div>
+          )}
+
+          {/* Step B: running simulation */}
+          {buildStep === "running-B" && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <CortisolGraph mode="recovery" onComplete={() => setBuildStep("result-B")} />
+            </div>
+          )}
+
+          {/* Step B: result → advance to Override */}
+          {buildStep === "result-B" && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <CortisolGraph mode="recovery" onComplete={() => {}} className="w-full max-w-xs mx-auto opacity-60" />
+              <p className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
+                {stressResponseContent.buildStepBRunningCaption}
+              </p>
+              <div className="mt-4 flex justify-center">
+                <button
+                  onClick={() => setPhase("override")}
+                  className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  Continue
+                </button>
+              </div>
             </div>
           )}
         </div>
