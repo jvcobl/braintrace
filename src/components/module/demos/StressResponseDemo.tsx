@@ -76,6 +76,12 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   const [buildErrors, setBuildErrors] = useState(0);
   const [hasInteracted, setHasInteracted] = useState(false);
 
+  // Build sub-steps
+  const [buildStep, setBuildStep] = useState<"placing-A" | "running-A" | "result-A" | "placing-B" | "running-B" | "result-B">("placing-A");
+
+  // Consequences prediction
+  const [consequencesPrediction, setConsequencesPrediction] = useState<"works" | "weakens" | null>(null);
+
   // Override phase
   const [overrideAnswer, setOverrideAnswer] = useState<number | null>(null);
 
