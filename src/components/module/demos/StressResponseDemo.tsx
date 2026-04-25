@@ -432,9 +432,33 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             Chronic Stress Consequences
           </p>
 
-          <p className="text-sm font-medium text-foreground mb-4">
-            What does sustained cortisol do to the brain? Select all that apply.
-          </p>
+          {consequencesPrediction === null && (
+            <div>
+              <p className="text-sm font-medium text-foreground mb-4">
+                {stressResponseContent.consequencesPredictionPrompt}
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <button
+                  onClick={() => setConsequencesPrediction("works")}
+                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+                >
+                  {stressResponseContent.consequencesPredictionOptions.works}
+                </button>
+                <button
+                  onClick={() => setConsequencesPrediction("weakens")}
+                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+                >
+                  {stressResponseContent.consequencesPredictionOptions.weakens}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {consequencesPrediction !== null && (
+            <>
+              <p className="text-sm font-medium text-foreground mb-4">
+                What does sustained cortisol do to the brain? Select all that apply.
+              </p>
 
           <div className="space-y-2">
             {CONSEQUENCES.map((c, i) => {
@@ -486,6 +510,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                   ? "All correct — you identified every consequence of sustained cortisol."
                   : `${consequenceScore} of 4 correct. The highlighted items show what you missed.`}
               </p>
+              <p className="text-sm text-foreground mb-4 leading-relaxed">
+                {consequencesPrediction === "works"
+                  ? stressResponseContent.consequencesResultIfWorks
+                  : stressResponseContent.consequencesResultIfWeakens}
+              </p>
               <button
                 onClick={() => setPhase("done")}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -493,6 +522,8 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                 See Summary
               </button>
             </div>
+          )}
+            </>
           )}
         </div>
       )}
