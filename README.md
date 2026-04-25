@@ -6,6 +6,8 @@ Every lesson follows the same three-step structure: **Experience** a phenomenon,
 
 Fully client-side. No accounts, no backend, no tracking.
 
+Live site: [learnbraintrace.com](http://learnbraintrace.com)
+
 ## Routes
 
 | Path              | Page                                                                 |
