@@ -224,6 +224,129 @@ function splitLabel(text: string, max = 22): string[] {
   return [text.slice(0, idx), text.slice(idx + 1)];
 }
 
+/* ── Edge label placement: keep labels clear of nodes, badges and each other ── */
+
+type Anchor = "start" | "middle" | "end";
+
+interface Box {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+interface PlacedLabel {
+  lines: string[];
+  x: number;
+  y: number;
+  anchor: Anchor;
+}
+
+const LABEL_CHAR_W = 6; // generous width of one 10px system-ui glyph
+const LABEL_LINE_H = 14;
+const LABEL_GAP = 3;
+
+function wrapWords(text: string, maxChars: number): string[] {
+  const lines: string[] = [];
+  for (const word of text.split(" ")) {
+    const last = lines[lines.length - 1];
+    if (last && (last + " " + word).length <= maxChars) lines[lines.length - 1] = last + " " + word;
+    else lines.push(word);
+  }
+  return lines;
+}
+
+function labelBox(lines: string[], x: number, y: number, anchor: Anchor): Box {
+  const w = Math.max(...lines.map((l) => l.length)) * LABEL_CHAR_W;
+  const h = (lines.length - 1) * LABEL_LINE_H + 12;
+  const left = anchor === "start" ? x : anchor === "end" ? x - w : x - w / 2;
+  return { x: left, y: y - (lines.length - 1) * (LABEL_LINE_H / 2) - 9, w, h };
+}
+
+function overlaps(a: Box, b: Box) {
+  return (
+    a.x < b.x + b.w + LABEL_GAP &&
+    a.x + a.w + LABEL_GAP > b.x &&
+    a.y < b.y + b.h + LABEL_GAP &&
+    a.y + a.h + LABEL_GAP > b.y
+  );
+}
+
+function placeLabels(
+  edges: TraceEdge[],
+  nodeMap: Map<string, Pos>,
+  backEdgeKeys: Set<string>,
+  totalW: number,
+): (PlacedLabel | null)[] {
+  const obstacles: Box[] = [];
+  const xs = [...nodeMap.values()].map((n) => n.cx);
+  const centerX = (Math.min(...xs) + Math.max(...xs)) / 2;
+  for (const n of nodeMap.values()) {
+    obstacles.push({ x: n.cx - NW / 2, y: n.cy - NH / 2, w: NW, h: NH });
+    if (n.badge) obstacles.push({ x: n.cx - 34, y: n.cy - NH / 2 - 10, w: 68, h: 20 });
+  }
+
+  return edges.map((e) => {
+    if (!e.label) return null;
+    const from = nodeMap.get(e.from)!;
+    const to = nodeMap.get(e.to)!;
+    const isBack = backEdgeKeys.has(`${e.from}->${e.to}`);
+    const base = getEdgePath(from, to, isBack, totalW);
+    let lines = splitLabel(e.label);
+
+    if (isBack) {
+      // Loop-back edges bow out to the right margin. Sit the label just inside the
+      // curve and wrap it to the room left between the nodes and the curve.
+      const rx = totalW - 24;
+      const curveX = 0.125 * (from.cx + NW / 2) + 0.75 * rx + 0.125 * (to.cx + NW / 2);
+      const nodesRight = Math.max(...[...nodeMap.values()].map((n) => n.cx + NW / 2));
+      const room = curveX - 8 - (nodesRight + LABEL_GAP + 2);
+      lines = wrapWords(e.label, Math.max(8, Math.floor(room / LABEL_CHAR_W)));
+      const placed: PlacedLabel = { lines, x: curveX - 8, y: base.ly, anchor: "end" };
+      obstacles.push(labelBox(lines, placed.x, placed.y, placed.anchor));
+      return placed;
+    }
+
+    // Candidate anchors, preferred first: curved edges put the label on the side
+    // facing away from the diagram's center, so labels of edges that fan out from
+    // (or converge on) one node land on opposite sides instead of meeting.
+    let anchors: { x: number; anchor: Anchor }[];
+    if (base.anchor === "start") {
+      anchors = [
+        { x: base.lx, anchor: "start" },
+        { x: base.lx - 24, anchor: "end" },
+      ];
+    } else {
+      const away: Anchor = base.lx < centerX ? "end" : "start";
+      const toward: Anchor = away === "end" ? "start" : "end";
+      const off = (a: Anchor) => (a === "start" ? 8 : -8);
+      anchors = [
+        { x: base.lx + off(away), anchor: away },
+        { x: base.lx + off(toward), anchor: toward },
+        { x: base.lx, anchor: "middle" },
+      ];
+    }
+
+    let chosen: PlacedLabel | null = null;
+    // Vertical nudges; +-50 lands in the gap between two node rows (row pitch 100).
+    outer: for (const dy of [0, -16, 16, -32, 32, -50, 50, -64, 64]) {
+      for (const a of anchors) {
+        const box = labelBox(lines, a.x, base.ly + dy, a.anchor);
+        if (box.x < 2 || box.x + box.w > totalW - 2) continue;
+        if (obstacles.some((o) => overlaps(box, o))) continue;
+        chosen = { lines, x: a.x, y: base.ly + dy, anchor: a.anchor };
+        obstacles.push(box);
+        break outer;
+      }
+    }
+    if (!chosen) {
+      chosen = { lines, x: anchors[0].x, y: base.ly, anchor: anchors[0].anchor };
+      obstacles.push(labelBox(lines, chosen.x, chosen.y, chosen.anchor));
+    }
+    return chosen;
+  });
+}
+
 /* ── Main component ── */
 
 interface TracePathwaySVGProps {
@@ -240,7 +363,14 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
   const { items, w, h, backEdgeKeys } = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
   const nodeMap = useMemo(() => new Map(items.map((n) => [n.id, n])), [items]);
 
-  const renderedEdges = edges.filter((e) => nodeMap.has(e.from) && nodeMap.has(e.to));
+  const renderedEdges = useMemo(
+    () => edges.filter((e) => nodeMap.has(e.from) && nodeMap.has(e.to)),
+    [edges, nodeMap],
+  );
+  const placedLabels = useMemo(
+    () => placeLabels(renderedEdges, nodeMap, backEdgeKeys, w),
+    [renderedEdges, nodeMap, backEdgeKeys, w],
+  );
 
   const usedBadges = useMemo(
     () => [...new Set(nodes.filter((n) => n.badge).map((n) => n.badge!))] as TraceBadge[],
@@ -318,7 +448,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
               const from = nodeMap.get(e.from)!;
               const to = nodeMap.get(e.to)!;
               const isBack = backEdgeKeys.has(`${e.from}->${e.to}`);
-              const { d, lx, ly, anchor } = getEdgePath(from, to, isBack, w);
+              const { d } = getEdgePath(from, to, isBack, w);
               const route = e.route || "primary";
               const bothActive = from.active && to.active;
 
@@ -326,7 +456,6 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
               const strokeW = route === "fast" ? 2 : 1.5;
               const dash = route === "slow" ? "7 5" : undefined;
               const marker = route === "fast" ? "arr-fast" : route === "slow" ? "arr-slow" : "arr";
-              const lines = e.label ? splitLabel(e.label) : [];
 
               return (
                 <g key={`${e.from}-${e.to}-${i}`} opacity={bothActive ? 1 : 0.2}>
@@ -339,27 +468,6 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                     markerEnd={`url(#${marker})`}
                     opacity={0.7}
                   />
-                  {lines.length > 0 && (
-                    <text
-                      textAnchor={anchor}
-                      fontSize={10}
-                      fill="#888"
-                      stroke="white"
-                      strokeWidth={4}
-                      paintOrder="stroke"
-                      fontFamily="system-ui, sans-serif"
-                    >
-                      {lines.map((line, li) => (
-                        <tspan
-                          key={li}
-                          x={lx}
-                          y={ly + (li - (lines.length - 1) / 2) * 14}
-                        >
-                          {line}
-                        </tspan>
-                      ))}
-                    </text>
-                  )}
                 </g>
               );
             })}
@@ -451,6 +559,32 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                     {node.label}
                   </text>
                 </g>
+              );
+            })}
+
+            {/* Edge labels: drawn after nodes so a node can never cover a label */}
+            {renderedEdges.map((e, i) => {
+              const placed = placedLabels[i];
+              if (!placed) return null;
+              const bothActive = nodeMap.get(e.from)!.active && nodeMap.get(e.to)!.active;
+              return (
+                <text
+                  key={`label-${e.from}-${e.to}-${i}`}
+                  textAnchor={placed.anchor}
+                  fontSize={10}
+                  fill="#888"
+                  stroke="white"
+                  strokeWidth={4}
+                  paintOrder="stroke"
+                  fontFamily="system-ui, sans-serif"
+                  opacity={bothActive ? 1 : 0.2}
+                >
+                  {placed.lines.map((line, li) => (
+                    <tspan key={li} x={placed.x} y={placed.y + (li - (placed.lines.length - 1) / 2) * LABEL_LINE_H}>
+                      {line}
+                    </tspan>
+                  ))}
+                </text>
               );
             })}
           </svg>
