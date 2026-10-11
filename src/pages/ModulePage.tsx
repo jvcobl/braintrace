@@ -27,7 +27,7 @@ const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
   "homeostasis-vs-allostasis-sorter": { slug: "stress", title: "Stress and Homeostasis" },
 };
 
-const ModulePage = () => {
+const ModulePageContent = () => {
   const { id } = useParams<{ id: string }>();
   const mod = id ? getModuleById(id) : undefined;
   const unit = mod ? getUnitById(mod.unitId) : undefined;
@@ -157,6 +157,15 @@ const ModulePage = () => {
       )}
     </div>
   );
+};
+
+/**
+ * Remount per lesson so the active tab and demo state never carry over
+ * when moving between lessons on the same /module/:id route.
+ */
+const ModulePage = () => {
+  const { id } = useParams<{ id: string }>();
+  return <ModulePageContent key={id} />;
 };
 
 export default ModulePage;
