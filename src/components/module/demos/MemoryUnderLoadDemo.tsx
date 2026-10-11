@@ -36,6 +36,9 @@ const ROUNDS: RoundConfig[] = [
 
 const LETTERS = "BCDFGHJKLMNPQRSTVWXYZ".split("");
 
+/** Read typed letters in order, ignoring spaces, commas and case ("B K M", "b,k,m", "BKM"). */
+const parseLetters = (input: string) => input.toUpperCase().replace(/[^A-Z]/g, "").split("");
+
 function pickRandom<T>(arr: T[], n: number): T[] {
   const shuffled = [...arr].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, n);
@@ -182,10 +185,10 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
   }, [round]);
 
   const handleRecallSubmit = useCallback(() => {
-    const entered = userInput.toUpperCase().trim().split(/[\s,]+/);
+    const entered = parseLetters(userInput);
     let correct = 0;
     sequence.forEach((letter, i) => {
-      if (entered[i]?.toUpperCase() === letter) correct++;
+      if (entered[i] === letter) correct++;
     });
     setLastCorrectCount(correct);
     setResults((prev) => [...prev, { load: round!.load, correct, total: sequence.length }]);
@@ -349,7 +352,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {phase === "recall" && (
             <div className="text-center w-full max-w-sm px-4">
               <p className="text-sm text-muted-foreground mb-3">
-                Type the {sequence.length} letters in order (spaces between):
+                Type the {sequence.length} letters in order (spaces optional):
               </p>
               <input
                 type="text"
@@ -379,8 +382,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
               <p className="text-xs text-muted-foreground mb-2">Correct sequence:</p>
               <div className="flex gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => {
-                  const entered = userInput.toUpperCase().trim().split(/[\s,]+/);
-                  const isCorrect = entered[i]?.toUpperCase() === letter;
+                  const isCorrect = parseLetters(userInput)[i] === letter;
                   return (
                     <span
                       key={i}
