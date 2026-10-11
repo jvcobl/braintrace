@@ -330,12 +330,22 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
                     )}
                   </div>
                 )}
-                <button
-                  onClick={handleNextTrial}
-                  className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  {trialIndex < TRIAL_SEQUENCE.length - 1 ? "Next Trial" : "Continue to Reflection"}
-                </button>
+                {reactionMs === -1 ? (
+                  // An early click leaves no reaction time to compare, so rerun the same trial.
+                  <button
+                    onClick={startTrial}
+                    className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    Try again
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleNextTrial}
+                    className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    {trialIndex < TRIAL_SEQUENCE.length - 1 ? "Next Trial" : "Continue to Reflection"}
+                  </button>
+                )}
               </div>
             )}
 
