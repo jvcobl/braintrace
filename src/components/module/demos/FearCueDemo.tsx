@@ -4,6 +4,7 @@ import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/
 import PredictionOutcome from "@/components/module/PredictionOutcome";
 import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
 import { fearCueContent } from "@/data/content/fearCueContent";
+import { scrollBehavior } from "@/lib/utils";
 
 /* ── Trial structure ── */
 
@@ -162,8 +163,14 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const [recoveryPhase, setRecoveryPhase] = useState<"prediction" | "timepass" | "replay" | "result" | "finished" | null>(null);
   const [recoveryPrediction, setRecoveryPrediction] = useState<"extinguished" | "returns" | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
+  const feedbackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
+
+  // On small screens the feedback opens below the fold; bring it into view.
+  useEffect(() => {
+    if (step === "feedback") feedbackRef.current?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+  }, [step, index]);
 
   // Recovery flow auto-advances
   useEffect(() => {
@@ -319,8 +326,9 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
               </div>
             )}
 
-            {step === "outcome" && (
-              <div className="text-center animate-[fadeIn_300ms_ease-out]">
+            {/* The outcome stays visible while the feedback below is read */}
+            {(step === "outcome" || step === "feedback") && (
+              <div className={`text-center ${step === "outcome" ? "animate-[fadeIn_300ms_ease-out]" : ""}`}>
                 <div className="text-5xl mb-3 select-none flex items-center justify-center gap-3">
                   <span>◆</span>
                   {trial.hasUS && <span className="text-destructive animate-[fadeIn_200ms_ease-out]">✕</span>}
@@ -330,19 +338,27 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
                     ? "An unpleasant outcome follows the cue."
                     : "Nothing happens. The cue appears alone."}
                 </p>
-                <button
-                  onClick={handleShowFeedback}
-                  className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  Continue
-                </button>
+                {step === "outcome" ? (
+                  <button
+                    onClick={handleShowFeedback}
+                    className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    Continue
+                  </button>
+                ) : (
+                  prediction && (
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      You predicted: {prediction === "bad" ? "Something bad" : "Nothing"}
+                    </p>
+                  )
+                )}
               </div>
             )}
           </div>
 
           {/* FeedbackCard below interaction area */}
           {step === "feedback" && prediction && (
-            <div className="mt-5">
+            <div ref={feedbackRef} className="mt-5 scroll-mb-4">
               <FeedbackCard onNavigate={onNavigate} feedback={getFeedback(trial.stage, prediction)} />
               <div className="mt-4 flex justify-center">
                 <button
