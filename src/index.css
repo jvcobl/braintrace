@@ -2,11 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Design system tokens. All colors are HSL. */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap');
+/* Self-hosted fonts (latin subset, SIL OFL; licenses in /public/fonts). The two
+   upright files are preloaded in index.html so headings don't reflow on load. */
+@font-face {
+  font-family: "DM Serif Display";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/dm-serif-display-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/dm-sans-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/dm-sans-italic-latin.woff2") format("woff2");
+}
 
 @layer base {
   :root {
@@ -68,8 +90,9 @@ All colors MUST be HSL.
   }
 
   h1, h2, h3 {
-    font-family: "DM Serif Display", serif;
+    font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
     font-weight: 400;
+    text-wrap: balance;
   }
 }
 
