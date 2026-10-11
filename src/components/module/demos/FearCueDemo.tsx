@@ -15,9 +15,11 @@ interface Trial {
   hasUS: boolean;
 }
 
+// Only the first trial is "early": once the cue has been paired, the
+// "no association yet" feedback no longer applies.
 const TRIALS: Trial[] = [
   { stage: "acquisition-early", hasUS: true },
-  { stage: "acquisition-early", hasUS: true },
+  { stage: "acquisition-late", hasUS: true },
   { stage: "acquisition-late", hasUS: true },
   { stage: "acquisition-late", hasUS: true },
   { stage: "extinction-early", hasUS: false },
