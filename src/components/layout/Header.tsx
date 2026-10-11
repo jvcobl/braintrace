@@ -33,7 +33,7 @@ const Header = () => {
     }`;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="font-display text-xl text-foreground">
           BrainTrace

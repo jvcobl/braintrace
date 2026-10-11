@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { searchIndex, type SearchItem } from "@/data/searchIndex";
@@ -107,14 +108,14 @@ export default function SearchBar() {
         <Search size={18} />
       </button>
 
-      {/* Modal overlay */}
-      {open && (
+      {/* Modal overlay (portaled to body so no ancestor can clip or contain it) */}
+      {open && createPortal(
         <div
           className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         >
           <div
-            className="mx-auto mt-20 max-w-lg rounded-xl border border-gray-200 bg-white p-4 shadow-lg"
+            className="mx-4 mt-20 max-w-lg rounded-xl border border-gray-200 bg-white p-4 shadow-lg sm:mx-auto"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search input */}
@@ -181,7 +182,8 @@ export default function SearchBar() {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );
