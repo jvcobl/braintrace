@@ -351,7 +351,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {/* Completed cascade with feedback highlighted */}
           <div className="rounded-lg bg-gray-50 p-4 mb-5">
-            <div className="flex items-center gap-2 text-sm text-gray-700">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-700">
               <span>Hypothalamus</span>
               <span className="text-gray-300">→</span>
               <span>Pituitary</span>
