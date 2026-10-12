@@ -13,25 +13,63 @@ function DotLabel({ color, children }: { color: string; children: React.ReactNod
   );
 }
 
-function PathwayPills({ text }: { text: string }) {
-  if (!text.includes("→")) {
-    return <p className="text-[13px] text-gray-900 leading-relaxed">{text}</p>;
+/** Split on " → " only where it isn't inside parentheses, e.g. "Amygdala (BLA → CeA)" stays whole. */
+function splitTopLevelArrows(sentence: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < sentence.length; i++) {
+    const ch = sentence[i];
+    if (ch === "(") depth++;
+    else if (ch === ")") depth = Math.max(0, depth - 1);
+    else if (depth === 0 && sentence.startsWith(" → ", i)) {
+      parts.push(sentence.slice(start, i));
+      start = i + 3;
+      i += 2;
+    }
   }
+  parts.push(sentence.slice(start));
+  return parts.map((p) => p.trim()).filter(Boolean);
+}
 
-  const segments = text.split(" → ").map((s) => s.trim()).filter(Boolean);
+/** Capitalize a pill's first word unless it is an abbreviation like "dlPFC". */
+const capitalize = (s: string) => (/^[a-z]+\b/.test(s) ? s[0].toUpperCase() + s.slice(1) : s);
+
+/** Each sentence becomes a row: arrow chains render as pills, plain sentences as text. */
+function PathwayPills({ text }: { text: string }) {
+  const sentences = text
+    .split(/(?<=\.)\s+/)
+    .map((s) => s.trim().replace(/\.$/, ""))
+    .filter(Boolean);
 
   return (
-    <div className="flex flex-wrap items-center gap-1.5">
-      {segments.map((segment, i) => (
-        <span key={i} className="contents">
-          <span className="bg-gray-100 text-xs text-gray-900 px-2 py-0.5 rounded">
-            {segment}
-          </span>
-          {i < segments.length - 1 && (
-            <span className="text-gray-300 text-xs">→</span>
-          )}
-        </span>
-      ))}
+    <div className="space-y-2">
+      {sentences.map((sentence, si) => {
+        const segments = splitTopLevelArrows(sentence);
+        if (segments.length < 2) {
+          return (
+            <p key={si} className="text-[13px] text-gray-900 leading-relaxed">
+              {sentence}.
+            </p>
+          );
+        }
+        return (
+          <div key={si} className="flex flex-wrap items-center gap-1.5">
+            {segments.map((segment, i) => (
+              <span key={i} className="contents">
+                <span className="bg-gray-100 text-xs text-gray-900 px-2 py-0.5 rounded">
+                  {capitalize(segment)}
+                </span>
+                {i < segments.length - 1 && (
+                  <span className="text-gray-500 text-xs" aria-hidden="true">
+                    →
+                  </span>
+                )}
+              </span>
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 }
