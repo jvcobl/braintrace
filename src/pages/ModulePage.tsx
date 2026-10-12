@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { getModuleById, modules } from "@/data/modules";
 import { moduleDefinitions } from "@/data/moduleDefinitions";
-import { getUnitById } from "@/data/courseMap";
-import { getUnitContent, getLessonsByUnit } from "@/data/content/registry";
+import { getLessonsByUnit } from "@/data/content/registry";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import SectionNav, { type SectionId } from "@/components/module/SectionNav";
 import IntroSection from "@/components/module/IntroSection";
@@ -48,8 +47,6 @@ const ModulePageContent = () => {
       ? { title: mod.title, description: mod.shortGoal, canonicalPath: `/module/${mod.slug}` }
       : { title: "Page not found", noindex: true },
   );
-  const unit = mod ? getUnitById(mod.unitId) : undefined;
-  const unitContent = mod ? getUnitContent(mod.unitId) : undefined;
   const location = useLocation();
   const sectionNavRef = useRef<HTMLDivElement>(null);
   const [section, setSection] = useState<SectionId>(() => sectionFromHash(window.location.hash.slice(1)));
