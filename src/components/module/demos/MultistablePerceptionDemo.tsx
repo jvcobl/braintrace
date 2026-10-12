@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import examples from "./gallery/multistableExamples";
 import figureRegistry from "./gallery/figures";
 
@@ -48,9 +48,13 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
     }
   };
 
+  // One timer at a time, so a second hint isn't cut short by the first one's timeout.
+  const assistTimer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(assistTimer.current), []);
   const flashAssist = useCallback((target: "a" | "b") => {
+    clearTimeout(assistTimer.current);
     setAssist(target);
-    setTimeout(() => setAssist("none"), 1400);
+    assistTimer.current = setTimeout(() => setAssist("none"), 1400);
   }, []);
 
   const completedCount = Object.values(states).filter(
@@ -221,14 +225,14 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
                     onClick={() => flashAssist(state.choice === "a" ? "b" : "a")}
                     className="rounded-md border border-border bg-secondary/60 px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
-                    Show {example.interpretations[otherIdx].toLowerCase()}
+                    Help me see: {example.interpretations[otherIdx].toLowerCase()}
                   </button>
                   <button
                     type="button"
                     onClick={() => flashAssist(state.choice!)}
                     className="rounded-md border border-border bg-secondary/60 px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
-                    Show {example.interpretations[choiceIdx].toLowerCase()}
+                    Help me see: {example.interpretations[choiceIdx].toLowerCase()}
                   </button>
                 </div>
 
@@ -238,6 +242,13 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
                   className="rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   I can see both
+                </button>
+                <button
+                  type="button"
+                  onClick={handleConfirmSwitch}
+                  className="block mx-auto rounded-sm px-2 py-2 text-xs text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  I can only see one so far
                 </button>
               </div>
             )}

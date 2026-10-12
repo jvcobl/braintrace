@@ -147,7 +147,7 @@ function getSummary(recoveryPrediction: "extinguished" | "returns" | null): Expe
   }
   return {
     heading: "What This Shows",
-    body: "Most people predict that extinction = erasure. It doesn't. The fear came back at reduced strength because the original CS-US association in the BLA was suppressed, not deleted. The vmPFC-ITC inhibition weakened overnight and the underlying fear memory resurfaced. Spontaneous recovery is the proof that extinction is new learning layered on top of old learning, not a rewrite.",
+    body: "Most people predict that extinction means erasure. It doesn't. The fear came back at reduced strength because the original CS-US association in the BLA was suppressed, not deleted. The vmPFC-ITC inhibition weakened overnight and the underlying fear memory resurfaced. Spontaneous recovery is the proof that extinction is new learning layered on top of old learning, not a rewrite.",
     bridge: "Explain covers why the original memory is never truly erased.",
   };
 }

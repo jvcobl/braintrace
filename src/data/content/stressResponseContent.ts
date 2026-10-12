@@ -10,7 +10,7 @@ export const stressResponseContent = {
     weakens: "Loop weakens, cortisol stays elevated",
   },
   consequencesResultIfWorks:
-    "You predicted the loop would still work. It doesn't — damaged hippocampus = weakened inhibition.",
+    "You predicted the loop would still work. It doesn't — a damaged hippocampus means weaker inhibition.",
   consequencesResultIfWeakens:
-    "You called it. Damaged hippocampus = weakened inhibition. Cortisol stays elevated.",
+    "You called it. A damaged hippocampus means weaker inhibition, so cortisol stays elevated.",
 };

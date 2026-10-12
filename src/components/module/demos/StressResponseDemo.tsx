@@ -360,14 +360,14 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-700">
               <span>Hypothalamus</span>
               <span className="text-gray-400" aria-hidden="true">→</span>
-              <span>Pituitary</span>
+              <span>Anterior Pituitary</span>
               <span className="text-gray-400" aria-hidden="true">→</span>
               <span>Adrenal Cortex</span>
               <span className="text-gray-400" aria-hidden="true">→</span>
               <span className="font-medium">Cortisol</span>
             </div>
             <div className={`mt-2 text-xs px-2 py-1 rounded inline-block ${
-              overrideAnswer !== null && overrideCorrect
+              overrideAnswer !== null
                 ? "bg-destructive/10 text-destructive line-through"
                 : "bg-primary/10 text-primary"
             }`}>
@@ -515,7 +515,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
               <p className="text-sm text-muted-foreground mb-4">
                 {consequenceScore === 4
                   ? "All correct — you identified every consequence of sustained cortisol."
-                  : `${consequenceScore} of 4 correct. The highlighted items show what you missed.`}
+                  : `${consequenceScore} of 4 correct. The highlighted items show what to review.`}
               </p>
               <p className="text-sm text-foreground mb-4 leading-relaxed">
                 {consequencesPrediction === "works"

@@ -153,7 +153,7 @@ const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" |
             <div className="rounded-lg bg-accent/40 px-4 py-3">
               <p className="text-sm text-foreground leading-relaxed">
                 {correctCount === items.length
-                  ? "You correctly distinguished every scenario. The key differentiator — present threat vs predicted threat — was clear in each case."
+                  ? "You correctly distinguished every scenario. The key differentiator — present threat vs. predicted threat — was clear in each case."
                   : correctCount > items.length / 2
                     ? "The distinction held for most scenarios. The cases that blur are often ones where prediction and presence overlap — a sign that the boundary is real but not always obvious."
                     : "Several scenarios crossed the boundary. This reflects how naturally the brain blurs the line between responding to what is here and anticipating what might come."}

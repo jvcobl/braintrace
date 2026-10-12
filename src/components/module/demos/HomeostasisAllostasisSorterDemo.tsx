@@ -149,7 +149,7 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
             <div className="rounded-lg bg-accent/40 px-4 py-3">
               <p className="text-sm text-foreground leading-relaxed">
                 {correctCount === items.length
-                  ? "Every classification was correct. The core distinction — reactive correction vs anticipatory shift — was clear throughout."
+                  ? "Every classification was correct. The core distinction — reactive correction vs. anticipatory shift — was clear throughout."
                   : correctCount > items.length / 2
                     ? "The distinction held for most cases. The hardest calls are chronic scenarios where the body shifts its baseline — that shift is allostasis, and its cost over time is allostatic load."
                     : "This distinction is subtle. Both systems maintain stability, but through different mechanisms: homeostasis corrects deviations reactively, while allostasis shifts the set point itself to meet predicted demand."}

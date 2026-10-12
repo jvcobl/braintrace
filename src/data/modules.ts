@@ -36,14 +36,14 @@ export const modules: Module[] = [
     hook: "Your brain starts guessing before the image is clear.",
     shortGoal: "Explore how the brain resolves ambiguous visual input.",
     shortDescription: "How the visual system predicts identity from minimal input.",
-    introCopy: "You'll see a blurry image and try to identify it. Then you'll trace the pathway your brain uses to make sense of incomplete information.",
+    introCopy: "You'll see three blurry images and try to identify each one. Then you'll trace the pathway your brain uses to make sense of incomplete information.",
     traceNodes: [
       { label: "Low Spatial Frequency Input", description: "The visual system receives coarse, blurry information first: broad shapes and contrast patterns that carry low spatial frequency data before fine edges and textures arrive." },
       { label: "Orbitofrontal Cortex (OFC)", description: "The OFC rapidly generates a contextual prediction, a best guess about the object's identity, using this rough input combined with prior experience and expectations." },
       { label: "Ventral Stream → IT Cortex", description: "As finer detail becomes available, the ventral visual stream carries it forward to inferotemporal (IT) cortex, which performs detailed object recognition and either confirms or overrides the OFC's initial prediction." },
     ],
     explain: {
-      whatHappened: "You viewed an object that started heavily blurred and sharpened in stages. Early on, only low spatial frequency information was available: coarse blobs of contrast and shape without fine detail. You could guess at the object or wait for the image to clarify.",
+      whatHappened: "You viewed objects that started heavily blurred and sharpened in stages. Early on, only low spatial frequency information was available: coarse blobs of contrast and shape without fine detail. You could guess at the object or wait for the image to clarify.",
       whatYourBrainDid: "Your orbitofrontal cortex (OFC) used the low spatial frequency input to generate a rapid top-down contextual prediction, an educated guess based on rough shape and prior knowledge. This prediction reached your visual processing areas before the ventral stream had finished extracting fine detail. As the image sharpened, inferotemporal (IT) cortex in the ventral stream performed full object recognition, confirming or correcting the OFC's guess. If you identified the object early, your OFC prediction was driving perception. If you waited, your brain relied more on bottom-up detail from IT cortex.",
       keyPathway: "Low spatial frequency visual input → OFC (rapid contextual prediction) → Ventral stream → Inferotemporal cortex (detailed object recognition). This pathway shows that perception is not passive. Higher-order areas like the OFC actively predict what you are seeing before complete sensory data is available.",
       whyItMatters: "The OFC's role in generating rapid object predictions from degraded input shows that perception is active construction, not passive reception. The ventral stream and IT cortex pathway is the canonical object recognition route. The OFC shortcut is evidence that cortical feedback shapes what you see before complete information arrives.",
