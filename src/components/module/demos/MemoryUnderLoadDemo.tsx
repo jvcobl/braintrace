@@ -159,7 +159,6 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
   const [distractorInput, setDistractorInput] = useState("");
   const [results, setResults] = useState<RoundResult[]>([]);
   const [lastCorrectCount, setLastCorrectCount] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   const done = roundIndex >= ROUNDS.length;
@@ -193,7 +192,6 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
     setLastCorrectCount(correct);
     setResults((prev) => [...prev, { load: round!.load, correct, total: sequence.length }]);
     setPhase("feedback");
-    if (!hasInteracted) setHasInteracted(true);
   }, [userInput, sequence, round]);
 
   const handleNext = useCallback(() => {
@@ -228,6 +226,13 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
       done={done}
       summary={getSummary(results)}
       onRestart={handleRestart}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["memory-under-load"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
         {/* Header */}
@@ -417,14 +422,6 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
         )}
       </div>
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["memory-under-load"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

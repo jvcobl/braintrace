@@ -159,7 +159,6 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const [step, setStep] = useState<"predict" | "outcome" | "feedback">("predict");
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [predictions, setPredictions] = useState<{ stage: Stage; prediction: Prediction }[]>([]);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const [recoveryPhase, setRecoveryPhase] = useState<"prediction" | "timepass" | "replay" | "result" | "finished" | null>(null);
   const [recoveryPrediction, setRecoveryPrediction] = useState<"extinguished" | "returns" | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
@@ -190,9 +189,8 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
   const handlePredict = useCallback((p: Prediction) => {
     setPrediction(p);
-    if (!hasInteracted) setHasInteracted(true);
     timer.current = setTimeout(() => setStep("outcome"), 500);
-  }, [hasInteracted]);
+  }, []);
 
   const handleShowFeedback = useCallback(() => {
     if (prediction && trial) {
@@ -238,6 +236,13 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
       done={done}
       summary={getSummary(recoveryPrediction)}
       onRestart={restart}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["fear-cue"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       {/* Pause interlude */}
       {trial?.stage === "pause" && (
@@ -480,14 +485,6 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
         </div>
       )}
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["fear-cue"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

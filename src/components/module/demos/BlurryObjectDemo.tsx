@@ -103,7 +103,6 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
   const [guessStage, setGuessStage] = useState<number | null>(null);
   const [done, setDone] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   const current = stimuli[round];
   const hasGuessed = guess !== null;
@@ -118,10 +117,9 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       if (hasGuessed) return;
       setGuess(option);
       setGuessStage(blurStage);
-      if (!hasInteracted) setHasInteracted(true);
       if (option === current.name) setCorrectCount((c) => c + 1);
     },
-    [hasGuessed, blurStage, current.name, hasInteracted]
+    [hasGuessed, blurStage, current.name]
   );
 
   const handleNext = useCallback(() => {
@@ -156,6 +154,13 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       done={done}
       summary={getSummary(correctCount, stimuli.length)}
       onRestart={handleRestart}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["blurry-object"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
         <div className="flex items-center justify-between mb-4">
@@ -249,14 +254,6 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
         )}
       </div>
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["blurry-object"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

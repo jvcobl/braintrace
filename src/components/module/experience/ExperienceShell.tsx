@@ -12,6 +12,8 @@ interface ExperienceShellProps {
   onRestart?: () => void;
   /** Navigate to Trace or Explain when bridge is clicked. */
   onNavigate?: (target: "Trace" | "Explain") => void;
+  /** Shown under the summary once the experience is done (e.g. the Prediction & Outcome recap). */
+  footer?: ReactNode;
   children: ReactNode;
 }
 
@@ -34,6 +36,7 @@ const ExperienceShell = ({
   summary,
   onRestart,
   onNavigate,
+  footer,
   children,
 }: ExperienceShellProps) => {
   if (done && summary) {
@@ -81,6 +84,7 @@ const ExperienceShell = ({
             </div>
           )}
         </div>
+        {footer}
       </section>
     );
   }

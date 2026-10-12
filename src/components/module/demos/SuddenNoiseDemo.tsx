@@ -82,7 +82,6 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
   // Reflection answers
   const [expectAnswer, setExpectAnswer] = useState<"didNotExpect" | "didExpect" | null>(null);
   const [primingAnswer, setPrimingAnswer] = useState<"strongerAfterCue" | "sameOrWeaker" | null>(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   const targetTime = useRef(0);
   const waitTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -149,7 +148,6 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       setReactionMs(ms);
       setResults((prev) => [...prev, { type: currentTrialType!, reactionMs: ms }]);
       setPhase({ kind: "trial", trial: "reacted" });
-      if (!hasInteracted) setHasInteracted(true);
     } else if (phase.trial === "waiting") {
       if (waitTimer.current) clearTimeout(waitTimer.current);
       if (interruptTimer.current) clearTimeout(interruptTimer.current);
@@ -195,6 +193,13 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       done={done}
       summary={summaryData}
       onRestart={handleRestart}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["sudden-noise"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       {/* ── Prediction commit ── */}
       {phase.kind === "predict" && (
@@ -207,7 +212,6 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               onClick={() => {
                 setUserPrediction("calm");
                 setPhase({ kind: "trial", trial: "ready" });
-                setHasInteracted(true);
               }}
               className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
             >
@@ -217,7 +221,6 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               onClick={() => {
                 setUserPrediction("flinch");
                 setPhase({ kind: "trial", trial: "ready" });
-                setHasInteracted(true);
               }}
               className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
             >
@@ -490,14 +493,6 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
         </div>
       )}
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["sudden-noise"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

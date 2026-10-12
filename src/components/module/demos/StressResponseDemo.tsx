@@ -82,7 +82,6 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   const [usedChips, setUsedChips] = useState<Set<string>>(new Set());
   const [shakeSlot, setShakeSlot] = useState<number | null>(null);
   const [buildErrors, setBuildErrors] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   // Build sub-steps
   const [buildStep, setBuildStep] = useState<"placing-A" | "running-A" | "result-A" | "placing-B" | "running-B" | "result-B">("placing-A");
@@ -111,7 +110,6 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   const handleChipClick = useCallback(
     (chip: string) => {
       if (buildComplete || usedChips.has(chip)) return;
-      if (!hasInteracted) setHasInteracted(true);
 
       const slot = SLOTS[currentSlotIndex];
       if (chip === slot.correctAnswer) {
@@ -123,7 +121,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
         setTimeout(() => setShakeSlot(null), 500);
       }
     },
-    [buildComplete, usedChips, currentSlotIndex, hasInteracted],
+    [buildComplete, usedChips, currentSlotIndex],
   );
 
   const handleOverrideAnswer = useCallback((idx: number) => {
@@ -135,7 +133,8 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
     if (consequencesSubmitted) return;
     setCheckedConsequences((prev) => {
       const next = new Set(prev);
-      next.has(idx) ? next.delete(idx) : next.add(idx);
+      if (next.has(idx)) next.delete(idx);
+      else next.add(idx);
       return next;
     });
   }, [consequencesSubmitted]);
@@ -162,6 +161,13 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
       done={done}
       summary={getSummary(buildErrors, overrideCorrect, consequenceScore)}
       onRestart={handleRestart}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["stress-response-builder"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       {/* ── Phase 1: Build the cascade ── */}
       {phase === "build" && (
@@ -528,14 +534,6 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
         </div>
       )}
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["stress-response-builder"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

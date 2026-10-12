@@ -199,7 +199,6 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<("face" | "not-face")[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<"face" | "not-face" | null>(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   const done = index >= stimulusSet.length;
   const trial = !done ? stimulusSet[index] : null;
@@ -208,7 +207,6 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
     (answer: "face" | "not-face") => {
       if (currentAnswer) return;
       setCurrentAnswer(answer);
-      if (!hasInteracted) setHasInteracted(true);
     },
     [currentAnswer]
   );
@@ -238,6 +236,13 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
       done={done}
       summary={getSummary(answers, stimulusSet)}
       onRestart={handleRestart}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["face-or-not"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
         <p className="mb-4 text-xs text-muted-foreground">
@@ -285,14 +290,6 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
         )}
       </div>
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["face-or-not"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };
