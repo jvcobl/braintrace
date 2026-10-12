@@ -25,7 +25,7 @@ interface TrialResult {
 const expectationFeedback: Record<"didNotExpect" | "didExpect", ExperienceFeedback> = {
   didNotExpect: {
     primary: "You were startled — the reflex fired before conscious awareness.",
-    secondary: "This fits the acoustic startle reflex: a 3-synapse loop from cochlear root neurons to the pontine reticular nucleus to spinal motor neurons. The entire circuit completes without cortical involvement, which is why the body reacts before the mind registers what happened.",
+    secondary: "This parallels the acoustic startle reflex: a 3-synapse loop from cochlear root neurons to the pontine reticular nucleus to spinal motor neurons. The entire circuit completes without cortical involvement, which is why the body reacts before the mind registers what happened.",
     bridge: "Trace shows the full 3-synapse startle loop.",
     structure: "Cochlear root neurons → PNC → spinal cord",
   },
@@ -60,7 +60,7 @@ const contextFeedback: ExperienceFeedback = {
 
 const summaryData: ExperienceSummary = {
   heading: "What This Shows",
-  body: "The acoustic startle reflex exists because organisms that flinched first survived. It runs on three synapses with no cortical involvement. The amygdala does not create the reflex — it amplifies or suppresses it based on context, priming, and learned associations. That amplification is fear-potentiated startle; that suppression is habituation or cortical override.",
+  body: "The acoustic startle reflex exists because organisms that flinched first survived. It runs on three synapses with no cortical involvement. The amygdala does not create the reflex — it amplifies or suppresses it based on context, priming, and learned associations. That amplification is fear-potentiated startle; that suppression is cortical override.",
   bridge: "Trace shows both the basic startle loop and the amplification circuit.",
 };
 

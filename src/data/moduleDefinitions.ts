@@ -121,12 +121,12 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
     tagline: "You react before you understand.",
     nbb302Units: [2],
     predictionLens: {
-      whatHappened: "You heard a sudden noise and your body reacted before you could think about it.",
-      whatBrainPredicted: "Your brain's default prediction in a quiet environment is 'nothing abrupt will happen.' The sudden sound violated that prediction instantly.",
-      whatInputArrived: "A rapid, high-intensity auditory signal entering through pre-cortical sensory pathways.",
-      whatMismatchMattered: "The mismatch between expected silence and actual loud input triggered the fastest defensive response your brain has: the acoustic startle reflex.",
+      whatHappened: "You experienced a sudden interruption and your body reacted before you could think about it.",
+      whatBrainPredicted: "Your brain's default prediction in a quiet environment is 'nothing abrupt will happen.' The sudden stimulus violated that prediction instantly.",
+      whatInputArrived: "A rapid, unexpected signal entering through pre-cortical sensory pathways.",
+      whatMismatchMattered: "The mismatch between expected calm and actual sudden input triggered the fastest defensive response your brain has: the startle reflex.",
       whatPathwayHandledIt: "Auditory input → brainstem startle circuit (subcortical, ultra-fast) + amygdala salience amplification. Cortical interpretation came only on the slower route.",
-      howBrainUpdated: "Your cortex evaluated the sound afterward to decide whether it was truly threatening. The startle response happened first. The interpretation came second.",
+      howBrainUpdated: "Your cortex evaluated the stimulus afterward to decide whether it was truly threatening. The startle response happened first. The interpretation came second.",
       nbb302Connection: "Acoustic startle reflex, amygdala as salience center, low road vs. high road processing, fear-potentiated startle. Covered in States that Prime Behavior (Arousal, Emotions).",
     },
     tracePathway: {
@@ -141,7 +141,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       ],
       edges: [
         { from: "auditory-input", to: "brainstem-startle", route: "fast", label: "Fast subcortical route" },
-        { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification" },
+        { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification", arrowAt: "from" },
         { from: "auditory-input", to: "auditory-cortex", route: "slow", label: "Slower cortical route" },
         { from: "auditory-cortex", to: "pfc", route: "slow", label: "Conscious evaluation" },
         { from: "amygdala", to: "pfc", route: "primary", label: "Threat evaluation" },
@@ -158,7 +158,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
         ],
         edges: [
           { from: "auditory-input", to: "brainstem-startle", route: "fast", label: "Fast subcortical route" },
-          { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification" },
+          { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification", arrowAt: "from" },
           { from: "auditory-input", to: "auditory-cortex", route: "slow", label: "Slower cortical route" },
           { from: "auditory-cortex", to: "pfc", route: "slow", label: "Conscious evaluation" },
           { from: "amygdala", to: "pfc", route: "primary", label: "Threat evaluation" },
@@ -184,7 +184,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "failure"],
-    traceBridge: "The pathway splits at the auditory input node: the fast coral route fires the brainstem startle in milliseconds, while the dashed slow route reaches cortex for conscious evaluation. Your reaction time in the demo measured the gap between these two routes. The Prediction Lens below breaks down the prediction error that made the startle happen.",
+    traceBridge: "The pathway splits at the auditory input node: the fast coral route fires the brainstem startle in milliseconds, while the dashed slow route reaches cortex for conscious evaluation. The Prediction Lens below breaks down the prediction error that made the startle happen.",
   },
 
   "fear-cue-and-extinction": {

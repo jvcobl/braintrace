@@ -465,7 +465,8 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                     stroke={stroke}
                     strokeWidth={strokeW}
                     strokeDasharray={dash}
-                    markerEnd={`url(#${marker})`}
+                    markerEnd={e.arrowAt === "from" ? undefined : `url(#${marker})`}
+                    markerStart={e.arrowAt === "from" ? `url(#${marker})` : undefined}
                     opacity={0.7}
                   />
                 </g>
