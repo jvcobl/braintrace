@@ -40,6 +40,9 @@ const SEARCHABLE = searchIndex.map((item) => ({
 
 const GROUP_ORDER: SearchItem["type"][] = ["module", "concept", "structure", "deeper", "guide"];
 
+/** Most results shown per group. */
+const GROUP_QUOTA: Record<SearchItem["type"], number> = { module: 4, concept: 2, structure: 3, deeper: 2, guide: 4 };
+
 interface SearchBarProps {
   /**
    * Whether this instance listens for Cmd/Ctrl+K. The header renders one search
@@ -92,16 +95,17 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
     };
   }, [open]);
 
-  // Filter results: title matches first (so "Phineas" finds the Phineas Gage note before cards
-  // that merely mention him), then the index order (lessons, concepts, structures, study guides).
+  // Filter results: within each group, title matches first (so "Phineas" finds the Phineas Gage
+  // note before cards that merely mention him). Each group gets its own quota, so a common term
+  // like "amygdala" still shows the lessons and not only structures and study-guide cards.
   const results = useMemo(() => {
     const q = fold(query.trim());
     if (q.length < 2) return [];
-    return SEARCHABLE.filter(({ title, text }) => title.includes(q) || text.includes(q))
+    const ranked = SEARCHABLE.filter(({ title, text }) => title.includes(q) || text.includes(q))
       .map(({ item, title }, order) => ({ item, order, rank: title.includes(q) ? 0 : 1 }))
       .sort((a, b) => a.rank - b.rank || a.order - b.order)
-      .slice(0, 8)
       .map(({ item }) => item);
+    return GROUP_ORDER.flatMap((type) => ranked.filter((item) => item.type === type).slice(0, GROUP_QUOTA[type]));
   }, [query]);
 
   // Group results by type
@@ -206,7 +210,7 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
             </div>
 
             {/* Results */}
-            <div className="max-h-80 overflow-y-auto" aria-live="polite">
+            <div className="max-h-[min(60vh,28rem)] overflow-y-auto" aria-live="polite">
               {query.trim().length >= 2 && results.length === 0 && (
                 <p className="py-8 text-center text-sm text-gray-500">
                   No results for "{query}"
@@ -235,7 +239,7 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
                           {TYPE_LABEL[item.type]}
                         </span>
                         <div className="min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
+                          <p className="text-sm font-medium text-gray-900">
                             {item.title}
                           </p>
                           <p className="text-xs text-gray-500 truncate">

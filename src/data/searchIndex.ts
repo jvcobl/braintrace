@@ -3,6 +3,7 @@ import { moduleDefinitions } from "./moduleDefinitions";
 import { conceptPages } from "./conceptPages";
 import { brainStructures } from "./brainStructures";
 import { unitContent } from "./content/registry";
+import multistableExamples from "@/components/module/demos/gallery/multistableExamples";
 
 export interface SearchItem {
   id: string;
@@ -35,9 +36,13 @@ const items: SearchItem[] = [];
 // Modules + Go Deeper cards
 for (const mod of modules) {
   const def = moduleDefinitions[mod.slug];
-  const keywords = [mod.title, mod.slug, mod.shortGoal];
+  // Also findable by the structures and ideas on its Trace tab (and, for the gallery, its figures).
+  const keywords = [mod.title, mod.slug, mod.shortGoal, ...mod.traceNodes.map((n) => n.label)];
   if (def) {
     keywords.push(def.tagline, def.predictionLens.nbb302Connection);
+  }
+  if (mod.slug === "multistable-perception-gallery") {
+    keywords.push(...multistableExamples.flatMap((ex) => [ex.title, ex.category, ...ex.interpretations]));
   }
 
   items.push({
