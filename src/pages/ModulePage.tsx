@@ -161,7 +161,7 @@ const ModulePageContent = () => {
       {/* Sibling lessons */}
       {siblingLessons.length > 0 && (
         <div className="mt-12 sm:mt-14 border-t border-border pt-6 sm:pt-8">
-          <h2 className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <h2 className="font-sans text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             More in this topic
           </h2>
           <ul className="mt-3 sm:mt-4 space-y-2">

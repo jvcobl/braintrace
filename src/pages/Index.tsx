@@ -88,13 +88,13 @@ const Index = () => {
 
           <div className="mx-auto mt-8 flex max-w-3xl flex-col sm:flex-row items-stretch gap-2">
             {STEPS.map((s, i) => (
-              <div key={s.name} className="flex flex-1 items-center gap-2">
+              <div key={s.name} className="flex flex-1 items-stretch gap-2">
                 <div className="flex-1 rounded-lg bg-muted/40 px-4 py-4 text-center">
                   <p className="text-sm font-semibold text-foreground">{s.name}</p>
                   <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
                 {i < STEPS.length - 1 && (
-                  <span className="hidden sm:block text-muted-foreground/30" aria-hidden="true">→</span>
+                  <span className="hidden sm:block self-center text-muted-foreground/30" aria-hidden="true">→</span>
                 )}
               </div>
             ))}

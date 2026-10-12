@@ -35,7 +35,7 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, trace
     <div className="mt-5 sm:mt-6 space-y-5 sm:space-y-6">
       {subheads.map(({ key, label }) => (
         <div key={key as string} className="border-l-2 border-primary/10 pl-4 sm:pl-5">
-          <h3 className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <h3 className="font-sans text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             {label}
           </h3>
           <p className="mt-1.5 sm:mt-2 text-[13px] sm:text-[14px] text-foreground/75 leading-relaxed">{explain[key]}</p>
@@ -53,7 +53,7 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, trace
     {/* Go Deeper */}
     {goDeeper && goDeeper.length > 0 && (
       <div className="pt-8">
-        <h3 className="text-lg font-medium text-foreground mb-3">Go deeper</h3>
+        <h3 className="font-display text-lg tracking-tight text-foreground mb-3">Go deeper</h3>
         <div className="space-y-2">
           {goDeeper.map((card) => (
             <div key={card.id} id={`deeper-${card.id}`}>
@@ -67,7 +67,7 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, trace
     {/* Related concepts */}
     {conceptLinks && conceptLinks.length > 0 && (
       <div id="concept-links" className="pt-8">
-        <h3 className="text-sm font-medium text-muted-foreground mb-2">Related concepts</h3>
+        <h3 className="font-display text-lg tracking-tight text-foreground mb-3">Related concepts</h3>
         <div className="space-y-2">
           {conceptLinks.map((id) => (
             <ConceptLink key={id} conceptPageId={id} />
@@ -78,10 +78,10 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, trace
 
     {/* End-of-module navigation */}
     {topicLink && (
-      <div className="pt-10 mt-10 border-t border-gray-100 text-center">
+      <div className="pt-10 text-center">
         <Link
           to={topicLink.to}
-          className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          className="inline-flex items-center gap-2 rounded-sm px-2 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <span aria-hidden="true">←</span>
           Back to {topicLink.label}
