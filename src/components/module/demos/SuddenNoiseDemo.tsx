@@ -26,7 +26,7 @@ const expectationFeedback: Record<"didNotExpect" | "didExpect", ExperienceFeedba
   didNotExpect: {
     primary: "You were startled — the reflex fired before conscious awareness.",
     secondary: "This parallels the acoustic startle reflex: a 3-synapse loop from cochlear root neurons to the pontine reticular nucleus to spinal motor neurons. The entire circuit completes without cortical involvement, which is why the body reacts before the mind registers what happened.",
-    bridge: "Trace shows the full 3-synapse startle loop.",
+    bridge: "Trace shows the fast subcortical route to the brainstem startle.",
     structure: "Cochlear root neurons → PNC → spinal cord",
   },
   didExpect: {
@@ -41,13 +41,13 @@ const primingFeedback: Record<"strongerAfterCue" | "sameOrWeaker", ExperienceFee
   strongerAfterCue: {
     primary: "The startle response was amplified — this fits fear-potentiated startle.",
     secondary: "When a warning cue primes the system, auditory input routes from the medial geniculate nucleus (MGN) to the basolateral amygdala (BLA). If the BLA is already in a heightened state, the central amygdala (CeA) amplifies the outgoing startle command. This is the mechanism Mike Davis demonstrated in fear-potentiated startle research.",
-    bridge: "Trace shows the MGN → BLA → CeA amplification pathway.",
+    bridge: "Trace shows how the amygdala amplifies the startle.",
     structure: "MGN → BLA → CeA → amplified startle",
   },
   sameOrWeaker: {
     primary: "The startle did not increase after the cue.",
     secondary: "This could reflect habituation (the brainstem circuit dampening its response to a now-familiar stimulus) or cortical suppression (the high road partially inhibiting the amygdala's priming effect). Both are real mechanisms, and without direct measurement, either could explain the pattern.",
-    bridge: "Compare habituation vs cortical suppression in Explain.",
+    bridge: "Explain covers how the amygdala modulates startle intensity.",
     structure: "Habituation or high road suppression",
   },
 };

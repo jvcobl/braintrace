@@ -73,7 +73,7 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   "acquisition-early-bad": {
     primary: "The cue has not been paired with anything aversive yet.",
     secondary: "Any unease at this point reflects contextual expectation — the cortex predicting what the experiment might do — rather than a learned CS-US association in the amygdala. True conditioned fear requires pairing.",
-    bridge: "Compare cortical prediction vs amygdala conditioning in Explain.",
+    bridge: "Explain covers how the amygdala learns the CS–US association.",
     structure: "Cortical expectation (not conditioning)",
   },
   "acquisition-late-bad": {
@@ -85,7 +85,7 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   "acquisition-late-nothing": {
     primary: "Most people expect something aversive by this point.",
     secondary: "The BLA typically forms a strong CS-US association after repeated pairing. If the association feels weak here, it may be because the simulated pairing lacks the physical salience of a real unconditioned stimulus, or because cortical reasoning is overriding the emotional prediction.",
-    bridge: "Explain covers why real conditioning is stronger than simulated.",
+    bridge: "Explain covers what the amygdala learns during acquisition.",
     structure: "BLA association (weak or suppressed)",
   },
   "extinction-early-bad": {
@@ -97,7 +97,7 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   "extinction-early-nothing": {
     primary: "You are already updating — faster than typical.",
     secondary: "This may reflect cortical reasoning overriding the amygdala's prediction. In full extinction, the IL gradually activates ITCs to suppress BLA output. Here, conscious evaluation may be running ahead of the subcortical learning process.",
-    bridge: "Compare cortical override vs ITC-mediated extinction in Explain.",
+    bridge: "Explain covers how vmPFC and ITCs suppress fear during extinction.",
     structure: "Cortical reasoning ahead of extinction circuit",
   },
   "extinction-late-nothing": {
@@ -109,13 +109,13 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   "extinction-late-bad": {
     primary: "The fear association is persisting despite repeated safe exposures.",
     secondary: "This can occur when the original CS-US association was strong or when amygdala primers (anxiety, fatigue, context) keep the BLA reactive. Extinction is not guaranteed to be fast or complete — it depends on the balance between the original association and the vmPFC-ITC inhibition system.",
-    bridge: "Explain covers why extinction varies and can be incomplete.",
+    bridge: "Explain covers how the new safety memory competes with the original fear.",
     structure: "BLA resisting ITC inhibition",
   },
   "test-bad": {
     primary: "The fear returned — this is spontaneous recovery.",
     secondary: "The original fear memory was never erased. During extinction, ITCs suppressed the BLA's output, creating a competing safety memory. After a delay, the suppression weakened and the original association resurfaced. This is proof that extinction is suppression, not erasure.",
-    bridge: "Explain covers why this matters for phobia and PTSD treatment.",
+    bridge: "Explain covers why this matters for exposure therapy.",
     structure: "Original BLA memory resurfaces",
   },
   "test-nothing": {
@@ -142,7 +142,7 @@ function getSummary(recoveryPrediction: "extinguished" | "returns" | null): Expe
     return {
       heading: "What This Shows",
       body: "You called it. You experienced the full cycle: acquisition, extinction, and spontaneous recovery. This demonstrates the unit's central principle: extinction is new learning, not forgetting. The vmPFC-ITC circuit suppressed the amygdala's fear output, but the original memory persisted. When the fear returned, it proved the original association was intact all along. This dual-memory architecture is why treating phobias and PTSD is difficult. The old fear always exists underneath.",
-      bridge: "Review covers why suppression of output is not erasure of memory.",
+      bridge: "Explain covers why suppression of output is not erasure of memory.",
     };
   }
   return {

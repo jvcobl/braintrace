@@ -78,14 +78,14 @@ function getSummary(correctCount: number, total: number): ExperienceSummary {
     return {
       heading: "What This Shows",
       body: "The images were chosen to be ambiguous at low spatial frequencies. The OFC generated confident guesses from coarse input, and every guess pointed to the wrong identity. This illustrates both the power and the cost of the top-down prediction system: the same mechanism that enables millisecond recognition also produces confident wrong answers.",
-      bridge: "Explain covers the cost of heuristics in detail.",
+      bridge: "Explain covers how the OFC's fast guess gets confirmed or corrected.",
     };
   }
   if (correctCount >= total / 2) {
     return {
       heading: "What This Shows",
       body: "The OFC shortcut works well when coarse cues are distinctive, but misfires when shapes and color profiles overlap between objects. The system trades accuracy for speed, and the trade-off shows up in ambiguous cases.",
-      bridge: "Explain breaks down why heuristics are fast but fallible.",
+      bridge: "Explain breaks down why the OFC guess is fast and how it gets corrected.",
     };
   }
   return {

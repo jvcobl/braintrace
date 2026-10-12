@@ -57,7 +57,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "precision-attention"],
-    traceBridge: "The pathway above shows how your brain resolved the blurry image. A fast OFC guess raced ahead of the slower ventral stream detail. The Prediction Lens below breaks down what was predicted, what arrived, and how the mismatch was handled.",
+    traceBridge: "The pathway in Trace shows how your brain resolved the blurry image. A fast OFC guess raced ahead of the slower ventral stream detail. The Prediction Lens below breaks down what was predicted, what arrived, and how the mismatch was handled.",
   },
 
   "face-or-not": {
@@ -111,7 +111,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "precision-attention", "failure"],
-    traceBridge: "The pathway above shows how a strong face-detection prior from OFC/PFC dominates ambiguous input before the FFA and PFC can verify. The Prediction Lens below maps this to the specific mismatch between what your brain expected and what the evidence actually showed.",
+    traceBridge: "The pathway in Trace shows how a strong face-detection prior from OFC/PFC dominates ambiguous input before the FFA and PFC can verify. The Prediction Lens below maps this to the specific mismatch between what your brain expected and what the evidence actually showed.",
   },
 
   "sudden-noise-reaction": {
@@ -184,7 +184,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "failure"],
-    traceBridge: "The pathway splits at the auditory input node: the fast coral route fires the brainstem startle in milliseconds, while the dashed slow route reaches cortex for conscious evaluation. The Prediction Lens below breaks down the prediction error that made the startle happen.",
+    traceBridge: "The pathway in Trace splits at the auditory input node: the fast coral route fires the brainstem startle in milliseconds, while the dashed slow route reaches cortex for conscious evaluation. The Prediction Lens below breaks down the prediction error that made the startle happen.",
   },
 
   "fear-cue-and-extinction": {
@@ -255,7 +255,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "failure"],
-    traceBridge: "The pathway above shows fear acquisition through the BLA→CeA route and extinction through the vmPFC→ITC inhibition pathway. Toggle between states to see how the same cue activates different circuits. The Prediction Lens below explains the prediction error that drives each transition.",
+    traceBridge: "The pathway in Trace shows fear acquisition through the BLA→CeA route and extinction through the vmPFC→ITC inhibition pathway. Toggle between states in Trace to see how the same cue activates different circuits. The Prediction Lens below explains the prediction error that drives each transition.",
   },
 
   "memory-under-load": {
@@ -304,7 +304,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "precision-attention", "failure"],
-    traceBridge: "The pathway above shows the dlPFC maintaining working memory through a feedback loop with sensory input. As load increased, that control signal weakened. The dashed feedback edge is the loop breaking down. The Prediction Lens below maps this to the specific capacity failure you experienced.",
+    traceBridge: "The pathway in Trace shows the dlPFC maintaining working memory through a feedback loop with sensory input. As load increased, that control signal weakened. The dashed feedback edge is the loop breaking down. The Prediction Lens below maps this to the specific capacity failure you experienced.",
   },
 
   "stress-response-builder": {
@@ -385,6 +385,6 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "failure"],
-    traceBridge: "The pathway above shows the HPA cascade from stressor detection through cortisol release, with the negative feedback loop that normally shuts it down. Toggle to the chronic stress state to see how CeA and PFC override that shutdown. The Prediction Lens below explains the prediction failure behind sustained cortisol.",
+    traceBridge: "The pathway in Trace shows the HPA cascade from stressor detection through cortisol release, with the negative feedback loop that normally shuts it down. Toggle to the chronic stress state in Trace to see how CeA and PFC override that shutdown. The Prediction Lens below explains the prediction failure behind sustained cortisol.",
   },
 };

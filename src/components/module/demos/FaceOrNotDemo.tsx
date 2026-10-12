@@ -121,7 +121,7 @@ const signalFeedback: Record<SignalKey, ExperienceFeedback> = {
     primary: "Correct — this was a real face.",
     secondary:
       "This reflects FFA activation recognizing the arrangement of features. Recognition relies on cell ensembles — distributed groups encoding eyes, nose, and mouth — not a single dedicated neuron per identity.",
-    bridge: "Explain covers ensemble theory and why 'grandmother cells' are flawed.",
+    bridge: "Explain covers how the FFA becomes specialized through experience.",
     structure: "FFA (fusiform gyrus)",
   },
   correctReject: {
@@ -176,7 +176,7 @@ function getSummary(
     return {
       heading: "What This Shows",
       body: "A high false-alarm rate reflects strong FFA detection bias — the system fires readily for anything resembling the face template. This is the same mechanism that produces pareidolia in everyday life and was likely protective in evolutionary contexts.",
-      bridge: "Explain covers pareidolia and evolutionary detection trade-offs.",
+      bridge: "Explain covers pareidolia and the face-detection trade-off.",
     };
   }
   if (falseAlarms === 0) {

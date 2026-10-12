@@ -61,13 +61,13 @@ const trialFeedback: Record<FeedbackKey, ExperienceFeedback> = {
   lowCorrect: {
     primary: "You held the information at low load.",
     secondary: "At this level, working memory and distractor suppression can both run without competing for resources. The dlPFC has surplus capacity.",
-    bridge: "Trace shows the PFC role map.",
+    bridge: "Trace shows how the dlPFC holds items and suppresses distractors.",
     structure: "dlPFC (working memory)",
   },
   lowIncorrect: {
     primary: "Even at low load, the task was challenging.",
     secondary: "Baseline working memory capacity varies by individual and by state — fatigue, hunger, stress, and time of day all affect available dlPFC resources at any given moment.",
-    bridge: "Explain covers why PFC capacity is not fixed.",
+    bridge: "Explain covers why prefrontal control is resource-limited.",
     structure: "dlPFC (baseline variation)",
   },
   mediumCorrect: {
@@ -119,7 +119,7 @@ function getSummary(results: RoundResult[]): ExperienceSummary {
     return {
       heading: "What This Shows",
       body: "Working memory capacity at any moment depends on current state: fatigue, hunger, stress, illness, and time of day all affect available PFC resources. One snapshot does not define baseline capacity — the same system performs differently under different metabolic conditions.",
-      bridge: "Explain covers state-dependent PFC performance.",
+      bridge: "Explain covers why prefrontal control is costly and limited.",
     };
   }
 
@@ -128,7 +128,7 @@ function getSummary(results: RoundResult[]): ExperienceSummary {
     return {
       heading: "What This Shows",
       body: "Performance held longer than typical, but notice the pattern: even strong performance degrades as load increases. This demonstrates the fundamental capacity limit of the PFC. The same mechanism explains why judges make worse parole decisions before lunch and why illness impairs cognition — it is all the same resource pool.",
-      bridge: "Explain covers the full range of depletion effects from the course.",
+      bridge: "Explain connects this limit to multitasking, stress, and cognitive overload.",
     };
   }
 
