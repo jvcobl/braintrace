@@ -31,7 +31,7 @@ export const conceptPages: Record<ConceptPageId, ConceptPage> = {
     id: "failure",
     title: "When Prediction Fails",
     slug: "when-prediction-fails",
-    description: "Prediction breaks in three ways: the brain trusts its assumptions too much, overreacts to noise, or runs out of control capacity. Each failure mode maps to a BrainTrace module.",
+    description: "Prediction breaks in three ways: the brain trusts its assumptions too much, overreacts to noise, or runs out of control capacity. Each failure mode maps to a BrainTrace lesson.",
     moduleLinks: ["face-or-not", "sudden-noise-reaction", "fear-cue-and-extinction", "memory-under-load", "stress-response-builder"],
   },
 };
