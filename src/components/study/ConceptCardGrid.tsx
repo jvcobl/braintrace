@@ -25,12 +25,12 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
             key={card.id}
             className="rounded-xl border border-border/70 bg-card p-4 sm:p-5"
           >
-            <div className="flex items-baseline justify-between gap-3">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
               <h4 className="text-[13px] sm:text-[14px] font-semibold text-card-foreground leading-snug">
                 {card.term}
               </h4>
               {card.structures.length > 0 && (
-                <div className="flex shrink-0 flex-wrap justify-end gap-1.5">
+                <div className="flex flex-wrap gap-1.5 sm:shrink-0 sm:justify-end">
                   {card.structures.slice(0, 3).map((s) => (
                     <span
                       key={s}

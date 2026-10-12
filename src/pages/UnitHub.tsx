@@ -52,8 +52,8 @@ const UnitHub = () => {
     <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-20">
       {/* Breadcrumb */}
       <Link
-        to="/"
-        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+        to="/topics"
+        className="inline-flex items-center gap-1.5 py-1 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
       >
         <span aria-hidden="true">←</span> All Topics
       </Link>
