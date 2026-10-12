@@ -140,7 +140,7 @@ const ModulePageContent = () => {
             const modDef = moduleDefinitions[mod.slug];
             return modDef?.tracePathway
               ? <TracePathwaySVG pathway={modDef.tracePathway} onAdvanceToExplain={() => handleSection("Explain")} />
-              : <TracePanel nodes={mod.traceNodes} />;
+              : <TracePanel nodes={mod.traceNodes} onAdvanceToExplain={() => handleSection("Explain")} />;
           })()}</div>}
           {section === "Explain" && <div id="explain">{(() => {
             const modDef = moduleDefinitions[mod.slug];

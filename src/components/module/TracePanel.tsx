@@ -2,9 +2,10 @@ import type { TraceNode } from "@/data/modules";
 
 interface TracePanelProps {
   nodes: TraceNode[];
+  onAdvanceToExplain?: () => void;
 }
 
-const TracePanel = ({ nodes }: TracePanelProps) => (
+const TracePanel = ({ nodes, onAdvanceToExplain }: TracePanelProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Trace the Pathway</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground">
@@ -28,6 +29,18 @@ const TracePanel = ({ nodes }: TracePanelProps) => (
         </li>
       ))}
     </ol>
+
+    {onAdvanceToExplain && (
+      <div className="mt-6 flex justify-center">
+        <button
+          onClick={onAdvanceToExplain}
+          className="inline-flex items-center gap-2 rounded-sm px-2 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Read the explanation
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    )}
   </section>
 );
 
