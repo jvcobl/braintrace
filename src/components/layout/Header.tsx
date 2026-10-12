@@ -55,7 +55,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white">
       <div className="container flex h-16 items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="font-display text-xl text-foreground">
+        <Link to="/" className="rounded-sm font-display text-xl text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
           BrainTrace
         </Link>
 
@@ -126,7 +126,7 @@ const Header = () => {
               key={to}
               to={to}
               onClick={() => setMenuOpen(false)}
-              className={`block px-3.5 py-3 text-sm font-medium uppercase tracking-wide transition-colors ${
+              className={`block rounded-sm px-3.5 py-3 text-sm font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${
                 isActive(to)
                   ? "text-foreground"
                   : "text-gray-500 hover:text-gray-700"

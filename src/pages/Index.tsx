@@ -158,7 +158,7 @@ const Index = () => {
               </div>
               <Link
                 to="/how-your-brain-predicts"
-                className="inline-flex items-center shrink-0 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+                className="-my-3 inline-flex min-h-11 items-center shrink-0 rounded-sm text-sm font-medium text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Explore →
               </Link>

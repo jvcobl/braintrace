@@ -116,7 +116,7 @@ const UnitHub = () => {
         {prevUnit ? (
           <Link
             to={`/unit/${prevUnit}`}
-            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+            className="group -my-3 inline-flex min-h-11 items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">←</span>
             {(() => {
@@ -130,7 +130,7 @@ const UnitHub = () => {
         {nextUnit ? (
           <Link
             to={`/unit/${nextUnit}`}
-            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+            className="group -my-3 inline-flex min-h-11 items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
             {(() => {
               const nc = getUnitContent(nextUnit);

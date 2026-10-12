@@ -12,11 +12,11 @@ const SensitivityBadge = ({ note }: SensitivityBadgeProps) => (
     </p>
     {note?.includes("988") && (
       <p className="mt-1.5 text-[12px] sm:text-[13px] text-foreground/80">
-        <a href="tel:988" className="font-medium text-primary underline underline-offset-2">
+        <a href="tel:988" className="rounded-sm font-medium text-primary underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
           Call 988
         </a>
         {" · "}
-        <a href="sms:988" className="font-medium text-primary underline underline-offset-2">
+        <a href="sms:988" className="rounded-sm font-medium text-primary underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
           Text 988
         </a>{" "}
         <span className="text-muted-foreground">(US)</span>

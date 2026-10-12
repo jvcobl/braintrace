@@ -14,7 +14,7 @@ const ConceptLink = ({ conceptPageId, label }: ConceptLinkProps) => {
   return (
     <Link
       to={`/how-your-brain-predicts/${page.slug}`}
-      className="group flex items-center gap-3 border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition-colors"
+      className="group flex items-center gap-3 border border-gray-200 rounded-lg p-3 hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       <div className="min-w-0 flex-1">
         <span className="text-sm font-medium text-primary">{label ?? page.title}</span>

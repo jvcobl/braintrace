@@ -29,7 +29,7 @@ const ConceptHub = () => {
             <Link
               key={page.id}
               to={`/how-your-brain-predicts/${page.slug}`}
-              className="group block border border-gray-200 rounded-xl bg-white overflow-hidden hover:shadow-sm transition-all"
+              className="group block border border-gray-200 rounded-xl bg-white overflow-hidden hover:shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               <div className="h-[3px]" style={{ backgroundColor: accent }} />
               <div className="p-6">
@@ -50,7 +50,7 @@ const ConceptHub = () => {
         </p>
         <Link
           to="/topics"
-          className="mt-2 inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+          className="-mb-3 inline-flex min-h-11 items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           Browse by topic →
         </Link>
