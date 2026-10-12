@@ -78,9 +78,9 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   },
   "acquisition-late-bad": {
     primary: "Correct — the association has formed.",
-    secondary: "After repeated CS-US pairings, the BLA encodes the association. The infralimbic cortex (IL) strengthened the connection with excitatory glutamatergic signals. The CeA now triggers anticipatory fear — freezing behavior — when the cue appears alone. This is classical conditioning.",
-    bridge: "Trace shows the IL → BLA → CeA fear acquisition pathway.",
-    structure: "IL → BLA → CeA",
+    secondary: "After repeated CS-US pairings, the BLA encodes the association. The prelimbic cortex (PL) strengthened the connection with excitatory glutamatergic signals. The CeA now triggers anticipatory fear — freezing behavior — when the cue appears alone. This is classical conditioning.",
+    bridge: "Trace shows the CS → BLA → CeA fear acquisition pathway.",
+    structure: "CS → BLA → CeA",
   },
   "acquisition-late-nothing": {
     primary: "Most people expect something aversive by this point.",
@@ -90,21 +90,21 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   },
   "extinction-early-bad": {
     primary: "The fear persists — extinction has not occurred yet.",
-    secondary: "The BLA still holds the original association. Extinction requires repeated CS-alone presentations so the prelimbic cortex (PL) can activate intercalated cells (ITCs) to inhibit amygdala output. That process takes time.",
-    bridge: "Trace shows the PL → ITC → BLA inhibition pathway.",
+    secondary: "The BLA still holds the original association. Extinction requires repeated CS-alone presentations so the infralimbic cortex (IL) can activate intercalated cells (ITCs) to inhibit amygdala output. That process takes time.",
+    bridge: "Trace shows the vmPFC → ITC → CeA inhibition pathway.",
     structure: "BLA association still active",
   },
   "extinction-early-nothing": {
     primary: "You are already updating — faster than typical.",
-    secondary: "This may reflect cortical reasoning overriding the amygdala's prediction. In full extinction, the PL gradually activates ITCs to suppress BLA output. Here, conscious evaluation may be running ahead of the subcortical learning process.",
+    secondary: "This may reflect cortical reasoning overriding the amygdala's prediction. In full extinction, the IL gradually activates ITCs to suppress BLA output. Here, conscious evaluation may be running ahead of the subcortical learning process.",
     bridge: "Compare cortical override vs ITC-mediated extinction in Explain.",
     structure: "Cortical reasoning ahead of extinction circuit",
   },
   "extinction-late-nothing": {
     primary: "Extinction learning has formed.",
-    secondary: "The PL activated the ITCs, which suppressed BLA output. A new safety association now competes with the original fear memory. Critically, the original memory still exists — it has been suppressed, not erased. Extinction is new learning layered on top of old learning.",
-    bridge: "Trace shows the full extinction circuit: PL → ITCs → BLA inhibition.",
-    structure: "PL → ITCs → BLA inhibition",
+    secondary: "The IL activated the ITCs, which suppressed BLA output. A new safety association now competes with the original fear memory. Critically, the original memory still exists — it has been suppressed, not erased. Extinction is new learning layered on top of old learning.",
+    bridge: "Trace shows the full extinction circuit: vmPFC → ITCs → CeA inhibition.",
+    structure: "vmPFC → ITCs → CeA inhibition",
   },
   "extinction-late-bad": {
     primary: "The fear association is persisting despite repeated safe exposures.",

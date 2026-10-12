@@ -87,23 +87,23 @@ export const unit4ConceptCards = [
   },
   {
     id: "u4-cc-09",
-    term: "Infralimbic Cortex (IL)",
+    term: "Prelimbic Cortex (PL)",
     definition:
-      "A subregion of the vmPFC that sends excitatory (glutamatergic) signals directly to the BLA. The IL activates the amygdala, effectively saying 'this is dangerous.' It is critical for initial fear conditioning — strengthening the association between the CS and danger.",
-    structures: ["Infralimbic cortex", "BLA"],
+      "A subregion of the vmPFC that sends excitatory (glutamatergic) signals directly to the BLA. The PL activates the amygdala, effectively saying 'this is dangerous.' It is critical for initial fear conditioning — strengthening the association between the CS and danger.",
+    structures: ["Prelimbic cortex", "BLA"],
   },
   {
     id: "u4-cc-10",
-    term: "Prelimbic Cortex (PL)",
+    term: "Infralimbic Cortex (IL)",
     definition:
-      "A subregion of the vmPFC that sends excitatory signals to the intercalated cells (ITCs). By activating these GABAergic inhibitory cells, the PL effectively inhibits the amygdala, saying 'calm down, I got this.' The PL is the key structure enabling extinction.",
-    structures: ["Prelimbic cortex", "ITCs"],
+      "A subregion of the vmPFC that sends excitatory signals to the intercalated cells (ITCs). By activating these GABAergic inhibitory cells, the IL effectively inhibits the amygdala, saying 'calm down, I got this.' The IL is the key structure enabling extinction.",
+    structures: ["Infralimbic cortex", "ITCs"],
   },
   {
     id: "u4-cc-11",
     term: "Intercalated Cells (ITCs) in Extinction",
     definition:
-      "GABAergic (inhibitory) cells flanking the BLA. When activated by the prelimbic cortex during extinction, they suppress amygdala output. This is the mechanism by which the brain learns 'the cue is now safe' — not by erasing the original fear memory, but by actively inhibiting its expression.",
+      "GABAergic (inhibitory) cells flanking the BLA. When activated by the infralimbic cortex during extinction, they suppress amygdala output. This is the mechanism by which the brain learns 'the cue is now safe' — not by erasing the original fear memory, but by actively inhibiting its expression.",
     structures: ["ITCs", "BLA"],
   },
   {
@@ -136,10 +136,10 @@ export const unit4ConceptCards = [
   },
   {
     id: "u4-cc-16",
-    term: "Glutamatergic Signaling (IL → BLA)",
+    term: "Glutamatergic Signaling (PL → BLA)",
     definition:
-      "The infralimbic cortex sends excitatory glutamate signals to the basolateral amygdala, strengthening fear associations. This is the neurochemical basis of how the vmPFC activates fear during conditioning.",
-    structures: ["IL", "BLA"],
+      "The prelimbic cortex sends excitatory glutamate signals to the basolateral amygdala, strengthening fear associations. This is the neurochemical basis of how the vmPFC activates fear during conditioning.",
+    structures: ["PL", "BLA"],
   },
   {
     id: "u4-cc-17",
@@ -177,7 +177,7 @@ export const unit4Pathways = [
         number: 3,
         structure: "Basolateral Amygdala (BLA) — Association Formed",
         description:
-          "The BLA encodes the association between the CS and the US. The infralimbic cortex (IL) sends excitatory glutamatergic signals to the BLA, strengthening this connection.",
+          "The BLA encodes the association between the CS and the US. The prelimbic cortex (PL) sends excitatory glutamatergic signals to the BLA, strengthening this connection.",
       },
       {
         number: 4,
@@ -201,15 +201,15 @@ export const unit4Pathways = [
       },
       {
         number: 2,
-        structure: "Prelimbic Cortex (PL) Activation",
+        structure: "Infralimbic Cortex (IL) Activation",
         description:
-          "The PL subregion of the vmPFC becomes active, recognizing that the CS no longer predicts danger.",
+          "The IL subregion of the vmPFC becomes active, recognizing that the CS no longer predicts danger.",
       },
       {
         number: 3,
         structure: "ITCs Activated (GABAergic Inhibition)",
         description:
-          "The PL sends excitatory signals to the intercalated cells. These GABAergic cells inhibit the BLA's output, suppressing the fear response. The amygdala is being actively quieted.",
+          "The IL sends excitatory signals to the intercalated cells. These GABAergic cells inhibit the BLA's output, suppressing the fear response. The amygdala is being actively quieted.",
       },
       {
         number: 4,
@@ -287,14 +287,14 @@ export const unit4Distinctions = [
   },
   {
     id: "u4-db-04",
-    termA: "Infralimbic Cortex (IL)",
-    termB: "Prelimbic Cortex (PL)",
+    termA: "Prelimbic Cortex (PL)",
+    termB: "Infralimbic Cortex (IL)",
     descriptionA:
       "Sends excitatory (glutamatergic) signals directly to the BLA. Activates the amygdala — 'this is dangerous.' Critical for initial fear conditioning and strengthening fear associations.",
     descriptionB:
-      "Sends excitatory signals to the intercalated cells (ITCs). By activating these GABAergic inhibitory cells, the PL suppresses amygdala output — 'calm down, I got this.' Critical for extinction.",
+      "Sends excitatory signals to the intercalated cells (ITCs). By activating these GABAergic inhibitory cells, the IL suppresses amygdala output — 'calm down, I got this.' Critical for extinction.",
     keyDifference:
-      "The IL turns fear on by exciting the BLA. The PL turns fear off by exciting the ITCs, which inhibit the BLA. Both are in the vmPFC but have opposite functional effects.",
+      "The PL turns fear on by exciting the BLA. The IL turns fear off by exciting the ITCs, which inhibit the BLA. Both are in the vmPFC but have opposite functional effects.",
   },
 ];
 
@@ -307,7 +307,7 @@ export const unit4CaseNotes = [
     id: "u4-cn-01",
     title: "Why Fear Returns After Extinction",
     content:
-      "Spontaneous recovery demonstrates that the original fear memory is never truly erased. During extinction, the vmPFC (specifically the prelimbic cortex) activates inhibitory ITCs to suppress amygdala output. A new 'safety' memory is formed that competes with the original fear memory. But because both memories coexist, the original fear can resurface — sometimes after a time delay, sometimes after a context change. This is why a person who has overcome a phobia might suddenly feel the fear return in an unexpected moment.",
+      "Spontaneous recovery demonstrates that the original fear memory is never truly erased. During extinction, the vmPFC (specifically the infralimbic cortex) activates inhibitory ITCs to suppress amygdala output. A new 'safety' memory is formed that competes with the original fear memory. But because both memories coexist, the original fear can resurface — sometimes after a time delay, sometimes after a context change. This is why a person who has overcome a phobia might suddenly feel the fear return in an unexpected moment.",
     sensitivity: "standard" as const,
   },
   {
@@ -352,7 +352,7 @@ export const unit4Review = [
     id: "u4-rq-05",
     question:
       "Identify the roles of the infralimbic cortex, prelimbic cortex, and intercalated cells in fear conditioning and extinction.",
-    hint: "IL activates the amygdala (fear on). PL activates ITCs, which inhibit the amygdala (fear off).",
+    hint: "PL activates the amygdala (fear on). IL activates ITCs, which inhibit the amygdala (fear off).",
   },
   {
     id: "u4-rq-06",

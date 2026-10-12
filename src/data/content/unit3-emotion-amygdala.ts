@@ -347,7 +347,7 @@ export const unit3Pathways = [
         number: 2,
         structure: "Intercalated Cells (ITCs) — Inhibitory Brakes",
         description:
-          "GABAergic cells flanking the BLA that can suppress amygdala output. When activated by the prelimbic cortex (vmPFC), ITCs quiet the system.",
+          "GABAergic cells flanking the BLA that can suppress amygdala output. When activated by the infralimbic cortex (vmPFC), ITCs quiet the system.",
       },
       {
         number: 3,
