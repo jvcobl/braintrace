@@ -1,6 +1,7 @@
 import { RotateCcw } from "lucide-react";
 import ModuleLink from "@/components/ModuleLink";
 import Breadcrumb from "@/components/layout/Breadcrumb";
+import { badgeFill } from "@/lib/colors";
 
 const steps = [
   { name: "Predict", badge: "Prediction", color: "#7F77DD", description: "The brain generates an expectation based on prior experience and context." },
@@ -36,7 +37,7 @@ const ConceptLoop = () => (
               <div className="flex items-center gap-2 mb-1.5">
                 <span
                   className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
-                  style={{ backgroundColor: step.color }}
+                  style={{ backgroundColor: badgeFill(step.color) }}
                 >
                   {step.badge}
                 </span>
@@ -60,7 +61,7 @@ const ConceptLoop = () => (
     <h2 id="loop-modules" className="text-xl font-medium text-foreground mt-14 mb-2">
       The loop in each module
     </h2>
-    <p className="text-sm text-gray-400 mb-5">
+    <p className="text-sm text-gray-500 mb-5">
       Each module emphasizes different steps of the loop. The badges show which roles are most prominent.
     </p>
     <div className="space-y-3">
@@ -70,7 +71,7 @@ const ConceptLoop = () => (
             <ModuleLink moduleId={m.id} />
           </div>
           <div className="flex-1 pt-1">
-            <span className="text-xs font-medium text-gray-400">{m.emphasis}</span>
+            <span className="text-xs font-medium text-gray-500">{m.emphasis}</span>
             <p className="text-sm text-muted-foreground mt-0.5 leading-relaxed">{m.note}</p>
           </div>
         </div>

@@ -29,7 +29,7 @@ const Header = () => {
     `relative py-5 text-sm font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
       isActive(to)
         ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary"
-        : "text-gray-400 hover:text-gray-600"
+        : "text-gray-500 hover:text-gray-700"
     }`;
 
   return (
@@ -86,7 +86,7 @@ const Header = () => {
           <SearchBar />
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-full p-2.5 text-gray-400 hover:bg-gray-100 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex items-center justify-center rounded-full p-2.5 text-gray-500 hover:bg-gray-100 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
@@ -106,7 +106,7 @@ const Header = () => {
               className={`block px-3.5 py-3 text-sm font-medium uppercase tracking-wide transition-colors ${
                 isActive(to)
                   ? "text-foreground"
-                  : "text-gray-400 hover:text-gray-600"
+                  : "text-gray-500 hover:text-gray-700"
               }`}
               aria-current={isActive(to) ? "page" : undefined}
             >

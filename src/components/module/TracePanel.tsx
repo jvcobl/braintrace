@@ -7,7 +7,7 @@ interface TracePanelProps {
 const TracePanel = ({ nodes }: TracePanelProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Trace the Pathway</h2>
-    <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground/60">
+    <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground">
       Follow the signal through the circuit.
     </p>
     <ol className="mt-5 sm:mt-6 space-y-0" aria-label="Neural pathway steps">

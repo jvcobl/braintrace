@@ -29,11 +29,11 @@ const TopicsIndex = () => (
             <h2 className="font-display text-base text-foreground group-hover:text-primary transition-colors">
               {t.title}
             </h2>
-            <p className="text-xs text-gray-400 mt-0.5 truncate">
+            <p className="text-xs text-gray-500 mt-0.5 truncate">
               {t.teaser}
             </p>
           </div>
-          <span className="text-xs text-muted-foreground/40 shrink-0">
+          <span className="text-xs text-muted-foreground shrink-0">
             {t.modules} {t.modules === 1 ? "module" : "modules"}
           </span>
           <span

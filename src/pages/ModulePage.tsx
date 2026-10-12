@@ -94,7 +94,7 @@ const ModulePageContent = () => {
         {MODULE_TOPIC[mod.slug] && (
           <Link
             to={`/topics/${MODULE_TOPIC[mod.slug].slug}`}
-            className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 hover:text-primary transition-colors"
+            className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary hover:text-primary/80 transition-colors"
           >
             {MODULE_TOPIC[mod.slug].title}
           </Link>

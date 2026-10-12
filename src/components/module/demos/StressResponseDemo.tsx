@@ -201,7 +201,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                             : "border-dashed border-gray-200 bg-gray-50/50"
                       }`}
                     >
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 mb-0.5">
+                      <p className="text-[10px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
                         {slot.label}
                       </p>
                       {filled ? (
@@ -210,7 +210,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                           <span className="text-sm font-medium text-gray-900">{filled}</span>
                         </div>
                       ) : (
-                        <p className="text-sm text-gray-400 italic">
+                        <p className="text-sm text-gray-500 italic">
                           {isCurrent ? "Select from below..." : "—"}
                         </p>
                       )}
@@ -345,7 +345,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
       {/* ── Phase 2: Override question ── */}
       {phase === "override" && (
         <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-wide text-amber-500 mb-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-amber-700 mb-4">
             Feedback Override
           </p>
 
@@ -353,11 +353,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           <div className="rounded-lg bg-gray-50 p-4 mb-5">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-700">
               <span>Hypothalamus</span>
-              <span className="text-gray-300">→</span>
+              <span className="text-gray-400" aria-hidden="true">→</span>
               <span>Pituitary</span>
-              <span className="text-gray-300">→</span>
+              <span className="text-gray-400" aria-hidden="true">→</span>
               <span>Adrenal Cortex</span>
-              <span className="text-gray-300">→</span>
+              <span className="text-gray-400" aria-hidden="true">→</span>
               <span className="font-medium">Cortisol</span>
             </div>
             <div className={`mt-2 text-xs px-2 py-1 rounded inline-block ${
@@ -383,7 +383,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                 } else if (selected) {
                   style = "border-destructive bg-destructive/5 text-gray-900";
                 } else {
-                  style = "border-gray-100 bg-gray-50 text-gray-400";
+                  style = "border-gray-100 bg-gray-50 text-gray-500";
                 }
               }
               return (

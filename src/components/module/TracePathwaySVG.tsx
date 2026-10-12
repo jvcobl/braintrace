@@ -393,7 +393,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
             className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
               !showAlt
                 ? "bg-white text-foreground shadow-sm"
-                : "text-gray-400 hover:text-gray-600"
+                : "text-gray-600 hover:text-gray-800"
             }`}
           >
             {pathway.title}
@@ -403,7 +403,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
             className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
               showAlt
                 ? "bg-white text-foreground shadow-sm"
-                : "text-gray-400 hover:text-gray-600"
+                : "text-gray-600 hover:text-gray-800"
             }`}
           >
             {pathway.alternateState.label}
@@ -572,7 +572,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                   key={`label-${e.from}-${e.to}-${i}`}
                   textAnchor={placed.anchor}
                   fontSize={10}
-                  fill="#888"
+                  fill="#6b7280"
                   stroke="white"
                   strokeWidth={4}
                   paintOrder="stroke"
@@ -596,16 +596,16 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
         {usedBadges.map((b) => (
           <span key={b} className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: BADGE_COLOR[b] }} />
-            <span className="text-xs text-gray-400 capitalize">{b}</span>
+            <span className="text-xs text-gray-500 capitalize">{b}</span>
           </span>
         ))}
         <span className="flex items-center gap-1.5">
           <span className="w-5 h-0 border-t-2 border-[#D85A30]" />
-          <span className="text-xs text-gray-400">Fast route</span>
+          <span className="text-xs text-gray-500">Fast route</span>
         </span>
         <span className="flex items-center gap-1.5">
           <span className="w-5 h-0 border-t-[1.5px] border-dashed border-gray-300" />
-          <span className="text-xs text-gray-400">Slow route</span>
+          <span className="text-xs text-gray-500">Slow route</span>
         </span>
       </div>
 

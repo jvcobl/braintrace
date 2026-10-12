@@ -102,7 +102,7 @@ export default function SearchBar() {
       {/* Trigger button */}
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center justify-center rounded-full p-2.5 text-gray-400 hover:bg-gray-100 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="inline-flex items-center justify-center rounded-full p-2.5 text-gray-500 hover:bg-gray-100 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         aria-label="Search (⌘K)"
       >
         <Search size={18} />
@@ -120,16 +120,16 @@ export default function SearchBar() {
           >
             {/* Search input */}
             <div className="flex items-center gap-2 border-b border-gray-100 pb-3 mb-3">
-              <Search size={16} className="text-gray-400 shrink-0" />
+              <Search size={16} className="text-gray-500 shrink-0" />
               <input
                 ref={inputRef}
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search modules, concepts, structures..."
-                className="w-full text-sm text-gray-900 placeholder:text-gray-400 outline-none bg-transparent"
+                className="w-full text-sm text-gray-900 placeholder:text-gray-500 outline-none bg-transparent"
               />
-              <kbd className="hidden sm:inline-flex shrink-0 items-center rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-medium text-gray-400">
+              <kbd className="hidden sm:inline-flex shrink-0 items-center rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
                 ESC
               </kbd>
             </div>
@@ -137,7 +137,7 @@ export default function SearchBar() {
             {/* Results */}
             <div className="max-h-80 overflow-y-auto">
               {query.trim().length >= 2 && results.length === 0 && (
-                <p className="py-8 text-center text-sm text-gray-400">
+                <p className="py-8 text-center text-sm text-gray-500">
                   No results for "{query}"
                 </p>
               )}
@@ -147,7 +147,7 @@ export default function SearchBar() {
                 if (!items?.length) return null;
                 return (
                   <div key={type} className="mb-3 last:mb-0">
-                    <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 mb-1.5 px-1">
+                    <p className="text-[10px] font-medium uppercase tracking-wider text-gray-500 mb-1.5 px-1">
                       {TYPE_LABEL[type]}s
                     </p>
                     {items.map((item) => (
@@ -176,7 +176,7 @@ export default function SearchBar() {
               })}
 
               {query.trim().length < 2 && (
-                <p className="py-8 text-center text-sm text-gray-400">
+                <p className="py-8 text-center text-sm text-gray-500">
                   Type at least 2 characters to search
                 </p>
               )}

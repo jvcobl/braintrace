@@ -84,7 +84,7 @@ const TopicPage = () => {
         <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl">
           {topic.description}
         </p>
-        <p className="mt-3 text-xs text-gray-400">
+        <p className="mt-3 text-xs text-gray-500">
           {topic.courseConnection}
         </p>
       </div>
@@ -93,7 +93,7 @@ const TopicPage = () => {
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
         Explore the modules
       </h2>
-      <p className="text-sm text-gray-400 mb-3">
+      <p className="text-sm text-gray-500 mb-3">
         Each module lets you experience the phenomenon, trace the neural pathway, and read the explanation.
       </p>
       <div className="space-y-2">
@@ -106,7 +106,7 @@ const TopicPage = () => {
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
         How your brain predicts
       </h2>
-      <p className="text-sm text-gray-400 mb-3">
+      <p className="text-sm text-gray-500 mb-3">
         These concept pages explain the shared framework behind the modules above.
       </p>
       <div className="space-y-2 max-w-md">

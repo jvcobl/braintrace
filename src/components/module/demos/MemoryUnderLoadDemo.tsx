@@ -144,7 +144,7 @@ function getSummary(results: RoundResult[]): ExperienceSummary {
 
 const loadColors: Record<LoadLevel, string> = {
   low: "text-primary",
-  medium: "text-amber-500",
+  medium: "text-amber-700",
   high: "text-destructive",
 };
 
@@ -300,7 +300,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {phase === "show" && (
             <div className="text-center">
               <p className="text-xs text-muted-foreground mb-1">Memorize these letters:</p>
-              <p className="text-[10px] text-muted-foreground/50 mb-3">They'll disappear shortly</p>
+              <p className="text-[11px] text-muted-foreground mb-3">They'll disappear shortly</p>
               <div className="flex gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => (
                   <span

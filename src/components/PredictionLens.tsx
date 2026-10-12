@@ -8,7 +8,7 @@ function DotLabel({ color, children }: { color: string; children: React.ReactNod
   return (
     <span className="flex items-center gap-1.5">
       <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${color}`} />
-      <span className="text-xs font-medium text-gray-400">{children}</span>
+      <span className="text-xs font-medium text-gray-500">{children}</span>
     </span>
   );
 }
@@ -42,14 +42,14 @@ const PredictionLens = ({ data }: PredictionLensProps) => {
       {/* Header */}
       <div className="flex items-center gap-2 mb-5">
         <span className="w-2 h-2 rounded-full bg-blue-500" />
-        <span className="text-[11px] uppercase tracking-widest font-medium text-gray-400">
+        <span className="text-[11px] uppercase tracking-widest font-medium text-gray-500">
           Prediction Lens
         </span>
       </div>
 
       {/* What happened */}
       <div className="mb-4">
-        <p className="text-xs font-medium text-gray-400 mb-1">What happened</p>
+        <p className="text-xs font-medium text-gray-500 mb-1">What happened</p>
         <p className="text-[13px] text-gray-900 leading-relaxed">{data.whatHappened}</p>
       </div>
 
@@ -83,13 +83,13 @@ const PredictionLens = ({ data }: PredictionLensProps) => {
 
       {/* Pathway */}
       <div className="mb-4">
-        <p className="text-xs font-medium text-gray-400 mb-1.5">Pathway</p>
+        <p className="text-xs font-medium text-gray-500 mb-1.5">Pathway</p>
         <PathwayPills text={data.whatPathwayHandledIt} />
       </div>
 
       {/* NBB302 connection */}
       <div className="bg-gray-50 rounded-lg px-4 py-3">
-        <p className="text-xs font-medium text-gray-400 mb-1">NBB302 connection</p>
+        <p className="text-xs font-medium text-gray-500 mb-1">NBB302 connection</p>
         <p className="text-[13px] text-gray-900 leading-relaxed">{data.nbb302Connection}</p>
       </div>
     </div>

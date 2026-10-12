@@ -233,7 +233,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className={`text-xs font-semibold uppercase tracking-wide ${
-                currentTrialType === "baseline" ? "text-primary" : "text-amber-500"
+                currentTrialType === "baseline" ? "text-primary" : "text-amber-700"
               }`}>
                 {trialLabel}
               </span>
@@ -280,7 +280,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
                     : "This trial may include an unexpected interruption. Same task — click the circle."}
                 </p>
                 {currentTrialType === "interrupted" && (
-                  <p className="text-xs text-muted-foreground/70 italic mb-3">
+                  <p className="text-xs text-muted-foreground italic mb-3">
                     Notice how your body responds, not just your click speed.
                   </p>
                 )}

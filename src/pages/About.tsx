@@ -10,7 +10,7 @@ const steps = [
 const About = () => (
   <div className="container max-w-2xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
     <Breadcrumb />
-    <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/70">
+    <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
       About
     </p>
     <h1 className="mt-3 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-4xl">

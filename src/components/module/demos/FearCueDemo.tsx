@@ -54,7 +54,7 @@ const phaseInfo: Record<Exclude<Stage, "pause">, { label: string; color: string;
   },
   test: {
     label: "Test — After Delay",
-    color: "text-amber-500",
+    color: "text-amber-700",
     description: "Time has passed. Does the fear return?",
   },
 };
@@ -376,7 +376,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
       {/* Recovery: prediction commit */}
       {recoveryPhase === "prediction" && (
         <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             After Extinction
           </p>
           <p className="text-sm font-medium text-foreground mb-4">
@@ -421,7 +421,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
       {/* Recovery: CS replay (reuses existing trial-card pattern) */}
       {recoveryPhase === "replay" && (
         <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             Test — CS Alone
           </p>
           <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary">
@@ -447,7 +447,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
       {/* Recovery: result */}
       {recoveryPhase === "result" && (
         <div className="rounded-lg border border-border bg-card p-4 sm:p-6 animate-[fadeIn_400ms_ease-out]">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             Spontaneous Recovery
           </p>
           <div className="flex min-h-[120px] items-center justify-center rounded-lg bg-secondary mb-4">

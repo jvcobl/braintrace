@@ -107,13 +107,13 @@ const CourseMap = () => {
               ))}
             </div>
 
-            <span className="inline-block mt-3 text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
+            <span className="inline-block mt-3 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
               {area.temporal}
             </span>
 
             <div className="border-t border-gray-100 my-4" />
 
-            <p className="text-[10px] font-medium text-gray-400 uppercase tracking-wider mb-2">
+            <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider mb-2">
               BrainTrace modules
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -149,9 +149,9 @@ const CourseMap = () => {
             View full course timeline
           </span>
           {timelineOpen ? (
-            <ChevronUp className="w-4 h-4 text-gray-400" />
+            <ChevronUp className="w-4 h-4 text-gray-500" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-gray-400" />
+            <ChevronDown className="w-4 h-4 text-gray-500" />
           )}
         </button>
 
@@ -172,14 +172,14 @@ const CourseMap = () => {
                     />
 
                     <div className="flex items-baseline gap-2 flex-wrap">
-                      <span className="text-xs text-gray-400 font-medium shrink-0">
+                      <span className="text-xs text-gray-500 font-medium shrink-0">
                         {entry.week === "—" ? "" : `Week ${entry.week}`}
                       </span>
-                      <span className={`text-sm ${isExam ? "text-gray-400 font-medium" : "text-gray-700"}`}>
+                      <span className={`text-sm ${isExam ? "text-gray-500 font-medium" : "text-gray-700"}`}>
                         {entry.topic}
                       </span>
                       {entry.temporal && (
-                        <span className="text-[10px] text-gray-400">
+                        <span className="text-[10px] text-gray-500">
                           ({entry.temporal})
                         </span>
                       )}
@@ -190,7 +190,7 @@ const CourseMap = () => {
                         {entry.modules!.map((name) => (
                           <span
                             key={name}
-                            className="text-[10px] font-medium bg-[#1D9E75]/10 text-[#1D9E75] px-2 py-0.5 rounded"
+                            className="text-[10px] font-medium bg-primary/10 text-primary px-2 py-0.5 rounded"
                           >
                             {name}
                           </span>

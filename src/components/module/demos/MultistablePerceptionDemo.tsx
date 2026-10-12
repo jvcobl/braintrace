@@ -101,7 +101,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
               `} />
               <span className={`
                 text-[11px] font-medium transition-colors
-                ${active ? "text-primary" : done ? "text-muted-foreground" : "text-muted-foreground/60"}
+                ${active ? "text-primary" : done ? "text-muted-foreground" : "text-muted-foreground"}
               `}>
                 {ex.title}
               </span>
@@ -135,7 +135,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
         {/* Card header */}
         <div className="flex items-center justify-between gap-3 border-b border-border/60 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2.5">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary/50">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">
               {example.category}
             </span>
             <span className="text-border" aria-hidden>·</span>
@@ -274,7 +274,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
 
                 {/* Neuroscience */}
                 <div className="rounded-lg border border-primary/15 bg-primary/5 px-4 py-3">
-                  <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 mb-1.5">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary mb-1.5">
                     Neuroscience
                   </p>
                   <p className="text-[13px] text-foreground/80 leading-relaxed">

@@ -1,5 +1,6 @@
 import ModuleLink from "@/components/ModuleLink";
 import Breadcrumb from "@/components/layout/Breadcrumb";
+import { badgeFill } from "@/lib/colors";
 
 const failures = [
   {
@@ -55,13 +56,13 @@ const ConceptFailure = () => (
             <h2 className="text-lg font-medium text-foreground">{f.title}</h2>
             <span
               className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
-              style={{ backgroundColor: f.accent }}
+              style={{ backgroundColor: badgeFill(f.accent) }}
             >
               {f.badge}
             </span>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">{f.explanation}</p>
-          <p className="mt-2 text-xs text-gray-400 italic">{f.traceNote}</p>
+          <p className="mt-2 text-xs text-gray-500 italic">{f.traceNote}</p>
           <div className="mt-4 space-y-2">
             {f.modules.map((id) => (
               <ModuleLink key={id} moduleId={id} />

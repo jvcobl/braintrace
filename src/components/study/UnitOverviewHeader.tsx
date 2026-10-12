@@ -7,7 +7,7 @@ interface UnitOverviewHeaderProps {
 
 const UnitOverviewHeader = ({ unitNumber, meta }: UnitOverviewHeaderProps) => (
   <header>
-    <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/70">
+    <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
       Topic Area
     </p>
     <h1 className="mt-2.5 sm:mt-3 font-display text-[1.75rem] sm:text-[2rem] tracking-tight text-foreground md:text-[2.25rem] leading-[1.15]">

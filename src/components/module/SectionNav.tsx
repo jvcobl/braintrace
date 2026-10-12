@@ -20,11 +20,11 @@ const SectionNav = ({ current, onSelect }: SectionNavProps) => (
         className={`relative pb-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
           current === s
             ? "text-gray-900 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary"
-            : "text-gray-400 hover:text-gray-600"
+            : "text-gray-500 hover:text-gray-700"
         }`}
         aria-current={current === s ? "step" : undefined}
       >
-        <span className="text-[10px] text-gray-300 mr-1">{i + 1}</span>
+        <span className="text-[10px] mr-1" aria-hidden="true">{i + 1}</span>
         {s}
       </button>
     ))}

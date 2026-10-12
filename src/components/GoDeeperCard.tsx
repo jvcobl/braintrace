@@ -18,7 +18,7 @@ const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
         className="w-full flex items-center justify-between py-3.5 px-5 cursor-pointer hover:bg-gray-50 transition-colors"
       >
         <span className="text-sm font-medium text-gray-900 text-left">{data.title}</span>
-        <span className="text-gray-400 text-lg leading-none select-none">
+        <span className="text-gray-500 text-lg leading-none select-none">
           {open ? "−" : "+"}
         </span>
       </button>
@@ -46,7 +46,7 @@ const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
 
           {data.clinicalNote && (
             <div className="bg-gray-50 rounded-lg p-3 mt-3">
-              <p className="text-xs font-medium text-gray-400 mb-1">Clinical note</p>
+              <p className="text-xs font-medium text-gray-500 mb-1">Clinical note</p>
               <p className="text-[13px] text-gray-600 italic leading-relaxed">
                 {data.clinicalNote}
               </p>

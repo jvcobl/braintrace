@@ -109,9 +109,9 @@ const Index = () => (
                 <h3 className="font-display text-base text-foreground group-hover:text-primary transition-colors">
                   {t.title}
                 </h3>
-                <p className="text-xs text-gray-400 mt-0.5">{t.hook}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{t.hook}</p>
               </div>
-              <span className="text-xs text-muted-foreground/40 shrink-0">
+              <span className="text-xs text-muted-foreground shrink-0">
                 {t.count} {t.count === 1 ? "module" : "modules"}
               </span>
               <span

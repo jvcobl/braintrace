@@ -20,7 +20,7 @@ const FeaturedLessonCards = ({ linkedModules }: FeaturedLessonCardsProps) => (
         ))}
       </div>
     ) : (
-      <p className="mt-6 text-[13px] text-muted-foreground/50">
+      <p className="mt-6 text-[13px] text-muted-foreground">
         Lessons coming soon
       </p>
     )}

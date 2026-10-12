@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import ModuleLink from "@/components/ModuleLink";
 import Breadcrumb from "@/components/layout/Breadcrumb";
+import { badgeFill } from "@/lib/colors";
 
 /* ── Scenario data (text only, no slider) ── */
 
@@ -103,7 +104,7 @@ const ConceptPrecision = () => {
               <h3 className="text-base font-medium text-foreground">{s.title}</h3>
               <span
                 className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
-                style={{ backgroundColor: s.dominantColor }}
+                style={{ backgroundColor: badgeFill(s.dominantColor) }}
               >
                 {s.dominant} dominates
               </span>
@@ -149,9 +150,9 @@ const ConceptPrecision = () => {
             </span>
           </div>
           {deeperOpen ? (
-            <ChevronUp className="w-4 h-4 text-gray-400" />
+            <ChevronUp className="w-4 h-4 text-gray-500" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-gray-400" />
+            <ChevronDown className="w-4 h-4 text-gray-500" />
           )}
         </button>
 
