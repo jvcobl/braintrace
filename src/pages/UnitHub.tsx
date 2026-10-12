@@ -29,7 +29,12 @@ const UnitHub = () => {
   // Scroll to a linked section or item once the page (and any expanded list) has rendered.
   const location = useLocation();
   useEffect(() => {
-    const target = decodeURIComponent(location.hash.slice(1));
+    let target = location.hash.slice(1);
+    try {
+      target = decodeURIComponent(target);
+    } catch {
+      return; // a malformed link (e.g. a stray "%") just opens the top of the page
+    }
     if (!target) return;
     const timer = setTimeout(() => {
       const el = document.getElementById(target);

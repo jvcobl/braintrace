@@ -31,3 +31,11 @@ export function focusTarget(el: HTMLElement | null) {
   if (!el.matches(FOCUSABLE)) el.setAttribute("tabindex", "-1");
   el.focus({ preventScroll: true });
 }
+
+/**
+ * Look up a key that came from the URL. Plain objects also "have" keys like "constructor",
+ * so /topics/constructor must not find Object's constructor.
+ */
+export function lookup<T>(map: Record<string, T>, key: string | undefined): T | undefined {
+  return key !== undefined && Object.prototype.hasOwnProperty.call(map, key) ? map[key] : undefined;
+}

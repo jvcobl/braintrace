@@ -6,6 +6,7 @@
 // ============================================================
 
 import type { UnitContent } from "./types";
+import { lookup } from "@/lib/utils";
 
 import {
   unit1Meta, unit1ConceptCards, unit1Pathways, unit1Distinctions, unit1CaseNotes, unit1Review,
@@ -95,7 +96,7 @@ export const lessonMappings: LessonMapping[] = [
 
 /** Get the full content bundle for a unit. */
 export function getUnitContent(unitId: string): UnitContent | undefined {
-  return unitContent[unitId];
+  return lookup(unitContent, unitId);
 }
 
 /** Get all unit IDs in order. */

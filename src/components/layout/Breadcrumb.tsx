@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { modules } from "@/data/modules";
 import { conceptPages } from "@/data/conceptPages";
 import { UNIT_TO_TOPIC } from "@/data/topicUnits";
+import { lookup } from "@/lib/utils";
 
 const TOPIC_TITLES: Record<string, string> = {
   perception: "Perception and Object Recognition",
@@ -58,17 +59,17 @@ export default function Breadcrumb() {
         : { label: "How Your Brain Predicts", to: "/how-your-brain-predicts" },
     );
     if (segments[1]) {
-      crumbs.push({ label: conceptSlugToTitle[segments[1]] ?? segments[1] });
+      crumbs.push({ label: lookup(conceptSlugToTitle, segments[1]) ?? segments[1] });
     }
   } else if (segments[0] === "topics") {
     if (segments[1]) {
       crumbs.push({ label: "Topics", to: "/topics" });
-      crumbs.push({ label: TOPIC_TITLES[segments[1]] ?? segments[1] });
+      crumbs.push({ label: lookup(TOPIC_TITLES, segments[1]) ?? segments[1] });
     } else {
       crumbs.push({ label: "Topics" });
     }
   } else if (segments[0] === "unit" && segments[1]) {
-    const topicSlug = UNIT_TO_TOPIC[segments[1]];
+    const topicSlug = lookup(UNIT_TO_TOPIC, segments[1]);
     crumbs.push({ label: "Topics", to: "/topics" });
     if (topicSlug) crumbs.push({ label: TOPIC_TITLES[topicSlug], to: `/topics/${topicSlug}` });
     crumbs.push({ label: "Study guide" });

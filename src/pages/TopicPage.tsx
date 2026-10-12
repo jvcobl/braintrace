@@ -4,6 +4,7 @@ import ModuleLink from "@/components/ModuleLink";
 import ConceptLink from "@/components/ConceptLink";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { TOPIC_TO_UNIT } from "@/data/topicUnits";
+import { lookup } from "@/lib/utils";
 
 /* ── Topic data ── */
 
@@ -73,7 +74,8 @@ const topics: Record<string, Topic> = {
 
 const TopicPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const topic = slug ? topics[slug] : undefined;
+  const topic = lookup(topics, slug);
+  const unitId = lookup(TOPIC_TO_UNIT, slug);
   usePageMeta({ title: topic?.title, description: topic?.description, canonicalPath: topic ? `/topics/${slug}` : undefined });
 
   if (!topic) return <Navigate to="/topics" replace />;
@@ -106,9 +108,9 @@ const TopicPage = () => {
       </div>
 
       {/* Study guide (unit hub) */}
-      {slug && TOPIC_TO_UNIT[slug] && (
+      {unitId && (
         <Link
-          to={`/unit/${TOPIC_TO_UNIT[slug]}`}
+          to={`/unit/${unitId}`}
           className="group mt-4 flex items-center justify-between gap-3 rounded-lg border border-dashed border-border bg-white/60 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <span>
