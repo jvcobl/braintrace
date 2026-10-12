@@ -32,10 +32,14 @@ function installDoubleTapGuard() {
   );
 }
 
-function armDoubleTapGuard() {
+/** Called when a step (or lesson tab) changes; arms the guard if the user's input caused it. */
+export function armDoubleTapGuard() {
   const now = performance.now();
   if (now - lastInputAt < CAUSED_BY_INPUT_MS) guardUntil = now + GUARD_MS;
 }
+
+// Listen from app start, so the tap that opens a demo (e.g. "Begin Experience") is seen too.
+installDoubleTapGuard();
 
 /**
  * Keeps keyboard and screen-reader users oriented as a demo moves from step to step.
@@ -51,8 +55,6 @@ export function useStepFocus<T extends HTMLElement = HTMLDivElement>(stepKey: st
   const containerRef = useRef<T>(null);
   const previousKey = useRef(stepKey);
   const [announcement, setAnnouncement] = useState("");
-
-  useEffect(installDoubleTapGuard, []);
 
   useEffect(() => {
     if (previousKey.current === stepKey) return;
