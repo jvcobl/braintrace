@@ -67,7 +67,7 @@ function shuffle<T>(arr: T[]): T[] {
 type Phase = "match" | "result";
 
 const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
-  const [items] = useState(() => shuffle(SCENARIOS));
+  const [items, setItems] = useState(() => shuffle(SCENARIOS));
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [phase, setPhase] = useState<Phase>("match");
@@ -88,6 +88,7 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   );
 
   const handleReset = useCallback(() => {
+    setItems(shuffle(SCENARIOS));
     setCurrent(0);
     setAnswers({});
     setPhase("match");
@@ -139,7 +140,7 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                   key={r}
                   type="button"
                   onClick={() => handlePick(r)}
-                  className="flex-1 min-w-[100px] rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="flex-1 min-w-[100px] rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors [@media(hover:hover)]:hover:bg-accent [@media(hover:hover)]:hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <span className="block font-semibold">{r}</span>
                   <span className="block text-[11px] text-muted-foreground">{REGION_LABELS[r].short}</span>
@@ -190,7 +191,7 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
               <button
                 type="button"
                 onClick={() => onNavigate("Trace")}
-                className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group"
+                className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group rounded-sm py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <span>Trace shows the PFC functional map and how these regions connect</span>
                 <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
@@ -200,7 +201,7 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             <button
               type="button"
               onClick={handleReset}
-              className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="mx-auto block rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Try Again
             </button>

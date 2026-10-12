@@ -61,7 +61,7 @@ function shuffle<T>(arr: T[]): T[] {
 type Phase = "sort" | "result";
 
 const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
-  const [items] = useState(() => shuffle(ITEMS));
+  const [items, setItems] = useState(() => shuffle(ITEMS));
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [phase, setPhase] = useState<Phase>("sort");
@@ -82,6 +82,7 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
   );
 
   const handleReset = useCallback(() => {
+    setItems(shuffle(ITEMS));
     setCurrent(0);
     setAnswers({});
     setPhase("sort");
@@ -128,14 +129,14 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
               <button
                 type="button"
                 onClick={() => handlePick("homeostasis")}
-                className="flex-1 rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="flex-1 rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors [@media(hover:hover)]:hover:bg-accent [@media(hover:hover)]:hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Homeostasis
               </button>
               <button
                 type="button"
                 onClick={() => handlePick("allostasis")}
-                className="flex-1 rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="flex-1 rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors [@media(hover:hover)]:hover:bg-accent [@media(hover:hover)]:hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Allostasis
               </button>
@@ -149,7 +150,7 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
               <p className="text-sm text-foreground leading-relaxed">
                 {correctCount === items.length
                   ? "Every classification was correct. The core distinction — reactive correction vs anticipatory shift — was clear throughout."
-                  : correctCount >= items.length / 2
+                  : correctCount > items.length / 2
                     ? "The distinction held for most cases. The hardest calls are chronic scenarios where the body shifts its baseline — that shift is allostasis, and its cost over time is allostatic load."
                     : "This distinction is subtle. Both systems maintain stability, but through different mechanisms: homeostasis corrects deviations reactively, while allostasis shifts the set point itself to meet predicted demand."}
               </p>
@@ -182,7 +183,7 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
               <button
                 type="button"
                 onClick={() => onNavigate("Explain")}
-                className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group"
+                className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group rounded-sm py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <span>Explain covers why allostatic load damages brain structures over time</span>
                 <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
@@ -192,7 +193,7 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
             <button
               type="button"
               onClick={handleReset}
-              className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="mx-auto block rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Try Again
             </button>

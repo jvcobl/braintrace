@@ -61,7 +61,7 @@ function shuffle<T>(arr: T[]): T[] {
 type Phase = "sort" | "result";
 
 const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
-  const [items] = useState(() => shuffle(ITEMS));
+  const [items, setItems] = useState(() => shuffle(ITEMS));
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [phase, setPhase] = useState<Phase>("sort");
@@ -82,6 +82,7 @@ const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" |
   );
 
   const handleReset = useCallback(() => {
+    setItems(shuffle(ITEMS));
     setCurrent(0);
     setAnswers({});
     setPhase("sort");
@@ -131,14 +132,14 @@ const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" |
               <button
                 type="button"
                 onClick={() => handlePick("fear")}
-                className="flex-1 rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="flex-1 rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors [@media(hover:hover)]:hover:bg-accent [@media(hover:hover)]:hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Fear
               </button>
               <button
                 type="button"
                 onClick={() => handlePick("anxiety")}
-                className="flex-1 rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                className="flex-1 rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors [@media(hover:hover)]:hover:bg-accent [@media(hover:hover)]:hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 Anxiety
               </button>
@@ -153,7 +154,7 @@ const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" |
               <p className="text-sm text-foreground leading-relaxed">
                 {correctCount === items.length
                   ? "You correctly distinguished every scenario. The key differentiator — present threat vs predicted threat — was clear in each case."
-                  : correctCount >= items.length / 2
+                  : correctCount > items.length / 2
                     ? "The distinction held for most scenarios. The cases that blur are often ones where prediction and presence overlap — a sign that the boundary is real but not always obvious."
                     : "Several scenarios crossed the boundary. This reflects how naturally the brain blurs the line between responding to what is here and anticipating what might come."}
               </p>
@@ -187,7 +188,7 @@ const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" |
               <button
                 type="button"
                 onClick={() => onNavigate("Trace")}
-                className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group"
+                className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group rounded-sm py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <span>See how fear and anxiety use different amygdala circuits in Trace</span>
                 <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
@@ -197,7 +198,7 @@ const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" |
             <button
               type="button"
               onClick={handleReset}
-              className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="mx-auto block rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Try Again
             </button>
