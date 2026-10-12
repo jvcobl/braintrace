@@ -10,7 +10,7 @@ import ExperienceSection from "@/components/module/ExperienceSection";
 import TracePanel from "@/components/module/TracePanel";
 import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
-import { scrollBehavior } from "@/lib/utils";
+import { focusIsLost, scrollBehavior } from "@/lib/utils";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import NotFoundContent from "@/components/NotFoundContent";
 
@@ -70,6 +70,19 @@ const ModulePageContent = () => {
     }, 150);
     return () => clearTimeout(timer);
   }, [location.hash, location.key]);
+
+  // When a button inside a tab (e.g. "Begin Experience") switches tabs, that button is gone;
+  // move focus to the new tab's heading so keyboard and screen-reader users land at its start.
+  const previousSection = useRef(section);
+  useEffect(() => {
+    if (previousSection.current === section) return;
+    previousSection.current = section;
+    if (!focusIsLost()) return;
+    const heading = document.querySelector<HTMLElement>(`#${section.toLowerCase()} h2`);
+    if (!heading) return;
+    if (!heading.hasAttribute("tabindex")) heading.setAttribute("tabindex", "-1");
+    heading.focus({ preventScroll: true });
+  }, [section]);
 
   const handleSection = (s: SectionId) => {
     setSection(s);

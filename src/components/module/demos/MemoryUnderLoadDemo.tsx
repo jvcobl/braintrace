@@ -226,6 +226,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
       done={done}
       summary={getSummary(results)}
       onRestart={handleRestart}
+      stepKey={`${roundIndex}-${phase}`}
       footer={
         <PredictionOutcome
           visible
@@ -234,7 +235,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
         />
       }
     >
-      <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+      <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
         {/* Header */}
         {round && (
           <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
@@ -242,7 +243,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
               <span className={`text-xs font-semibold uppercase tracking-wide ${loadColors[round.load]}`}>
                 {round.label}
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span data-announce={phase === "intro" || undefined} className="text-xs text-muted-foreground">
                 Round {roundIndex + 1} of {ROUNDS.length}
               </span>
             </div>
@@ -274,17 +275,17 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
             <div className="text-center max-w-sm px-4">
               {isLoadTransition ? (
                 <>
-                  <p className={`text-sm font-semibold mb-2 ${loadColors[round.load]}`}>
+                  <p data-announce className={`text-sm font-semibold mb-2 ${loadColors[round.load]}`}>
                     Increasing to {round.label}
                   </p>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p data-announce className="text-sm text-muted-foreground mb-4">
                     {round.load === "medium"
                       ? "Now: 5 letters plus a math distractor. Your dlPFC must hold more items while handling a competing task."
                       : "Now: 7 letters plus a math distractor. This pushes the PFC's shared resource pool to its limit."}
                   </p>
                 </>
               ) : (
-                <p className="text-sm text-muted-foreground mb-4">
+                <p data-announce className="text-sm text-muted-foreground mb-4">
                   {round.load === "low"
                     ? "You'll see 3 letters briefly, then recall them. A manageable load for your dlPFC."
                     : round.load === "medium"
@@ -293,6 +294,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                 </p>
               )}
               <button
+                data-autofocus
                 onClick={startShow}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -304,7 +306,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {/* Show sequence */}
           {phase === "show" && (
             <div className="text-center">
-              <p className="text-xs text-muted-foreground mb-1">Memorize these letters:</p>
+              <p data-announce className="text-xs text-muted-foreground mb-1">Memorize these letters:</p>
               <p className="text-[11px] text-muted-foreground mb-3">They'll disappear shortly</p>
               <div className="flex gap-1 sm:gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => (
@@ -317,6 +319,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                   </span>
                 ))}
               </div>
+              <p data-announce className="sr-only">{sequence.join(" ")}</p>
               <div className="mt-3 mx-auto w-24 h-0.5 rounded-full bg-primary/20 overflow-hidden">
                 <div
                   className="h-full bg-primary rounded-full"
@@ -332,8 +335,8 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {/* Distractor */}
           {phase === "distractor" && distractor && (
             <div className="text-center">
-              <p className="text-xs text-muted-foreground mb-1">Distractor — solve this while holding the letters:</p>
-              <p className="text-2xl font-bold text-foreground mb-4">{distractor.question}</p>
+              <p data-announce className="text-xs text-muted-foreground mb-1">Distractor — solve this while holding the letters:</p>
+              <p data-announce className="text-2xl font-bold text-foreground mb-4">{distractor.question}</p>
               <div className="flex items-center justify-center gap-2">
                 <input
                   type="number"
@@ -407,16 +410,22 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                   );
                 })}
               </div>
+              <p data-announce className="sr-only">
+                Correct sequence: {sequence.join(" ")}. You had {lastCorrectCount} of {sequence.length} in the right position.
+              </p>
             </div>
           )}
         </div>
 
         {/* FeedbackCard below the interaction area */}
         {feedbackKey && (
-          <div className="mt-5">
-            <FeedbackCard feedback={trialFeedback[feedbackKey]} />
+          <div data-reveal className="mt-5">
+            <div data-announce>
+              <FeedbackCard feedback={trialFeedback[feedbackKey]} />
+            </div>
             <div className="mt-4 flex justify-center">
               <button
+                data-autofocus
                 onClick={handleNext}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >

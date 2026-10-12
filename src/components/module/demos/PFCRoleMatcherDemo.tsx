@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { AnswerLine } from "@/components/module/experience";
+import { AnswerLine, useStepFocus } from "@/components/module/experience";
 
 interface Scenario {
   id: string;
@@ -98,8 +98,11 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
     (s) => answers[s.id] === s.correctRegion,
   ).length;
 
+  // Keep keyboard focus and screen readers with the current scenario (see useStepFocus).
+  const { containerRef, announcement } = useStepFocus<HTMLElement>(`${phase}-${current}`);
+
   return (
-    <section>
+    <section ref={containerRef}>
       <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
@@ -112,9 +115,9 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       <div className="mt-6">
         {phase === "match" && (
-          <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-5">
-            <p className="text-xs text-muted-foreground">
-              {current + 1} of {items.length}
+          <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-5">
+            <p data-announce className="text-xs text-muted-foreground">
+              Scenario {current + 1} of {items.length}
             </p>
 
             <div className="flex gap-0.5">
@@ -129,16 +132,17 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             </div>
 
             <div className="rounded-lg bg-secondary px-5 py-4">
-              <p className="text-sm text-foreground leading-relaxed">
+              <p data-announce className="text-sm text-foreground leading-relaxed">
                 {scenario.text}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {REGIONS.map((r) => (
+              {REGIONS.map((r, i) => (
                 <button
                   key={r}
                   type="button"
+                  data-autofocus={i === 0 || undefined}
                   onClick={() => handlePick(r)}
                   className="flex-1 min-w-[100px] rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors [@media(hover:hover)]:hover:bg-accent [@media(hover:hover)]:hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -151,8 +155,8 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
         )}
 
         {phase === "result" && (
-          <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-6">
-            <div className="rounded-lg bg-accent/40 px-4 py-3">
+          <div data-reveal="start" className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-6">
+            <div data-autofocus tabIndex={-1} className="rounded-lg bg-accent/40 px-4 py-3 focus:outline-none">
               <p className="text-sm text-foreground leading-relaxed">
                 {correctCount === items.length
                   ? "Every match was correct. The three PFC regions handle distinct functions, though they collaborate constantly and compete for the same finite metabolic resources."
@@ -207,6 +211,10 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             </button>
           </div>
         )}
+      </div>
+
+      <div role="status" aria-live="polite" className="sr-only">
+        {announcement}
       </div>
     </section>
   );

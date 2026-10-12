@@ -4,7 +4,6 @@ import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/
 import PredictionOutcome from "@/components/module/PredictionOutcome";
 import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
 import { fearCueContent } from "@/data/content/fearCueContent";
-import { scrollBehavior } from "@/lib/utils";
 
 /* ── Trial structure ── */
 
@@ -162,14 +161,8 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const [recoveryPhase, setRecoveryPhase] = useState<"prediction" | "timepass" | "replay" | "result" | "finished" | null>(null);
   const [recoveryPrediction, setRecoveryPrediction] = useState<"extinguished" | "returns" | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
-  const feedbackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
-
-  // On small screens the feedback opens below the fold; bring it into view.
-  useEffect(() => {
-    if (step === "feedback") feedbackRef.current?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
-  }, [step, index]);
 
   // Recovery flow auto-advances
   useEffect(() => {
@@ -237,6 +230,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
       done={done}
       summary={getSummary(recoveryPrediction)}
       onRestart={restart}
+      stepKey={`${index}-${step}-${recoveryPhase ?? "trials"}`}
       footer={
         <PredictionOutcome
           visible
@@ -247,7 +241,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
     >
       {/* Pause interlude */}
       {trial?.stage === "pause" && (
-        <div className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center">
+        <div data-reveal data-announce className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center">
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-2">
             Time Passes
           </p>
@@ -258,6 +252,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
             The extinction memory — "the cue is safe" — can weaken during this gap, allowing the original fear memory to re-emerge. This is the setup for testing spontaneous recovery.
           </p>
           <button
+            data-autofocus
             onClick={advance}
             className="mt-6 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
@@ -268,15 +263,15 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Active trial */}
       {trial && trial.stage !== "pause" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
           {/* Phase header */}
           <div className="mb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className={`text-xs font-semibold uppercase tracking-wide ${phaseInfo[trial.stage].color}`}>
+                <span data-announce={step === "predict" || undefined} className={`text-xs font-semibold uppercase tracking-wide ${phaseInfo[trial.stage].color}`}>
                   {phaseInfo[trial.stage].label}
                 </span>
-                <span className="text-xs text-muted-foreground">
+                <span data-announce={step === "predict" || undefined} className="text-xs text-muted-foreground">
                   {trialProgress + 1} of {trialCount}
                 </span>
               </div>
@@ -312,13 +307,14 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
               <div className="text-center">
                 <div className="text-5xl mb-4 select-none animate-[fadeIn_400ms_ease-out]">◆</div>
                 <style>{`@keyframes fadeIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}`}</style>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p data-announce className="text-sm text-muted-foreground mb-4">
                   The cue appears. What do you expect will follow?
                 </p>
                 <div className="flex gap-3 justify-center">
                   <button
                     onClick={() => handlePredict("bad")}
                     disabled={prediction !== null}
+                    data-autofocus={prediction === null || undefined}
                     aria-pressed={prediction === "bad"}
                     className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default ${prediction === "bad" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
                   >
@@ -343,13 +339,14 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
                   <span>◆</span>
                   {trial.hasUS && <span className="text-destructive animate-[fadeIn_200ms_ease-out]">✕</span>}
                 </div>
-                <p className="text-sm text-foreground">
+                <p data-announce={step === "outcome" || undefined} className="text-sm text-foreground">
                   {trial.hasUS
                     ? "An unpleasant outcome follows the cue."
                     : "Nothing happens. The cue appears alone."}
                 </p>
                 {step === "outcome" ? (
                   <button
+                    data-autofocus
                     onClick={handleShowFeedback}
                     className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
@@ -368,10 +365,13 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
           {/* FeedbackCard below interaction area */}
           {step === "feedback" && prediction && (
-            <div ref={feedbackRef} className="mt-5 scroll-mb-4">
-              <FeedbackCard feedback={getFeedback(trial.stage, prediction)} />
+            <div data-reveal className="mt-5">
+              <div data-announce>
+                <FeedbackCard feedback={getFeedback(trial.stage, prediction)} />
+              </div>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={advance}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -385,29 +385,32 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: prediction commit */}
       {recoveryPhase === "prediction" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <p data-announce className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             After Extinction
           </p>
-          <p className="text-sm font-medium text-foreground mb-4">
+          <p data-announce className="text-sm font-medium text-foreground mb-4">
             {fearCueContent.recoveryPredictionPrompt}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <button
+              type="button"
+              data-autofocus
               onClick={() => {
                 setRecoveryPrediction("extinguished");
                 setRecoveryPhase("timepass");
               }}
-              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {fearCueContent.recoveryOptionExtinguished}
             </button>
             <button
+              type="button"
               onClick={() => {
                 setRecoveryPrediction("returns");
                 setRecoveryPhase("timepass");
               }}
-              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {fearCueContent.recoveryOptionReturns}
             </button>
@@ -417,7 +420,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: time advance */}
       {recoveryPhase === "timepass" && (
-        <div className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center animate-[fadeIn_400ms_ease-out]">
+        <div data-announce className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center animate-[fadeIn_400ms_ease-out]">
           <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-2">
             Time Passes
@@ -430,7 +433,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: CS replay (reuses existing trial-card pattern) */}
       {recoveryPhase === "replay" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-announce className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             Test — CS Alone
           </p>
@@ -456,7 +459,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: result */}
       {recoveryPhase === "result" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6 animate-[fadeIn_400ms_ease-out]">
+        <div data-reveal data-announce className="rounded-lg border border-border bg-card p-4 sm:p-6 animate-[fadeIn_400ms_ease-out]">
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             Spontaneous Recovery
           </p>
@@ -481,6 +484,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
           </p>
           <div className="mt-5 flex justify-center">
             <button
+              data-autofocus
               onClick={() => setRecoveryPhase("finished")}
               className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >

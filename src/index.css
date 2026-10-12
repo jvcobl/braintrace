@@ -104,6 +104,18 @@
   animation: searchHighlight 1.5s ease-out;
 }
 
+/* Headings and panels that only receive focus from script (tabindex="-1") need no ring. */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+/* Demo steps scroll these into view (useStepFocus); keep them clear of the sticky header. */
+[data-reveal],
+[data-autofocus] {
+  scroll-margin-top: 5rem;
+  scroll-margin-bottom: 1rem;
+}
+
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-6px); }

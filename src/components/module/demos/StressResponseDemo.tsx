@@ -153,6 +153,18 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   }, []);
 
   const done = phase === "done";
+  const firstOpenChip = visibleChips.find((chip) => !usedChips.has(chip));
+  const lastPlacedIndex = filledSlots.length - 1;
+  const nextSlot = currentSlotIndex < visibleSlots.length ? visibleSlots[currentSlotIndex] : null;
+  const stepKey = [
+    phase,
+    buildStep,
+    filledSlots.length,
+    buildErrors,
+    overrideAnswer ?? "",
+    consequencesPrediction ?? "",
+    consequencesSubmitted ? "checked" : "",
+  ].join("-");
 
   return (
     <ExperienceShell
@@ -161,6 +173,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
       done={done}
       summary={getSummary(buildErrors, overrideCorrect, consequenceScore)}
       onRestart={handleRestart}
+      stepKey={stepKey}
       footer={
         <PredictionOutcome
           visible
@@ -171,14 +184,26 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
     >
       {/* ── Phase 1: Build the cascade ── */}
       {phase === "build" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-4">
             {inStepB ? "Add Negative Feedback" : "Build the Cascade"}
           </p>
 
           {inStepB && buildStep === "placing-B" && (
-            <p className="text-sm text-muted-foreground mb-4">
+            <p data-announce={(filledSlots.length === CASCADE_SLOTS.length && shakeSlot === null) || undefined} className="text-sm text-muted-foreground mb-4">
               A new component is available. Place it in the shutdown slot, then run the cascade again.
+            </p>
+          )}
+
+          {/* Placement results for screen readers (the slots below show them visually). */}
+          {(buildStep === "placing-A" || buildStep === "placing-B") && (
+            <p data-announce className="sr-only">
+              {shakeSlot !== null
+                ? `That doesn't belong in ${SLOTS[currentSlotIndex].label}. Try another component.`
+                : lastPlacedIndex >= 0 && !(buildStep === "placing-B" && lastPlacedIndex < CASCADE_SLOTS.length)
+                  ? `Placed in ${SLOTS[lastPlacedIndex].label}: ${filledSlots[lastPlacedIndex]}.`
+                  : ""}
+              {nextSlot && shakeSlot === null ? ` Next: ${nextSlot.label}.` : ""}
             </p>
           )}
 
@@ -235,9 +260,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                 return (
                   <button
                     key={chip}
+                    type="button"
                     onClick={() => handleChipClick(chip)}
                     disabled={used}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
+                    data-autofocus={chip === firstOpenChip || undefined}
+                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                       used
                         ? "border-gray-100 bg-gray-50 text-gray-300 cursor-default"
                         : "border-gray-200 bg-white text-gray-800 hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] cursor-pointer"
@@ -257,9 +284,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                 return (
                   <button
                     key={chip}
+                    type="button"
                     onClick={() => handleChipClick(chip)}
                     disabled={used}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
+                    data-autofocus={chip === firstOpenChip || undefined}
+                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                       used
                         ? "border-gray-100 bg-gray-50 text-gray-300 cursor-default"
                         : "border-gray-200 bg-white text-gray-800 hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] cursor-pointer"
@@ -276,6 +305,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {buildStep === "placing-A" && cascadeFilled && (
             <div className="text-center mt-4 pt-4 border-t border-gray-100">
               <button
+                data-autofocus
                 onClick={() => setBuildStep("running-A")}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -295,11 +325,12 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {buildStep === "result-A" && (
             <div className="mt-4 pt-4 border-t border-gray-100">
               <CortisolGraph mode="runaway" instant className="w-full max-w-xs mx-auto opacity-80" />
-              <p className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
+              <p data-announce className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
                 {stressResponseContent.buildStepARunningCaption}
               </p>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={() => setBuildStep("placing-B")}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -313,6 +344,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {buildStep === "placing-B" && buildComplete && (
             <div className="text-center mt-4 pt-4 border-t border-gray-100">
               <button
+                data-autofocus
                 onClick={() => setBuildStep("running-B")}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -332,11 +364,12 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {buildStep === "result-B" && (
             <div className="mt-4 pt-4 border-t border-gray-100">
               <CortisolGraph mode="recovery" instant className="w-full max-w-xs mx-auto opacity-80" />
-              <p className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
+              <p data-announce className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
                 {stressResponseContent.buildStepBRunningCaption}
               </p>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={() => setPhase("override")}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -350,7 +383,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       {/* ── Phase 2: Override question ── */}
       {phase === "override" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-wide text-amber-700 mb-4">
             Feedback Override
           </p>
@@ -375,7 +408,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             </div>
           </div>
 
-          <p className="text-sm font-medium text-foreground mb-3">
+          <p data-announce={overrideAnswer === null || undefined} className="text-sm font-medium text-foreground mb-3">
             Under extreme or chronic stress, what prevents the feedback loop from working?
           </p>
 
@@ -395,9 +428,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
               return (
                 <button
                   key={i}
+                  type="button"
                   onClick={() => handleOverrideAnswer(i)}
                   disabled={overrideAnswer !== null}
-                  className={`w-full text-left rounded-lg border px-4 py-3 text-sm font-medium transition-colors ${style} disabled:cursor-default`}
+                  data-autofocus={(overrideAnswer === null && i === 0) || undefined}
+                  className={`w-full text-left rounded-lg border px-4 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${style} disabled:cursor-default`}
                 >
                   {opt.text}
                   {overrideAnswer !== null && opt.correct && (
@@ -413,13 +448,14 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {overrideAnswer !== null && (
             <div className="mt-5">
-              <div className="rounded-lg bg-gray-50 p-4 text-sm text-gray-700 leading-relaxed">
+              <div data-announce className="rounded-lg bg-gray-50 p-4 text-sm text-gray-700 leading-relaxed">
                 {overrideCorrect
                   ? "Correct — the central amygdala (CeA) and PFC send override signals that prevent cortisol from shutting the axis down. The cascade keeps running despite elevated cortisol."
                   : "The correct answer is: CeA and PFC override the feedback. Under chronic stress, these structures actively prevent the negative feedback loop from shutting the cascade down."}
               </div>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={() => setPhase("consequences")}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -433,26 +469,29 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       {/* ── Phase 3: Consequences ── */}
       {phase === "consequences" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-wide text-destructive mb-4">
             Chronic Stress Consequences
           </p>
 
           {consequencesPrediction === null && (
             <div>
-              <p className="text-sm font-medium text-foreground mb-4">
+              <p data-announce className="text-sm font-medium text-foreground mb-4">
                 {stressResponseContent.consequencesPredictionPrompt}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
+                  type="button"
+                  data-autofocus
                   onClick={() => setConsequencesPrediction("works")}
-                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   {stressResponseContent.consequencesPredictionOptions.works}
                 </button>
                 <button
+                  type="button"
                   onClick={() => setConsequencesPrediction("weakens")}
-                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   {stressResponseContent.consequencesPredictionOptions.weakens}
                 </button>
@@ -462,7 +501,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {consequencesPrediction !== null && (
             <>
-              <p className="text-sm font-medium text-foreground mb-4">
+              <p data-announce={!consequencesSubmitted || undefined} className="text-sm font-medium text-foreground mb-4">
                 What does sustained cortisol do to the brain? Select all that apply.
               </p>
 
@@ -479,10 +518,12 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
               return (
                 <button
                   key={i}
+                  type="button"
                   onClick={() => handleConsequenceToggle(i)}
                   disabled={consequencesSubmitted}
                   aria-pressed={checked}
-                  className={`w-full text-left rounded-lg border px-4 py-3 transition-colors ${style} disabled:cursor-default`}
+                  data-autofocus={(!consequencesSubmitted && i === 0) || undefined}
+                  className={`w-full text-left rounded-lg border px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${style} disabled:cursor-default`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 rounded border shrink-0 flex items-center justify-center ${
@@ -511,7 +552,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
               </button>
             </div>
           ) : (
-            <div className="mt-5 text-center">
+            <div data-announce className="mt-5 text-center">
               <p className="text-sm text-muted-foreground mb-4">
                 {consequenceScore === 4
                   ? "All correct — you identified every consequence of sustained cortisol."
@@ -523,6 +564,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                   : stressResponseContent.consequencesResultIfWeakens}
               </p>
               <button
+                data-autofocus
                 onClick={() => setPhase("done")}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >

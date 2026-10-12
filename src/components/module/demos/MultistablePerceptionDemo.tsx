@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
+import { useStepFocus } from "@/components/module/experience";
 import examples from "./gallery/multistableExamples";
 import figureRegistry from "./gallery/figures";
 
@@ -65,8 +66,11 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
   const choiceIdx = state.choice === "a" ? 0 : 1;
   const otherIdx = state.choice === "a" ? 1 : 0;
 
+  // Keep keyboard focus and screen readers with the current step (see useStepFocus).
+  const { containerRef, announcement } = useStepFocus<HTMLElement>(`${currentIdx}-${state.phase}`);
+
   return (
-    <section>
+    <section ref={containerRef}>
       <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
@@ -135,7 +139,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
       )}
 
       {/* Active example card */}
-      <div className="mt-5 rounded-xl border border-border bg-card overflow-hidden">
+      <div data-reveal="start" className="mt-5 rounded-xl border border-border bg-card overflow-hidden">
         {/* Card header */}
         <div className="flex items-center justify-between gap-3 border-b border-border/60 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2.5">
@@ -143,7 +147,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
               {example.category}
             </span>
             <span className="text-border" aria-hidden>·</span>
-            <h3 className="font-sans text-sm font-semibold text-foreground">
+            <h3 data-announce className="font-sans text-sm font-semibold text-foreground">
               {example.title}
             </h3>
           </div>
@@ -186,12 +190,13 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
             {/* Phase 1: Choose */}
             {state.phase === "choose" && (
               <div className="text-center space-y-4 max-w-sm mx-auto">
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p data-announce className="text-sm text-muted-foreground leading-relaxed">
                   {example.prompt}
                 </p>
                 <div className="flex flex-wrap justify-center gap-3">
                   <button
                     type="button"
+                    data-autofocus
                     onClick={() => handleChoice("a")}
                     className="rounded-lg border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
@@ -211,10 +216,10 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
             {/* Phase 2: Switch */}
             {state.phase === "switch" && state.choice && (
               <div className="text-center space-y-4 max-w-sm mx-auto">
-                <p className="text-sm text-foreground leading-relaxed">
+                <p data-announce className="text-sm text-foreground leading-relaxed">
                   {example.switchFeedback[choiceIdx]}
                 </p>
-                <p className="text-xs text-muted-foreground leading-relaxed italic">
+                <p data-announce className="text-xs text-muted-foreground leading-relaxed italic">
                   {example.switchHint[choiceIdx]}
                 </p>
 
@@ -222,6 +227,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
                 <div className="flex flex-wrap justify-center gap-2 pt-1">
                   <button
                     type="button"
+                    data-autofocus
                     onClick={() => flashAssist(state.choice === "a" ? "b" : "a")}
                     className="rounded-md border border-border bg-secondary/60 px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                   >
@@ -257,7 +263,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
             {state.phase === "result" && state.choice && (
               <div className="space-y-3 max-w-md mx-auto">
                 {/* Choice-specific feedback */}
-                <div className="rounded-lg border border-border bg-accent/40 px-4 py-3">
+                <div data-autofocus tabIndex={-1} className="rounded-lg border border-border bg-accent/40 px-4 py-3 focus:outline-none">
                   <p className="text-sm text-foreground leading-relaxed">
                     {example.resultFeedback[choiceIdx]}
                   </p>
@@ -325,6 +331,10 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
             )}
           </div>
         </div>
+      </div>
+
+      <div role="status" aria-live="polite" className="sr-only">
+        {announcement}
       </div>
     </section>
   );
