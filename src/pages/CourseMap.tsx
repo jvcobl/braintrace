@@ -145,7 +145,8 @@ const CourseMap = () => {
       <div className="mt-12 border border-gray-200 rounded-xl overflow-hidden">
         <button
           onClick={() => setTimelineOpen((o) => !o)}
-          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+          aria-expanded={timelineOpen}
+          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
         >
           <span className="text-sm font-medium text-foreground">
             View full course timeline

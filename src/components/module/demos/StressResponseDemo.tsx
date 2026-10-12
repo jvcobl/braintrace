@@ -481,6 +481,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                   key={i}
                   onClick={() => handleConsequenceToggle(i)}
                   disabled={consequencesSubmitted}
+                  aria-pressed={checked}
                   className={`w-full text-left rounded-lg border px-4 py-3 transition-colors ${style} disabled:cursor-default`}
                 >
                   <div className="flex items-center gap-3">

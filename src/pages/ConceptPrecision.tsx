@@ -145,7 +145,8 @@ const ConceptPrecision = () => {
       <div className="mt-12 border border-gray-200 rounded-xl overflow-hidden">
         <button
           onClick={() => setDeeperOpen(!deeperOpen)}
-          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+          aria-expanded={deeperOpen}
+          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
         >
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary" />

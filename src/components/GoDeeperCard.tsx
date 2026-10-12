@@ -15,10 +15,11 @@ const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between py-3.5 px-5 cursor-pointer hover:bg-gray-50 transition-colors"
+        aria-expanded={open}
+        className="w-full flex items-center justify-between py-3.5 px-5 cursor-pointer hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
       >
         <span className="text-sm font-medium text-gray-900 text-left">{data.title}</span>
-        <span className="text-gray-500 text-lg leading-none select-none">
+        <span className="text-gray-500 text-lg leading-none select-none" aria-hidden="true">
           {open ? "−" : "+"}
         </span>
       </button>

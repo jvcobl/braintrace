@@ -392,7 +392,8 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
         <div className="mt-5 inline-flex rounded-full bg-gray-100 p-0.5">
           <button
             onClick={() => setShowAlt(false)}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
+            aria-pressed={!showAlt}
+            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               !showAlt
                 ? "bg-white text-foreground shadow-sm"
                 : "text-gray-600 hover:text-gray-800"
@@ -402,7 +403,8 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
           </button>
           <button
             onClick={() => setShowAlt(true)}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
+            aria-pressed={showAlt}
+            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               showAlt
                 ? "bg-white text-foreground shadow-sm"
                 : "text-gray-600 hover:text-gray-800"

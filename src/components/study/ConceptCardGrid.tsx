@@ -56,6 +56,7 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
         <button
           type="button"
           onClick={() => setExpanded(!expanded)}
+          aria-expanded={expanded}
           className="mt-4 w-full rounded-xl border border-border/70 bg-card py-3 text-[12px] sm:text-[13px] font-medium text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           {expanded ? "Show fewer" : `Show all ${cards.length}`}
