@@ -17,7 +17,7 @@ const steps = [
 const moduleCallouts = [
   { id: "blurry-object-guess", emphasis: "Prediction → Update", note: "OFC predicts object identity from blurry input; ventral stream corrects when detail arrives." },
   { id: "face-or-not", emphasis: "Prediction → Mismatch", note: "Face-detection prior fires on ambiguous patterns; mismatch when the FFA confirms it's not a face." },
-  { id: "sudden-noise-reaction", emphasis: "Input → Mismatch", note: "Sudden sound violates the prediction of silence; brainstem reacts before cortex can evaluate." },
+  { id: "sudden-noise-reaction", emphasis: "Input → Mismatch", note: "Sudden stimulus violates the prediction of calm; brainstem reacts before cortex can evaluate." },
   { id: "fear-cue-and-extinction", emphasis: "Prediction → Update", note: "Amygdala predicts danger from the cue; extinction builds a competing safety prediction via vmPFC." },
   { id: "memory-under-load", emphasis: "Prediction → Mismatch", note: "dlPFC predicts it can maintain the memory set; overload creates a control failure mismatch." },
   { id: "stress-response-builder", emphasis: "Update → Mismatch", note: "Cortisol feedback should update the system to shut down; chronic override prevents the update." },

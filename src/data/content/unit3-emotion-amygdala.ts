@@ -456,7 +456,7 @@ export const unit3Distinctions = [
     descriptionA:
       "The accurate description of the amygdala. It stamps importance onto events — 'this matters, remember it' — for both negative (fear, threat) and positive (reward, love, achievement) events.",
     descriptionB:
-      "A common but inaccurate label for the amygdala. While the amygdala is hyperactive during fear, it is equally active during reward, addiction, and intensely positive life events.",
+      "A common but inaccurate label for the amygdala. While the amygdala is hyperactive during fear, it is also active during reward, addiction, and intensely positive life events.",
     keyDifference:
       "Calling the amygdala a 'fear center' misses half of what it does. It detects salience — importance — regardless of whether the event is positive or negative.",
   },

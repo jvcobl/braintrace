@@ -82,7 +82,7 @@ export const unit4ConceptCards = [
     id: "u4-cc-08",
     term: "Ventromedial PFC (vmPFC) in Conditioning",
     definition:
-      "The vmPFC dictates extinction learning. It contains two functionally distinct subregions — the infralimbic cortex and the prelimbic cortex — that have opposite effects on the amygdala and therefore opposite roles in fear expression versus fear suppression.",
+      "The vmPFC dictates extinction learning. It contains two functionally distinct subregions — the prelimbic cortex and the infralimbic cortex — that have opposite effects on the amygdala and therefore opposite roles in fear expression versus fear suppression.",
     structures: ["vmPFC", "IL", "PL"],
   },
   {
@@ -294,7 +294,7 @@ export const unit4Distinctions = [
     descriptionB:
       "Sends excitatory signals to the intercalated cells (ITCs). By activating these GABAergic inhibitory cells, the IL suppresses amygdala output — 'calm down, I got this.' Critical for extinction.",
     keyDifference:
-      "The PL turns fear on by exciting the BLA. The IL turns fear off by exciting the ITCs, which inhibit the BLA. Both are in the vmPFC but have opposite functional effects.",
+      "The PL turns fear on by exciting the BLA. The IL turns fear off by exciting the ITCs, which inhibit the BLA's output. Both are in the vmPFC but have opposite functional effects.",
   },
 ];
 

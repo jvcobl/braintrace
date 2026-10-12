@@ -119,7 +119,7 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   },
   "test-nothing": {
     primary: "The extinction held — but the original memory persists.",
-    secondary: "The safety memory is currently dominant. However, spontaneous recovery can occur later — after more time, a context change, or stress that re-primes the amygdala. The original CS-US association in the BLA was suppressed, not deleted.",
+    secondary: "The safety memory is currently dominant. However, fear can return later — after more time, a context change, or stress that re-primes the amygdala. The original CS-US association in the BLA was suppressed, not deleted.",
     bridge: "Explain covers why fear can always potentially return.",
     structure: "Safety memory dominant (suppression holding)",
   },
