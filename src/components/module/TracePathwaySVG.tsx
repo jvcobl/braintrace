@@ -185,11 +185,19 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
 
 /* ── Edge path + label position ── */
 
-function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number) {
+type Pt = [number, number];
+
+/**
+ * Path for an edge as one cubic Bezier (a straight edge has its control points on the line).
+ * `toDx` shifts where it meets the target, so edges converging on one node don't share an arrowhead.
+ */
+function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number, toDx = 0) {
   if (isBack) {
     const rx = totalW - 24;
+    const pts: Pt[] = [[from.cx + NW / 2, from.cy], [rx, from.cy], [rx, to.cy], [to.cx + NW / 2, to.cy]];
     return {
-      d: `M ${from.cx + NW / 2} ${from.cy} C ${rx} ${from.cy}, ${rx} ${to.cy}, ${to.cx + NW / 2} ${to.cy}`,
+      d: `M ${pts[0]} C ${pts[1]}, ${pts[2]}, ${pts[3]}`,
+      pts,
       lx: rx - 24,
       ly: (from.cy + to.cy) / 2,
       anchor: "end" as const,
@@ -198,21 +206,24 @@ function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number) {
 
   const x1 = from.cx;
   const y1 = from.cy + NH / 2;
-  const x2 = to.cx;
+  const x2 = to.cx + toDx;
   // Stop above a role badge (the pill straddling the node's top edge), so it can't hide the arrowhead.
   const y2 = to.cy - NH / 2 - (to.badge ? 10 : 0);
-  const dx = Math.abs(x2 - x1);
+  // Nodes stacked in one column get a straight edge (judged before any spread, so the spread
+  // can't change which side its label goes).
+  const straight = Math.abs(to.cx - from.cx) < 5;
 
-  const d =
-    dx < 5
-      ? `M ${x1} ${y1} L ${x2} ${y2}`
-      : `M ${x1} ${y1} C ${x1} ${y1 + (y2 - y1) * 0.4}, ${x2} ${y2 - (y2 - y1) * 0.4}, ${x2} ${y2}`;
+  const pts: Pt[] = straight
+    ? [[x1, y1], [x1, y1], [x2, y2], [x2, y2]]
+    : [[x1, y1], [x1, y1 + (y2 - y1) * 0.4], [x2, y2 - (y2 - y1) * 0.4], [x2, y2]];
+  const d = straight ? `M ${x1} ${y1} L ${x2} ${y2}` : `M ${pts[0]} C ${pts[1]}, ${pts[2]}, ${pts[3]}`;
 
   return {
     d,
-    lx: (x1 + x2) / 2 + (dx < 5 ? 12 : 0),
+    pts,
+    lx: (x1 + x2) / 2 + (straight ? 12 : 0),
     ly: (y1 + y2) / 2,
-    anchor: (dx < 5 ? "start" : "middle") as "start" | "middle" | "end",
+    anchor: (straight ? "start" : "middle") as "start" | "middle" | "end",
   };
 }
 
@@ -245,9 +256,21 @@ interface PlacedLabel {
   anchor: Anchor;
 }
 
-const LABEL_CHAR_W = 6.5; // generous width of one 11px system-ui glyph
+const LABEL_FONT = 11;
+const LABEL_CHAR_W = 6.5; // generous width of one 11px DM Sans glyph
 const LABEL_LINE_H = 14;
 const LABEL_GAP = 3;
+const SVG_FONT = "'DM Sans', system-ui, sans-serif";
+
+/** Points along an edge, used to keep other edges' labels off its line. */
+function sampleEdge(pts: Pt[], n = 32): Pt[] {
+  const [p0, p1, p2, p3] = pts;
+  return Array.from({ length: n + 1 }, (_, i) => {
+    const t = i / n;
+    const a = (1 - t) ** 3, b = 3 * (1 - t) ** 2 * t, c = 3 * (1 - t) * t ** 2, e = t ** 3;
+    return [a * p0[0] + b * p1[0] + c * p2[0] + e * p3[0], a * p0[1] + b * p1[1] + c * p2[1] + e * p3[1]] as Pt;
+  });
+}
 
 function wrapWords(text: string, maxChars: number): string[] {
   const lines: string[] = [];
@@ -266,6 +289,8 @@ function labelBox(lines: string[], x: number, y: number, anchor: Anchor): Box {
   return { x: left, y: y - (lines.length - 1) * (LABEL_LINE_H / 2) - 9, w, h };
 }
 
+const containsPoint = (b: Box, [px, py]: Pt) => px > b.x - 2 && px < b.x + b.w + 2 && py > b.y - 2 && py < b.y + b.h + 2;
+
 function overlaps(a: Box, b: Box) {
   return (
     a.x < b.x + b.w + LABEL_GAP &&
@@ -280,8 +305,12 @@ function placeLabels(
   nodeMap: Map<string, Pos>,
   backEdgeKeys: Set<string>,
   totalW: number,
+  toDx: Map<string, number>,
 ): (PlacedLabel | null)[] {
   const obstacles: Box[] = [];
+  const pathOf = (e: TraceEdge) =>
+    getEdgePath(nodeMap.get(e.from)!, nodeMap.get(e.to)!, backEdgeKeys.has(`${e.from}->${e.to}`), totalW, toDx.get(`${e.from}->${e.to}`) ?? 0);
+  const edgePoints = edges.map((e) => sampleEdge(pathOf(e).pts));
   const xs = [...nodeMap.values()].map((n) => n.cx);
   const centerX = (Math.min(...xs) + Math.max(...xs)) / 2;
   for (const n of nodeMap.values()) {
@@ -289,12 +318,12 @@ function placeLabels(
     if (n.badge) obstacles.push({ x: n.cx - 34, y: n.cy - NH / 2 - 10, w: 68, h: 20 });
   }
 
-  return edges.map((e) => {
+  return edges.map((e, idx) => {
     if (!e.label) return null;
     const from = nodeMap.get(e.from)!;
     const to = nodeMap.get(e.to)!;
     const isBack = backEdgeKeys.has(`${e.from}->${e.to}`);
-    const base = getEdgePath(from, to, isBack, totalW);
+    const base = pathOf(e);
     let lines = splitLabel(e.label);
 
     if (isBack) {
@@ -330,23 +359,25 @@ function placeLabels(
       ];
     }
 
-    let chosen: PlacedLabel | null = null;
     // Vertical nudges; +-50 lands in the gap between two node rows (row pitch 100).
-    outer: for (const dy of [0, -16, 16, -32, 32, -50, 50, -64, 64]) {
-      for (const a of anchors) {
-        const box = labelBox(lines, a.x, base.ly + dy, a.anchor);
-        if (box.x < 2 || box.x + box.w > totalW - 2) continue;
-        if (obstacles.some((o) => overlaps(box, o))) continue;
-        chosen = { lines, x: a.x, y: base.ly + dy, anchor: a.anchor };
-        obstacles.push(box);
-        break outer;
+    // First look for a spot clear of other edges' lines too; if there is none, settle for
+    // one clear of nodes, badges and labels (the white halo keeps a crossing line legible).
+    const crossesEdge = (box: Box) => edgePoints.some((pts, j) => j !== idx && pts.some((p) => containsPoint(box, p)));
+    for (const avoidEdges of [true, false]) {
+      for (const dy of [0, -16, 16, -32, 32, -50, 50, -64, 64]) {
+        for (const a of anchors) {
+          const box = labelBox(lines, a.x, base.ly + dy, a.anchor);
+          if (box.x < 2 || box.x + box.w > totalW - 2) continue;
+          if (obstacles.some((o) => overlaps(box, o))) continue;
+          if (avoidEdges && crossesEdge(box)) continue;
+          obstacles.push(box);
+          return { lines, x: a.x, y: base.ly + dy, anchor: a.anchor };
+        }
       }
     }
-    if (!chosen) {
-      chosen = { lines, x: anchors[0].x, y: base.ly, anchor: anchors[0].anchor };
-      obstacles.push(labelBox(lines, chosen.x, chosen.y, chosen.anchor));
-    }
-    return chosen;
+    const fallback = { lines, x: anchors[0].x, y: base.ly, anchor: anchors[0].anchor };
+    obstacles.push(labelBox(lines, fallback.x, fallback.y, fallback.anchor));
+    return fallback;
   });
 }
 
@@ -370,9 +401,24 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
     () => edges.filter((e) => nodeMap.has(e.from) && nodeMap.has(e.to)),
     [edges, nodeMap],
   );
+  // Edges converging on one node meet it side by side, ordered by where they come from.
+  const toDx = useMemo(() => {
+    const offsets = new Map<string, number>();
+    const byTarget = new Map<string, TraceEdge[]>();
+    for (const e of renderedEdges) {
+      if (backEdgeKeys.has(`${e.from}->${e.to}`)) continue;
+      byTarget.set(e.to, [...(byTarget.get(e.to) ?? []), e]);
+    }
+    for (const group of byTarget.values()) {
+      group.sort((a, b) => nodeMap.get(a.from)!.cx - nodeMap.get(b.from)!.cx);
+      group.forEach((e, i) => offsets.set(`${e.from}->${e.to}`, (i - (group.length - 1) / 2) * 18));
+    }
+    return offsets;
+  }, [renderedEdges, backEdgeKeys, nodeMap]);
+
   const placedLabels = useMemo(
-    () => placeLabels(renderedEdges, nodeMap, backEdgeKeys, w),
-    [renderedEdges, nodeMap, backEdgeKeys, w],
+    () => placeLabels(renderedEdges, nodeMap, backEdgeKeys, w, toDx),
+    [renderedEdges, nodeMap, backEdgeKeys, w, toDx],
   );
 
   const usedRoutes = useMemo(() => new Set(renderedEdges.map((e) => e.route ?? "primary")), [renderedEdges]);
@@ -408,11 +454,12 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
 
       {/* State toggle */}
       {pathway.alternateState && (
-        <div className="mt-5 inline-flex rounded-full bg-gray-100 p-0.5">
+        // Stacked on phones, where the long state names would wrap inside a pill.
+        <div className="mt-5 flex flex-col gap-0.5 rounded-xl bg-gray-100 p-0.5 sm:inline-flex sm:flex-row sm:rounded-full">
           <button
             onClick={() => setShowAlt(false)}
             aria-pressed={!showAlt}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+            className={`rounded-lg px-4 py-2 text-left text-xs font-medium transition-all duration-200 sm:rounded-full sm:py-1.5 sm:text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               !showAlt
                 ? "bg-white text-foreground shadow-sm"
                 : "text-gray-600 hover:text-gray-800"
@@ -423,7 +470,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
           <button
             onClick={() => setShowAlt(true)}
             aria-pressed={showAlt}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+            className={`rounded-lg px-4 py-2 text-left text-xs font-medium transition-all duration-200 sm:rounded-full sm:py-1.5 sm:text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               showAlt
                 ? "bg-white text-foreground shadow-sm"
                 : "text-gray-600 hover:text-gray-800"
@@ -475,7 +522,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
               const from = nodeMap.get(e.from)!;
               const to = nodeMap.get(e.to)!;
               const isBack = backEdgeKeys.has(`${e.from}->${e.to}`);
-              const { d } = getEdgePath(from, to, isBack, w);
+              const { d } = getEdgePath(from, to, isBack, w, toDx.get(`${e.from}->${e.to}`) ?? 0);
               const route = e.route || "primary";
               const bothActive = from.active && to.active;
 
@@ -526,7 +573,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                       textAnchor="middle"
                       fontSize={12}
                       fill="#bbb"
-                      fontFamily="system-ui, sans-serif"
+                      fontFamily={SVG_FONT}
                     >
                       {node.label}
                     </text>
@@ -567,7 +614,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                         fontSize={8.5}
                         fontWeight={700}
                         fill="white"
-                        fontFamily="system-ui, sans-serif"
+                        fontFamily={SVG_FONT}
                         style={{ letterSpacing: "0.08em" }}
                       >
                         {BADGE_LABEL[node.badge]}
@@ -582,7 +629,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                     fontSize={13}
                     fontWeight={600}
                     fill="#1a1a1a"
-                    fontFamily="system-ui, sans-serif"
+                    fontFamily={SVG_FONT}
                   >
                     {node.label}
                   </text>
@@ -599,12 +646,12 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                 <text
                   key={`label-${e.from}-${e.to}-${i}`}
                   textAnchor={placed.anchor}
-                  fontSize={11}
+                  fontSize={LABEL_FONT}
                   fill="#6b7280"
                   stroke="white"
                   strokeWidth={4}
                   paintOrder="stroke"
-                  fontFamily="system-ui, sans-serif"
+                  fontFamily={SVG_FONT}
                   opacity={bothActive ? 1 : 0.2}
                 >
                   {placed.lines.map((line, li) => (
