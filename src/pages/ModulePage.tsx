@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { getModuleById, modules } from "@/data/modules";
 import { moduleDefinitions } from "@/data/moduleDefinitions";
 import { getUnitById } from "@/data/courseMap";
@@ -29,6 +29,16 @@ const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
   "homeostasis-vs-allostasis-sorter": { slug: "stress", title: "Stress and Homeostasis" },
 };
 
+/** The four tab containers; a hash naming one of them opens that tab without a highlight flash. */
+const TAB_IDS = ["intro", "experience", "trace", "explain"];
+
+function sectionFromHash(hash: string): SectionId {
+  if (hash === "trace") return "Trace";
+  if (hash === "experience") return "Experience";
+  if (hash === "explain" || hash.startsWith("deeper-") || hash === "prediction-lens" || hash === "concept-links") return "Explain";
+  return "Intro";
+}
+
 const ModulePageContent = () => {
   const { id } = useParams<{ id: string }>();
   const mod = id ? getModuleById(id) : undefined;
@@ -39,32 +49,39 @@ const ModulePageContent = () => {
   );
   const unit = mod ? getUnitById(mod.unitId) : undefined;
   const unitContent = mod ? getUnitContent(mod.unitId) : undefined;
-  const [section, setSection] = useState<SectionId>(() => {
-    const hash = window.location.hash.slice(1);
-    if (!hash) return "Intro";
-    if (hash === "trace") return "Trace";
-    if (hash === "experience") return "Experience";
-    if (hash.startsWith("deeper-") || hash === "prediction-lens" || hash === "concept-links" || hash === "explain") return "Explain";
-    return "Intro";
-  });
+  const location = useLocation();
+  const sectionNavRef = useRef<HTMLDivElement>(null);
+  const [section, setSection] = useState<SectionId>(() => sectionFromHash(window.location.hash.slice(1)));
 
+  // Open the tab a hash points to and scroll to its target: on first load and whenever
+  // an in-app link (such as a search result) navigates here with a hash.
   useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    if (!hash) return;
+    const target = location.hash.slice(1);
+    if (!target) return;
+    setSection(sectionFromHash(target));
     const timer = setTimeout(() => {
-      const el = document.getElementById(hash);
+      const el = document.getElementById(target);
       if (!el) return;
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: scrollBehavior() });
-      el.classList.add("search-highlight");
-      setTimeout(() => el.classList.remove("search-highlight"), 1500);
+      // Flash specific targets (a Go Deeper card, the Prediction Lens), not whole tabs.
+      if (!TAB_IDS.includes(target)) {
+        el.classList.add("search-highlight");
+        setTimeout(() => el.classList.remove("search-highlight"), 1500);
+      }
     }, 150);
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.hash, location.key]);
 
   const handleSection = (s: SectionId) => {
     setSection(s);
-    window.scrollTo({ top: 0, behavior: scrollBehavior() });
+    // Keep the open tab in the URL so refresh, sharing and Back return to it. Uses
+    // replaceState (keeping the router's state) so it doesn't add history entries.
+    const url = s === "Intro" ? window.location.pathname : `${window.location.pathname}#${s.toLowerCase()}`;
+    window.history.replaceState(window.history.state, "", url);
+    // Bring the top of the new tab into view if the reader has scrolled past it.
+    const navTop = (sectionNavRef.current?.getBoundingClientRect().top ?? 0) + window.scrollY - 72;
+    if (window.scrollY > navTop) window.scrollTo({ top: navTop, behavior: scrollBehavior() });
   };
 
   if (!mod) {
@@ -113,7 +130,7 @@ const ModulePageContent = () => {
       </div>
 
       {/* Section nav + content */}
-      <div className="mt-8 sm:mt-10">
+      <div ref={sectionNavRef} className="mt-8 sm:mt-10">
         <SectionNav current={section} onSelect={handleSection} />
 
         <div className="mt-6 sm:mt-8">

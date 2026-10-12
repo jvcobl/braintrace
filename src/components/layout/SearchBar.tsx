@@ -85,15 +85,10 @@ export default function SearchBar() {
   const handleSelect = useCallback(
     (url: string) => {
       setOpen(false);
+      // Keep the hash: lesson pages open the right tab and scroll to the target from it.
+      navigate(url);
       const hashIdx = url.indexOf("#");
-      if (hashIdx === -1) {
-        navigate(url);
-        return;
-      }
-      const path = url.slice(0, hashIdx);
-      const hash = url.slice(hashIdx + 1);
-      navigate(path);
-      scrollToHash(hash);
+      if (hashIdx !== -1 && !url.startsWith("/module/")) scrollToHash(url.slice(hashIdx + 1));
     },
     [navigate],
   );
