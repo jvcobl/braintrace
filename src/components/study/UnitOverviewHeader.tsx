@@ -10,7 +10,7 @@ const UnitOverviewHeader = ({ unitNumber, meta }: UnitOverviewHeaderProps) => (
     <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
       Study guide
     </p>
-    <h1 className="mt-2.5 sm:mt-3 font-display text-[1.75rem] sm:text-[2rem] tracking-tight text-foreground md:text-[2.25rem] leading-[1.15]">
+    <h1 className="mt-2 font-display text-3xl tracking-tight text-foreground">
       {meta.title}
     </h1>
     <p className="mt-2.5 sm:mt-3 max-w-xl text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed">

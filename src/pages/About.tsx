@@ -12,9 +12,9 @@ const About = () => {
   usePageMeta({ title: "About", description: "What BrainTrace is, how its lessons work, and who built it." });
 
   return (
-    <div className="container max-w-2xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
+    <div className="container max-w-3xl px-4 sm:px-6 py-12 [&>p]:max-w-2xl">
       <Breadcrumb />
-      <h1 className="font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-4xl">
+      <h1 className="font-display text-3xl tracking-tight text-foreground">
         About BrainTrace
       </h1>
 

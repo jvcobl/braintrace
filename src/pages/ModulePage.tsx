@@ -120,7 +120,7 @@ const ModulePageContent = () => {
     .filter((x): x is NonNullable<typeof x> => x != null);
 
   return (
-    <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-16">
+    <div className="container max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
 
       {/* Header */}
@@ -133,7 +133,7 @@ const ModulePageContent = () => {
             {MODULE_TOPIC[mod.slug].title}
           </Link>
         )}
-        <h1 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-[2rem]">
+        <h1 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight text-foreground">
           {mod.title}
         </h1>
         <p className="mt-2.5 sm:mt-3 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed">{mod.shortGoal}</p>

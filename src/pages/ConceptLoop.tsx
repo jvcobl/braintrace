@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { RotateCcw } from "lucide-react";
 import ModuleLink from "@/components/ModuleLink";
 import Breadcrumb from "@/components/layout/Breadcrumb";
@@ -37,8 +38,9 @@ const ConceptLoop = () => {
       {/* 4-step diagram */}
       <div id="loop-visualization" className="mt-10">
         <div className="flex flex-col sm:flex-row items-stretch gap-3">
+          {/* Cards and arrows are siblings so every card gets the same width. */}
           {steps.map((step, i) => (
-            <div key={step.name} className="flex items-stretch gap-3 flex-1">
+            <Fragment key={step.name}>
               <div className="rounded-xl border border-gray-200 bg-white p-4 flex-1">
                 <div className="flex items-center gap-2 mb-1.5">
                   <span
@@ -53,7 +55,7 @@ const ConceptLoop = () => {
               {i < steps.length - 1 && (
                 <span className="hidden sm:block self-center shrink-0 text-gray-300" aria-hidden="true">→</span>
               )}
-            </div>
+            </Fragment>
           ))}
         </div>
 

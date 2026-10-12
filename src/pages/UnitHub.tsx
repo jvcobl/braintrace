@@ -62,13 +62,11 @@ const UnitHub = () => {
   const nextUnit = idx < allIds.length - 1 ? allIds[idx + 1] : null;
 
   return (
-    <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-20">
+    <div className="container max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
 
       {/* ── Hero: Unit intro ── */}
-      <div className="mt-6 sm:mt-8">
-        <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
-      </div>
+      <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
 
       {/* On-this-page links for a long study guide */}
       <nav aria-label="On this page" className="mt-8 flex flex-wrap gap-2">

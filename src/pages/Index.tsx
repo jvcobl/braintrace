@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { modules } from "@/data/modules";
 import { usePageMeta } from "@/hooks/use-page-meta";
@@ -59,7 +60,7 @@ const Index = () => {
               to="/module/blurry-object-guess"
               className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition-all hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Try a lesson
+              Try a Lesson
               <span aria-hidden="true">→</span>
             </Link>
           </div>
@@ -87,16 +88,17 @@ const Index = () => {
           </p>
 
           <div className="mx-auto mt-8 flex max-w-3xl flex-col sm:flex-row items-stretch gap-2">
+            {/* Cards and arrows are siblings so every card gets the same width. */}
             {STEPS.map((s, i) => (
-              <div key={s.name} className="flex flex-1 items-stretch gap-2">
+              <Fragment key={s.name}>
                 <div className="flex-1 rounded-lg bg-muted/40 px-4 py-4 text-center">
                   <p className="text-sm font-semibold text-foreground">{s.name}</p>
                   <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
                 {i < STEPS.length - 1 && (
-                  <span className="hidden sm:block self-center text-muted-foreground/30" aria-hidden="true">→</span>
+                  <span className="hidden sm:block shrink-0 self-center text-muted-foreground/30" aria-hidden="true">→</span>
                 )}
-              </div>
+              </Fragment>
             ))}
           </div>
         </div>

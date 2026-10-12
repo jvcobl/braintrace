@@ -94,6 +94,11 @@
     font-weight: 400;
     text-wrap: balance;
   }
+
+  /* Avoid a single word stranded on a paragraph's last line (ignored where unsupported). */
+  p {
+    text-wrap: pretty;
+  }
 }
 
 /* Brief teal wash on the item a search result or shared link points to. */
