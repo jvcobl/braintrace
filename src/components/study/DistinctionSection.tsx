@@ -5,8 +5,8 @@ interface DistinctionSectionProps {
 }
 
 const DistinctionSection = ({ distinctions }: DistinctionSectionProps) => (
-  <section>
-    <h3 className="font-display text-lg tracking-tight text-foreground">Key Distinctions</h3>
+  <section id="distinctions" className="scroll-mt-24">
+    <h2 className="font-display text-lg tracking-tight text-foreground">Key Distinctions</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
       Terms that are easy to confuse — and why the difference matters.
     </p>

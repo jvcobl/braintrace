@@ -7,9 +7,21 @@ const SensitivityBadge = ({ note }: SensitivityBadgeProps) => (
     <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
       Content note
     </p>
-    <p className="mt-1 sm:mt-1.5 text-[11px] sm:text-[12px] text-muted-foreground leading-relaxed">
+    <p className="mt-1 sm:mt-1.5 text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">
       {note ?? "This item contains sensitive material. It is included for educational purposes."}
     </p>
+    {note?.includes("988") && (
+      <p className="mt-1.5 text-[12px] sm:text-[13px] text-foreground/80">
+        <a href="tel:988" className="font-medium text-primary underline underline-offset-2">
+          Call 988
+        </a>
+        {" · "}
+        <a href="sms:988" className="font-medium text-primary underline underline-offset-2">
+          Text 988
+        </a>{" "}
+        <span className="text-muted-foreground">(US)</span>
+      </p>
+    )}
   </div>
 );
 

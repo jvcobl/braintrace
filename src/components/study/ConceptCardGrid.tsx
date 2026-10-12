@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { scrollBehavior } from "@/lib/utils";
 import type { ConceptCard } from "@/data/content/types";
 import SensitivityBadge from "./SensitivityBadge";
 
@@ -10,14 +11,15 @@ const INITIAL_VISIBLE = 6;
 
 const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
   const [expanded, setExpanded] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const showToggle = cards.length > INITIAL_VISIBLE;
   const visible = expanded ? cards : cards.slice(0, INITIAL_VISIBLE);
 
   return (
-    <section>
-      <h3 className="font-display text-lg tracking-tight text-foreground">Key Concepts</h3>
+    <section id="key-concepts" ref={sectionRef} className="scroll-mt-24">
+      <h2 className="font-display text-lg tracking-tight text-foreground">Key Concepts</h2>
       <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
-        {cards.length} terms and definitions covered in this unit.
+        {cards.length} terms and definitions for this topic.
       </p>
       <div className="mt-5 space-y-3">
         {visible.map((card) => (
@@ -26,9 +28,9 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
             className="rounded-xl border border-border/70 bg-card p-4 sm:p-5"
           >
             <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
-              <h4 className="text-[13px] sm:text-[14px] font-semibold text-card-foreground leading-snug">
+              <h3 className="font-sans text-[13px] sm:text-[14px] font-semibold text-card-foreground leading-snug">
                 {card.term}
-              </h4>
+              </h3>
               {card.structures.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 sm:shrink-0 sm:justify-end">
                   {card.structures.slice(0, 3).map((s) => (
@@ -55,7 +57,11 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
       {showToggle && (
         <button
           type="button"
-          onClick={() => setExpanded(!expanded)}
+          onClick={() => {
+            // Collapsing removes many cards above the button; bring the section back into view.
+            if (expanded) sectionRef.current?.scrollIntoView({ block: "start", behavior: scrollBehavior() });
+            setExpanded(!expanded);
+          }}
           aria-expanded={expanded}
           className="mt-4 w-full rounded-xl border border-border/70 bg-card py-3 text-[12px] sm:text-[13px] font-medium text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >

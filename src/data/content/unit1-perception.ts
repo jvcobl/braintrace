@@ -217,6 +217,9 @@ export const unit1ConceptCards = [
     definition:
       "The same PFC-driven heuristic system that enables fast recognition also carries costs. Joshua Correll's research showed that in computer simulations, subjects consistently shot Black individuals faster than White individuals. The neurobiology reveals a rapid 'threat' P200 ERP waveform followed by a delayed or weakened N200 'inhibitory/think-a-second' waveform originating in the PFC. This illustrates how the speed of heuristic processing can override careful evaluation.",
     structures: ["PFC"],
+    sensitivity: "high" as const,
+    sensitivityNote:
+      "This material is presented as a neuroscience reference, not as an interactive experience. It demonstrates the biological cost of the same heuristic system explored in this section.",
   },
   {
     id: "u1-cc-28",

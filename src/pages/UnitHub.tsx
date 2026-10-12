@@ -46,6 +46,26 @@ const UnitHub = () => {
         <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
       </div>
 
+      {/* On-this-page links for a long study guide */}
+      <nav aria-label="On this page" className="mt-8 flex flex-wrap gap-2">
+        {[
+          ["#lessons", "Lessons"],
+          ["#key-concepts", "Key concepts"],
+          ["#pathways", "Pathways"],
+          ["#distinctions", "Distinctions"],
+          ["#case-notes", "Case notes"],
+          ["#review", "Review"],
+        ].map(([href, label]) => (
+          <a
+            key={href}
+            href={href}
+            className="rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+
       {/* ── Interactive lessons — primary call to action ── */}
       <div className="mt-14 sm:mt-16">
         <FeaturedLessonCards

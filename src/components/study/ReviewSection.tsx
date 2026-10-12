@@ -9,8 +9,8 @@ const ReviewSection = ({ questions }: ReviewSectionProps) => {
   const [openHints, setOpenHints] = useState<Set<string>>(new Set());
 
   return (
-    <section className="rounded-xl border border-border/70 bg-section-alt p-5 sm:p-6 md:p-8">
-      <h3 className="font-display text-lg tracking-tight text-foreground">Test Your Understanding</h3>
+    <section id="review" className="scroll-mt-24 rounded-xl border border-border/70 bg-section-alt p-5 sm:p-6 md:p-8">
+      <h2 className="font-display text-lg tracking-tight text-foreground">Test Your Understanding</h2>
       <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
         Try answering these before checking the hints.
       </p>

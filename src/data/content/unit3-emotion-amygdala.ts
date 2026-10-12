@@ -232,6 +232,9 @@ export const unit3ConceptCards = [
     definition:
       "When the amygdala is chronically overactive, it leads to generalized anxiety, PTSD, and paralyzing phobias through overgeneralized threat cues. Pharmacological treatment includes SSRIs, where serotonin acts as a 'volume knob downward' on amygdala activity. Antidepressants, including SSRIs, can be dangerous in adolescents because they can increase the risk of suicidal behavior.",
     structures: ["Amygdala"],
+    sensitivity: "high" as const,
+    sensitivityNote:
+      "This material is presented as a factual neurobiology study card. If you or someone you know is struggling, please reach out to the 988 Suicide and Crisis Lifeline (call or text 988).",
   },
   {
     id: "u3-cc-30",
