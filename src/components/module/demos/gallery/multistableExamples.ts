@@ -51,7 +51,7 @@ const examples: MultistableExample[] = [
       "You see white and gold — your brain is assuming shadow and compensating, subtracting darkness to perceive lighter, warmer colors. Now try imagining the lighting is bright and even. Could those tones simply be blue and black?",
     ],
     switchHint: [
-      "Imagine warm shadow falling across white-and-gold fabric — the shadow would shift white toward blue-grey and gold toward dark brown.",
+      "Imagine cool shadow falling across white-and-gold fabric — the shadow would shift white toward blue-grey and gold toward dark brown.",
       "Imagine flat, even light. No shadow correction is needed — what you see is what's there.",
     ],
     resultFeedback: [

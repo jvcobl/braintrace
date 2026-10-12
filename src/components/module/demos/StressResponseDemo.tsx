@@ -18,7 +18,7 @@ interface Slot {
 }
 
 const CASCADE_SLOTS: Slot[] = [
-  { label: "Step 1: Detection", correctAnswer: "Hypothalamus releases CRH" },
+  { label: "Step 1: Initiation", correctAnswer: "Hypothalamus releases CRH" },
   { label: "Step 2: Signal", correctAnswer: "Anterior Pituitary releases ACTH" },
   { label: "Step 3: Release", correctAnswer: "Adrenal Cortex releases cortisol" },
 ];

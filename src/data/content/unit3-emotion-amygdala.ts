@@ -230,7 +230,7 @@ export const unit3ConceptCards = [
     id: "u3-cc-29",
     term: "Amygdala Hyperactivity",
     definition:
-      "When the amygdala is chronically overactive, it leads to generalized anxiety, PTSD, and paralyzing phobias through overgeneralized threat cues. Pharmacological treatment includes SSRIs, where serotonin acts as a 'volume knob downward' on amygdala activity. Older MAOIs can be dangerous in adolescents because excessive serotonin modulation can cause suicidal behavior.",
+      "When the amygdala is chronically overactive, it leads to generalized anxiety, PTSD, and paralyzing phobias through overgeneralized threat cues. Pharmacological treatment includes SSRIs, where serotonin acts as a 'volume knob downward' on amygdala activity. Antidepressants, including SSRIs, can be dangerous in adolescents because they can increase the risk of suicidal behavior.",
     structures: ["Amygdala"],
   },
   {
@@ -468,7 +468,7 @@ export const unit3CaseNotes = [
     id: "u3-cn-01",
     title: "Phineas Gage",
     content:
-      "A railroad foreman who survived a tamping iron destroying a hemisphere of his prefrontal cortex. After the injury, he transformed from a responsible, respected leader into someone described as obstinate, impulsive, capricious, and rude. This case is a foundational example of hypofrontality — the total loss of vmPFC emotional regulation. The PFC mediates between the emotional limbic system and rational cognition; without it, subcortical impulses go unchecked.",
+      "A railroad foreman who survived a tamping iron destroying part of his prefrontal cortex. After the injury, he transformed from a responsible, respected leader into someone described as obstinate, impulsive, capricious, and rude. This case is a foundational example of hypofrontality — a severe loss of vmPFC emotional regulation. The PFC mediates between the emotional limbic system and rational cognition; without it, subcortical impulses go unchecked.",
     sensitivity: "standard" as const,
   },
   {
@@ -484,7 +484,7 @@ export const unit3CaseNotes = [
     id: "u3-cn-03",
     title: "Patient SM (Urbach-Wiethe Disease)",
     content:
-      "Patient SM has a rare genetic disorder (Urbach-Wiethe disease) that caused a calcified, completely nonfunctional amygdala. She has a complete loss of physiological fear impulses and emotional braking — she cannot feel fear in her body. However, she retains full cognitive understanding of danger (she knows a train track is deadly). This dissociation proves that knowing something is dangerous and feeling afraid of it depend on different brain systems: cognitive awareness resides in the cortex, while the visceral fear response depends on the amygdala.",
+      "Patient SM has a rare genetic disorder (Urbach-Wiethe disease) that caused a calcified, completely nonfunctional amygdala. She has a profound loss of physiological fear impulses and emotional braking. However, she retains full cognitive understanding of danger (she knows a train track is deadly). This dissociation suggests that knowing something is dangerous and feeling afraid of it depend on different brain systems: cognitive awareness resides in the cortex, while the visceral fear response depends on the amygdala.",
     sensitivity: "high" as const,
     sensitivityNote:
       "Present as clinical reference material demonstrating the amygdala's role in fear physiology.",

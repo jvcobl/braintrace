@@ -72,7 +72,7 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   },
   "acquisition-early-bad": {
     primary: "The cue has not been paired with anything aversive yet.",
-    secondary: "Any unease at this point reflects contextual expectation — the cortex predicting what the experiment might do — rather than a learned CS-US association in the amygdala. True conditioned fear requires repeated pairing.",
+    secondary: "Any unease at this point reflects contextual expectation — the cortex predicting what the experiment might do — rather than a learned CS-US association in the amygdala. True conditioned fear requires pairing.",
     bridge: "Compare cortical prediction vs amygdala conditioning in Explain.",
     structure: "Cortical expectation (not conditioning)",
   },

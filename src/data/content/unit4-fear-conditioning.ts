@@ -131,7 +131,7 @@ export const unit4ConceptCards = [
     id: "u4-cc-15",
     term: "Spontaneous Recovery",
     definition:
-      "After successful extinction, the original fear response can randomly return — sometimes after a delay, sometimes after a change in context. This proves the original fear memory still exists underneath the newer extinction memory. Extinction suppressed the fear; it did not erase it.",
+      "After successful extinction, the original fear response can return after a delay. This proves the original fear memory still exists underneath the newer extinction memory. Extinction suppressed the fear; it did not erase it.",
     structures: ["Amygdala"],
   },
   {
@@ -241,7 +241,7 @@ export const unit4Pathways = [
         number: 3,
         structure: "Contextual Extinction",
         description:
-          "Extinction of contextual fear requires both the amygdala (to suppress the fear association) and the hippocampus (to update the context memory with new safety information). Cued extinction only requires the amygdala.",
+          "Extinction of contextual fear requires both the amygdala (to suppress the fear association) and the hippocampus (to update the context memory with new safety information). Cued extinction does not require the hippocampus.",
       },
     ],
   },
