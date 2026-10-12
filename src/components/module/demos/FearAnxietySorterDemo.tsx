@@ -1,4 +1,7 @@
 import { useState, useCallback } from "react";
+import { AnswerLine } from "@/components/module/experience";
+
+const capitalize = (w: string | undefined) => (w ? w[0].toUpperCase() + w.slice(1) : "");
 
 interface Item {
   id: string;
@@ -169,6 +172,7 @@ const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" |
                         : "border-destructive/30 bg-destructive/5"
                     }`}
                   >
+                    <AnswerLine correct={correct} picked={capitalize(picked)} answer={capitalize(s.correct)} />
                     <p className="text-foreground leading-relaxed">{s.text}</p>
                     <p className="mt-1 text-xs text-muted-foreground">
                       {s.explanation}

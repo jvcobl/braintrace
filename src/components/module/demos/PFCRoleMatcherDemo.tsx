@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { AnswerLine } from "@/components/module/experience";
 
 interface Scenario {
   id: string;
@@ -173,14 +174,13 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                         : "border-destructive/30 bg-destructive/5"
                     }`}
                   >
+                    <AnswerLine
+                      correct={correct}
+                      picked={picked ? REGION_LABELS[picked].full : ""}
+                      answer={REGION_LABELS[s.correctRegion].full}
+                    />
                     <p className="text-foreground leading-relaxed">{s.text}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {correct ? (
-                        <>✓ {REGION_LABELS[s.correctRegion].full} — {s.explanation}</>
-                      ) : (
-                        <>{REGION_LABELS[s.correctRegion].full} — {s.explanation}</>
-                      )}
-                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">{s.explanation}</p>
                   </li>
                 );
               })}
