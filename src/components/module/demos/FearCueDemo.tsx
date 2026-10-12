@@ -188,9 +188,10 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const trial = index < TRIALS.length && !inRecovery ? TRIALS[index] : null;
 
   const handlePredict = useCallback((p: Prediction) => {
+    if (prediction !== null) return; // ignore a second click during the short reveal delay
     setPrediction(p);
     timer.current = setTimeout(() => setStep("outcome"), 500);
-  }, []);
+  }, [prediction]);
 
   const handleShowFeedback = useCallback(() => {
     if (prediction && trial) {
@@ -317,13 +318,17 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
                 <div className="flex gap-3 justify-center">
                   <button
                     onClick={() => handlePredict("bad")}
-                    className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    disabled={prediction !== null}
+                    aria-pressed={prediction === "bad"}
+                    className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default ${prediction === "bad" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
                   >
                     Something bad
                   </button>
                   <button
                     onClick={() => handlePredict("nothing")}
-                    className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    disabled={prediction !== null}
+                    aria-pressed={prediction === "nothing"}
+                    className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default ${prediction === "nothing" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
                   >
                     Nothing
                   </button>
