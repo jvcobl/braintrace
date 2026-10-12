@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { modules } from "@/data/modules";
 
 /* ── Static data ── */
 
@@ -51,12 +52,23 @@ const Index = () => (
             Choose a Topic
           </Link>
           <Link
-            to="/how-your-brain-predicts"
-            className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            to="/module/blurry-object-guess"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition-all hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
-            The science behind it →
+            Try a lesson
+            <span aria-hidden="true">→</span>
           </Link>
         </div>
+
+        <p className="mt-8 sm:mt-10 text-[13px] text-muted-foreground">
+          {modules.length} interactive lessons · {TOPICS.length} topics ·{" "}
+          <Link
+            to="/about"
+            className="underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+          >
+            Built from Emory NBB302 course notes
+          </Link>
+        </p>
       </div>
     </section>
 
