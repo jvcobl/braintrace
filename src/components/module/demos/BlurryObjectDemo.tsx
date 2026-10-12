@@ -1,8 +1,9 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { ExperienceShell, FeedbackCard } from "@/components/module/experience";
 import type { ExperienceFeedback, ExperienceSummary } from "@/components/module/experience";
 import PredictionOutcome from "@/components/module/PredictionOutcome";
 import { predictionOutcomeContent } from "@/data/content/predictionOutcomeContent";
+import { scrollBehavior } from "@/lib/utils";
 
 interface StimulusItem {
   name: string;
@@ -106,7 +107,27 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
 
   const current = stimuli[round];
   const hasGuessed = guess !== null;
-  const blurPx = BLUR_STAGES[blurStage];
+  // Reveal the object once a guess is in, so the learner sees what it was.
+  const blurPx = hasGuessed ? 0 : BLUR_STAGES[blurStage];
+
+  const cardRef = useRef<HTMLDivElement>(null);
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  const sharpenRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
+
+  // After a guess, bring the feedback into view and move focus to "Next".
+  useEffect(() => {
+    if (!hasGuessed) return;
+    feedbackRef.current?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+    nextRef.current?.focus({ preventScroll: true });
+  }, [hasGuessed]);
+
+  // On each new object, scroll its card back into view (clear of the sticky header).
+  useEffect(() => {
+    if (round === 0) return;
+    cardRef.current?.scrollIntoView({ block: "start", behavior: scrollBehavior() });
+    sharpenRef.current?.focus({ preventScroll: true });
+  }, [round]);
 
   const handleSharpen = useCallback(() => {
     if (blurStage < BLUR_STAGES.length - 1) setBlurStage((s) => s + 1);
@@ -162,7 +183,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
         />
       }
     >
-      <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+      <div ref={cardRef} className="scroll-mt-20 rounded-lg border border-border bg-card p-4 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <p className="text-xs text-muted-foreground">
             Object {round + 1} of {stimuli.length}
@@ -186,6 +207,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
         {/* Stimulus */}
         <div className="flex items-center justify-center rounded-lg bg-secondary py-12">
           <span
+            role="img"
             className="text-8xl transition-all duration-700 ease-out select-none"
             style={{ filter: `blur(${blurPx}px)` }}
             aria-label={hasGuessed ? current.name : "Blurred object — try to guess"}
@@ -198,6 +220,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
         {!hasGuessed && (
           <div className="mt-4 flex justify-center">
             <button
+              ref={sharpenRef}
               onClick={handleSharpen}
               disabled={blurStage >= BLUR_STAGES.length - 1}
               className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -240,10 +263,11 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
 
         {/* Feedback */}
         {outcome && (
-          <div className="mt-5">
+          <div ref={feedbackRef} className="mt-5 scroll-mb-4">
             <FeedbackCard feedback={trialFeedback[outcome]} />
             <div className="mt-4 flex justify-center">
               <button
+                ref={nextRef}
                 onClick={handleNext}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
