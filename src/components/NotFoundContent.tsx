@@ -9,7 +9,7 @@ interface NotFoundContentProps {
 const NotFoundContent = ({ title, message }: NotFoundContentProps) => (
   <div className="container flex flex-col items-center justify-center px-4 sm:px-6 py-24 sm:py-32 text-center">
     <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary">404</p>
-    <h1 className="mt-3 font-display text-3xl sm:text-4xl tracking-tight text-foreground">{title}</h1>
+    <h1 className="mt-3 font-display text-3xl tracking-tight text-foreground">{title}</h1>
     <p className="mt-4 text-[14px] sm:text-[15px] text-muted-foreground">{message}</p>
     <div className="mt-10 flex flex-col sm:flex-row items-center gap-3">
       <Link

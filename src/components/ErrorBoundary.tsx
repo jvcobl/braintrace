@@ -34,7 +34,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     if (!this.state.error) return this.props.children;
     return (
       <div role="alert" className="container flex flex-col items-center justify-center px-4 sm:px-6 py-24 sm:py-32 text-center">
-        <h1 className="font-display text-3xl sm:text-4xl tracking-tight text-foreground">Something went wrong</h1>
+        <h1 className="font-display text-3xl tracking-tight text-foreground">Something went wrong</h1>
         <p className="mt-4 text-[14px] sm:text-[15px] text-muted-foreground">
           This page ran into a problem. Reloading usually fixes it.
         </p>

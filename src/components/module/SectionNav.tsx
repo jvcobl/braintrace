@@ -9,7 +9,7 @@ interface SectionNavProps {
 
 const SectionNav = ({ current, onSelect }: SectionNavProps) => (
   <nav
-    className="flex gap-6 border-b border-gray-200"
+    className="flex gap-4 sm:gap-6 border-b border-gray-200"
     aria-label="Lesson sections"
   >
     {sections.map((s, i) => (

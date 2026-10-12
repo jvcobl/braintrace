@@ -96,7 +96,7 @@ const Header = () => {
                       : "group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
                   }`}
                 >
-                  <div className="w-64 rounded-lg border border-gray-200 bg-white py-1.5 shadow-lg">
+                  <div className="w-80 rounded-lg border border-gray-200 bg-white py-1.5 shadow-lg">
                     {topicItems.map((item) => (
                       <Link
                         key={item.slug}

@@ -69,7 +69,7 @@ const Index = () => {
             {modules.length} interactive lessons · {TOPICS.length} topics ·{" "}
             <Link
               to="/about"
-              className="underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+              className="whitespace-nowrap underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
             >
               Built from Emory NBB302 course notes
             </Link>

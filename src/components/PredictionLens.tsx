@@ -56,8 +56,9 @@ function PathwayPills({ text }: { text: string }) {
         return (
           <div key={si} className="flex flex-wrap items-center gap-1.5">
             {segments.map((segment, i) => (
-              <span key={i} className="contents">
-                <span className="bg-gray-100 text-xs text-gray-900 px-2 py-0.5 rounded">
+              // Chip and its arrow wrap together, so a line never starts with a bare "→".
+              <span key={i} className="inline-flex max-w-full items-center gap-1.5">
+                <span className="min-w-0 bg-gray-100 text-xs text-gray-900 px-2 py-0.5 rounded">
                   {capitalize(segment)}
                 </span>
                 {i < segments.length - 1 && (

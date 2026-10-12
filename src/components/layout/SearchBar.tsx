@@ -210,7 +210,7 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
             </div>
 
             {/* Results */}
-            <div className="max-h-[min(60vh,28rem)] overflow-y-auto" aria-live="polite">
+            <div className="scroll-shadows max-h-[min(60vh,28rem)] overflow-y-auto" aria-live="polite">
               {query.trim().length >= 2 && results.length === 0 && (
                 <p className="py-8 text-center text-sm text-gray-500">
                   No results for "{query}"
@@ -234,7 +234,7 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
                         className="flex w-full items-start gap-3 rounded-lg px-2 py-2 text-left hover:bg-gray-50 focus-visible:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
                       >
                         <span
-                          className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-[11px] font-medium ${TYPE_COLOR[item.type]}`}
+                          className={`mt-0.5 w-20 shrink-0 rounded px-1.5 py-0.5 text-center text-[11px] font-medium ${TYPE_COLOR[item.type]}`}
                         >
                           {TYPE_LABEL[item.type]}
                         </span>

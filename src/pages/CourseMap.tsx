@@ -83,7 +83,7 @@ const CourseMap = () => {
   const [timelineOpen, setTimelineOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
 
       {/* Hero */}
@@ -175,9 +175,9 @@ const CourseMap = () => {
                     />
 
                     <div className="flex items-baseline gap-2 flex-wrap">
-                      <span className="text-xs text-gray-500 font-medium shrink-0">
-                        {entry.week === "—" ? "" : `Week ${entry.week}`}
-                      </span>
+                      {entry.week !== "—" && (
+                        <span className="text-xs text-gray-500 font-medium shrink-0">Week {entry.week}</span>
+                      )}
                       <span className={`text-sm ${isExam ? "text-gray-500 font-medium" : "text-gray-700"}`}>
                         {entry.topic}
                       </span>

@@ -133,7 +133,7 @@ const ModulePageContent = () => {
             {MODULE_TOPIC[mod.slug].title}
           </Link>
         )}
-        <h1 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight text-foreground">
+        <h1 className="mt-2 font-display text-3xl tracking-tight text-foreground">
           {mod.title}
         </h1>
         <p className="mt-2.5 sm:mt-3 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed">{mod.shortGoal}</p>

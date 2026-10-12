@@ -42,7 +42,7 @@ const ConceptFailure = () => {
   usePageMeta({ title: "When Prediction Fails", description: conceptPages.failure.description });
 
   return (
-    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
       <h1 className="font-display text-3xl tracking-tight text-foreground">When Prediction Fails</h1>
       <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
