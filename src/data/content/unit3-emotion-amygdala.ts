@@ -478,7 +478,7 @@ export const unit3CaseNotes = [
       "Caused by bilateral temporal lobe and amygdala damage, historically resulting from severe epilepsy surgeries. Symptoms include visual agnosia (inability to recognize objects), loss of normal fear and anger responses, hyperorality (putting inappropriate objects in the mouth), and hypersexuality. This syndrome demonstrates what happens when the amygdala's salience-stamping function is completely removed — the brain can no longer mark anything as important, dangerous, or socially inappropriate.",
     sensitivity: "high" as const,
     sensitivityNote:
-      "This is clinical study material. It demonstrates the consequences of amygdala loss and should be presented as an informational case card, not simulated.",
+      "This is clinical study material, presented as a reference case rather than an interactive experience. It shows the consequences of amygdala loss.",
   },
   {
     id: "u3-cn-03",
@@ -487,7 +487,7 @@ export const unit3CaseNotes = [
       "Patient SM has a rare genetic disorder (Urbach-Wiethe disease) that caused a calcified, completely nonfunctional amygdala. She has a profound loss of physiological fear impulses and emotional braking. However, she retains full cognitive understanding of danger (she knows a train track is deadly). This dissociation suggests that knowing something is dangerous and feeling afraid of it depend on different brain systems: cognitive awareness resides in the cortex, while the visceral fear response depends on the amygdala.",
     sensitivity: "high" as const,
     sensitivityNote:
-      "Present as clinical reference material demonstrating the amygdala's role in fear physiology.",
+      "This is clinical reference material, presented as a case summary rather than an interactive experience. It shows the amygdala's role in fear physiology.",
   },
   {
     id: "u3-cn-04",
