@@ -241,7 +241,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
         {/* Feedback */}
         {outcome && (
           <div className="mt-5">
-            <FeedbackCard onNavigate={onNavigate} feedback={trialFeedback[outcome]} />
+            <FeedbackCard feedback={trialFeedback[outcome]} />
             <div className="mt-4 flex justify-center">
               <button
                 onClick={handleNext}

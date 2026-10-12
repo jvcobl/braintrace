@@ -364,7 +364,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
           {/* FeedbackCard below interaction area */}
           {step === "feedback" && prediction && (
             <div ref={feedbackRef} className="mt-5 scroll-mb-4">
-              <FeedbackCard onNavigate={onNavigate} feedback={getFeedback(trial.stage, prediction)} />
+              <FeedbackCard feedback={getFeedback(trial.stage, prediction)} />
               <div className="mt-4 flex justify-center">
                 <button
                   onClick={advance}

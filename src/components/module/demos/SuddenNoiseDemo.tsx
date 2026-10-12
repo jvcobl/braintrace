@@ -416,7 +416,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               </div>
               {expectAnswer && (
                 <div className="mt-5">
-                  <FeedbackCard onNavigate={onNavigate} feedback={expectationFeedback[expectAnswer]} />
+                  <FeedbackCard feedback={expectationFeedback[expectAnswer]} />
                   <div className="mt-4 flex justify-center">
                     <button
                       onClick={() => setPhase({ kind: "reflect", step: "priming" })}
@@ -459,7 +459,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               </div>
               {primingAnswer && (
                 <div className="mt-5">
-                  <FeedbackCard onNavigate={onNavigate} feedback={primingFeedback[primingAnswer]} />
+                  <FeedbackCard feedback={primingFeedback[primingAnswer]} />
                   <div className="mt-4 flex justify-center">
                     <button
                       onClick={() => setPhase({ kind: "reflect", step: "context" })}
@@ -479,7 +479,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               <p className="text-sm font-medium text-foreground mb-3">
                 Now consider: would the same interruption feel different in a dark room alone vs. a bright classroom?
               </p>
-              <FeedbackCard onNavigate={onNavigate} feedback={contextFeedback} />
+              <FeedbackCard feedback={contextFeedback} />
               <div className="mt-4 flex justify-center">
                 <button
                   onClick={() => setPhase({ kind: "done" })}

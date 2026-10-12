@@ -409,7 +409,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
         {/* FeedbackCard below the interaction area */}
         {feedbackKey && (
           <div className="mt-5">
-            <FeedbackCard onNavigate={onNavigate} feedback={trialFeedback[feedbackKey]} />
+            <FeedbackCard feedback={trialFeedback[feedbackKey]} />
             <div className="mt-4 flex justify-center">
               <button
                 onClick={handleNext}
