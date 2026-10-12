@@ -10,7 +10,7 @@ import ExperienceSection from "@/components/module/ExperienceSection";
 import TracePanel from "@/components/module/TracePanel";
 import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
-import { armDoubleTapGuard } from "@/components/module/experience";
+import { armDoubleTapGuardIfControlGone } from "@/components/module/experience";
 import { focusIsLost, focusTarget, scrollBehavior } from "@/lib/utils";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import NotFoundContent from "@/components/NotFoundContent";
@@ -90,9 +90,9 @@ const ModulePageContent = () => {
   useEffect(() => {
     if (previousSection.current === section) return;
     previousSection.current = section;
-    // A button that switched tabs (e.g. "Begin Experience") is replaced by the new tab's
-    // controls; ignore a quick second tap so it can't answer the first question unseen.
-    armDoubleTapGuard();
+    // A button inside a tab (e.g. "Begin Experience") is replaced by the new tab's controls;
+    // ignore a quick second tap so it can't answer the first question unseen.
+    armDoubleTapGuardIfControlGone();
     // A deep link to a card (e.g. a Go Deeper search result) focuses that card instead.
     const hash = window.location.hash.slice(1);
     if (hash && !TAB_IDS.includes(hash)) return;

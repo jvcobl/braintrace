@@ -11,13 +11,17 @@ import { focusIsLost, scrollBehavior } from "@/lib/utils";
 const CAUSED_BY_INPUT_MS = 300;
 const GUARD_MS = 400;
 let lastInputAt = -Infinity;
+let lastInputTarget: EventTarget | null = null;
 let guardUntil = -Infinity;
 let guardInstalled = false;
 
 function installDoubleTapGuard() {
   if (guardInstalled || typeof window === "undefined") return;
   guardInstalled = true;
-  const noteInput = () => (lastInputAt = performance.now());
+  const noteInput = (e: Event) => {
+    lastInputAt = performance.now();
+    lastInputTarget = e.target;
+  };
   window.addEventListener("pointerdown", noteInput, true);
   window.addEventListener("keydown", noteInput, true);
   window.addEventListener(
@@ -36,6 +40,15 @@ function installDoubleTapGuard() {
 export function armDoubleTapGuard() {
   const now = performance.now();
   if (now - lastInputAt < CAUSED_BY_INPUT_MS) guardUntil = now + GUARD_MS;
+}
+
+/**
+ * For changes that only sometimes move controls under the pointer (switching lesson tabs):
+ * arm the guard only if the control just pressed is gone, as when "Begin Experience" is
+ * replaced by the demo. A tab in the tab bar stays put, so double-clicking it is harmless.
+ */
+export function armDoubleTapGuardIfControlGone() {
+  if (lastInputTarget instanceof Node && !lastInputTarget.isConnected) armDoubleTapGuard();
 }
 
 // Listen from app start, so the tap that opens a demo (e.g. "Begin Experience") is seen too.
