@@ -47,6 +47,7 @@ export function usePageMeta({ title, description, canonicalPath, noindex = false
       link.rel = "canonical";
       document.head.appendChild(link);
     }
-    link.href = SITE_URL + (canonicalPath ?? window.location.pathname);
+    // Routes match case-insensitively and with a trailing slash; canonicalise to the plain form.
+    link.href = SITE_URL + (canonicalPath ?? (window.location.pathname.replace(/\/+$/, "").toLowerCase() || "/"));
   }, [title, description, canonicalPath, noindex]);
 }

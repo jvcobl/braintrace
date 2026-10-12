@@ -85,13 +85,13 @@ const trialFeedback: Record<FeedbackKey, ExperienceFeedback> = {
   highCorrect: {
     primary: "You held accuracy under heavy load.",
     secondary: "At this level, most people show significant decline. Maintaining performance here reflects strong momentary PFC capacity, though the same person under different conditions (tired, hungry, stressed) might fail at this load.",
-    bridge: "Explain covers why the same system fails under depletion.",
+    bridge: "Explain covers why prefrontal control degrades under sustained demand.",
     structure: "dlPFC (sustained under strain)",
   },
   highIncorrect: {
     primary: "The load exceeded available capacity.",
     secondary: "This is where nearly everyone fails. The PFC's finite metabolic resources are exhausted — working memory, distractor suppression, and self-regulation all compete for the same pool, and at high load there is simply not enough to go around.",
-    bridge: "Explain connects this to real-world depletion effects.",
+    bridge: "Explain covers why prefrontal control is powerful but resource-limited.",
     structure: "dlPFC (capacity exceeded)",
   },
 };

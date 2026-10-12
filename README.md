@@ -23,7 +23,7 @@ Live site: [learnbraintrace.com](https://learnbraintrace.com)
 ## Lesson structure
 
 - **Intro**: hook, context, and learning objective
-- **Experience**: an interactive demo (predicting, sorting, building, observing, or recalling), ending with a summary and a **Prediction & Outcome** recap that bridges the demo to the neuroscience
+- **Experience**: an interactive demo (predicting, sorting, building, observing, or recalling), ending with a summary (and, in the six flagship lessons, a **Prediction & Outcome** recap that bridges the demo to the neuroscience)
 - **Trace**: the neural pathway, as an interactive diagram or a step-by-step walkthrough
 - **Explain**: What Happened, What Your Brain Did, Key Pathway, Why It Matters, plus a Prediction Lens and deeper notes for the flagship lessons
 

@@ -197,7 +197,7 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                 onClick={() => onNavigate("Trace")}
                 className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group rounded-sm py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                <span>Trace shows the PFC functional map and how these regions connect</span>
+                <span>Trace shows what each PFC region does</span>
                 <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
               </button>
             )}

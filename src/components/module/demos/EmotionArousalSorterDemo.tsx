@@ -190,7 +190,7 @@ const EmotionArousalSorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace
                 onClick={() => onNavigate("Explain")}
                 className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group rounded-sm py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                <span>Explain covers why this distinction is foundational to the unit</span>
+                <span>Explain covers why this distinction is foundational</span>
                 <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
               </button>
             )}

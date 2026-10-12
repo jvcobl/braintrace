@@ -3,15 +3,24 @@ import type { TraceNode } from "@/data/modules";
 interface TracePanelProps {
   nodes: TraceNode[];
   onAdvanceToExplain?: () => void;
+  /** Line under the heading; lessons whose list is concepts rather than a signal path pass their own. */
+  subtitle?: string;
+  /** Accessible name for the list. */
+  listLabel?: string;
 }
 
-const TracePanel = ({ nodes, onAdvanceToExplain }: TracePanelProps) => (
+const TracePanel = ({
+  nodes,
+  onAdvanceToExplain,
+  subtitle = "Follow the signal through the circuit.",
+  listLabel = "Neural pathway steps",
+}: TracePanelProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Trace the Pathway</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground">
-      Follow the signal through the circuit.
+      {subtitle}
     </p>
-    <ol className="mt-5 sm:mt-6 space-y-0" aria-label="Neural pathway steps">
+    <ol className="mt-5 sm:mt-6 space-y-0" aria-label={listLabel}>
       {nodes.map((node, i) => (
         <li key={node.label} className="flex gap-3 sm:gap-4">
           <div className="flex flex-col items-center">

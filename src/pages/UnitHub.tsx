@@ -22,7 +22,7 @@ const UnitHub = () => {
   const content = unitId ? getUnitContent(unitId) : undefined;
   usePageMeta(
     content && unitId
-      ? { title: `${content.meta.title}: Study Guide`, description: content.meta.overview, canonicalPath: `/unit/${unitId}` }
+      ? { title: `${content.meta.title}: Study Guide`, description: `${content.meta.subtitle} ${content.meta.overview}`, canonicalPath: `/unit/${unitId}` }
       : { title: "Page not found", noindex: true },
   );
 

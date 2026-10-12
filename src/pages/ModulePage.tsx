@@ -39,6 +39,16 @@ function sectionFromHash(hash: string): SectionId {
   return "Intro";
 }
 
+/** Sorters and the PFC matcher trace concepts, not a signal path, so their Trace tab says so. */
+const SORTER_TRACE = { subtitle: "The ideas the sorter is built on, and what separates them.", listLabel: "Key ideas" };
+const CONCEPT_TRACE: Record<string, { subtitle: string; listLabel: string }> = {
+  "pfc-role-matcher": { subtitle: "What each region of the prefrontal cortex contributes.", listLabel: "PFC regions" },
+  "fear-vs-anxiety-sorter": SORTER_TRACE,
+  "emotion-vs-arousal-sorter": SORTER_TRACE,
+  "classical-vs-operant-sorter": SORTER_TRACE,
+  "homeostasis-vs-allostasis-sorter": SORTER_TRACE,
+};
+
 const ModulePageContent = () => {
   const { id } = useParams<{ id: string }>();
   const mod = id ? getModuleById(id) : undefined;
@@ -140,7 +150,7 @@ const ModulePageContent = () => {
             const modDef = moduleDefinitions[mod.slug];
             return modDef?.tracePathway
               ? <TracePathwaySVG pathway={modDef.tracePathway} onAdvanceToExplain={() => handleSection("Explain")} />
-              : <TracePanel nodes={mod.traceNodes} onAdvanceToExplain={() => handleSection("Explain")} />;
+              : <TracePanel nodes={mod.traceNodes} onAdvanceToExplain={() => handleSection("Explain")} {...CONCEPT_TRACE[mod.slug]} />;
           })()}</div>}
           {section === "Explain" && <div id="explain">{(() => {
             const modDef = moduleDefinitions[mod.slug];
