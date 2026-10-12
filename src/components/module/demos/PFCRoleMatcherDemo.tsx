@@ -98,10 +98,10 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
   return (
     <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
+      <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+      <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
         Each scenario describes something the prefrontal cortex does. Match it
         to the correct PFC region: <strong>dlPFC</strong> (logic & working memory),{" "}
         <strong>vmPFC</strong> (emotion regulation), or <strong>OFC</strong> (prediction

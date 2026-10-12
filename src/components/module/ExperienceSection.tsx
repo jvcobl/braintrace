@@ -43,7 +43,7 @@ const ExperienceSection = ({ module, onNavigate }: ExperienceSectionProps) => {
   if (!Demo) {
     return (
       <section>
-        <h2 className="font-display text-2xl font-semibold text-foreground">Experience</h2>
+        <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Experience</h2>
         <div className="mt-4 rounded-lg border border-border bg-card p-8 text-center">
           <p className="text-sm text-muted-foreground">No demo available for this module.</p>
         </div>

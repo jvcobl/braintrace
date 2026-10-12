@@ -11,7 +11,7 @@ const CONCEPT_ACCENTS: Record<string, string> = {
 const ConceptHub = () => (
   <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
     <Breadcrumb />
-    <h1 className="text-3xl font-semibold text-foreground">How your brain predicts</h1>
+    <h1 className="font-display text-3xl tracking-tight text-foreground">How your brain predicts</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
       Every BrainTrace module runs on the same prediction loop. These
       three pages explain how that loop works, how attention shapes it,

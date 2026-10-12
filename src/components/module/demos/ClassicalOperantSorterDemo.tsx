@@ -88,10 +88,10 @@ const ClassicalOperantSorterDemo = ({ onNavigate }: { onNavigate?: (target: "Tra
 
   return (
     <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
+      <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+      <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
         For each scenario, decide: is this <strong>classical conditioning</strong> —
         where a neutral stimulus becomes associated with an outcome automatically — or{" "}
         <strong>operant conditioning</strong> — where voluntary behavior is shaped by

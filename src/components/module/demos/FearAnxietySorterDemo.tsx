@@ -90,10 +90,10 @@ const FearAnxietySorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" |
 
   return (
     <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
+      <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+      <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
         Read each scenario and decide: is this <strong>fear</strong> — a response
         to an imminent, tangible threat — or <strong>anxiety</strong> — the
         anticipation of a future, predicted threat?

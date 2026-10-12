@@ -80,7 +80,7 @@ const TopicPage = () => {
       <Breadcrumb />
 
       <div className="border-l-4 rounded-r-lg pl-5" style={{ borderLeftColor: topic.accent }}>
-        <h1 className="text-3xl text-foreground">{topic.title}</h1>
+        <h1 className="font-display text-3xl tracking-tight text-foreground">{topic.title}</h1>
         <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl">
           {topic.description}
         </p>

@@ -12,7 +12,7 @@ const topics = [
 const TopicsIndex = () => (
   <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
     <Breadcrumb />
-    <h1 className="text-3xl text-foreground">Explore by topic</h1>
+    <h1 className="font-display text-3xl tracking-tight text-foreground">Explore by topic</h1>
     <p className="mt-4 text-sm text-muted-foreground max-w-2xl">
       Pick a topic to see the modules connected to it.
     </p>

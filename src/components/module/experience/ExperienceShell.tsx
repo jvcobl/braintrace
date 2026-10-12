@@ -46,7 +46,7 @@ const ExperienceShell = ({
           Experience
         </h2>
         <div className="mt-4 rounded-lg border border-border bg-card px-5 py-6 sm:p-8 text-center space-y-3">
-          <h3 className="font-display text-base sm:text-lg font-semibold text-foreground">
+          <h3 className="font-display text-base sm:text-lg text-foreground">
             {summary.heading}
           </h3>
           <p className="text-[13px] sm:text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">

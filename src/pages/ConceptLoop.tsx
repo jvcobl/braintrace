@@ -21,7 +21,7 @@ const moduleCallouts = [
 const ConceptLoop = () => (
   <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
     <Breadcrumb />
-    <h1 className="text-3xl font-semibold text-foreground">The Loop</h1>
+    <h1 className="font-display text-3xl tracking-tight text-foreground">The Loop</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
       Your brain runs a constant cycle: predict, receive input, detect mismatch,
       update the model. Every BrainTrace module shows you one version of this loop.

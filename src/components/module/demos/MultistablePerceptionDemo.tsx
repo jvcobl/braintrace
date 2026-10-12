@@ -63,10 +63,10 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
 
   return (
     <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
+      <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+      <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
         This gallery contains three classic examples of perceptual ambiguity.
         For each one, report what you see first, then try to switch your
         interpretation. The image never changes; only your brain's reading of
@@ -139,7 +139,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
               {example.category}
             </span>
             <span className="text-border" aria-hidden>·</span>
-            <h3 className="text-sm font-semibold text-foreground">
+            <h3 className="font-sans text-sm font-semibold text-foreground">
               {example.title}
             </h3>
           </div>

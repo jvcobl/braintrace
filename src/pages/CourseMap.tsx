@@ -85,7 +85,7 @@ const CourseMap = () => {
       <Breadcrumb />
 
       {/* Hero */}
-      <h1 className="text-3xl font-semibold text-foreground">Course map</h1>
+      <h1 className="font-display text-3xl tracking-tight text-foreground">Course map</h1>
       <p className="mt-3 text-lg text-gray-500 max-w-2xl">
         How BrainTrace connects to NBB302. Each module maps to specific course
         topics.

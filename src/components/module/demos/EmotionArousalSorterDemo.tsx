@@ -88,10 +88,10 @@ const EmotionArousalSorterDemo = ({ onNavigate }: { onNavigate?: (target: "Trace
 
   return (
     <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
+      <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+      <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
         Is each scenario describing <strong>emotion</strong> — a transient state
         with specific valence that motivates approach or avoidance — or{" "}
         <strong>arousal</strong> — physiological intensity without inherent

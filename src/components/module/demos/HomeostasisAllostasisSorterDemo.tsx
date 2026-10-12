@@ -88,10 +88,10 @@ const HomeostasisAllostasisSorterDemo = ({ onNavigate }: { onNavigate?: (target:
 
   return (
     <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
+      <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+      <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
         Is each scenario <strong>homeostasis</strong> — negative feedback restoring
         a fixed set point — or <strong>allostasis</strong> — the body predictively
         shifting its parameters to meet anticipated demand?
