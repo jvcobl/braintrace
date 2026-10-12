@@ -33,7 +33,7 @@ const TopicsIndex = () => {
               <h2 className="font-display text-base text-foreground group-hover:text-primary transition-colors">
                 {t.title}
               </h2>
-              <p className="text-xs text-gray-500 mt-0.5 truncate">
+              <p className="text-xs text-gray-500 mt-0.5">
                 {t.teaser}
               </p>
             </div>

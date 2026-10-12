@@ -34,7 +34,7 @@ const ConceptHub = () => {
               <div className="h-[3px]" style={{ backgroundColor: accent }} />
               <div className="p-6">
                 <h2 className="font-display text-lg text-foreground">{page.title}</h2>
-                <p className="text-sm text-muted-foreground mt-2 line-clamp-3">{page.description}</p>
+                <p className="text-sm text-muted-foreground mt-2">{page.description}</p>
                 <span className="inline-block mt-4 text-sm font-medium text-primary group-hover:underline">
                   Read more →
                 </span>
