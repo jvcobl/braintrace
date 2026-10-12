@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { TracePathway, TraceNode as TNode, TraceEdge, TraceBadge } from "@/data/types";
 
 /* ── Design tokens ── */
@@ -199,7 +199,8 @@ function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number) {
   const x1 = from.cx;
   const y1 = from.cy + NH / 2;
   const x2 = to.cx;
-  const y2 = to.cy - NH / 2;
+  // Stop above a role badge (the pill straddling the node's top edge), so it can't hide the arrowhead.
+  const y2 = to.cy - NH / 2 - (to.badge ? 10 : 0);
   const dx = Math.abs(x2 - x1);
 
   const d =
@@ -381,6 +382,22 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
     [nodes],
   );
 
+  const activeTitle = showAlt && pathway.alternateState ? pathway.alternateState.label : pathway.title;
+
+  // When the diagram is wider than its box (wide graphs on phones), make the box a focusable,
+  // labelled region so keyboard users can scroll it, and show the scroll hint.
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollable, setScrollable] = useState(false);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const measure = () => setScrollable(el.scrollWidth > el.clientWidth + 1);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [showAlt, w, h]);
+
   return (
     <section>
       <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
@@ -421,16 +438,20 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
       {w > 0 && h > 0 && (
         <div
           key={showAlt ? "alt" : "default"}
-          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-3 sm:p-8"
+          ref={scrollRef}
+          tabIndex={scrollable ? 0 : undefined}
+          role={scrollable ? "region" : undefined}
+          aria-label={scrollable ? `${activeTitle} diagram, scrolls sideways` : undefined}
+          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-3 sm:p-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           style={{ animation: "tpFadeIn 250ms ease-out" }}
         >
           <style>{`@keyframes tpFadeIn{from{opacity:0}to{opacity:1}}`}</style>
           <svg
             viewBox={`0 0 ${w} ${h}`}
             className="w-full mx-auto"
-            style={{ maxWidth: Math.max(w, 360), minWidth: w > WIDE_GRAPH ? 480 : 300 }}
+            style={{ maxWidth: Math.max(w, 360), minWidth: w > WIDE_GRAPH ? 480 : 260 }}
             role="img"
-            aria-label={`Neural pathway diagram: ${pathway.title}`}
+            aria-label={`Neural pathway diagram: ${activeTitle}`}
           >
             <defs>
               {/* Subtle shadow for active nodes */}
@@ -598,8 +619,8 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
         </div>
       )}
 
-      {w > WIDE_GRAPH && (
-        <p className="mt-2 text-center text-xs text-muted-foreground sm:hidden">
+      {scrollable && (
+        <p className="mt-2 text-center text-xs text-muted-foreground">
           Scroll sideways to see the whole diagram.
         </p>
       )}
