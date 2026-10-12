@@ -39,8 +39,11 @@ const Header = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
+  // Lessons and study guides live under Topics, so highlight it there too.
   const isActive = (to: string) =>
-    pathname === to || (to !== "/" && pathname.startsWith(to));
+    pathname === to ||
+    (to !== "/" && pathname.startsWith(to)) ||
+    (to === "/topics" && /^\/(module|unit)\//.test(pathname));
 
   const linkClass = (to: string) =>
     `relative py-5 text-sm font-medium uppercase tracking-wide transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
@@ -51,13 +54,13 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200/60 bg-white">
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-16 items-center justify-between px-4 sm:px-6">
         <Link to="/" className="font-display text-xl text-foreground">
           BrainTrace
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden sm:flex items-center gap-6" aria-label="Main navigation">
+        <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
           {navLinks.map(({ to, label }) =>
             to === "/topics" ? (
               <div key={to} className="group relative">
@@ -99,7 +102,7 @@ const Header = () => {
         </nav>
 
         {/* Mobile: search + hamburger */}
-        <div className="flex sm:hidden items-center gap-1">
+        <div className="flex md:hidden items-center gap-1">
           <SearchBar />
           <button
             type="button"
@@ -117,7 +120,7 @@ const Header = () => {
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <nav id="mobile-nav" className="sm:hidden border-t border-gray-200/60 bg-white px-4 pb-4 pt-2 space-y-1" aria-label="Mobile navigation">
+        <nav id="mobile-nav" className="md:hidden border-t border-gray-200/60 bg-white px-4 pb-4 pt-2 space-y-1" aria-label="Mobile navigation">
           {navLinks.map(({ to, label }) => (
             <Link
               key={to}
