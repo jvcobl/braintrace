@@ -109,7 +109,7 @@ export default function CortisolGraph({ mode, onComplete, className, instant = f
         x2={W - PAD_X} y2={BASELINE_Y}
         stroke="#ccc" strokeWidth={1}
       />
-      <text x={W - PAD_X} y={BASELINE_Y + 10} textAnchor="end" fontSize={10} fill="#6b7280">
+      <text x={W - PAD_X} y={BASELINE_Y + 11} textAnchor="end" fontSize={11} fill="#6b7280">
         baseline
       </text>
 
@@ -119,7 +119,8 @@ export default function CortisolGraph({ mode, onComplete, className, instant = f
         x2={W - PAD_X} y2={THRESHOLD_Y}
         stroke="#ccc" strokeWidth={1} strokeDasharray="4 3"
       />
-      <text x={W - PAD_X} y={THRESHOLD_Y - 4} textAnchor="end" fontSize={10} fill="#6b7280">
+      {/* Labelled at the left, where both curves are still low (the runaway curve ends high on the right). */}
+      <text x={PAD_X} y={THRESHOLD_Y - 5} textAnchor="start" fontSize={11} fill="#6b7280">
         danger threshold
       </text>
 
