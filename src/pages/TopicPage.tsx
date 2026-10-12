@@ -1,8 +1,9 @@
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, Link } from "react-router-dom";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ModuleLink from "@/components/ModuleLink";
 import ConceptLink from "@/components/ConceptLink";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import { TOPIC_TO_UNIT } from "@/data/topicUnits";
 
 /* ── Topic data ── */
 
@@ -103,6 +104,22 @@ const TopicPage = () => {
           <ModuleLink key={id} moduleId={id} />
         ))}
       </div>
+
+      {/* Study guide (unit hub) */}
+      {slug && TOPIC_TO_UNIT[slug] && (
+        <Link
+          to={`/unit/${TOPIC_TO_UNIT[slug]}`}
+          className="group mt-4 flex items-center justify-between gap-3 rounded-lg border border-dashed border-border bg-white/60 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <span>
+            <span className="block text-sm font-medium text-foreground">Study guide</span>
+            <span className="block text-xs text-gray-500 mt-0.5">
+              Key concepts, neural pathways, distinctions, case notes and review questions for this topic.
+            </span>
+          </span>
+          <span className="shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+        </Link>
+      )}
 
       {/* Related concepts */}
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">

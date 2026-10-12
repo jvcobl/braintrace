@@ -9,6 +9,7 @@ import DistinctionSection from "@/components/study/DistinctionSection";
 import CaseNoteSection from "@/components/study/CaseNoteSection";
 import ReviewSection from "@/components/study/ReviewSection";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
@@ -50,13 +51,7 @@ const UnitHub = () => {
 
   return (
     <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-20">
-      {/* Breadcrumb */}
-      <Link
-        to="/topics"
-        className="inline-flex items-center gap-1.5 py-1 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
-      >
-        <span aria-hidden="true">←</span> All Topics
-      </Link>
+      <Breadcrumb />
 
       {/* ── Hero: Unit intro ── */}
       <div className="mt-6 sm:mt-8">
