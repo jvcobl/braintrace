@@ -8,6 +8,8 @@ type Phase = "choose" | "switch" | "result";
 interface ExampleState {
   phase: Phase;
   choice: "a" | "b" | null;
+  /** Whether the learner reported seeing both readings (vs "only one so far"). */
+  sawBoth?: boolean;
 }
 
 const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
@@ -34,8 +36,8 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
     setExampleState({ choice: pick, phase: "switch" });
   };
 
-  const handleConfirmSwitch = () => {
-    setExampleState({ phase: "result" });
+  const handleConfirmSwitch = (sawBoth: boolean) => {
+    setExampleState({ phase: "result", sawBoth });
   };
 
   const handleReset = () => {
@@ -244,14 +246,14 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
 
                 <button
                   type="button"
-                  onClick={handleConfirmSwitch}
+                  onClick={() => handleConfirmSwitch(true)}
                   className="rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   I can see both
                 </button>
                 <button
                   type="button"
-                  onClick={handleConfirmSwitch}
+                  onClick={() => handleConfirmSwitch(false)}
                   className="block mx-auto rounded-sm px-2 py-2 text-xs text-muted-foreground underline decoration-border underline-offset-4 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   I can only see one so far
@@ -262,6 +264,11 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
             {/* Phase 3: Result */}
             {state.phase === "result" && state.choice && (
               <div className="space-y-3 max-w-md mx-auto">
+                {state.sawBoth === false && (
+                  <p className="text-center text-[13px] text-muted-foreground leading-relaxed">
+                    Not yet? That's common. Try Again and use "Help me see" to highlight the other reading, or come back to it later.
+                  </p>
+                )}
                 {/* Choice-specific feedback */}
                 <div data-autofocus tabIndex={-1} className="rounded-lg border border-border bg-accent/40 px-4 py-3 focus:outline-none">
                   <p className="text-sm text-foreground leading-relaxed">

@@ -20,7 +20,7 @@ const BLUR_STAGES = [20, 10, 4, 0];
 
 /* ── Feedback states (from pasted spec) ── */
 
-type OutcomeKey = "earlyCorrect" | "lateCorrect" | "earlyIncorrect" | "incorrectAfterReveal";
+type OutcomeKey = "earlyCorrect" | "lateCorrect" | "earlyIncorrect" | "partlySharpIncorrect" | "incorrectAfterReveal";
 
 const trialFeedback: Record<OutcomeKey, ExperienceFeedback> = {
   earlyCorrect: {
@@ -28,7 +28,7 @@ const trialFeedback: Record<OutcomeKey, ExperienceFeedback> = {
     secondary:
       "This reflects the OFC shortcut: coarse, low spatial frequency information — broad shapes and contrast — was enough to generate a correct prediction. The guess reached the IT cortex before detailed processing through the ventral stream was complete.",
     bridge: "See how this pathway works in Trace.",
-    structure: "LSF → OFC → IT cortex",
+    structure: "Low spatial frequency → OFC → IT cortex",
   },
   lateCorrect: {
     primary: "You got it right, but needed more detail first.",
@@ -44,6 +44,13 @@ const trialFeedback: Record<OutcomeKey, ExperienceFeedback> = {
     bridge: "Trace shows where the prediction forms and where it gets corrected.",
     structure: "OFC prediction → IT cortex override",
   },
+  partlySharpIncorrect: {
+    primary: "You guessed before the image was fully sharp, and the remaining blur was misleading.",
+    secondary:
+      "This mirrors the trade-off of top-down prediction. The OFC generated a fast guess from rough shape and contrast cues, but the low spatial frequency information pointed to the wrong object. Speed costs accuracy — this is the inherent risk of heuristic processing.",
+    bridge: "Trace shows where the prediction forms and where it gets corrected.",
+    structure: "OFC prediction → IT cortex override",
+  },
   incorrectAfterReveal: {
     primary: "The object was hard to identify even with full detail.",
     secondary:
@@ -54,18 +61,39 @@ const trialFeedback: Record<OutcomeKey, ExperienceFeedback> = {
 };
 
 function classifyOutcome(correct: boolean, guessStage: number): OutcomeKey {
-  const early = guessStage < BLUR_STAGES.length - 2; // guessed while still blurry
+  const early = isEarly(guessStage); // guessed while still blurry
   const fullyRevealed = guessStage >= BLUR_STAGES.length - 1;
 
   if (correct && early) return "earlyCorrect";
   if (correct) return "lateCorrect";
-  if (!correct && !fullyRevealed) return "earlyIncorrect";
+  if (!correct && early) return "earlyIncorrect";
+  if (!correct && !fullyRevealed) return "partlySharpIncorrect";
   return "incorrectAfterReveal";
 }
 
 /* ── Summary tiers (from pasted spec) ── */
 
-function getSummary(correctCount: number, total: number): ExperienceSummary {
+/** Guessed while the image was still blurred (the first two clarity stages). */
+const isEarly = (stage: number) => stage < BLUR_STAGES.length - 2;
+
+function getSummary(correctCount: number, total: number, earlyGuesses: number, earlyCorrect: number): ExperienceSummary {
+  const tier = summaryTier(correctCount, total, earlyCorrect);
+  // Reflect the learner's own timing, which the instructions say is the point.
+  const timing =
+    earlyGuesses === 0
+      ? `You sharpened every image before answering. `
+      : `You answered while the image was still blurred on ${earlyGuesses} of ${total}, and ${earlyCorrect === earlyGuesses ? (earlyGuesses === 1 ? "that guess was" : "all of those were") : `${earlyCorrect} of those ${earlyCorrect === 1 ? "was" : "were"}`} right. `;
+  return { ...tier, body: timing + tier.body };
+}
+
+function summaryTier(correctCount: number, total: number, earlyCorrect: number): ExperienceSummary {
+  if (correctCount === total && earlyCorrect < total) {
+    return {
+      heading: "What This Shows",
+      body: "You identified every object, but waiting for more detail on some of them traded speed for the fuller information the ventral stream and IT cortex use to confirm identity. The fast OFC shortcut and the slower detailed route both reached the right answer.",
+      bridge: "Trace walks through the full OFC shortcut pathway.",
+    };
+  }
   if (correctCount === total) {
     return {
       heading: "What This Shows",
@@ -103,6 +131,8 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
   const [guessStage, setGuessStage] = useState<number | null>(null);
   const [done, setDone] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
+  const [earlyGuesses, setEarlyGuesses] = useState(0);
+  const [earlyCorrect, setEarlyCorrect] = useState(0);
 
   const current = stimuli[round];
   const hasGuessed = guess !== null;
@@ -121,6 +151,10 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       setGuess(option);
       setGuessStage(blurStage);
       if (option === current.name) setCorrectCount((c) => c + 1);
+      if (isEarly(blurStage)) {
+        setEarlyGuesses((n) => n + 1);
+        if (option === current.name) setEarlyCorrect((n) => n + 1);
+      }
     },
     [hasGuessed, blurStage, current.name]
   );
@@ -142,6 +176,8 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
     setGuess(null);
     setGuessStage(null);
     setCorrectCount(0);
+    setEarlyGuesses(0);
+    setEarlyCorrect(0);
     setDone(false);
   }, []);
 
@@ -155,7 +191,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       onNavigate={onNavigate}
       instructions="Each object starts heavily blurred. Try to identify it as early as you can, or sharpen the image first. Your timing reveals how your brain balances speed against accuracy."
       done={done}
-      summary={getSummary(correctCount, stimuli.length)}
+      summary={getSummary(correctCount, stimuli.length, earlyGuesses, earlyCorrect)}
       onRestart={handleRestart}
       stepKey={`${round}-${hasGuessed ? "guessed" : fullySharp ? "sharp" : "blurred"}`}
       footer={

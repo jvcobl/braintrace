@@ -114,7 +114,7 @@ const stimulusSet: Trial[] = [
 
 /* ── Signal-detection feedback (from pasted spec) ── */
 
-type SignalKey = "hit" | "correctReject" | "falseAlarm" | "miss";
+type SignalKey = "hit" | "correctReject" | "correctRejectPlain" | "falseAlarm" | "miss";
 
 const signalFeedback: Record<SignalKey, ExperienceFeedback> = {
   hit: {
@@ -128,8 +128,16 @@ const signalFeedback: Record<SignalKey, ExperienceFeedback> = {
     primary: "Correct — this was not a face.",
     secondary:
       "The FFA likely activated briefly for the face-like pattern, but higher-order processing overrode the initial detection signal. This mirrors the cortex checking the fast system's output before committing to a judgment.",
-    bridge: "Compare this to how the high road overrides the low road in States that Prime Behavior.",
+    bridge: "Explain covers why the face system leans toward false alarms.",
     structure: "FFA → cortical override",
+  },
+  // A pattern with no face layout at all (rings, slashes, polygons): nothing for the FFA to override.
+  correctRejectPlain: {
+    primary: "Correct. No face here.",
+    secondary:
+      "This pattern lacks the basic face configuration (two features above one, like eyes above a mouth), so it offers the face system little to respond to. The harder calls are the look-alikes that do have that layout.",
+    bridge: "Explain covers why the face system leans toward false alarms.",
+    structure: "Ventral stream (no face configuration)",
   },
   falseAlarm: {
     primary: "That was not a face — this is pareidolia.",
@@ -155,7 +163,7 @@ function classifySignal(
   const isFace = kind === "face";
   // Ambiguous items are treated as non-face for signal-detection purposes
   if (calledFace && isFace) return "hit";
-  if (!calledFace && !isFace) return "correctReject";
+  if (!calledFace && !isFace) return kind === "ambiguous" ? "correctReject" : "correctRejectPlain";
   if (calledFace && !isFace) return "falseAlarm";
   return "miss";
 }
@@ -172,23 +180,33 @@ function getSummary(
   const totalNonFace = trials.filter((t) => t.kind !== "face").length;
   const faRate = totalNonFace > 0 ? falseAlarms / totalNonFace : 0;
 
+  // Name the look-alikes, so the learner knows which patterns were the test.
+  const lookalikes = trials.filter((t) => t.kind === "ambiguous").length;
+  const lookalikesCalledFace = answers.filter((a, i) => a === "face" && trials[i].kind === "ambiguous").length;
+  const word = (n: number) => ["no", "one", "two", "three", "four", "five", "six", "seven", "eight"][n] ?? String(n);
+  const lookalikeLine =
+    `${word(lookalikes)[0].toUpperCase()}${word(lookalikes).slice(1)} of the patterns (the outlet, the three circles, the house front) were look-alikes with a face layout: two features above one. ` +
+    (lookalikesCalledFace === 0
+      ? `You called all ${word(lookalikes)} "not a face." `
+      : `You saw a face in ${word(lookalikesCalledFace)} of them. That is pareidolia. `);
+
   if (faRate >= 0.5) {
     return {
       heading: "What This Shows",
-      body: "A high false-alarm rate reflects strong FFA detection bias — the system fires readily for anything resembling the face template. This is the same mechanism that produces pareidolia in everyday life and was likely protective in evolutionary contexts.",
+      body: lookalikeLine + "A high false-alarm rate reflects strong FFA detection bias — the system fires readily for anything resembling the face template. This is the same mechanism that produces pareidolia in everyday life and was likely protective in evolutionary contexts.",
       bridge: "Explain covers pareidolia and the face-detection trade-off.",
     };
   }
   if (falseAlarms === 0) {
     return {
       heading: "What This Shows",
-      body: "A low false-alarm rate suggests that higher cortical processing effectively checked the FFA's initial detection signals for non-face patterns before they became conscious judgments.",
-      bridge: "Compare this to top-down override in the Blurry Object lesson.",
+      body: lookalikeLine + "A low false-alarm rate suggests that higher cortical processing effectively checked the FFA's initial detection signals for non-face patterns before they became conscious judgments.",
+      bridge: "Explain covers pareidolia and the face-detection trade-off.",
     };
   }
   return {
     heading: "What This Shows",
-    body: "Your detection pattern balanced hits and false alarms. This reflects the typical FFA trade-off: sensitive enough to catch real faces, but that sensitivity comes with occasional false positives. The system is optimized for not missing real faces, not for perfect accuracy.",
+    body: lookalikeLine + "Your detection pattern balanced hits and false alarms. This reflects the typical FFA trade-off: sensitive enough to catch real faces, but that sensitivity comes with occasional false positives. The system is optimized for not missing real faces, not for perfect accuracy.",
     bridge: "Trace shows how the FFA connects to the ventral stream.",
   };
 }

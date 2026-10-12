@@ -105,6 +105,21 @@ function classifyTrial(load: LoadLevel, correct: boolean): FeedbackKey {
 /* ── Summary tiers (from pasted spec) ── */
 
 function getSummary(results: RoundResult[]): ExperienceSummary {
+  const summary = summaryTier(results);
+  // Show the learner their own result at each load (the experiment's data, not a score).
+  const byLoad = (["low", "medium", "high"] as const)
+    .map((load) => {
+      const rs = results.filter((r) => r.load === load);
+      if (!rs.length) return null;
+      const label = load === "low" ? "Low" : load === "medium" ? "Medium" : "High";
+      return `${label} ${rs.reduce((s, r) => s + r.correct, 0)}/${rs.reduce((s, r) => s + r.total, 0)}`;
+    })
+    .filter(Boolean)
+    .join(" · ");
+  return { ...summary, body: `Letters recalled in position: ${byLoad}. ${summary.body}` };
+}
+
+function summaryTier(results: RoundResult[]): ExperienceSummary {
   const totalCorrect = results.reduce((s, r) => s + r.correct, 0);
   const totalItems = results.reduce((s, r) => s + r.total, 0);
   const overallPct = totalItems > 0 ? totalCorrect / totalItems : 0;
@@ -119,6 +134,15 @@ function getSummary(results: RoundResult[]): ExperienceSummary {
     return {
       heading: "What This Shows",
       body: "Working memory capacity at any moment depends on current state: fatigue, hunger, stress, illness, and time of day all affect available PFC resources. One snapshot does not define baseline capacity — the same system performs differently under different metabolic conditions.",
+      bridge: "Explain covers why prefrontal control is costly and limited.",
+    };
+  }
+
+  // Every letter right: don't claim performance degraded.
+  if (totalItems > 0 && totalCorrect === totalItems) {
+    return {
+      heading: "What This Shows",
+      body: "You recalled every letter, even at high load with the math distractor. Your accuracy held this time, but the demand on the same PFC resource pool rose with each level, and the same load can break down when you are tired, hungry, or stressed.",
       bridge: "Explain covers why prefrontal control is costly and limited.",
     };
   }

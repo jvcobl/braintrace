@@ -140,7 +140,7 @@ function getSummary(recoveryPrediction: "extinguished" | "returns" | null): Expe
   if (recoveryPrediction === "returns") {
     return {
       heading: "What This Shows",
-      body: "You called it. You experienced the full cycle: acquisition, extinction, and spontaneous recovery. This demonstrates the unit's central principle: extinction is new learning, not forgetting. The vmPFC-ITC circuit suppressed the amygdala's fear output, but the original memory persisted. When the fear returned, it proved the original association was intact all along. This dual-memory architecture is why treating phobias and PTSD is difficult. The old fear always exists underneath.",
+      body: "You experienced the full cycle: acquisition, extinction, and spontaneous recovery. This demonstrates the lesson's central idea: extinction is new learning, not forgetting. The vmPFC-ITC circuit suppressed the amygdala's fear output, but the original memory persisted. When the fear returned, it proved the original association was intact all along. This dual-memory architecture is why treating phobias and PTSD is difficult. The old fear always exists underneath.",
       bridge: "Explain covers why suppression of output is not erasure of memory.",
     };
   }

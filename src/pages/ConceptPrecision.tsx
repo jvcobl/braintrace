@@ -33,20 +33,6 @@ const scenarios = [
   },
 ];
 
-const crossLinks = [
-  {
-    id: "blurry-object-guess",
-    note: "See how a high-precision prior drives early object identification from blurry input.",
-  },
-  {
-    id: "face-or-not",
-    note: "See how a strong face-detection prior creates false positives when input precision is low.",
-  },
-  {
-    id: "memory-under-load",
-    note: "See how weakened top-down control lets low-precision distractors break through.",
-  },
-];
 
 /* ── Page ── */
 
@@ -123,23 +109,6 @@ const ConceptPrecision = () => {
         ))}
       </div>
 
-      {/* ── See it in BrainTrace ── */}
-      <h2 id="precision-modules" className="text-xl font-medium text-foreground mt-12 mb-4">
-        See it in BrainTrace
-      </h2>
-      <div className="space-y-4">
-        {crossLinks.map((link) => (
-          <div key={link.id} className="flex items-start gap-3">
-            <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-            <div className="min-w-0 flex-1">
-              <p className="text-sm text-muted-foreground leading-relaxed">{link.note}</p>
-              <div className="mt-1.5 max-w-sm">
-                <ModuleLink moduleId={link.id} />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
 
       {/* ── Go Deeper ── */}
       <div className="mt-12 border border-gray-200 rounded-xl overflow-hidden">

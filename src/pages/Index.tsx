@@ -45,31 +45,34 @@ const Index = () => {
           </h1>
 
           <p className="mx-auto mt-5 sm:mt-6 max-w-lg text-balance text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
-            Interactive neuroscience lessons where you experience a phenomenon,
-            trace the pathway, and understand what your brain is doing.
+            Guess a blurry object before it sharpens. Watch a vase turn into two
+            faces. Learn a fear, then see whether it comes back. Each short lesson
+            lets you feel it first, then shows the circuit behind it.
           </p>
 
           <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+            {/* The quickest way in: straight into a one-minute demo. */}
             <Link
-              to="/topics"
-              className="inline-flex items-center rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              Choose a Topic
-            </Link>
-            <Link
-              to="/module/blurry-object-guess"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition-all hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              to="/module/blurry-object-guess#experience"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Try a Lesson
               <span aria-hidden="true">→</span>
             </Link>
+            <Link
+              to="/topics"
+              className="inline-flex items-center rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition-all hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              Choose a Topic
+            </Link>
           </div>
 
           <p className="mt-8 sm:mt-10 text-balance text-[13px] text-muted-foreground">
-            {modules.length} interactive lessons · {TOPICS.length} topics ·{" "}
+            {modules.length} interactive lessons · {TOPICS.length} topics
+            <span className="hidden sm:inline"> · </span>
             <Link
               to="/about"
-              className="whitespace-nowrap underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+              className="mt-1 block sm:mt-0 sm:inline whitespace-nowrap underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
             >
               Built from Emory NBB302 course notes
             </Link>
@@ -100,6 +103,26 @@ const Index = () => {
                 )}
               </Fragment>
             ))}
+          </div>
+
+          {/* The idea that ties every lesson together */}
+          <div className="mx-auto mt-8 max-w-3xl rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+              <div className="flex-1">
+                <p className="text-sm font-medium text-foreground">One idea behind every lesson</p>
+                <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                  Every lesson runs the same loop: predict, receive input,
+                  detect mismatch, update. The concept pages explain how the
+                  loop works and where it breaks.
+                </p>
+              </div>
+              <Link
+                to="/how-your-brain-predicts"
+                className="-my-3 inline-flex min-h-11 items-center shrink-0 rounded-sm text-sm font-medium text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                How your brain predicts →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -139,32 +162,6 @@ const Index = () => {
                 </span>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── The framework ── */}
-      <section className="border-t border-border">
-        <div className="container mx-auto max-w-3xl px-4 sm:px-6 py-14">
-          <div className="rounded-xl border border-gray-200 bg-muted/30 p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-              <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">
-                  The shared framework
-                </p>
-                <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                  Every lesson runs the same loop: predict, receive input,
-                  detect mismatch, update. The concept pages explain how the
-                  loop works and where it breaks.
-                </p>
-              </div>
-              <Link
-                to="/how-your-brain-predicts"
-                className="-my-3 inline-flex min-h-11 items-center shrink-0 rounded-sm text-sm font-medium text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
-                Explore →
-              </Link>
-            </div>
           </div>
         </div>
       </section>

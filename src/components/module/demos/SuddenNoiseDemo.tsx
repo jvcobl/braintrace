@@ -200,7 +200,18 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       onNavigate={onNavigate}
       instructions="You'll complete two reaction-time trials: one calm baseline, one with an unexpected interruption. Afterward, you'll reflect on what you noticed. This isn't about speed. It's about what the startle reflex reveals."
       done={done}
-      summary={summaryData}
+      summary={
+        // Echo the learner's own reflection before the general explanation.
+        expectAnswer
+          ? {
+              ...summaryData,
+              body:
+                (expectAnswer === "didNotExpect"
+                  ? "You said the flash caught you off guard. "
+                  : "You said you were expecting something. ") + summaryData.body,
+            }
+          : summaryData
+      }
       onRestart={handleRestart}
       stepKey={stepKey}
       footer={
@@ -347,7 +358,9 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
                           {(userPrediction === "calm"
                             ? suddenNoiseContent.resultIfCalm
                             : suddenNoiseContent.resultIfFlinch
-                          ).replace("{ms}", String(reactionMs))}
+                          )
+                            .replace("{ms}", String(reactionMs))
+                            .replace("{baseline}", String(results.find((r) => r.type === "baseline")?.reactionMs ?? "—"))}
                         </p>
                         <p className="mt-2 text-xs text-primary font-medium">
                           {suddenNoiseContent.resultBridge}

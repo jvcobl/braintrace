@@ -52,6 +52,46 @@ const About = () => {
       </p>
 
       <h2 className="mt-10 sm:mt-12 font-display text-xl sm:text-2xl tracking-tight text-foreground">
+        What makes it different
+      </h2>
+      <ul className="mt-3 sm:mt-4 max-w-2xl space-y-2.5 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
+        {[
+          <>
+            <strong className="font-medium text-foreground">One idea throughout.</strong> Every lesson is a case of the
+            brain&rsquo;s predict-and-correct loop, explained in{" "}
+            <Link
+              to="/how-your-brain-predicts"
+              className="text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+            >
+              three short concept pages
+            </Link>
+            .
+          </>,
+          <>
+            <strong className="font-medium text-foreground">You go first.</strong> You make a prediction or a choice
+            before any explanation, and the feedback responds to what you actually did.
+          </>,
+          <>
+            <strong className="font-medium text-foreground">The circuit, not just the fact.</strong> Each lesson&rsquo;s
+            Trace step lays out the brain structures and pathway behind what you just experienced.
+          </>,
+          <>
+            <strong className="font-medium text-foreground">Study guides.</strong> Each topic has a guide with key
+            concepts, pathways, distinctions, case notes and review questions.
+          </>,
+          <>
+            <strong className="font-medium text-foreground">Built for everyone.</strong> Every lesson works with a
+            keyboard and a screen reader, and respects reduced-motion settings.
+          </>,
+        ].map((item, i) => (
+          <li key={i} className="flex gap-3">
+            <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h2 className="mt-10 sm:mt-12 font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Who built it
       </h2>
       <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
@@ -73,15 +113,21 @@ const About = () => {
       </p>
 
       {/* Primary CTA */}
-      <div className="mt-8 sm:mt-10">
+      <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3">
+        <Link
+          to="/module/blurry-object-guess#experience"
+          className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary px-7 py-3 sm:py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Try a Lesson
+          <span aria-hidden="true">→</span>
+        </Link>
         <Link
           to="/topics"
-          className="inline-flex items-center rounded-lg bg-primary px-7 py-3 sm:py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="inline-flex items-center justify-center rounded-lg border border-border bg-white px-6 py-3 sm:py-3.5 text-sm font-semibold text-foreground shadow-sm transition-all hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           Choose a Topic
         </Link>
       </div>
-
     </div>
   );
 };

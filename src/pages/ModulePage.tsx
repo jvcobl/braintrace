@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import { getModuleById, modules } from "@/data/modules";
 import { moduleDefinitions } from "@/data/moduleDefinitions";
-import { getLessonsByUnit } from "@/data/content/registry";
+import { getLessonsByUnit, lessonMappings } from "@/data/content/registry";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import SectionNav, { type SectionId } from "@/components/module/SectionNav";
 import IntroSection from "@/components/module/IntroSection";
@@ -118,6 +118,10 @@ const ModulePageContent = () => {
     return <NotFoundContent title="Lesson not found" message="The lesson you're looking for doesn't exist." />;
   }
 
+  // The lesson after this one in course order (topics in order), for the end of Explain.
+  const order = lessonMappings.map((l) => modules.find((m) => m.id === l.moduleId)).filter((m): m is NonNullable<typeof m> => m != null);
+  const nextLesson = order[order.findIndex((m) => m.id === mod.id) + 1];
+
   const siblingLessons = getLessonsByUnit(mod.unitId)
     .filter((l) => l.moduleId !== mod.id)
     .map((l) => {
@@ -143,7 +147,7 @@ const ModulePageContent = () => {
         <h1 className="mt-2 font-display text-3xl tracking-tight text-foreground">
           {mod.title}
         </h1>
-        <p className="mt-2.5 sm:mt-3 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed">{mod.shortGoal}</p>
+        <p className="mt-2.5 sm:mt-3 text-[14px] sm:text-[15px] text-foreground/75 leading-relaxed">{mod.hook}</p>
       </div>
 
       {/* Section nav + content */}
@@ -171,7 +175,24 @@ const ModulePageContent = () => {
                 topicLink={MODULE_TOPIC[mod.slug] ? { to: `/topics/${MODULE_TOPIC[mod.slug].slug}`, label: MODULE_TOPIC[mod.slug].title } : undefined}
               />
             );
-          })()}</div>}
+          })()}
+            {/* A clear way forward once the lesson is done */}
+            <Link
+              to={nextLesson ? `/module/${nextLesson.slug}` : "/topics"}
+              className="group mt-10 flex items-center gap-4 rounded-xl border border-primary/25 bg-accent/40 px-5 py-4 transition-colors hover:border-primary/50 hover:bg-accent/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
+                  {nextLesson ? "Up next" : "You've reached the last lesson"}
+                </p>
+                <p className="mt-1 font-display text-lg text-foreground">{nextLesson ? nextLesson.title : "Browse all topics"}</p>
+                <p className="mt-0.5 text-[13px] text-muted-foreground">
+                  {nextLesson ? nextLesson.hook : "Revisit a topic, or open a study guide to review."}
+                </p>
+              </div>
+              <span className="text-lg text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+            </Link>
+          </div>}
         </div>
       </div>
 

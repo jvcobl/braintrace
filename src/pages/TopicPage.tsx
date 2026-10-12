@@ -24,7 +24,7 @@ const topics: Record<string, Topic> = {
     description:
       "Your brain builds what you see before the picture is complete. The visual system uses shortcuts, prior experience, and specialized regions to recognize objects and faces, often before full sensory detail arrives.",
     courseConnection:
-      "Connects to Sensation, Perception, and Inklings of Awareness and Object Recognition and Decision-making.",
+      "NBB302 lectures: \u201cSensation, Perception, and Inklings of Awareness\u201d and \u201cObject Recognition and Decision-making.\u201d",
     moduleIds: ["blurry-object-guess", "face-or-not", "multistable-perception-gallery"],
     conceptIds: ["loop", "precision-attention"],
   },
@@ -34,7 +34,7 @@ const topics: Record<string, Topic> = {
     description:
       "Focus is expensive, and your brain runs out of it. The prefrontal cortex maintains working memory and suppresses distraction, but these operations share a finite resource pool that degrades under load.",
     courseConnection:
-      "Connects to Object Recognition and Decision-making — Top-down and Bottom-up Integrations.",
+      "NBB302 lecture: \u201cObject Recognition and Decision-making: Top-down and Bottom-up Integrations.\u201d",
     moduleIds: ["memory-under-load", "pfc-role-matcher"],
     conceptIds: ["precision-attention", "failure"],
   },
@@ -44,7 +44,7 @@ const topics: Record<string, Topic> = {
     description:
       "Your brain flags what matters before you've fully interpreted it. Salience, surprise, and arousal drive fast automatic responses through the amygdala and limbic system, often before cortical evaluation catches up.",
     courseConnection:
-      "Connects to States that Prime Behavior — Arousal, Emotions.",
+      "NBB302 lecture: \u201cStates that Prime Behavior: Arousal, Emotions.\u201d",
     moduleIds: ["sudden-noise-reaction", "emotion-vs-arousal-sorter", "fear-vs-anxiety-sorter"],
     conceptIds: ["loop", "failure"],
   },
@@ -54,7 +54,7 @@ const topics: Record<string, Topic> = {
     description:
       "The brain doesn't just react. It learns what to expect next. Cues become predictions, fear is conditioned through CS-US pairing, and extinction builds a new competing memory rather than erasing the old one.",
     courseConnection:
-      "Connects to Learning 101 — Behaviorism and Plasticity and The Push & Pull — Fear and Anxiety.",
+      "NBB302 lectures: \u201cLearning 101: Behaviorism and Plasticity\u201d and \u201cThe Push & Pull: Fear and Anxiety.\u201d",
     moduleIds: ["fear-cue-and-extinction", "classical-vs-operant-sorter"],
     conceptIds: ["loop", "failure"],
   },
@@ -64,7 +64,7 @@ const topics: Record<string, Topic> = {
     description:
       "The stress response is built to prepare you for demand. The HPA axis activates a hormonal cascade, negative feedback normally shuts it down, and chronic stress overrides that shutdown, causing structural damage.",
     courseConnection:
-      "Connects to Stress & Survival — HPA Axis, HPG Axis.",
+      "NBB302 lecture: \u201cStress & Survival: HPA Axis, HPG Axis.\u201d",
     moduleIds: ["stress-response-builder", "homeostasis-vs-allostasis-sorter"],
     conceptIds: ["loop", "failure"],
   },
