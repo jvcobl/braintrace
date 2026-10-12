@@ -374,6 +374,8 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
     [renderedEdges, nodeMap, backEdgeKeys, w],
   );
 
+  const usedRoutes = useMemo(() => new Set(renderedEdges.map((e) => e.route ?? "primary")), [renderedEdges]);
+
   const usedBadges = useMemo(
     () => [...new Set(nodes.filter((n) => n.badge).map((n) => n.badge!))] as TraceBadge[],
     [nodes],
@@ -610,14 +612,18 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
             <span className="text-xs text-gray-500 capitalize">{b}</span>
           </span>
         ))}
-        <span className="flex items-center gap-1.5">
-          <span className="w-5 h-0 border-t-2 border-[#D85A30]" />
-          <span className="text-xs text-gray-500">Fast route</span>
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-5 h-0 border-t-[1.5px] border-dashed border-gray-300" />
-          <span className="text-xs text-gray-500">Slow route</span>
-        </span>
+        {usedRoutes.has("fast") && (
+          <span className="flex items-center gap-1.5">
+            <span className="w-5 h-0 border-t-2 border-[#D85A30]" />
+            <span className="text-xs text-gray-500">Fast route</span>
+          </span>
+        )}
+        {usedRoutes.has("slow") && (
+          <span className="flex items-center gap-1.5">
+            <span className="w-5 h-0 border-t-[1.5px] border-dashed border-gray-300" />
+            <span className="text-xs text-gray-500">Slow route</span>
+          </span>
+        )}
       </div>
 
       {onAdvanceToExplain && (
