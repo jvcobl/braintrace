@@ -15,7 +15,7 @@ const LessonCard = ({ module, contextLabel, variant = "full" }: LessonCardProps)
     className="group flex flex-col rounded-xl border border-border bg-card p-4 sm:p-6 transition-all hover:border-primary/25 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
   >
     {contextLabel && (
-      <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+      <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
         {contextLabel}
       </p>
     )}
@@ -37,7 +37,7 @@ const LessonCard = ({ module, contextLabel, variant = "full" }: LessonCardProps)
       </p>
     )}
 
-    <p className="mt-3 sm:mt-4 text-[10px] sm:text-[11px] font-medium text-primary group-hover:underline">
+    <p className="mt-3 sm:mt-4 text-[11px] font-medium text-primary group-hover:underline">
       Start lesson →
     </p>
   </Link>

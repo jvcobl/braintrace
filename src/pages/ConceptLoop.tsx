@@ -42,7 +42,7 @@ const ConceptLoop = () => {
               <div className="rounded-xl border border-gray-200 bg-white p-4 flex-1">
                 <div className="flex items-center gap-2 mb-1.5">
                   <span
-                    className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
+                    className="text-[11px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
                     style={{ backgroundColor: badgeFill(step.color) }}
                   >
                     {step.badge}

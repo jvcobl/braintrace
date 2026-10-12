@@ -143,7 +143,7 @@ const MultistablePerceptionDemo = ({ onNavigate }: { onNavigate?: (target: "Trac
         {/* Card header */}
         <div className="flex items-center justify-between gap-3 border-b border-border/60 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2.5">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">
               {example.category}
             </span>
             <span className="text-border" aria-hidden>·</span>

@@ -61,7 +61,7 @@ const ConceptFailure = () => {
             <div className="flex items-center gap-2 mb-2">
               <h2 className="text-lg font-medium text-foreground">{f.title}</h2>
               <span
-                className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
+                className="text-[11px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
                 style={{ backgroundColor: badgeFill(f.accent) }}
               >
                 {f.badge}

@@ -35,7 +35,7 @@ const ExplainSection = ({ explain, predictionLens, goDeeper, conceptLinks, trace
     <div className="mt-5 sm:mt-6 space-y-5 sm:space-y-6">
       {subheads.map(({ key, label }) => (
         <div key={key as string} className="border-l-2 border-primary/10 pl-4 sm:pl-5">
-          <h3 className="font-sans text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <h3 className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             {label}
           </h3>
           <p className="mt-1.5 sm:mt-2 text-[13px] sm:text-[14px] text-foreground/75 leading-relaxed">{explain[key]}</p>

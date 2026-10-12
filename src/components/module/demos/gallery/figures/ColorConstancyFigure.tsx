@@ -12,7 +12,7 @@ interface Props {
 const ColorConstancyFigure = ({ highlighted, assist }: Props) => {
   return (
     <figure className="w-full">
-      <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden bg-secondary">
+      <div className="relative w-full aspect-[256/389] rounded-lg overflow-hidden bg-secondary">
         <img
           src={dressImg}
           alt="A photograph of a dress whose colors are ambiguous — perceived as either blue-and-black or white-and-gold depending on the viewer's lighting assumption"
@@ -44,7 +44,7 @@ const ColorConstancyFigure = ({ highlighted, assist }: Props) => {
         {/* Assist labels */}
         {assist !== "none" && (
           <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
-            <span className="rounded-md bg-primary/15 px-2.5 py-1 text-[10px] font-medium text-primary backdrop-blur-sm">
+            <span className="whitespace-nowrap rounded-md bg-white/90 px-2.5 py-1 text-[11px] font-medium text-primary shadow-sm">
               {assist === "a" ? "Imagine even, bright light" : "Imagine deep shadow"}
             </span>
           </div>

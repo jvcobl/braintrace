@@ -200,7 +200,7 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
                 autoComplete="off"
                 className="w-full text-sm text-gray-900 placeholder:text-gray-500 outline-none bg-transparent [&::-webkit-search-cancel-button]:hidden"
               />
-              <kbd className="hidden sm:inline-flex shrink-0 items-center rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">
+              <kbd className="hidden sm:inline-flex shrink-0 items-center rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[11px] font-medium text-gray-500">
                 ESC
               </kbd>
             </div>
@@ -218,7 +218,7 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
                 if (!items?.length) return null;
                 return (
                   <div key={type} className="mb-3 last:mb-0">
-                    <p className="text-[10px] font-medium uppercase tracking-wider text-gray-500 mb-1.5 px-1">
+                    <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-1.5 px-1">
                       {GROUP_LABEL[type]}
                     </p>
                     {items.map((item) => (
@@ -230,7 +230,7 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
                         className="flex w-full items-start gap-3 rounded-lg px-2 py-2 text-left hover:bg-gray-50 focus-visible:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring transition-colors"
                       >
                         <span
-                          className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-[10px] font-medium ${TYPE_COLOR[item.type]}`}
+                          className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-[11px] font-medium ${TYPE_COLOR[item.type]}`}
                         >
                           {TYPE_LABEL[item.type]}
                         </span>

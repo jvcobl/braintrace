@@ -144,7 +144,7 @@ function getSummary(results: RoundResult[]): ExperienceSummary {
 
 const loadColors: Record<LoadLevel, string> = {
   low: "text-primary",
-  medium: "text-amber-700",
+  medium: "text-amber-800",
   high: "text-destructive",
 };
 

@@ -24,7 +24,7 @@ const SectionNav = ({ current, onSelect }: SectionNavProps) => (
         }`}
         aria-current={current === s ? "step" : undefined}
       >
-        <span className="text-[10px] mr-1" aria-hidden="true">{i + 1}</span>
+        <span className="text-[11px] mr-1" aria-hidden="true">{i + 1}</span>
         {s}
       </button>
     ))}

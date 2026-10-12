@@ -44,13 +44,13 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
                   {card.structures.slice(0, 3).map((s) => (
                     <span
                       key={s}
-                      className="rounded-full bg-accent px-2 sm:px-2.5 py-0.5 text-[10px] text-accent-foreground whitespace-nowrap"
+                      className="rounded-full bg-accent px-2 sm:px-2.5 py-0.5 text-[11px] text-accent-foreground whitespace-nowrap"
                     >
                       {s}
                     </span>
                   ))}
                   {card.structures.length > 3 && (
-                    <span className="text-[10px] text-muted-foreground">
+                    <span className="text-[11px] text-muted-foreground">
                       +{card.structures.length - 3}
                     </span>
                   )}

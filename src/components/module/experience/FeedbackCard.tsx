@@ -28,7 +28,7 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
 
       {/* Secondary — interpretation */}
       <div className="rounded-lg border border-border bg-secondary/30 px-3.5 py-2.5 sm:px-4 sm:py-3">
-        <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1 sm:mb-1.5">
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1 sm:mb-1.5">
           What this reflects
         </p>
         <p className="text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">
@@ -50,7 +50,7 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
           aria-label={handleNavigate ? `View ${feedback.structure} pathway in ${target}` : undefined}
           onKeyDown={handleNavigate ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleNavigate(); } } : undefined}
         >
-          <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary mb-1 sm:mb-1.5">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary mb-1 sm:mb-1.5">
             Pathway
             {handleNavigate && (
               <span className="ml-1.5 text-primary hidden sm:inline">→ view in {target}</span>

@@ -19,7 +19,7 @@ const DistinctionSection = ({ distinctions }: DistinctionSectionProps) => (
         >
           <div className="grid sm:grid-cols-2">
             <div className="p-4 sm:p-5 sm:border-r sm:border-border/50">
-              <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
                 {d.termA}
               </p>
               <p className="mt-1.5 sm:mt-2 text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">
@@ -27,7 +27,7 @@ const DistinctionSection = ({ distinctions }: DistinctionSectionProps) => (
               </p>
             </div>
             <div className="border-t border-border/50 p-4 sm:p-5 sm:border-t-0">
-              <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
                 {d.termB}
               </p>
               <p className="mt-1.5 sm:mt-2 text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">

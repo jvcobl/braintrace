@@ -33,7 +33,7 @@ const About = () => {
       <div className="mt-7 sm:mt-8 grid gap-3 sm:gap-4 sm:grid-cols-3">
         {steps.map((s, i) => (
           <div key={s.name} className="rounded-xl border border-border/70 bg-card p-4 sm:p-5">
-            <span className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-primary text-[10px] sm:text-xs font-bold text-primary-foreground">
+            <span className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-primary text-[11px] sm:text-xs font-bold text-primary-foreground">
               {i + 1}
             </span>
             <p className="mt-2.5 sm:mt-3 font-display text-[14px] sm:text-[15px] text-foreground">

@@ -115,7 +115,7 @@ const CourseMap = () => {
 
             <div className="border-t border-gray-100 my-4" />
 
-            <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider mb-2">
+            <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider mb-2">
               BrainTrace lessons
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -182,7 +182,7 @@ const CourseMap = () => {
                         {entry.topic}
                       </span>
                       {entry.temporal && (
-                        <span className="text-[10px] text-gray-500">
+                        <span className="text-[11px] text-gray-500">
                           ({entry.temporal})
                         </span>
                       )}
@@ -193,7 +193,7 @@ const CourseMap = () => {
                         {entry.modules!.map((name) => (
                           <span
                             key={name}
-                            className="text-[10px] font-medium bg-primary/10 text-primary px-2 py-0.5 rounded"
+                            className="text-[11px] font-medium bg-primary/10 text-primary px-2 py-0.5 rounded"
                           >
                             {name}
                           </span>

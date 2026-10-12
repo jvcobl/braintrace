@@ -118,7 +118,7 @@ const ModulePageContent = () => {
         {MODULE_TOPIC[mod.slug] && (
           <Link
             to={`/topics/${MODULE_TOPIC[mod.slug].slug}`}
-            className="inline-block py-1.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+            className="inline-block py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
           >
             {MODULE_TOPIC[mod.slug].title}
           </Link>
@@ -161,7 +161,7 @@ const ModulePageContent = () => {
       {/* Sibling lessons */}
       {siblingLessons.length > 0 && (
         <div className="mt-12 sm:mt-14 border-t border-border pt-6 sm:pt-8">
-          <h2 className="font-sans text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <h2 className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             More in this topic
           </h2>
           <ul className="mt-2 sm:mt-3">

@@ -245,7 +245,7 @@ interface PlacedLabel {
   anchor: Anchor;
 }
 
-const LABEL_CHAR_W = 6; // generous width of one 10px system-ui glyph
+const LABEL_CHAR_W = 6.5; // generous width of one 11px system-ui glyph
 const LABEL_LINE_H = 14;
 const LABEL_GAP = 3;
 
@@ -599,7 +599,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                 <text
                   key={`label-${e.from}-${e.to}-${i}`}
                   textAnchor={placed.anchor}
-                  fontSize={10}
+                  fontSize={11}
                   fill="#6b7280"
                   stroke="white"
                   strokeWidth={4}

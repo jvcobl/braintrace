@@ -173,7 +173,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
           </p>
           {/* Blur stage indicator */}
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-muted-foreground">Clarity</span>
+            <span className="text-[11px] text-muted-foreground">Clarity</span>
             <div className="flex gap-0.5">
               {BLUR_STAGES.map((_, i) => (
                 <div

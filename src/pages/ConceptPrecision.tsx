@@ -107,7 +107,7 @@ const ConceptPrecision = () => {
             <div className="flex items-center gap-2">
               <h3 className="text-base font-medium text-foreground">{s.title}</h3>
               <span
-                className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
+                className="text-[11px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
                 style={{ backgroundColor: badgeFill(s.dominantColor) }}
               >
                 {s.dominant} dominates

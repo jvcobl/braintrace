@@ -237,7 +237,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                             : "border-dashed border-gray-200 bg-gray-50/50"
                       }`}
                     >
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
                         {slot.label}
                       </p>
                       {filled ? (
@@ -534,7 +534,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                     <div className={`w-4 h-4 rounded border shrink-0 flex items-center justify-center ${
                       checked ? "bg-primary border-primary" : "border-gray-300"
                     }`}>
-                      {checked && <span className="text-white text-[10px] font-bold">✓</span>}
+                      {checked && <span className="text-white text-[10px] font-bold leading-none">✓</span>}
                     </div>
                     <span className="text-sm font-medium text-gray-800">{c.text}</span>
                   </div>
