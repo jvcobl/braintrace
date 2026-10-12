@@ -2,6 +2,7 @@ import { useParams, Navigate } from "react-router-dom";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ModuleLink from "@/components/ModuleLink";
 import ConceptLink from "@/components/ConceptLink";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 /* ── Topic data ── */
 
@@ -72,6 +73,7 @@ const topics: Record<string, Topic> = {
 const TopicPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const topic = slug ? topics[slug] : undefined;
+  usePageMeta({ title: topic?.title, description: topic?.description, canonicalPath: topic ? `/topics/${slug}` : undefined });
 
   if (!topic) return <Navigate to="/topics" replace />;
 

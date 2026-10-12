@@ -8,10 +8,16 @@ import PathwaySection from "@/components/study/PathwaySection";
 import DistinctionSection from "@/components/study/DistinctionSection";
 import CaseNoteSection from "@/components/study/CaseNoteSection";
 import ReviewSection from "@/components/study/ReviewSection";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
   const content = unitId ? getUnitContent(unitId) : undefined;
+  usePageMeta(
+    content && unitId
+      ? { title: `${content.meta.title}: Study Guide`, description: content.meta.overview, canonicalPath: `/unit/${unitId}` }
+      : { title: "Page not found", noindex: true },
+  );
 
   if (!content || !unitId) {
     return (

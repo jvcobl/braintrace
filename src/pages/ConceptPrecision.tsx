@@ -3,6 +3,8 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import ModuleLink from "@/components/ModuleLink";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import { badgeFill } from "@/lib/colors";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { conceptPages } from "@/data/conceptPages";
 
 /* ── Scenario data (text only, no slider) ── */
 
@@ -48,6 +50,7 @@ const crossLinks = [
 /* ── Page ── */
 
 const ConceptPrecision = () => {
+  usePageMeta({ title: "Precision & Attention", description: conceptPages["precision-attention"].description });
   const [deeperOpen, setDeeperOpen] = useState(false);
 
   return (

@@ -1,6 +1,8 @@
 import ModuleLink from "@/components/ModuleLink";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import { badgeFill } from "@/lib/colors";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { conceptPages } from "@/data/conceptPages";
 
 const failures = [
   {
@@ -35,43 +37,47 @@ const failures = [
   },
 ];
 
-const ConceptFailure = () => (
-  <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
-    <Breadcrumb />
-    <h1 className="font-display text-3xl tracking-tight text-foreground">When prediction fails</h1>
-    <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
-      Prediction breaks in three ways. Each maps to a specific step in the
-      prediction loop going wrong.
-    </p>
+const ConceptFailure = () => {
+  usePageMeta({ title: "When Prediction Fails", description: conceptPages.failure.description });
 
-    <div className="mt-10 space-y-6">
-      {failures.map((f) => (
-        <div
-          key={f.id}
-          id={f.id}
-          className="border border-gray-200 rounded-xl p-6 border-l-4 bg-white"
-          style={{ borderLeftColor: f.accent }}
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <h2 className="text-lg font-medium text-foreground">{f.title}</h2>
-            <span
-              className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
-              style={{ backgroundColor: badgeFill(f.accent) }}
-            >
-              {f.badge}
-            </span>
+  return (
+    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+      <Breadcrumb />
+      <h1 className="font-display text-3xl tracking-tight text-foreground">When prediction fails</h1>
+      <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
+        Prediction breaks in three ways. Each maps to a specific step in the
+        prediction loop going wrong.
+      </p>
+
+      <div className="mt-10 space-y-6">
+        {failures.map((f) => (
+          <div
+            key={f.id}
+            id={f.id}
+            className="border border-gray-200 rounded-xl p-6 border-l-4 bg-white"
+            style={{ borderLeftColor: f.accent }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <h2 className="text-lg font-medium text-foreground">{f.title}</h2>
+              <span
+                className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: badgeFill(f.accent) }}
+              >
+                {f.badge}
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">{f.explanation}</p>
+            <p className="mt-2 text-xs text-gray-500 italic">{f.traceNote}</p>
+            <div className="mt-4 space-y-2">
+              {f.modules.map((id) => (
+                <ModuleLink key={id} moduleId={id} />
+              ))}
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">{f.explanation}</p>
-          <p className="mt-2 text-xs text-gray-500 italic">{f.traceNote}</p>
-          <div className="mt-4 space-y-2">
-            {f.modules.map((id) => (
-              <ModuleLink key={id} moduleId={id} />
-            ))}
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ConceptFailure;

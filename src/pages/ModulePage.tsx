@@ -12,6 +12,7 @@ import TracePanel from "@/components/module/TracePanel";
 import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
 import { scrollBehavior } from "@/lib/utils";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
   "blurry-object-guess": { slug: "perception", title: "Perception and Object Recognition" },
@@ -31,6 +32,11 @@ const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
 const ModulePageContent = () => {
   const { id } = useParams<{ id: string }>();
   const mod = id ? getModuleById(id) : undefined;
+  usePageMeta(
+    mod
+      ? { title: mod.title, description: mod.shortGoal, canonicalPath: `/module/${mod.slug}` }
+      : { title: "Page not found", noindex: true },
+  );
   const unit = mod ? getUnitById(mod.unitId) : undefined;
   const unitContent = mod ? getUnitContent(mod.unitId) : undefined;
   const [section, setSection] = useState<SectionId>(() => {

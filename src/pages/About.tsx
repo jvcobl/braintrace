@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Breadcrumb from "@/components/layout/Breadcrumb";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 const steps = [
   { name: "Experience", desc: "A short interactive demo that lets you observe the phenomenon firsthand." },
@@ -7,71 +8,75 @@ const steps = [
   { name: "Explain", desc: "A focused write-up connecting the demo to the neuroscience behind it." },
 ];
 
-const About = () => (
-  <div className="container max-w-2xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
-    <Breadcrumb />
-    <h1 className="font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-4xl">
-      About BrainTrace
-    </h1>
+const About = () => {
+  usePageMeta({ title: "About", description: "What BrainTrace is, how its lessons work, and who built it." });
 
-    <p className="mt-5 sm:mt-6 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      BrainTrace is a free interactive neuroscience site covering perception,
-      attention, emotion, learning, and stress. Each lesson is built around
-      a real phenomenon you can experience in your browser.
-    </p>
+  return (
+    <div className="container max-w-2xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
+      <Breadcrumb />
+      <h1 className="font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-4xl">
+        About BrainTrace
+      </h1>
 
-    <p className="mt-3.5 sm:mt-4 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      Every lesson follows the same three steps. You encounter the
-      phenomenon first, then trace the neural pathway, then read a focused
-      explanation of what your brain was doing.
-    </p>
+      <p className="mt-5 sm:mt-6 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
+        BrainTrace is a free interactive neuroscience site covering perception,
+        attention, emotion, learning, and stress. Each lesson is built around
+        a real phenomenon you can experience in your browser.
+      </p>
 
-    <div className="mt-7 sm:mt-8 grid gap-3 sm:gap-4 sm:grid-cols-3">
-      {steps.map((s, i) => (
-        <div key={s.name} className="rounded-xl border border-border/70 bg-card p-4 sm:p-5">
-          <span className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-primary text-[10px] sm:text-xs font-bold text-primary-foreground">
-            {i + 1}
-          </span>
-          <p className="mt-2.5 sm:mt-3 font-display text-[14px] sm:text-[15px] text-foreground">
-            {s.name}
-          </p>
-          <p className="mt-1 sm:mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
-            {s.desc}
-          </p>
-        </div>
-      ))}
+      <p className="mt-3.5 sm:mt-4 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
+        Every lesson follows the same three steps. You encounter the
+        phenomenon first, then trace the neural pathway, then read a focused
+        explanation of what your brain was doing.
+      </p>
+
+      <div className="mt-7 sm:mt-8 grid gap-3 sm:gap-4 sm:grid-cols-3">
+        {steps.map((s, i) => (
+          <div key={s.name} className="rounded-xl border border-border/70 bg-card p-4 sm:p-5">
+            <span className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-primary text-[10px] sm:text-xs font-bold text-primary-foreground">
+              {i + 1}
+            </span>
+            <p className="mt-2.5 sm:mt-3 font-display text-[14px] sm:text-[15px] text-foreground">
+              {s.name}
+            </p>
+            <p className="mt-1 sm:mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
+              {s.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <p className="mt-7 sm:mt-8 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
+        Everything runs in your browser. No accounts, no saved data, no
+        tracking. Anyone curious about how the brain works can use it.
+      </p>
+
+      <h2 className="mt-10 sm:mt-12 font-display text-xl sm:text-2xl tracking-tight text-foreground">
+        Who built it
+      </h2>
+      <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
+        BrainTrace was designed and built by Jacob Hyun Lee. The science in every
+        lesson comes from course notes for NBB302, Behavioral Neuroscience, at
+        Emory University. Lessons that end with an &ldquo;NBB302 connection&rdquo;
+        name the lectures they draw on.
+      </p>
+      <p className="mt-3.5 sm:mt-4 text-[13px] sm:text-[14px] text-muted-foreground leading-[1.7]">
+        BrainTrace is an independent study project. It is not affiliated with or
+        endorsed by Emory University, and it is not medical advice.
+      </p>
+
+      {/* Primary CTA */}
+      <div className="mt-8 sm:mt-10">
+        <Link
+          to="/topics"
+          className="inline-flex items-center rounded-lg bg-primary px-7 py-3 sm:py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Choose a Topic
+        </Link>
+      </div>
+
     </div>
-
-    <p className="mt-7 sm:mt-8 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      Everything runs in your browser. No accounts, no saved data, no
-      tracking. Anyone curious about how the brain works can use it.
-    </p>
-
-    <h2 className="mt-10 sm:mt-12 font-display text-xl sm:text-2xl tracking-tight text-foreground">
-      Who built it
-    </h2>
-    <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
-      BrainTrace was designed and built by Jacob Hyun Lee. The science in every
-      lesson comes from course notes for NBB302, Behavioral Neuroscience, at
-      Emory University. Lessons that end with an &ldquo;NBB302 connection&rdquo;
-      name the lectures they draw on.
-    </p>
-    <p className="mt-3.5 sm:mt-4 text-[13px] sm:text-[14px] text-muted-foreground leading-[1.7]">
-      BrainTrace is an independent study project. It is not affiliated with or
-      endorsed by Emory University, and it is not medical advice.
-    </p>
-
-    {/* Primary CTA */}
-    <div className="mt-8 sm:mt-10">
-      <Link
-        to="/topics"
-        className="inline-flex items-center rounded-lg bg-primary px-7 py-3 sm:py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-      >
-        Choose a Topic
-      </Link>
-    </div>
-
-  </div>
-);
+  );
+};
 
 export default About;

@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ModuleLink from "@/components/ModuleLink";
 import ConceptLink from "@/components/ConceptLink";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 /* ── Topic area data ── */
 
@@ -78,6 +79,7 @@ const timeline: TimelineEntry[] = [
 /* ── Page ── */
 
 const CourseMap = () => {
+  usePageMeta({ title: "Course Map", description: "How BrainTrace lessons connect to the NBB302 course topics." });
   const [timelineOpen, setTimelineOpen] = useState(false);
 
   return (
