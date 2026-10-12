@@ -25,14 +25,14 @@ const topicAreas: TopicArea[] = [
       "Top-down and Bottom-up Integrations",
     ],
     temporal: "Milliseconds Before → One Second Before",
-    moduleIds: ["blurry-object-guess", "face-or-not", "memory-under-load"],
+    moduleIds: ["blurry-object-guess", "face-or-not", "multistable-perception-gallery", "memory-under-load", "pfc-role-matcher"],
   },
   {
     title: "Emotion, Arousal, and Salience",
     accent: "#D85A30",
     courseTopics: ["States that Prime Behavior — Arousal, Emotions"],
     temporal: "Seconds to Minutes",
-    moduleIds: ["sudden-noise-reaction"],
+    moduleIds: ["sudden-noise-reaction", "emotion-vs-arousal-sorter", "fear-vs-anxiety-sorter"],
   },
   {
     title: "Learning, Fear, and Stress",
@@ -43,7 +43,7 @@ const topicAreas: TopicArea[] = [
       "Stress & Survival — HPA Axis",
     ],
     temporal: "Minutes to Days → Days to Months",
-    moduleIds: ["fear-cue-and-extinction", "stress-response-builder"],
+    moduleIds: ["fear-cue-and-extinction", "classical-vs-operant-sorter", "stress-response-builder", "homeostasis-vs-allostasis-sorter"],
   },
 ];
 

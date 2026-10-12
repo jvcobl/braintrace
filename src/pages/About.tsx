@@ -58,7 +58,14 @@ const About = () => {
         BrainTrace was designed and built by Jacob Hyun Lee. The science in every
         lesson comes from course notes for NBB302, Behavioral Neuroscience, at
         Emory University. Lessons that end with an &ldquo;NBB302 connection&rdquo;
-        name the lectures they draw on.
+        name the lectures they draw on, and the{" "}
+        <Link
+          to="/course-map"
+          className="text-primary underline decoration-primary/30 underline-offset-4 hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+        >
+          course map
+        </Link>{" "}
+        shows how every lesson lines up with the course.
       </p>
       <p className="mt-3.5 sm:mt-4 text-[13px] sm:text-[14px] text-muted-foreground leading-[1.7]">
         BrainTrace is an independent study project. It is not affiliated with or
