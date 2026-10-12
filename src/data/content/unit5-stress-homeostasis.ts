@@ -186,7 +186,7 @@ export const unit5ConceptCards = [
     id: "u5-cc-23",
     term: "Suicide Neurobiology",
     definition:
-      "Suicidal behavior maps to depletion of serotonin and noradrenaline. Post-mortem studies show decreased serotonin transporter binding and increased 5-HT receptor binding specifically in the prefrontal cortex. This represents a neurobiological basis for the condition, not a moral or character failing.",
+      "Suicidal behavior maps to depletion of serotonin and norepinephrine. Post-mortem studies show decreased serotonin transporter binding and increased 5-HT receptor binding specifically in the prefrontal cortex. This represents a neurobiological basis for the condition, not a moral or character failing.",
     structures: ["PFC"],
     sensitivity: "high" as const,
     sensitivityNote:
@@ -376,7 +376,7 @@ export const unit5CaseNotes = [
     id: "u5-cn-03",
     title: "Suicide Neurobiology",
     content:
-      "Post-mortem studies of individuals who died by suicide reveal specific neurobiological markers: decreased serotonin transporter binding and increased 5-HT receptor binding in the prefrontal cortex, alongside depletion of serotonin and noradrenaline. Suicidal behavior has a neurobiological basis — it maps to measurable changes in brain chemistry. This does not diminish the role of environmental factors, but it establishes that the condition involves genuine dysfunction in the brain systems responsible for mood regulation and executive control.",
+      "Post-mortem studies of individuals who died by suicide reveal specific neurobiological markers: decreased serotonin transporter binding and increased 5-HT receptor binding in the prefrontal cortex, alongside depletion of serotonin and norepinephrine. Suicidal behavior has a neurobiological basis — it maps to measurable changes in brain chemistry. This does not diminish the role of environmental factors, but it establishes that the condition involves genuine dysfunction in the brain systems responsible for mood regulation and executive control.",
     sensitivity: "high" as const,
     sensitivityNote:
       "This material is included because it covers real neurobiology. It is presented as factual content, not as an interactive experience. If you or someone you know is in crisis, contact the 988 Suicide and Crisis Lifeline (call or text 988).",

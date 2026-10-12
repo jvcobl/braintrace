@@ -15,7 +15,7 @@ export const unit3Meta = {
     "Central amygdala (CeA)",
     "Medial amygdala (MeA)",
     "Intercalated cells (ITCs)",
-    "Pontine reticular nucleus (PNC)",
+    "Pontine reticular nucleus (PnC)",
     "Medial geniculate nucleus (MGN)",
     "Ventral hippocampus",
   ],
@@ -153,14 +153,14 @@ export const unit3ConceptCards = [
     id: "u3-cc-18",
     term: "Amygdala as Salience Center",
     definition:
-      "The amygdala is NOT the 'fear center.' It is the salience center — its job is to stamp importance onto an event's memory formation, saying 'this is important, remember it.' It is hyper-active during fear, but also intensely active during reward, addiction (with the nucleus accumbens), and highly positive events like the birth of a child, marriage, or earning a PhD.",
+      "The amygdala is NOT the 'fear center.' It is the salience center — its job is to stamp importance onto an event's memory formation, saying 'this is important, remember it.' It is hyperactive during fear, but also intensely active during reward, addiction (with the nucleus accumbens), and highly positive events like the birth of a child, marriage, or earning a PhD.",
     structures: ["Amygdala", "Nucleus accumbens"],
   },
   {
     id: "u3-cc-19",
     term: "Basolateral Amygdala (BLA)",
     definition:
-      "Comprised of the lateral and basal nuclei. The BLA is the major input hub — the 'ears' of the amygdala. It receives sensory and cortical information and routes it to other amygdala subregions for processing.",
+      "Composed of the lateral and basal nuclei. The BLA is the major input hub — the 'ears' of the amygdala. It receives sensory and cortical information and routes it to other amygdala subregions for processing.",
     structures: ["Basolateral amygdala"],
   },
   {
@@ -195,7 +195,7 @@ export const unit3ConceptCards = [
     id: "u3-cc-24",
     term: "Acoustic Startle Reflex",
     definition:
-      "A fast, 3-synapse survival loop: high-intensity sound → cochlear root neurons → contralateral projection to the pontine reticular nucleus (PNC) in the brainstem → spinal cord → alpha motor neuron → muscle jolt. This reflex is so fast because it uses only three synapses, bypassing cortical processing entirely.",
+      "A fast, 3-synapse survival loop: high-intensity sound → cochlear root neurons → contralateral projection to the pontine reticular nucleus (PnC) in the brainstem → spinal cord → alpha motor neuron → muscle jolt. This reflex is so fast because it uses only three synapses, bypassing cortical processing entirely.",
     structures: ["Cochlear root neurons", "Pontine reticular nucleus", "Spinal cord"],
   },
   {
@@ -207,7 +207,7 @@ export const unit3ConceptCards = [
   },
   {
     id: "u3-cc-26",
-    term: "Pontine Reticular Nucleus (PNC)",
+    term: "Pontine Reticular Nucleus (PnC)",
     definition:
       "The second synapse in the acoustic startle reflex, located in the brainstem. It receives the contralateral projection from cochlear root neurons and relays the motor command to the spinal cord, triggering the startle response.",
     structures: ["Pontine reticular nucleus"],
@@ -261,15 +261,15 @@ export const unit3Pathways = [
       },
       {
         number: 2,
-        structure: "Pontine Reticular Nucleus (PNC)",
+        structure: "Pontine Reticular Nucleus (PnC)",
         description:
-          "The signal crosses to the contralateral PNC in the brainstem. This is synapse 2. No cortical processing has occurred.",
+          "The signal crosses to the contralateral PnC in the brainstem. This is synapse 2. No cortical processing has occurred.",
       },
       {
         number: 3,
         structure: "Spinal Cord → Alpha Motor Neuron → Muscle",
         description:
-          "The PNC sends a motor command down the spinal cord to alpha motor neurons, producing the involuntary muscle jolt. This is synapse 3. The entire loop is complete before you are consciously aware of the sound.",
+          "The PnC sends a motor command down the spinal cord to alpha motor neurons, producing the involuntary muscle jolt. This is synapse 3. The entire loop is complete before you are consciously aware of the sound.",
       },
     ],
   },
@@ -453,7 +453,7 @@ export const unit3Distinctions = [
     descriptionA:
       "The accurate description of the amygdala. It stamps importance onto events — 'this matters, remember it' — for both negative (fear, threat) and positive (reward, love, achievement) events.",
     descriptionB:
-      "A common but inaccurate label for the amygdala. While the amygdala is hyper-active during fear, it is equally active during reward, addiction, and intensely positive life events.",
+      "A common but inaccurate label for the amygdala. While the amygdala is hyperactive during fear, it is equally active during reward, addiction, and intensely positive life events.",
     keyDifference:
       "Calling the amygdala a 'fear center' misses half of what it does. It detects salience — importance — regardless of whether the event is positive or negative.",
   },

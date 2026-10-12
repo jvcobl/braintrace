@@ -27,7 +27,7 @@ const expectationFeedback: Record<"didNotExpect" | "didExpect", ExperienceFeedba
     primary: "You were startled — the reflex fired before conscious awareness.",
     secondary: "This parallels the acoustic startle reflex: a 3-synapse loop from cochlear root neurons to the pontine reticular nucleus to spinal motor neurons. The entire circuit completes without cortical involvement, which is why the body reacts before the mind registers what happened.",
     bridge: "Trace shows the fast subcortical route to the brainstem startle.",
-    structure: "Cochlear root neurons → PNC → spinal cord",
+    structure: "Cochlear root neurons → PnC → spinal cord",
   },
   didExpect: {
     primary: "You expected it — but the reflex likely still fired.",

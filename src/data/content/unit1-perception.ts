@@ -96,7 +96,7 @@ export const unit1ConceptCards = [
     id: "u1-cc-10",
     term: "Synesthesia",
     definition:
-      "Present in 4–5% of the population, synesthesia involves experiencing multiple sensory modalities through a single stimulus. For example, in color-grapheme synesthesia, the letter 'S' is always perceived as magenta. It provides a distinct memory advantage because multiple sensory nodes fire simultaneously, strengthening neural connections via the Hebbian rule.",
+      "Present in 4–5% of the population, synesthesia involves experiencing multiple sensory modalities through a single stimulus. For example, in grapheme-color synesthesia, the letter 'S' is always perceived as magenta. It provides a distinct memory advantage because multiple sensory nodes fire simultaneously, strengthening neural connections via the Hebbian rule.",
     structures: [],
   },
   {
@@ -187,7 +187,7 @@ export const unit1ConceptCards = [
     id: "u1-cc-23",
     term: "Prosopagnosia (Face Blindness)",
     definition:
-      "A condition caused by damage to the fusiform face area that prevents a person from constructing an individual's identity abstract from facial features. People with prosopagnosia can see faces but cannot recognize who they belong to.",
+      "A condition caused by damage to the fusiform face area that prevents a person from constructing an individual's identity from facial features. People with prosopagnosia can see faces but cannot recognize who they belong to.",
     structures: ["Fusiform face area"],
   },
   {
@@ -417,7 +417,7 @@ export const unit1Distinctions = [
     descriptionB:
       "Accurate identification of an actual individual's face. Relies on cell ensembles in the FFA that encode specific features (hair, eyes, mouth) to construct an identity.",
     keyDifference:
-      "Pareidolia is a false positive from an over-eager pattern detector. True recognition requires the FFA to construct a detailed identity abstract from real facial features.",
+      "Pareidolia is a false positive from an over-eager pattern detector. True recognition requires the FFA to construct a detailed identity from real facial features.",
   },
   {
     id: "u1-db-05",
