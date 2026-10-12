@@ -57,7 +57,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "precision-attention"],
-    traceBridge: "The pathway above shows how your brain resolved the blurry image. A fast OFC guess raced ahead of the slower ventral stream detail. The Prediction Lens below breaks down what was predicted, what arrived, and how the mismatch was handled.",
+    traceBridge: "The pathway in Trace shows how your brain resolved the blurry image. A fast OFC guess raced ahead of the slower ventral stream detail. The Prediction Lens below breaks down what was predicted, what arrived, and how the mismatch was handled.",
   },
 
   "face-or-not": {
@@ -107,11 +107,11 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
         title: "Pareidolia: When Priors Overpower Input",
         explanation: "Pareidolia is seeing faces in clouds, toast, or power outlets. It's a prediction error in reverse. Your face-detection prior is so strong that it fires even when the incoming sensory evidence is weak. The brain treats 'might be a face' as 'probably a face' because the cost of missing a real face is higher than the cost of a false alarm.",
         keyStructures: ["ffa", "pfc", "ofc"],
-        whyItMattersHere: "Every false positive you made in this module is pareidolia in action. Your brain's top-down face prior overwhelmed the actual evidence.",
+        whyItMattersHere: "Every false positive you made in this lesson is pareidolia in action. Your brain's top-down face prior overwhelmed the actual evidence.",
       },
     ],
     conceptLinks: ["loop", "precision-attention", "failure"],
-    traceBridge: "The pathway above shows how a strong face-detection prior from OFC/PFC dominates ambiguous input before the FFA and PFC can verify. The Prediction Lens below maps this to the specific mismatch between what your brain expected and what the evidence actually showed.",
+    traceBridge: "The pathway in Trace shows how a strong face-detection prior from OFC/PFC dominates ambiguous input before the FFA and PFC can verify. The Prediction Lens below maps this to the specific mismatch between what your brain expected and what the evidence actually showed.",
   },
 
   "sudden-noise-reaction": {
@@ -121,12 +121,12 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
     tagline: "You react before you understand.",
     nbb302Units: [2],
     predictionLens: {
-      whatHappened: "You heard a sudden noise and your body reacted before you could think about it.",
-      whatBrainPredicted: "Your brain's default prediction in a quiet environment is 'nothing abrupt will happen.' The sudden sound violated that prediction instantly.",
-      whatInputArrived: "A rapid, high-intensity auditory signal entering through pre-cortical sensory pathways.",
-      whatMismatchMattered: "The mismatch between expected silence and actual loud input triggered the fastest defensive response your brain has: the acoustic startle reflex.",
+      whatHappened: "You experienced a sudden interruption and your body reacted before you could think about it.",
+      whatBrainPredicted: "Your brain's default prediction in a quiet environment is 'nothing abrupt will happen.' The sudden stimulus violated that prediction instantly.",
+      whatInputArrived: "A rapid, unexpected signal entering through pre-cortical sensory pathways.",
+      whatMismatchMattered: "The mismatch between expected calm and actual sudden input triggered the fastest defensive response your brain has: the startle reflex.",
       whatPathwayHandledIt: "Auditory input → brainstem startle circuit (subcortical, ultra-fast) + amygdala salience amplification. Cortical interpretation came only on the slower route.",
-      howBrainUpdated: "Your cortex evaluated the sound afterward to decide whether it was truly threatening. The startle response happened first. The interpretation came second.",
+      howBrainUpdated: "Your cortex evaluated the stimulus afterward to decide whether it was truly threatening. The startle response happened first. The interpretation came second.",
       nbb302Connection: "Acoustic startle reflex, amygdala as salience center, low road vs. high road processing, fear-potentiated startle. Covered in States that Prime Behavior (Arousal, Emotions).",
     },
     tracePathway: {
@@ -141,7 +141,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       ],
       edges: [
         { from: "auditory-input", to: "brainstem-startle", route: "fast", label: "Fast subcortical route" },
-        { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification" },
+        { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification", arrowAt: "from" },
         { from: "auditory-input", to: "auditory-cortex", route: "slow", label: "Slower cortical route" },
         { from: "auditory-cortex", to: "pfc", route: "slow", label: "Conscious evaluation" },
         { from: "amygdala", to: "pfc", route: "primary", label: "Threat evaluation" },
@@ -158,7 +158,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
         ],
         edges: [
           { from: "auditory-input", to: "brainstem-startle", route: "fast", label: "Fast subcortical route" },
-          { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification" },
+          { from: "brainstem-startle", to: "amygdala", route: "fast", label: "Salience amplification", arrowAt: "from" },
           { from: "auditory-input", to: "auditory-cortex", route: "slow", label: "Slower cortical route" },
           { from: "auditory-cortex", to: "pfc", route: "slow", label: "Conscious evaluation" },
           { from: "amygdala", to: "pfc", route: "primary", label: "Threat evaluation" },
@@ -184,7 +184,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "failure"],
-    traceBridge: "The pathway splits at the auditory input node: the fast coral route fires the brainstem startle in milliseconds, while the dashed slow route reaches cortex for conscious evaluation. Your reaction time in the demo measured the gap between these two routes. The Prediction Lens below breaks down the prediction error that made the startle happen.",
+    traceBridge: "The pathway in Trace splits at the auditory input node: the fast coral route fires the brainstem startle in milliseconds, while the dashed slow route reaches cortex for conscious evaluation. The Prediction Lens below breaks down the prediction error that made the startle happen.",
   },
 
   "fear-cue-and-extinction": {
@@ -255,7 +255,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "failure"],
-    traceBridge: "The pathway above shows fear acquisition through the BLA→CeA route and extinction through the vmPFC→ITC inhibition pathway. Toggle between states to see how the same cue activates different circuits. The Prediction Lens below explains the prediction error that drives each transition.",
+    traceBridge: "The pathway in Trace shows fear acquisition through the BLA→CeA route and extinction through the vmPFC→ITC inhibition pathway. Toggle between states in Trace to see how the same cue activates different circuits. The Prediction Lens below explains the prediction error that drives each transition.",
   },
 
   "memory-under-load": {
@@ -304,7 +304,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "precision-attention", "failure"],
-    traceBridge: "The pathway above shows the dlPFC maintaining working memory through a feedback loop with sensory input. As load increased, that control signal weakened. The dashed feedback edge is the loop breaking down. The Prediction Lens below maps this to the specific capacity failure you experienced.",
+    traceBridge: "The pathway in Trace shows the dlPFC maintaining working memory through a feedback loop with sensory input. As load increased, that control signal weakened. The dashed feedback edge is the loop breaking down. The Prediction Lens below maps this to the specific capacity failure you experienced.",
   },
 
   "stress-response-builder": {
@@ -385,6 +385,6 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
       },
     ],
     conceptLinks: ["loop", "failure"],
-    traceBridge: "The pathway above shows the HPA cascade from stressor detection through cortisol release, with the negative feedback loop that normally shuts it down. Toggle to the chronic stress state to see how CeA and PFC override that shutdown. The Prediction Lens below explains the prediction failure behind sustained cortisol.",
+    traceBridge: "The pathway in Trace shows the HPA cascade from stressor detection through cortisol release, with the negative feedback loop that normally shuts it down. Toggle to the chronic stress state in Trace to see how CeA and PFC override that shutdown. The Prediction Lens below explains the prediction failure behind sustained cortisol.",
   },
 };

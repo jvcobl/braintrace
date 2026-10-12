@@ -25,9 +25,9 @@ interface TrialResult {
 const expectationFeedback: Record<"didNotExpect" | "didExpect", ExperienceFeedback> = {
   didNotExpect: {
     primary: "You were startled — the reflex fired before conscious awareness.",
-    secondary: "This fits the acoustic startle reflex: a 3-synapse loop from cochlear root neurons to the pontine reticular nucleus to spinal motor neurons. The entire circuit completes without cortical involvement, which is why the body reacts before the mind registers what happened.",
-    bridge: "Trace shows the full 3-synapse startle loop.",
-    structure: "Cochlear root neurons → PNC → spinal cord",
+    secondary: "This parallels the acoustic startle reflex: a 3-synapse loop from cochlear root neurons to the pontine reticular nucleus to spinal motor neurons. The entire circuit completes without cortical involvement, which is why the body reacts before the mind registers what happened.",
+    bridge: "Trace shows the fast subcortical route to the brainstem startle.",
+    structure: "Cochlear root neurons → PnC → spinal cord",
   },
   didExpect: {
     primary: "You expected it — but the reflex likely still fired.",
@@ -41,13 +41,13 @@ const primingFeedback: Record<"strongerAfterCue" | "sameOrWeaker", ExperienceFee
   strongerAfterCue: {
     primary: "The startle response was amplified — this fits fear-potentiated startle.",
     secondary: "When a warning cue primes the system, auditory input routes from the medial geniculate nucleus (MGN) to the basolateral amygdala (BLA). If the BLA is already in a heightened state, the central amygdala (CeA) amplifies the outgoing startle command. This is the mechanism Mike Davis demonstrated in fear-potentiated startle research.",
-    bridge: "Trace shows the MGN → BLA → CeA amplification pathway.",
+    bridge: "Trace shows how the amygdala amplifies the startle.",
     structure: "MGN → BLA → CeA → amplified startle",
   },
   sameOrWeaker: {
     primary: "The startle did not increase after the cue.",
     secondary: "This could reflect habituation (the brainstem circuit dampening its response to a now-familiar stimulus) or cortical suppression (the high road partially inhibiting the amygdala's priming effect). Both are real mechanisms, and without direct measurement, either could explain the pattern.",
-    bridge: "Compare habituation vs cortical suppression in Explain.",
+    bridge: "Explain covers how the amygdala modulates startle intensity.",
     structure: "Habituation or high road suppression",
   },
 };
@@ -60,7 +60,7 @@ const contextFeedback: ExperienceFeedback = {
 
 const summaryData: ExperienceSummary = {
   heading: "What This Shows",
-  body: "The acoustic startle reflex exists because organisms that flinched first survived. It runs on three synapses with no cortical involvement. The amygdala does not create the reflex — it amplifies or suppresses it based on context, priming, and learned associations. That amplification is fear-potentiated startle; that suppression is habituation or cortical override.",
+  body: "The acoustic startle reflex exists because organisms that flinched first survived. It runs on three synapses with no cortical involvement. The amygdala does not create the reflex — it amplifies or suppresses it based on context, priming, and learned associations. That amplification is fear-potentiated startle; that suppression is cortical override.",
   bridge: "Trace shows both the basic startle loop and the amplification circuit.",
 };
 
@@ -82,7 +82,6 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
   // Reflection answers
   const [expectAnswer, setExpectAnswer] = useState<"didNotExpect" | "didExpect" | null>(null);
   const [primingAnswer, setPrimingAnswer] = useState<"strongerAfterCue" | "sameOrWeaker" | null>(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   const targetTime = useRef(0);
   const waitTimer = useRef<ReturnType<typeof setTimeout>>();
@@ -149,7 +148,6 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       setReactionMs(ms);
       setResults((prev) => [...prev, { type: currentTrialType!, reactionMs: ms }]);
       setPhase({ kind: "trial", trial: "reacted" });
-      if (!hasInteracted) setHasInteracted(true);
     } else if (phase.trial === "waiting") {
       if (waitTimer.current) clearTimeout(waitTimer.current);
       if (interruptTimer.current) clearTimeout(interruptTimer.current);
@@ -188,6 +186,15 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
 
   const trialLabel = currentTrialType === "baseline" ? "Baseline" : "With Interruption";
 
+  const stepKey = [
+    phase.kind,
+    phase.kind === "trial" ? phase.trial : phase.kind === "reflect" ? phase.step : "",
+    trialIndex,
+    reactionMs === -1 ? "early" : "",
+    expectAnswer ?? "",
+    primingAnswer ?? "",
+  ].join("-");
+
   return (
     <ExperienceShell
       onNavigate={onNavigate}
@@ -195,31 +202,40 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
       done={done}
       summary={summaryData}
       onRestart={handleRestart}
+      stepKey={stepKey}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["sudden-noise"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       {/* ── Prediction commit ── */}
       {phase.kind === "predict" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-          <p className="text-sm font-medium text-foreground mb-4">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <p data-announce className="text-sm font-medium text-foreground mb-4">
             {suddenNoiseContent.predictionPrompt}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <button
+              type="button"
+              data-autofocus
               onClick={() => {
                 setUserPrediction("calm");
                 setPhase({ kind: "trial", trial: "ready" });
-                setHasInteracted(true);
               }}
-              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {suddenNoiseContent.predictionOptionCalm}
             </button>
             <button
+              type="button"
               onClick={() => {
                 setUserPrediction("flinch");
                 setPhase({ kind: "trial", trial: "ready" });
-                setHasInteracted(true);
               }}
-              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {suddenNoiseContent.predictionOptionFlinch}
             </button>
@@ -229,22 +245,22 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
 
       {/* ── Trial phase ── */}
       {phase.kind === "trial" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className={`text-xs font-semibold uppercase tracking-wide ${
-                currentTrialType === "baseline" ? "text-primary" : "text-amber-500"
+              <span data-announce={phase.trial === "ready" || undefined} className={`text-xs font-semibold uppercase tracking-wide ${
+                currentTrialType === "baseline" ? "text-primary" : "text-amber-700"
               }`}>
                 {trialLabel}
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span data-announce={phase.trial === "ready" || undefined} className="text-xs text-muted-foreground">
                 Trial {trialIndex + 1} of {TRIAL_SEQUENCE.length}
               </span>
             </div>
             <button
               onClick={() => setMuted((m) => !m)}
               className="rounded-md bg-secondary px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              aria-label={muted ? "Turn sound on" : "Mute sound"}
+              aria-pressed={!muted}
             >
               {muted ? "🔇 Sound Off" : "🔊 Sound On"}
             </button>
@@ -267,24 +283,34 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               flashVisible ? "bg-accent" : phase.trial === "target" ? "bg-primary/10" : "bg-secondary"
             }`}
             onClick={isTrialActive ? handleClick : undefined}
-            onKeyDown={isTrialActive ? (e) => { if (e.key === " " || e.key === "Enter") handleClick(); } : undefined}
+            onKeyDown={
+              isTrialActive
+                ? (e) => {
+                    if (e.key !== " " && e.key !== "Enter") return;
+                    e.preventDefault(); // Space would otherwise scroll the page
+                    if (!e.repeat) handleClick();
+                  }
+                : undefined
+            }
             role={isTrialActive ? "button" : undefined}
             tabIndex={isTrialActive ? 0 : undefined}
+            data-autofocus={isTrialActive || undefined}
             style={{ cursor: isTrialActive ? "pointer" : "default" }}
           >
             {phase.trial === "ready" && (
-              <div className="text-center max-w-sm px-4">
+              <div data-announce className="text-center max-w-sm px-4">
                 <p className="text-sm text-muted-foreground mb-2">
                   {currentTrialType === "baseline"
                     ? "First: a calm trial. Click when the circle appears."
                     : "This trial may include an unexpected interruption. Same task — click the circle."}
                 </p>
                 {currentTrialType === "interrupted" && (
-                  <p className="text-xs text-muted-foreground/70 italic mb-3">
+                  <p className="text-xs text-muted-foreground italic mb-3">
                     Notice how your body responds, not just your click speed.
                   </p>
                 )}
                 <button
+                  data-autofocus
                   onClick={startTrial}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -294,18 +320,18 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
             )}
 
             {phase.trial === "waiting" && (
-              <p className="text-sm text-muted-foreground select-none">Wait for it…</p>
+              <p data-announce className="text-sm text-muted-foreground select-none">Wait for it…</p>
             )}
 
             {phase.trial === "target" && (
               <div className="flex flex-col items-center gap-2">
                 <div className="h-14 w-14 rounded-full bg-primary animate-pulse" />
-                <p className="text-sm font-medium text-foreground">Now!</p>
+                <p data-announce className="text-sm font-medium text-foreground">Now!</p>
               </div>
             )}
 
             {phase.trial === "reacted" && (
-              <div className="text-center">
+              <div data-announce className="text-center">
                 {reactionMs === -1 ? (
                   <p className="text-sm font-medium text-destructive">Too early — wait for the circle.</p>
                 ) : (
@@ -330,12 +356,24 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
                     )}
                   </div>
                 )}
-                <button
-                  onClick={handleNextTrial}
-                  className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  {trialIndex < TRIAL_SEQUENCE.length - 1 ? "Next Trial" : "Continue to Reflection"}
-                </button>
+                {reactionMs === -1 ? (
+                  // An early click leaves no reaction time to compare, so rerun the same trial.
+                  <button
+                    data-autofocus
+                    onClick={startTrial}
+                    className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    Try again
+                  </button>
+                ) : (
+                  <button
+                    data-autofocus
+                    onClick={handleNextTrial}
+                    className="mt-4 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    {trialIndex < TRIAL_SEQUENCE.length - 1 ? "Next Trial" : "Continue to Reflection"}
+                  </button>
+                )}
               </div>
             )}
 
@@ -353,7 +391,10 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
         <div className="space-y-5">
           {/* Reaction time comparison */}
           {results.length >= 2 && (
-            <div className="rounded-lg border border-border bg-card p-4 sm:p-5">
+            <div
+              data-announce={(phase.step === "expectation" && !expectAnswer) || undefined}
+              className="rounded-lg border border-border bg-card p-4 sm:p-5"
+            >
               <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-3">
                 Your reaction times
               </p>
@@ -376,20 +417,22 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
 
           {/* Step 1: Expectation */}
           {phase.step === "expectation" && (
-            <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-              <p className="text-sm font-medium text-foreground mb-1">
+            <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
+              <p data-announce={!expectAnswer || undefined} className="text-sm font-medium text-foreground mb-1">
                 During the interrupted trial, were you startled by the flash?
               </p>
-              <p className="text-xs text-muted-foreground mb-4">
+              <p data-announce={!expectAnswer || undefined} className="text-xs text-muted-foreground mb-4">
                 Think about your body's reaction, not just whether you expected something to happen.
               </p>
               <div className="flex flex-wrap gap-3">
                 {([
                   { key: "didNotExpect" as const, label: "Yes — it caught me off guard" },
                   { key: "didExpect" as const, label: "Not really — I was expecting something" },
-                ]).map(({ key, label }) => (
+                ]).map(({ key, label }, i) => (
                   <button
                     key={key}
+                    data-autofocus={(!expectAnswer && i === 0) || undefined}
+                    aria-pressed={expectAnswer === key}
                     onClick={() => setExpectAnswer(key)}
                     className={`rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                       expectAnswer === key
@@ -403,9 +446,12 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               </div>
               {expectAnswer && (
                 <div className="mt-5">
-                  <FeedbackCard onNavigate={onNavigate} feedback={expectationFeedback[expectAnswer]} />
+                  <div data-announce>
+                    <FeedbackCard feedback={expectationFeedback[expectAnswer]} />
+                  </div>
                   <div className="mt-4 flex justify-center">
                     <button
+                      data-autofocus
                       onClick={() => setPhase({ kind: "reflect", step: "priming" })}
                       className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
@@ -419,20 +465,22 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
 
           {/* Step 2: Priming */}
           {phase.step === "priming" && (
-            <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-              <p className="text-sm font-medium text-foreground mb-1">
+            <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
+              <p data-announce={!primingAnswer || undefined} className="text-sm font-medium text-foreground mb-1">
                 Did the interruption make the circle-click feel more urgent?
               </p>
-              <p className="text-xs text-muted-foreground mb-4">
+              <p data-announce={!primingAnswer || undefined} className="text-xs text-muted-foreground mb-4">
                 Compare how alert you felt clicking in the baseline trial vs. after the flash.
               </p>
               <div className="flex flex-wrap gap-3">
                 {([
                   { key: "strongerAfterCue" as const, label: "Yes — I felt more on edge" },
                   { key: "sameOrWeaker" as const, label: "No — it felt about the same" },
-                ]).map(({ key, label }) => (
+                ]).map(({ key, label }, i) => (
                   <button
                     key={key}
+                    data-autofocus={(!primingAnswer && i === 0) || undefined}
+                    aria-pressed={primingAnswer === key}
                     onClick={() => setPrimingAnswer(key)}
                     className={`rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
                       primingAnswer === key
@@ -446,9 +494,12 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
               </div>
               {primingAnswer && (
                 <div className="mt-5">
-                  <FeedbackCard onNavigate={onNavigate} feedback={primingFeedback[primingAnswer]} />
+                  <div data-announce>
+                    <FeedbackCard feedback={primingFeedback[primingAnswer]} />
+                  </div>
                   <div className="mt-4 flex justify-center">
                     <button
+                      data-autofocus
                       onClick={() => setPhase({ kind: "reflect", step: "context" })}
                       className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
@@ -462,13 +513,16 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
 
           {/* Step 3: Context interpretation */}
           {phase.step === "context" && (
-            <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-              <p className="text-sm font-medium text-foreground mb-3">
-                Now consider: would the same interruption feel different in a dark room alone vs. a bright classroom?
-              </p>
-              <FeedbackCard onNavigate={onNavigate} feedback={contextFeedback} />
+            <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
+              <div data-announce>
+                <p className="text-sm font-medium text-foreground mb-3">
+                  Now consider: would the same interruption feel different in a dark room alone vs. a bright classroom?
+                </p>
+                <FeedbackCard feedback={contextFeedback} />
+              </div>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={() => setPhase({ kind: "done" })}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -480,14 +534,6 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
         </div>
       )}
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["sudden-noise"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

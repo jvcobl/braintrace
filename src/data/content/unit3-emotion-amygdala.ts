@@ -15,7 +15,7 @@ export const unit3Meta = {
     "Central amygdala (CeA)",
     "Medial amygdala (MeA)",
     "Intercalated cells (ITCs)",
-    "Pontine reticular nucleus (PNC)",
+    "Pontine reticular nucleus (PnC)",
     "Medial geniculate nucleus (MGN)",
     "Ventral hippocampus",
   ],
@@ -153,14 +153,14 @@ export const unit3ConceptCards = [
     id: "u3-cc-18",
     term: "Amygdala as Salience Center",
     definition:
-      "The amygdala is NOT the 'fear center.' It is the salience center — its job is to stamp importance onto an event's memory formation, saying 'this is important, remember it.' It is hyper-active during fear, but also intensely active during reward, addiction (with the nucleus accumbens), and highly positive events like the birth of a child, marriage, or earning a PhD.",
+      "The amygdala is NOT the 'fear center.' It is the salience center — its job is to stamp importance onto an event's memory formation, saying 'this is important, remember it.' It is hyperactive during fear, but also intensely active during reward, addiction (with the nucleus accumbens), and highly positive events like the birth of a child, marriage, or earning a PhD.",
     structures: ["Amygdala", "Nucleus accumbens"],
   },
   {
     id: "u3-cc-19",
     term: "Basolateral Amygdala (BLA)",
     definition:
-      "Comprised of the lateral and basal nuclei. The BLA is the major input hub — the 'ears' of the amygdala. It receives sensory and cortical information and routes it to other amygdala subregions for processing.",
+      "Composed of the lateral and basal nuclei. The BLA is the major input hub — the 'ears' of the amygdala. It receives sensory and cortical information and routes it to other amygdala subregions for processing.",
     structures: ["Basolateral amygdala"],
   },
   {
@@ -195,7 +195,7 @@ export const unit3ConceptCards = [
     id: "u3-cc-24",
     term: "Acoustic Startle Reflex",
     definition:
-      "A fast, 3-synapse survival loop: high-intensity sound → cochlear root neurons → contralateral projection to the pontine reticular nucleus (PNC) in the brainstem → spinal cord → alpha motor neuron → muscle jolt. This reflex is so fast because it uses only three synapses, bypassing cortical processing entirely.",
+      "A fast, 3-synapse survival loop: high-intensity sound → cochlear root neurons → contralateral projection to the pontine reticular nucleus (PnC) in the brainstem → spinal cord → alpha motor neuron → muscle jolt. This reflex is so fast because it uses only three synapses, bypassing cortical processing entirely.",
     structures: ["Cochlear root neurons", "Pontine reticular nucleus", "Spinal cord"],
   },
   {
@@ -207,7 +207,7 @@ export const unit3ConceptCards = [
   },
   {
     id: "u3-cc-26",
-    term: "Pontine Reticular Nucleus (PNC)",
+    term: "Pontine Reticular Nucleus (PnC)",
     definition:
       "The second synapse in the acoustic startle reflex, located in the brainstem. It receives the contralateral projection from cochlear root neurons and relays the motor command to the spinal cord, triggering the startle response.",
     structures: ["Pontine reticular nucleus"],
@@ -230,8 +230,11 @@ export const unit3ConceptCards = [
     id: "u3-cc-29",
     term: "Amygdala Hyperactivity",
     definition:
-      "When the amygdala is chronically overactive, it leads to generalized anxiety, PTSD, and paralyzing phobias through overgeneralized threat cues. Pharmacological treatment includes SSRIs, where serotonin acts as a 'volume knob downward' on amygdala activity. Older MAOIs can be dangerous in adolescents because excessive serotonin modulation can cause suicidal behavior.",
+      "When the amygdala is chronically overactive, it leads to generalized anxiety, PTSD, and paralyzing phobias through overgeneralized threat cues. Pharmacological treatment includes SSRIs, where serotonin acts as a 'volume knob downward' on amygdala activity. Antidepressants, including SSRIs, can be dangerous in adolescents because they can increase the risk of suicidal behavior.",
     structures: ["Amygdala"],
+    sensitivity: "high" as const,
+    sensitivityNote:
+      "This material is presented as a factual neurobiology study card. If you or someone you know is struggling, please reach out to the 988 Suicide and Crisis Lifeline (call or text 988).",
   },
   {
     id: "u3-cc-30",
@@ -261,15 +264,15 @@ export const unit3Pathways = [
       },
       {
         number: 2,
-        structure: "Pontine Reticular Nucleus (PNC)",
+        structure: "Pontine Reticular Nucleus (PnC)",
         description:
-          "The signal crosses to the contralateral PNC in the brainstem. This is synapse 2. No cortical processing has occurred.",
+          "The signal crosses to the contralateral PnC in the brainstem. This is synapse 2. No cortical processing has occurred.",
       },
       {
         number: 3,
         structure: "Spinal Cord → Alpha Motor Neuron → Muscle",
         description:
-          "The PNC sends a motor command down the spinal cord to alpha motor neurons, producing the involuntary muscle jolt. This is synapse 3. The entire loop is complete before you are consciously aware of the sound.",
+          "The PnC sends a motor command down the spinal cord to alpha motor neurons, producing the involuntary muscle jolt. This is synapse 3. The entire loop is complete before you are consciously aware of the sound.",
       },
     ],
   },
@@ -347,7 +350,7 @@ export const unit3Pathways = [
         number: 2,
         structure: "Intercalated Cells (ITCs) — Inhibitory Brakes",
         description:
-          "GABAergic cells flanking the BLA that can suppress amygdala output. When activated by the prelimbic cortex (vmPFC), ITCs quiet the system.",
+          "GABAergic cells flanking the BLA that can suppress amygdala output. When activated by the infralimbic cortex (vmPFC), ITCs quiet the system.",
       },
       {
         number: 3,
@@ -453,7 +456,7 @@ export const unit3Distinctions = [
     descriptionA:
       "The accurate description of the amygdala. It stamps importance onto events — 'this matters, remember it' — for both negative (fear, threat) and positive (reward, love, achievement) events.",
     descriptionB:
-      "A common but inaccurate label for the amygdala. While the amygdala is hyper-active during fear, it is equally active during reward, addiction, and intensely positive life events.",
+      "A common but inaccurate label for the amygdala. While the amygdala is hyperactive during fear, it is equally active during reward, addiction, and intensely positive life events.",
     keyDifference:
       "Calling the amygdala a 'fear center' misses half of what it does. It detects salience — importance — regardless of whether the event is positive or negative.",
   },
@@ -468,7 +471,7 @@ export const unit3CaseNotes = [
     id: "u3-cn-01",
     title: "Phineas Gage",
     content:
-      "A railroad foreman who survived a tamping iron destroying a hemisphere of his prefrontal cortex. After the injury, he transformed from a responsible, respected leader into someone described as obstinate, impulsive, capricious, and rude. This case is a foundational example of hypofrontality — the total loss of vmPFC emotional regulation. The PFC mediates between the emotional limbic system and rational cognition; without it, subcortical impulses go unchecked.",
+      "A railroad foreman who survived a tamping iron destroying part of his prefrontal cortex. After the injury, he transformed from a responsible, respected leader into someone described as obstinate, impulsive, capricious, and rude. This case is a foundational example of hypofrontality — a severe loss of vmPFC emotional regulation. The PFC mediates between the emotional limbic system and rational cognition; without it, subcortical impulses go unchecked.",
     sensitivity: "standard" as const,
   },
   {
@@ -478,16 +481,16 @@ export const unit3CaseNotes = [
       "Caused by bilateral temporal lobe and amygdala damage, historically resulting from severe epilepsy surgeries. Symptoms include visual agnosia (inability to recognize objects), loss of normal fear and anger responses, hyperorality (putting inappropriate objects in the mouth), and hypersexuality. This syndrome demonstrates what happens when the amygdala's salience-stamping function is completely removed — the brain can no longer mark anything as important, dangerous, or socially inappropriate.",
     sensitivity: "high" as const,
     sensitivityNote:
-      "This is clinical study material. It demonstrates the consequences of amygdala loss and should be presented as an informational case card, not simulated.",
+      "This is clinical study material, presented as a reference case rather than an interactive experience. It shows the consequences of amygdala loss.",
   },
   {
     id: "u3-cn-03",
     title: "Patient SM (Urbach-Wiethe Disease)",
     content:
-      "Patient SM has a rare genetic disorder (Urbach-Wiethe disease) that caused a calcified, completely nonfunctional amygdala. She has a complete loss of physiological fear impulses and emotional braking — she cannot feel fear in her body. However, she retains full cognitive understanding of danger (she knows a train track is deadly). This dissociation proves that knowing something is dangerous and feeling afraid of it depend on different brain systems: cognitive awareness resides in the cortex, while the visceral fear response depends on the amygdala.",
+      "Patient SM has a rare genetic disorder (Urbach-Wiethe disease) that caused a calcified, completely nonfunctional amygdala. She has a profound loss of physiological fear impulses and emotional braking. However, she retains full cognitive understanding of danger (she knows a train track is deadly). This dissociation suggests that knowing something is dangerous and feeling afraid of it depend on different brain systems: cognitive awareness resides in the cortex, while the visceral fear response depends on the amygdala.",
     sensitivity: "high" as const,
     sensitivityNote:
-      "Present as clinical reference material demonstrating the amygdala's role in fear physiology.",
+      "This is clinical reference material, presented as a case summary rather than an interactive experience. It shows the amygdala's role in fear physiology.",
   },
   {
     id: "u3-cn-04",

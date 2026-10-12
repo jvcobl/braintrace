@@ -2,9 +2,14 @@ import { useEffect, useRef, useState } from "react";
 
 interface CortisolGraphProps {
   mode: "runaway" | "recovery" | "weakened";
-  onComplete: () => void;
+  onComplete?: () => void;
   className?: string;
+  /** Draw the finished curve immediately (used when re-showing a result). */
+  instant?: boolean;
 }
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" && !!window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
 const DURATION_MS = 3000;
 const STEPS = 60;
@@ -50,14 +55,27 @@ function buildPoints(mode: CortisolGraphProps["mode"], progress: number): string
   return pts.join(" ");
 }
 
-export default function CortisolGraph({ mode, onComplete, className }: CortisolGraphProps) {
-  const [progress, setProgress] = useState(0);
+export default function CortisolGraph({ mode, onComplete, className, instant = false }: CortisolGraphProps) {
+  const [progress, setProgress] = useState(instant ? 1 : 0);
   const completedRef = useRef(false);
   const startRef = useRef(0);
   const rafRef = useRef(0);
+  // Keep the latest callback without restarting the animation when the parent re-renders.
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     completedRef.current = false;
+
+    if (instant || prefersReducedMotion()) {
+      setProgress(1);
+      if (!instant) {
+        completedRef.current = true;
+        onCompleteRef.current?.();
+      }
+      return;
+    }
+
     setProgress(0);
     startRef.current = performance.now();
 
@@ -70,13 +88,13 @@ export default function CortisolGraph({ mode, onComplete, className }: CortisolG
         rafRef.current = requestAnimationFrame(tick);
       } else if (!completedRef.current) {
         completedRef.current = true;
-        onComplete();
+        onCompleteRef.current?.();
       }
     }
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [mode, onComplete]);
+  }, [mode, instant]);
 
   return (
     <svg
@@ -91,7 +109,7 @@ export default function CortisolGraph({ mode, onComplete, className }: CortisolG
         x2={W - PAD_X} y2={BASELINE_Y}
         stroke="#ccc" strokeWidth={1}
       />
-      <text x={W - PAD_X} y={BASELINE_Y + 10} textAnchor="end" fontSize={9} fill="#bbb">
+      <text x={W - PAD_X} y={BASELINE_Y + 11} textAnchor="end" fontSize={11} fill="#6b7280">
         baseline
       </text>
 
@@ -101,7 +119,8 @@ export default function CortisolGraph({ mode, onComplete, className }: CortisolG
         x2={W - PAD_X} y2={THRESHOLD_Y}
         stroke="#ccc" strokeWidth={1} strokeDasharray="4 3"
       />
-      <text x={W - PAD_X} y={THRESHOLD_Y - 4} textAnchor="end" fontSize={9} fill="#bbb">
+      {/* Labelled at the left, where both curves are still low (the runaway curve ends high on the right). */}
+      <text x={PAD_X} y={THRESHOLD_Y - 5} textAnchor="start" fontSize={11} fill="#6b7280">
         danger threshold
       </text>
 

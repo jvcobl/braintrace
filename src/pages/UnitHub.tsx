@@ -1,4 +1,5 @@
-import { useParams, Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { getUnitContent, getLessonsByUnit, getUnitIds } from "@/data/content/registry";
 import { modules } from "@/data/modules";
 import UnitOverviewHeader from "@/components/study/UnitOverviewHeader";
@@ -8,26 +9,49 @@ import PathwaySection from "@/components/study/PathwaySection";
 import DistinctionSection from "@/components/study/DistinctionSection";
 import CaseNoteSection from "@/components/study/CaseNoteSection";
 import ReviewSection from "@/components/study/ReviewSection";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import Breadcrumb from "@/components/layout/Breadcrumb";
+import NotFoundContent from "@/components/NotFoundContent";
+import { focusTarget, scrollBehavior } from "@/lib/utils";
+
+/** Item anchors (from search results or shared links) get a brief highlight; section anchors don't. */
+const ITEM_ANCHOR = /^(concept|pathway|distinction|case)-u\d/;
 
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
   const content = unitId ? getUnitContent(unitId) : undefined;
+  usePageMeta(
+    content && unitId
+      ? { title: `${content.meta.title}: Study Guide`, description: `${content.meta.subtitle} ${content.meta.overview}`, canonicalPath: `/unit/${unitId}` }
+      : { title: "Page not found", noindex: true },
+  );
+
+  // Scroll to a linked section or item once the page (and any expanded list) has rendered.
+  const location = useLocation();
+  useEffect(() => {
+    let target = location.hash.slice(1);
+    try {
+      target = decodeURIComponent(target);
+    } catch {
+      return; // a malformed link (e.g. a stray "%") just opens the top of the page
+    }
+    if (!target) return;
+    const timer = setTimeout(() => {
+      const el = document.getElementById(target);
+      if (!el) return;
+      el.scrollIntoView({ block: "start", behavior: scrollBehavior() });
+      const isItem = ITEM_ANCHOR.test(target);
+      focusTarget(isItem ? el : el.querySelector<HTMLElement>("h2") ?? el);
+      if (isItem) {
+        el.classList.add("search-highlight");
+        setTimeout(() => el.classList.remove("search-highlight"), 1500);
+      }
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [location.hash, location.key]);
 
   if (!content || !unitId) {
-    return (
-      <div className="container flex flex-col items-center justify-center py-32 text-center">
-        <h1 className="font-display text-3xl sm:text-4xl text-foreground">Unit Not Found</h1>
-        <p className="mt-4 text-[14px] sm:text-[15px] text-muted-foreground">
-          The unit you're looking for doesn't exist.
-        </p>
-        <Link
-          to="/"
-          className="mt-10 inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        >
-          Browse Lessons
-        </Link>
-      </div>
-    );
+    return <NotFoundContent title="Study guide not found" message="The study guide you're looking for doesn't exist." />;
   }
 
   const unitNumber = unitId.replace("unit-", "");
@@ -43,19 +67,31 @@ const UnitHub = () => {
   const nextUnit = idx < allIds.length - 1 ? allIds[idx + 1] : null;
 
   return (
-    <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-20">
-      {/* Breadcrumb */}
-      <Link
-        to="/"
-        className="inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
-      >
-        <span aria-hidden="true">←</span> All Topics
-      </Link>
+    <div className="container max-w-3xl px-4 sm:px-6 py-12">
+      <Breadcrumb />
 
       {/* ── Hero: Unit intro ── */}
-      <div className="mt-6 sm:mt-8">
-        <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
-      </div>
+      <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
+
+      {/* On-this-page links for a long study guide */}
+      <nav aria-label="On this page" className="mt-8 flex flex-wrap gap-2">
+        {[
+          ["#lessons", "Lessons"],
+          ["#key-concepts", "Key concepts"],
+          ["#pathways", "Pathways"],
+          ["#distinctions", "Distinctions"],
+          ["#case-notes", "Case notes"],
+          ["#review", "Review"],
+        ].map(([href, label]) => (
+          <a
+            key={href}
+            href={href}
+            className="rounded-full border border-border bg-white px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
 
       {/* ── Interactive lessons — primary call to action ── */}
       <div className="mt-14 sm:mt-16">
@@ -85,7 +121,7 @@ const UnitHub = () => {
         {prevUnit ? (
           <Link
             to={`/unit/${prevUnit}`}
-            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+            className="group -my-3 inline-flex min-h-11 items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">←</span>
             {(() => {
@@ -99,7 +135,7 @@ const UnitHub = () => {
         {nextUnit ? (
           <Link
             to={`/unit/${nextUnit}`}
-            className="group inline-flex items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+            className="group -my-3 inline-flex min-h-11 items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
             {(() => {
               const nc = getUnitContent(nextUnit);

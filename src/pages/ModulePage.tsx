@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { getModuleById, modules } from "@/data/modules";
 import { moduleDefinitions } from "@/data/moduleDefinitions";
-import { getUnitById } from "@/data/courseMap";
-import { getUnitContent, getLessonsByUnit } from "@/data/content/registry";
+import { getLessonsByUnit } from "@/data/content/registry";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import SectionNav, { type SectionId } from "@/components/module/SectionNav";
 import IntroSection from "@/components/module/IntroSection";
@@ -11,6 +10,10 @@ import ExperienceSection from "@/components/module/ExperienceSection";
 import TracePanel from "@/components/module/TracePanel";
 import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
+import { armDoubleTapGuardIfControlGone } from "@/components/module/experience";
+import { focusIsLost, focusTarget, scrollBehavior } from "@/lib/utils";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import NotFoundContent from "@/components/NotFoundContent";
 
 const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
   "blurry-object-guess": { slug: "perception", title: "Perception and Object Recognition" },
@@ -27,66 +30,104 @@ const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
   "homeostasis-vs-allostasis-sorter": { slug: "stress", title: "Stress and Homeostasis" },
 };
 
-const ModulePage = () => {
+/** The four tab containers; a hash naming one of them opens that tab without a highlight flash. */
+const TAB_IDS = ["intro", "experience", "trace", "explain"];
+
+function sectionFromHash(hash: string): SectionId {
+  if (hash === "trace") return "Trace";
+  if (hash === "experience") return "Experience";
+  if (hash === "explain" || hash.startsWith("deeper-") || hash === "prediction-lens" || hash === "concept-links") return "Explain";
+  return "Intro";
+}
+
+/** Sorters and the PFC matcher trace concepts, not a signal path, so their Trace tab says so. */
+const SORTER_TRACE = { subtitle: "The ideas the sorter is built on, and what separates them.", listLabel: "Key ideas" };
+const CONCEPT_TRACE: Record<string, { subtitle: string; listLabel: string }> = {
+  "pfc-role-matcher": { subtitle: "What each region of the prefrontal cortex contributes.", listLabel: "PFC regions" },
+  "fear-vs-anxiety-sorter": SORTER_TRACE,
+  "emotion-vs-arousal-sorter": SORTER_TRACE,
+  "classical-vs-operant-sorter": SORTER_TRACE,
+  "homeostasis-vs-allostasis-sorter": SORTER_TRACE,
+};
+
+const ModulePageContent = () => {
   const { id } = useParams<{ id: string }>();
   const mod = id ? getModuleById(id) : undefined;
-  const unit = mod ? getUnitById(mod.unitId) : undefined;
-  const unitContent = mod ? getUnitContent(mod.unitId) : undefined;
-  const [section, setSection] = useState<SectionId>(() => {
-    const hash = window.location.hash.slice(1);
-    if (!hash) return "Intro";
-    if (hash === "trace") return "Trace";
-    if (hash === "experience") return "Experience";
-    if (hash.startsWith("deeper-") || hash === "prediction-lens" || hash === "concept-links" || hash === "explain") return "Explain";
-    return "Intro";
-  });
+  usePageMeta(
+    mod
+      ? { title: mod.title, description: mod.shortGoal, canonicalPath: `/module/${mod.slug}` }
+      : { title: "Page not found", noindex: true },
+  );
+  const location = useLocation();
+  const sectionNavRef = useRef<HTMLDivElement>(null);
+  const [section, setSection] = useState<SectionId>(() => sectionFromHash(window.location.hash.slice(1)));
 
+  // Open the tab a hash points to and scroll to its target: on first load and whenever
+  // an in-app link (such as a search result) navigates here with a hash.
   useEffect(() => {
-    const hash = window.location.hash.slice(1);
-    if (!hash) return;
+    const target = location.hash.slice(1);
+    if (!target) return;
+    setSection(sectionFromHash(target));
     const timer = setTimeout(() => {
-      const el = document.getElementById(hash);
+      const el = document.getElementById(target);
       if (!el) return;
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: "smooth" });
-      el.classList.add("search-highlight");
-      setTimeout(() => el.classList.remove("search-highlight"), 1500);
+      window.scrollTo({ top, behavior: scrollBehavior() });
+      // Focus the tab's heading, or the card's toggle, so keyboard users continue from here.
+      focusTarget(TAB_IDS.includes(target) ? el.querySelector<HTMLElement>("h2") : el.querySelector<HTMLElement>("button[aria-expanded]") ?? el);
+      // Flash specific targets (a Go Deeper card, the Prediction Lens), not whole tabs.
+      if (!TAB_IDS.includes(target)) {
+        el.classList.add("search-highlight");
+        setTimeout(() => el.classList.remove("search-highlight"), 1500);
+      }
     }, 150);
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.hash, location.key]);
+
+  // When a button inside a tab (e.g. "Begin Experience") switches tabs, that button is gone;
+  // move focus to the new tab's heading so keyboard and screen-reader users land at its start.
+  const previousSection = useRef(section);
+  useEffect(() => {
+    if (previousSection.current === section) return;
+    previousSection.current = section;
+    // A button inside a tab (e.g. "Begin Experience") is replaced by the new tab's controls;
+    // ignore a quick second tap so it can't answer the first question unseen.
+    armDoubleTapGuardIfControlGone();
+    // A deep link to a card (e.g. a Go Deeper search result) focuses that card instead.
+    const hash = window.location.hash.slice(1);
+    if (hash && !TAB_IDS.includes(hash)) return;
+    if (!focusIsLost()) return;
+    const heading = document.querySelector<HTMLElement>(`#${section.toLowerCase()} h2`);
+    if (!heading) return;
+    if (!heading.hasAttribute("tabindex")) heading.setAttribute("tabindex", "-1");
+    heading.focus({ preventScroll: true });
+  }, [section]);
 
   const handleSection = (s: SectionId) => {
     setSection(s);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Keep the open tab in the URL so refresh, sharing and Back return to it. Uses
+    // replaceState (keeping the router's state) so it doesn't add history entries.
+    const url = s === "Intro" ? window.location.pathname : `${window.location.pathname}#${s.toLowerCase()}`;
+    window.history.replaceState(window.history.state, "", url);
+    // Bring the top of the new tab into view if the reader has scrolled past it.
+    const navTop = (sectionNavRef.current?.getBoundingClientRect().top ?? 0) + window.scrollY - 72;
+    if (window.scrollY > navTop) window.scrollTo({ top: navTop, behavior: scrollBehavior() });
   };
 
   if (!mod) {
-    return (
-      <div className="container flex flex-col items-center justify-center py-32 text-center">
-        <h1 className="font-display text-3xl sm:text-4xl text-foreground">Lesson Not Found</h1>
-        <p className="mt-4 text-[14px] sm:text-[15px] text-muted-foreground">
-          The lesson you're looking for doesn't exist.
-        </p>
-        <Link
-          to="/"
-          className="mt-10 inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        >
-          Back to Home
-        </Link>
-      </div>
-    );
+    return <NotFoundContent title="Lesson not found" message="The lesson you're looking for doesn't exist." />;
   }
 
   const siblingLessons = getLessonsByUnit(mod.unitId)
     .filter((l) => l.moduleId !== mod.id)
     .map((l) => {
       const m = modules.find((x) => x.id === l.moduleId);
-      return m ? { id: m.id, title: m.title } : null;
+      return m ? { id: m.id, slug: m.slug, title: m.title } : null;
     })
     .filter((x): x is NonNullable<typeof x> => x != null);
 
   return (
-    <div className="container max-w-3xl px-4 sm:px-6 py-10 md:py-16">
+    <div className="container max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
 
       {/* Header */}
@@ -94,19 +135,19 @@ const ModulePage = () => {
         {MODULE_TOPIC[mod.slug] && (
           <Link
             to={`/topics/${MODULE_TOPIC[mod.slug].slug}`}
-            className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/60 hover:text-primary transition-colors"
+            className="inline-block py-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
           >
             {MODULE_TOPIC[mod.slug].title}
           </Link>
         )}
-        <h1 className="mt-2 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-[2rem]">
+        <h1 className="mt-2 font-display text-3xl tracking-tight text-foreground">
           {mod.title}
         </h1>
         <p className="mt-2.5 sm:mt-3 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed">{mod.shortGoal}</p>
       </div>
 
       {/* Section nav + content */}
-      <div className="mt-8 sm:mt-10">
+      <div ref={sectionNavRef} className="mt-8 sm:mt-10">
         <SectionNav current={section} onSelect={handleSection} />
 
         <div className="mt-6 sm:mt-8">
@@ -116,7 +157,7 @@ const ModulePage = () => {
             const modDef = moduleDefinitions[mod.slug];
             return modDef?.tracePathway
               ? <TracePathwaySVG pathway={modDef.tracePathway} onAdvanceToExplain={() => handleSection("Explain")} />
-              : <TracePanel nodes={mod.traceNodes} />;
+              : <TracePanel nodes={mod.traceNodes} onAdvanceToExplain={() => handleSection("Explain")} {...CONCEPT_TRACE[mod.slug]} />;
           })()}</div>}
           {section === "Explain" && <div id="explain">{(() => {
             const modDef = moduleDefinitions[mod.slug];
@@ -137,15 +178,15 @@ const ModulePage = () => {
       {/* Sibling lessons */}
       {siblingLessons.length > 0 && (
         <div className="mt-12 sm:mt-14 border-t border-border pt-6 sm:pt-8">
-          <h2 className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            More in this unit
+          <h2 className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            More in this topic
           </h2>
-          <ul className="mt-3 sm:mt-4 space-y-2">
+          <ul className="mt-2 sm:mt-3">
             {siblingLessons.map((s) => (
               <li key={s.id}>
                 <Link
-                  to={`/module/${s.id}`}
-                  className="inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                  to={`/module/${s.slug}`}
+                  className="inline-flex min-h-11 items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
                 >
                   <span className="text-xs text-muted-foreground/50" aria-hidden="true">→</span>
                   {s.title}
@@ -157,6 +198,15 @@ const ModulePage = () => {
       )}
     </div>
   );
+};
+
+/**
+ * Remount per lesson so the active tab and demo state never carry over
+ * when moving between lessons on the same /module/:id route.
+ */
+const ModulePage = () => {
+  const { id } = useParams<{ id: string }>();
+  return <ModulePageContent key={id} />;
 };
 
 export default ModulePage;

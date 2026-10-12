@@ -44,76 +44,71 @@ const NeckerCubeFigure = ({ highlighted, assist }: Props) => {
   const showHighB = highlighted === "b";
 
   return (
-    <svg
-      viewBox="0 0 260 280"
-      className="w-full h-full"
-      role="img"
-      aria-label="Wireframe cube that can be perceived with either face in front"
-    >
-      <rect width="260" height="280" rx="16" fill={bg} />
+    <div className="relative">
+      <svg
+        viewBox="0 0 260 280"
+        className="w-full h-full"
+        role="img"
+        aria-label="Wireframe cube that can be perceived with either face in front"
+      >
+        <rect width="260" height="280" rx="16" fill={bg} />
 
-      <polygon
-        points={toPoints(fA)}
-        fill={showAssistA || showHighA ? accentFill : "none"}
-        stroke="none"
-        style={{ transition: "fill 0.35s ease" }}
-      />
-
-      <polygon
-        points={toPoints(fB)}
-        fill={showAssistB || showHighB ? accentFill : "none"}
-        stroke="none"
-        style={{ transition: "fill 0.35s ease" }}
-      />
-
-      <polygon
-        points={toPoints(fB)}
-        fill="none"
-        stroke={showHighB ? accentStroke : stroke}
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-        style={{ transition: "stroke 0.35s ease" }}
-      />
-
-      {edges.map(({ from, to }, i) => (
-        <line
-          key={i}
-          x1={from[0]}
-          y1={from[1]}
-          x2={to[0]}
-          y2={to[1]}
-          stroke={stroke}
-          strokeWidth="2.5"
-          strokeLinecap="round"
+        <polygon
+          points={toPoints(fA)}
+          fill={showAssistA || showHighA ? accentFill : "none"}
+          stroke="none"
+          style={{ transition: "fill 0.35s ease" }}
         />
-      ))}
 
-      <polygon
-        points={toPoints(fA)}
-        fill="none"
-        stroke={showHighA ? accentStroke : stroke}
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-        style={{ transition: "stroke 0.35s ease" }}
-      />
+        <polygon
+          points={toPoints(fB)}
+          fill={showAssistB || showHighB ? accentFill : "none"}
+          stroke="none"
+          style={{ transition: "fill 0.35s ease" }}
+        />
 
-      {showAssistA && (
-        <g>
-          <rect x="65" y="246" width="130" height="20" rx="4" fill="hsl(var(--primary) / 0.15)" />
-          <text x="130" y="260" textAnchor="middle" fontSize="10" fontFamily="Inter, sans-serif" fill="hsl(var(--primary))" fontWeight="500">
-            Viewed from above
-          </text>
-        </g>
+        <polygon
+          points={toPoints(fB)}
+          fill="none"
+          stroke={showHighB ? accentStroke : stroke}
+          strokeWidth="2.5"
+          strokeLinejoin="round"
+          style={{ transition: "stroke 0.35s ease" }}
+        />
+
+        {edges.map(({ from, to }, i) => (
+          <line
+            key={i}
+            x1={from[0]}
+            y1={from[1]}
+            x2={to[0]}
+            y2={to[1]}
+            stroke={stroke}
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        ))}
+
+        <polygon
+          points={toPoints(fA)}
+          fill="none"
+          stroke={showHighA ? accentStroke : stroke}
+          strokeWidth="2.5"
+          strokeLinejoin="round"
+          style={{ transition: "stroke 0.35s ease" }}
+        />
+
+      </svg>
+
+      {/* Assist label: same pill as the other gallery figures */}
+      {(showAssistA || showAssistB) && (
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+          <span className="whitespace-nowrap rounded-md bg-white/90 px-2.5 py-1 text-[11px] font-medium text-primary shadow-sm">
+            {showAssistA ? "Viewed from above" : "Viewed from below"}
+          </span>
+        </div>
       )}
-      {showAssistB && (
-        <g>
-          <rect x="65" y="246" width="130" height="20" rx="4" fill="hsl(var(--primary) / 0.15)" />
-          <text x="130" y="260" textAnchor="middle" fontSize="10" fontFamily="Inter, sans-serif" fill="hsl(var(--primary))" fontWeight="500">
-            Viewed from below
-          </text>
-        </g>
-      )}
-    </svg>
+    </div>
   );
 };
 

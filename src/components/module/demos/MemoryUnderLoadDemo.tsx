@@ -36,6 +36,9 @@ const ROUNDS: RoundConfig[] = [
 
 const LETTERS = "BCDFGHJKLMNPQRSTVWXYZ".split("");
 
+/** Read typed letters in order, ignoring spaces, commas and case ("B K M", "b,k,m", "BKM"). */
+const parseLetters = (input: string) => input.toUpperCase().replace(/[^A-Z]/g, "").split("");
+
 function pickRandom<T>(arr: T[], n: number): T[] {
   const shuffled = [...arr].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, n);
@@ -58,13 +61,13 @@ const trialFeedback: Record<FeedbackKey, ExperienceFeedback> = {
   lowCorrect: {
     primary: "You held the information at low load.",
     secondary: "At this level, working memory and distractor suppression can both run without competing for resources. The dlPFC has surplus capacity.",
-    bridge: "Trace shows the PFC role map.",
+    bridge: "Trace shows how the dlPFC holds items and suppresses distractors.",
     structure: "dlPFC (working memory)",
   },
   lowIncorrect: {
     primary: "Even at low load, the task was challenging.",
     secondary: "Baseline working memory capacity varies by individual and by state — fatigue, hunger, stress, and time of day all affect available dlPFC resources at any given moment.",
-    bridge: "Explain covers why PFC capacity is not fixed.",
+    bridge: "Explain covers why prefrontal control is resource-limited.",
     structure: "dlPFC (baseline variation)",
   },
   mediumCorrect: {
@@ -82,13 +85,13 @@ const trialFeedback: Record<FeedbackKey, ExperienceFeedback> = {
   highCorrect: {
     primary: "You held accuracy under heavy load.",
     secondary: "At this level, most people show significant decline. Maintaining performance here reflects strong momentary PFC capacity, though the same person under different conditions (tired, hungry, stressed) might fail at this load.",
-    bridge: "Explain covers why the same system fails under depletion.",
+    bridge: "Explain covers why prefrontal control degrades under sustained demand.",
     structure: "dlPFC (sustained under strain)",
   },
   highIncorrect: {
     primary: "The load exceeded available capacity.",
     secondary: "This is where nearly everyone fails. The PFC's finite metabolic resources are exhausted — working memory, distractor suppression, and self-regulation all compete for the same pool, and at high load there is simply not enough to go around.",
-    bridge: "Explain connects this to real-world depletion effects.",
+    bridge: "Explain covers why prefrontal control is powerful but resource-limited.",
     structure: "dlPFC (capacity exceeded)",
   },
 };
@@ -116,7 +119,7 @@ function getSummary(results: RoundResult[]): ExperienceSummary {
     return {
       heading: "What This Shows",
       body: "Working memory capacity at any moment depends on current state: fatigue, hunger, stress, illness, and time of day all affect available PFC resources. One snapshot does not define baseline capacity — the same system performs differently under different metabolic conditions.",
-      bridge: "Explain covers state-dependent PFC performance.",
+      bridge: "Explain covers why prefrontal control is costly and limited.",
     };
   }
 
@@ -125,7 +128,7 @@ function getSummary(results: RoundResult[]): ExperienceSummary {
     return {
       heading: "What This Shows",
       body: "Performance held longer than typical, but notice the pattern: even strong performance degrades as load increases. This demonstrates the fundamental capacity limit of the PFC. The same mechanism explains why judges make worse parole decisions before lunch and why illness impairs cognition — it is all the same resource pool.",
-      bridge: "Explain covers the full range of depletion effects from the course.",
+      bridge: "Explain connects this limit to multitasking, stress, and cognitive overload.",
     };
   }
 
@@ -141,7 +144,7 @@ function getSummary(results: RoundResult[]): ExperienceSummary {
 
 const loadColors: Record<LoadLevel, string> = {
   low: "text-primary",
-  medium: "text-amber-500",
+  medium: "text-amber-800",
   high: "text-destructive",
 };
 
@@ -156,7 +159,6 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
   const [distractorInput, setDistractorInput] = useState("");
   const [results, setResults] = useState<RoundResult[]>([]);
   const [lastCorrectCount, setLastCorrectCount] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   const done = roundIndex >= ROUNDS.length;
@@ -182,15 +184,14 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
   }, [round]);
 
   const handleRecallSubmit = useCallback(() => {
-    const entered = userInput.toUpperCase().trim().split(/[\s,]+/);
+    const entered = parseLetters(userInput);
     let correct = 0;
     sequence.forEach((letter, i) => {
-      if (entered[i]?.toUpperCase() === letter) correct++;
+      if (entered[i] === letter) correct++;
     });
     setLastCorrectCount(correct);
     setResults((prev) => [...prev, { load: round!.load, correct, total: sequence.length }]);
     setPhase("feedback");
-    if (!hasInteracted) setHasInteracted(true);
   }, [userInput, sequence, round]);
 
   const handleNext = useCallback(() => {
@@ -225,20 +226,28 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
       done={done}
       summary={getSummary(results)}
       onRestart={handleRestart}
+      stepKey={`${roundIndex}-${phase}`}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["memory-under-load"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
-      <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+      <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
         {/* Header */}
         {round && (
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+            <div className="flex items-center gap-2 whitespace-nowrap">
               <span className={`text-xs font-semibold uppercase tracking-wide ${loadColors[round.load]}`}>
                 {round.label}
               </span>
-              <span className="text-xs text-muted-foreground">
+              <span data-announce={phase === "intro" || undefined} className="text-xs text-muted-foreground">
                 Round {roundIndex + 1} of {ROUNDS.length}
               </span>
             </div>
-            <span className="text-xs text-muted-foreground">{round.description}</span>
+            <span className="text-xs text-muted-foreground whitespace-nowrap">{round.description}</span>
           </div>
         )}
 
@@ -266,17 +275,17 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
             <div className="text-center max-w-sm px-4">
               {isLoadTransition ? (
                 <>
-                  <p className={`text-sm font-semibold mb-2 ${loadColors[round.load]}`}>
+                  <p data-announce className={`text-sm font-semibold mb-2 ${loadColors[round.load]}`}>
                     Increasing to {round.label}
                   </p>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p data-announce className="text-sm text-muted-foreground mb-4">
                     {round.load === "medium"
                       ? "Now: 5 letters plus a math distractor. Your dlPFC must hold more items while handling a competing task."
                       : "Now: 7 letters plus a math distractor. This pushes the PFC's shared resource pool to its limit."}
                   </p>
                 </>
               ) : (
-                <p className="text-sm text-muted-foreground mb-4">
+                <p data-announce className="text-sm text-muted-foreground mb-4">
                   {round.load === "low"
                     ? "You'll see 3 letters briefly, then recall them. A manageable load for your dlPFC."
                     : round.load === "medium"
@@ -285,6 +294,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                 </p>
               )}
               <button
+                data-autofocus
                 onClick={startShow}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -295,10 +305,10 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
 
           {/* Show sequence */}
           {phase === "show" && (
-            <div className="text-center">
-              <p className="text-xs text-muted-foreground mb-1">Memorize these letters:</p>
-              <p className="text-[10px] text-muted-foreground/50 mb-3">They'll disappear shortly</p>
-              <div className="flex gap-1.5 justify-center flex-wrap">
+            <div tabIndex={-1} data-autofocus className="text-center">
+              <p data-announce className="text-xs text-muted-foreground mb-1">Memorize these letters:</p>
+              <p className="text-[11px] text-muted-foreground mb-3">They'll disappear shortly</p>
+              <div className="flex gap-1 sm:gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => (
                   <span
                     key={i}
@@ -309,6 +319,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                   </span>
                 ))}
               </div>
+              <p data-announce className="sr-only">{sequence.join(" ")}</p>
               <div className="mt-3 mx-auto w-24 h-0.5 rounded-full bg-primary/20 overflow-hidden">
                 <div
                   className="h-full bg-primary rounded-full"
@@ -324,16 +335,21 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {/* Distractor */}
           {phase === "distractor" && distractor && (
             <div className="text-center">
-              <p className="text-xs text-muted-foreground mb-1">Distractor — solve this while holding the letters:</p>
-              <p className="text-2xl font-bold text-foreground mb-4">{distractor.question}</p>
+              <p data-announce className="text-xs text-muted-foreground mb-1">Distractor — solve this while holding the letters:</p>
+              <p data-announce className="text-2xl font-bold text-foreground mb-4">{distractor.question}</p>
               <div className="flex items-center justify-center gap-2">
                 <input
                   type="number"
+                  aria-label="Answer to the math problem"
                   value={distractorInput}
                   onChange={(e) => setDistractorInput(e.target.value)}
                   className="w-20 rounded-md border border-border bg-card px-3 py-2 text-center text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                   autoFocus
-                  onKeyDown={(e) => e.key === "Enter" && setPhase("recall")}
+                  onKeyDown={(e) => {
+                    if (e.key !== "Enter") return;
+                    e.preventDefault(); // or the same Enter press would also activate the next step's button
+                    setPhase("recall");
+                  }}
                 />
                 <button
                   onClick={() => setPhase("recall")}
@@ -349,10 +365,14 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {phase === "recall" && (
             <div className="text-center w-full max-w-sm px-4">
               <p className="text-sm text-muted-foreground mb-3">
-                Type the {sequence.length} letters in order (spaces between):
+                Type the {sequence.length} letters in order (spaces optional):
               </p>
               <input
                 type="text"
+                aria-label={`The ${sequence.length} letters in order`}
+                autoComplete="off"
+                autoCapitalize="characters"
+                spellCheck={false}
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 placeholder={
@@ -362,7 +382,11 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                 }
                 className="w-full rounded-md border border-border bg-card px-3 py-2 text-center text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 autoFocus
-                onKeyDown={(e) => e.key === "Enter" && handleRecallSubmit()}
+                onKeyDown={(e) => {
+                  if (e.key !== "Enter") return;
+                  e.preventDefault(); // or the same Enter press would also press "Next" once focus moves there
+                  handleRecallSubmit();
+                }}
               />
               <button
                 onClick={handleRecallSubmit}
@@ -377,10 +401,9 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {phase === "feedback" && (
             <div className="text-center">
               <p className="text-xs text-muted-foreground mb-2">Correct sequence:</p>
-              <div className="flex gap-1.5 justify-center flex-wrap">
+              <div className="flex gap-1 sm:gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => {
-                  const entered = userInput.toUpperCase().trim().split(/[\s,]+/);
-                  const isCorrect = entered[i]?.toUpperCase() === letter;
+                  const isCorrect = parseLetters(userInput)[i] === letter;
                   return (
                     <span
                       key={i}
@@ -395,16 +418,22 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                   );
                 })}
               </div>
+              <p data-announce className="sr-only">
+                Correct sequence: {sequence.join(" ")}. You had {lastCorrectCount} of {sequence.length} in the right position.
+              </p>
             </div>
           )}
         </div>
 
         {/* FeedbackCard below the interaction area */}
         {feedbackKey && (
-          <div className="mt-5">
-            <FeedbackCard onNavigate={onNavigate} feedback={trialFeedback[feedbackKey]} />
+          <div data-reveal className="mt-5">
+            <div data-announce>
+              <FeedbackCard feedback={trialFeedback[feedbackKey]} />
+            </div>
             <div className="mt-4 flex justify-center">
               <button
+                data-autofocus
                 onClick={handleNext}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -415,14 +444,6 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
         )}
       </div>
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["memory-under-load"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

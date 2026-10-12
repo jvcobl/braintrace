@@ -1,96 +1,92 @@
 # BrainTrace
 
-BrainTrace is a free, interactive neuroscience site. It covers five areas — perception, attention, emotion, learning, and stress — through lessons built around real phenomena you can experience in your browser.
+BrainTrace is a free, interactive neuroscience site built from Emory University NBB302 (Behavioral Neuroscience) course notes. It covers five areas (perception, attention, emotion, learning, and stress) through lessons built around real phenomena you can experience in your browser.
 
 Every lesson follows the same three-step structure: **Experience** a phenomenon, **Trace** the neural pathway, and **Explain** what your brain was doing.
 
 Fully client-side. No accounts, no backend, no tracking.
 
-Live site: [learnbraintrace.com](http://learnbraintrace.com)
+Live site: [learnbraintrace.com](https://learnbraintrace.com)
+
+## What's inside
+
+| Topic                                  | Lessons |
+| -------------------------------------- | ------- |
+| Perception and Object Recognition      | 3       |
+| Attention, Cognitive Load, and the PFC | 2       |
+| Emotion, Limbic System, and Amygdala   | 3       |
+| Learning and Fear Conditioning         | 2       |
+| Stress and Homeostasis                 | 2       |
+
+**12 interactive lessons** across 5 topics. Each topic also has a study guide with 211 reference items in total (concept cards, pathway walkthroughs, distinctions, case notes, and review questions), and three concept pages explain the shared prediction-loop framework.
+
+## Lesson structure
+
+- **Intro**: hook, context, and learning objective
+- **Experience**: an interactive demo (predicting, sorting, building, observing, or recalling), ending with a summary (and, in the six flagship lessons, a **Prediction & Outcome** recap that bridges the demo to the neuroscience)
+- **Trace**: the neural pathway, as an interactive diagram or a step-by-step walkthrough
+- **Explain**: What Happened, What Your Brain Did, Key Pathway, Why It Matters, plus a Prediction Lens and deeper notes for the flagship lessons
 
 ## Routes
 
-| Path              | Page                                                                 |
-| ----------------- | -------------------------------------------------------------------- |
-| `/`               | Homepage — unit overview, featured lessons, and site introduction    |
-| `/unit/:unitId`   | Unit hub — overview, lesson cards, concept cards, pathways, review   |
-| `/module/:id`     | Lesson page — Intro → Experience → Trace → Explain                  |
-| `/course-map`     | Topic mapping — connects lessons to classroom topics                 |
-| `/about`          | About page — what BrainTrace is and how lessons work                 |
-| `*`               | 404                                                                  |
+| Path                                   | Page                                                         |
+| -------------------------------------- | ------------------------------------------------------------ |
+| `/`                                    | Homepage                                                     |
+| `/topics`, `/topics/:slug`             | Topic index and topic pages (lessons + study guide link)     |
+| `/module/:slug`                        | Lesson: Intro → Experience → Trace → Explain (`#trace` etc.) |
+| `/unit/:unitId`                        | Study guide for a topic                                      |
+| `/how-your-brain-predicts` (+ 3 pages) | Concept pages: The Loop, Precision & Attention, Failures     |
+| `/course-map`                          | How lessons connect to NBB302 course topics                  |
+| `/about`                               | About the project                                            |
+| `*`                                    | Not found                                                    |
 
-## Units
+## Quality
 
-| Unit   | Title                                  | Lessons |
-| ------ | -------------------------------------- | ------- |
-| Unit 1 | Perception and Object Recognition      | 3       |
-| Unit 2 | Attention, Cognitive Load, and the PFC | 2       |
-| Unit 3 | Emotion, Limbic System, and Amygdala   | 3       |
-| Unit 4 | Learning and Fear Conditioning         | 2       |
-| Unit 5 | Stress and Homeostasis                 | 2       |
+- Every lesson can be completed with a keyboard alone; text meets WCAG AA contrast; animations respect `prefers-reduced-motion`.
+- Layouts are checked at 320–1440px with no horizontal scrolling.
+- Fonts (DM Serif Display, DM Sans) are self-hosted, so the site makes no third-party requests.
 
-**12 interactive lessons** across 5 units, with 211 reference items (concept cards, pathway traces, distinction blocks, case notes, and review questions).
-
-## Lesson Structure
-
-Each lesson contains:
-
-- **Intro** — hook, context, and learning objective
-- **Experience** — an interactive demo (sorting, building, observing, or recalling)
-- **Prediction & Outcome** — bridges the demo to the neuroscience (appears after first interaction)
-- **Trace** — step-by-step neural pathway walkthrough
-- **Explain** — four-part write-up: What Happened, What Your Brain Did, Key Pathway, Why It Matters
-
-## Project Structure
+## Project structure
 
 ```
 src/
-├── pages/                   Route pages (Index, UnitHub, ModulePage, CourseMap, About, NotFound)
+├── pages/            Route pages (home, topics, lessons, study guides, concept pages, about)
 ├── components/
-│   ├── layout/              Header, Footer, Layout (shared shell via Outlet)
-│   ├── module/              Lesson UI: SectionNav, IntroSection, ExperienceSection,
-│   │   │                    TracePanel, ExplainSection, PredictionOutcome
-│   │   ├── demos/           One self-contained demo component per lesson (12 total)
-│   │   └── experience/      Shared demo primitives (ExperienceShell, FeedbackCard)
-│   ├── study/               Unit hub components (LessonCard, ConceptCardGrid,
-│   │                        PathwaySection, DistinctionSection, CaseNoteSection, ReviewSection)
-│   └── ui/                  shadcn/ui primitives
+│   ├── layout/       Header, footer, breadcrumb, search
+│   ├── module/       Lesson UI: section tabs, intro, trace diagram/panel, explain, Prediction & Outcome
+│   │   ├── demos/        One self-contained demo per lesson
+│   │   └── experience/   Shared demo pieces (ExperienceShell, FeedbackCard, AnswerLine)
+│   ├── study/        Study guide components (concept cards, pathways, distinctions, case notes, review)
+│   └── ui/           shadcn/ui primitives
 ├── data/
-│   ├── modules.ts           Lesson definitions (titles, hooks, trace nodes, explain content)
-│   ├── courseMap.ts          Unit-to-lesson mapping for the Course Map page
-│   └── content/
-│       ├── types.ts          Shared content type definitions
-│       ├── registry.ts       Central registry mapping units ↔ lessons
-│       ├── index.ts          Master export for all unit content
-│       ├── unit1-perception.ts        Unit 1 content (30 concepts, 4 pathways, 6 distinctions)
-│       ├── unit2-attention-pfc.ts     Unit 2 content (17 concepts, 3 pathways, 5 distinctions)
-│       ├── unit3-emotion-amygdala.ts  Unit 3 content (30 concepts, 5 pathways, 5 distinctions)
-│       ├── unit4-fear-conditioning.ts Unit 4 content (17 concepts, 3 pathways, 4 distinctions)
-│       └── unit5-stress-homeostasis.ts Unit 5 content (23 concepts, 3 pathways, 5 distinctions)
-│       └── predictionOutcomeContent.ts Prediction & Outcome bridge text per lesson
-├── hooks/                   Custom hooks (use-mobile, use-toast)
-├── lib/                     Utilities (cn helper)
-└── index.css                Design tokens and Tailwind config
+│   ├── modules.ts            Lesson definitions (titles, intros, trace steps, explain content)
+│   ├── moduleDefinitions.ts  Trace diagrams, Prediction Lens and deeper notes for flagship lessons
+│   └── content/              Study guide content per unit, plus per-lesson copy
+├── hooks/            Page titles/meta, misc hooks
+└── index.css         Design tokens and fonts
 ```
 
 ## Development
 
 ```bash
 npm install
-npm run dev          # Vite dev server on localhost:8080
+npm run dev                          # dev server on localhost:8080
+npx tsc --noEmit -p tsconfig.app.json   # type-check
+npm test                             # content-integrity tests (links, search, sitemap)
+npm run build                        # production build → dist/
+npm run preview                      # serve the production build
 ```
 
-## Build
-
-```bash
-npm run build        # TypeScript check + Vite build → dist/
-npm run preview      # Preview production build locally
-```
-
-## Tech Stack
+## Tech stack
 
 React 18 · TypeScript 5 · Vite 5 · Tailwind CSS 3 · shadcn/ui · React Router 6
 
-## License
+## How it was built
 
-All content is original. Originally developed alongside Emory University's NBB302 course.
+The lesson content comes from the author's NBB302 course notes, and the author designed the lesson structure and interactions. The code was written with AI-assisted tools (an initial scaffold in Lovable, later development with Claude Code) under the author's direction and review, which is why most commits are authored by those tools.
+
+## Credits
+
+- Fonts: DM Serif Display and DM Sans, SIL Open Font License (licenses in `public/fonts`).
+- "The Dress" photograph (2015) by Cecilia Bleasdale, shown for educational illustration.
+- BrainTrace is an independent study project. It is not affiliated with or endorsed by Emory University, and it is not medical advice.

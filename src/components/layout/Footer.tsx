@@ -8,7 +8,7 @@ const Footer = () => (
           BrainTrace. An interactive neuroscience learning experience.
         </p>
       </div>
-      <Link to="/about" className="text-sm text-gray-400 hover:text-foreground transition-colors">
+      <Link to="/about" className="inline-flex min-h-11 items-center rounded-sm px-2 text-sm text-gray-500 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
         About
       </Link>
     </div>

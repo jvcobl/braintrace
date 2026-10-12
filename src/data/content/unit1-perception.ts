@@ -96,7 +96,7 @@ export const unit1ConceptCards = [
     id: "u1-cc-10",
     term: "Synesthesia",
     definition:
-      "Present in 4–5% of the population, synesthesia involves experiencing multiple sensory modalities through a single stimulus. For example, in color-grapheme synesthesia, the letter 'S' is always perceived as magenta. It provides a distinct memory advantage because multiple sensory nodes fire simultaneously, strengthening neural connections via the Hebbian rule.",
+      "Present in 4–5% of the population, synesthesia involves experiencing multiple sensory modalities through a single stimulus. For example, in grapheme-color synesthesia, the letter 'S' is always perceived as magenta. It provides a distinct memory advantage because multiple sensory nodes fire simultaneously, strengthening neural connections via the Hebbian rule.",
     structures: [],
   },
   {
@@ -145,21 +145,21 @@ export const unit1ConceptCards = [
     id: "u1-cc-17",
     term: "Ventral Stream ('What')",
     definition:
-      "The second parallel visual processing stream. Travels via the inferior longitudinal fasciculus to the inferior temporal (IT) cortex. Responsible for object identification — knowing what something is. Damage impairs the ability to grasp an object or begin a task because the object cannot be identified.",
+      "The second parallel visual processing stream. Travels via the inferior longitudinal fasciculus to the inferior temporal (IT) cortex. Responsible for object identification — knowing what something is. Damage impairs the ability to identify what an object is.",
     structures: ["Inferior longitudinal fasciculus", "Inferior temporal cortex"],
   },
   {
     id: "u1-cc-18",
     term: "Inferior Temporal (IT) Cortex",
     definition:
-      "The endpoint of the ventral stream where conscious visual recognition occurs. Receptive fields grow larger moving from V1/V2 to the IT cortex. Single neurons here fire for specific complex concepts (like a hand) regardless of blurriness or spatial orientation. In binocular rivalry experiments, IT cortex cells spiked exactly one second before the monkey pressed a button, proving this is where conscious visual perception occurs.",
+      "The endpoint of the ventral stream where conscious visual recognition occurs. Receptive fields grow larger moving from V1/V2 to the IT cortex. Single neurons here fire for specific complex concepts (like a hand) regardless of blurriness or spatial orientation. In binocular rivalry experiments, IT cortex cells spiked about one second before the monkey pressed a button, suggesting this is where conscious visual perception occurs.",
     structures: ["Inferior temporal cortex"],
   },
   {
     id: "u1-cc-19",
     term: "Binocular Rivalry",
     definition:
-      "When different images are shown to each eye, the brain alternates between perceiving one or the other. In macaque studies, lower visual areas (V1) showed only 10–20% fluctuation with perception, and V4 showed 25–33%. But IT cortex cells spiked precisely with conscious perception, proving the IT cortex is the site of conscious visual recognition.",
+      "When different images are shown to each eye, the brain alternates between perceiving one or the other. In macaque studies, lower visual areas (V1) showed only 10–20% fluctuation with perception, and V4 showed 25–33%. But most IT cortex cells spiked with conscious perception, suggesting the IT cortex is the site of conscious visual recognition.",
     structures: ["V1", "V4", "IT cortex"],
   },
   {
@@ -187,7 +187,7 @@ export const unit1ConceptCards = [
     id: "u1-cc-23",
     term: "Prosopagnosia (Face Blindness)",
     definition:
-      "A condition caused by damage to the fusiform face area that prevents a person from constructing an individual's identity abstract from facial features. People with prosopagnosia can see faces but cannot recognize who they belong to.",
+      "A condition caused by damage to the fusiform face area that prevents a person from constructing an individual's identity from facial features. People with prosopagnosia can see faces but cannot recognize who they belong to.",
     structures: ["Fusiform face area"],
   },
   {
@@ -217,6 +217,9 @@ export const unit1ConceptCards = [
     definition:
       "The same PFC-driven heuristic system that enables fast recognition also carries costs. Joshua Correll's research showed that in computer simulations, subjects consistently shot Black individuals faster than White individuals. The neurobiology reveals a rapid 'threat' P200 ERP waveform followed by a delayed or weakened N200 'inhibitory/think-a-second' waveform originating in the PFC. This illustrates how the speed of heuristic processing can override careful evaluation.",
     structures: ["PFC"],
+    sensitivity: "high" as const,
+    sensitivityNote:
+      "This material is presented as a neuroscience reference, not as an interactive experience. It demonstrates the biological cost of the same heuristic system explored in this section.",
   },
   {
     id: "u1-cc-28",
@@ -352,19 +355,19 @@ export const unit1Pathways = [
         number: 2,
         structure: "V1 / V2 (Early Visual Cortex)",
         description:
-          "Basic features are extracted — edges, orientation, spatial frequency. In binocular rivalry, cells here fluctuate only 10–20% with conscious perception, meaning they are not yet 'deciding' what you see.",
+          "Basic features are extracted — edges, orientation, spatial frequency. In binocular rivalry, only 10–20% of cells here fluctuate with conscious perception, meaning they are not yet 'deciding' what you see.",
       },
       {
         number: 3,
         structure: "V4 / Higher Visual Areas",
         description:
-          "More complex features are processed. V4 cells fluctuate 25–33% with perception in rivalry studies. The signal is being refined but is not yet fully conscious.",
+          "More complex features are processed. In rivalry studies, 25–33% of V4 cells fluctuate with perception. The signal is being refined but is not yet fully conscious.",
       },
       {
         number: 4,
         structure: "Inferior Temporal (IT) Cortex",
         description:
-          "Conscious visual perception occurs here. Single neurons fire for specific complex concepts regardless of blurriness or orientation. In binocular rivalry, IT cortex activity tracked perfectly with what the subject reported seeing.",
+          "Conscious visual perception occurs here. Single neurons fire for specific complex concepts regardless of blurriness or orientation. In binocular rivalry, IT cortex activity tracked closely with what the subject reported seeing.",
       },
     ],
   },
@@ -417,7 +420,7 @@ export const unit1Distinctions = [
     descriptionB:
       "Accurate identification of an actual individual's face. Relies on cell ensembles in the FFA that encode specific features (hair, eyes, mouth) to construct an identity.",
     keyDifference:
-      "Pareidolia is a false positive from an over-eager pattern detector. True recognition requires the FFA to construct a detailed identity abstract from real facial features.",
+      "Pareidolia is a false positive from an over-eager pattern detector. True recognition requires the FFA to construct a detailed identity from real facial features.",
   },
   {
     id: "u1-db-05",

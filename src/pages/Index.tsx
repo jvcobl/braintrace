@@ -1,4 +1,7 @@
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
+import { modules } from "@/data/modules";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 /* ── Static data ── */
 
@@ -18,140 +21,155 @@ const TOPICS = [
 
 /* ── Component ── */
 
-const Index = () => (
-  <div>
-    {/* ── Hero ── */}
-    <section className="relative overflow-hidden bg-hero-bg">
-      <div
-        className="pointer-events-none absolute -top-1/3 left-1/2 h-[900px] w-[900px] -translate-x-1/2 rounded-full opacity-[0.06]"
-        style={{
-          background:
-            "radial-gradient(circle, hsl(162 75% 25%) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+const Index = () => {
+  usePageMeta();
 
-      <div className="container relative mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center sm:py-24 md:py-32">
-        <h1 className="font-display text-[2rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.5rem] md:text-[3.25rem]">
-          Experience how your brain
-          <br className="hidden sm:block" />
-          <span className="text-primary/80"> predicts, reacts, and learns.</span>
-        </h1>
+  return (
+    <div>
+      {/* ── Hero ── */}
+      <section className="relative overflow-hidden bg-hero-bg">
+        <div
+          className="pointer-events-none absolute -top-1/3 left-1/2 h-[900px] w-[900px] -translate-x-1/2 rounded-full opacity-[0.06]"
+          style={{
+            background:
+              "radial-gradient(circle, hsl(162 75% 25%) 0%, transparent 70%)",
+          }}
+          aria-hidden="true"
+        />
 
-        <p className="mx-auto mt-5 sm:mt-6 max-w-lg text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
-          Interactive neuroscience modules where you experience a phenomenon,
-          trace the pathway, and understand what your brain is doing.
-        </p>
+        <div className="container relative mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center sm:py-24 md:py-32">
+          <h1 className="font-display text-[2rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.5rem] md:text-[3.25rem]">
+            Experience how your brain
+            <br className="hidden sm:block" />
+            <span className="text-primary/80"> predicts, reacts, and learns.</span>
+          </h1>
 
-        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <Link
-            to="/topics"
-            className="inline-flex items-center rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          >
-            Choose a Topic
-          </Link>
-          <Link
-            to="/how-your-brain-predicts"
-            className="inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            The science behind it →
-          </Link>
-        </div>
-      </div>
-    </section>
+          <p className="mx-auto mt-5 sm:mt-6 max-w-lg text-balance text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
+            Interactive neuroscience lessons where you experience a phenomenon,
+            trace the pathway, and understand what your brain is doing.
+          </p>
 
-    {/* ── How it works ── */}
-    <section className="border-y border-border">
-      <div className="container mx-auto max-w-4xl px-4 sm:px-6 py-14 sm:py-16">
-        <h2 className="text-center font-display text-xl sm:text-2xl tracking-tight text-foreground">
-          Every module follows the same structure
-        </h2>
-        <p className="text-center mt-2 text-sm text-muted-foreground max-w-lg mx-auto">
-          Experience the phenomenon first. Then see the circuit. Then read the explanation.
-        </p>
-
-        <div className="mx-auto mt-8 flex max-w-3xl flex-col sm:flex-row items-stretch gap-2">
-          {STEPS.map((s, i) => (
-            <div key={s.name} className="flex flex-1 items-center gap-2">
-              <div className="flex-1 rounded-lg bg-muted/40 px-4 py-4 text-center">
-                <p className="text-sm font-semibold text-foreground">{s.name}</p>
-                <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
-              </div>
-              {i < STEPS.length - 1 && (
-                <span className="hidden sm:block text-muted-foreground/30" aria-hidden="true">→</span>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    {/* ── Topics ── */}
-    <section className="bg-section-alt">
-      <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-20">
-        <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
-          Five areas of neuroscience
-        </h2>
-        <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-          Pick a topic. Each has a few interactive modules you can
-          finish in a few minutes.
-        </p>
-
-        <div className="mt-8 space-y-2">
-          {TOPICS.map((t) => (
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Link
-              key={t.slug}
-              to={`/topics/${t.slug}`}
-              className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white border-l-4 p-4 sm:p-5 transition-all hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              style={{ borderLeftColor: t.accent }}
+              to="/topics"
+              className="inline-flex items-center rounded-lg bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              <div className="min-w-0 flex-1">
-                <h3 className="font-display text-base text-foreground group-hover:text-primary transition-colors">
-                  {t.title}
-                </h3>
-                <p className="text-xs text-gray-400 mt-0.5">{t.hook}</p>
-              </div>
-              <span className="text-xs text-muted-foreground/40 shrink-0">
-                {t.count} {t.count === 1 ? "module" : "modules"}
-              </span>
-              <span
-                className="text-gray-300 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0"
-                aria-hidden="true"
-              >
-                →
-              </span>
+              Choose a Topic
             </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    {/* ── The framework ── */}
-    <section className="border-t border-border">
-      <div className="container mx-auto max-w-3xl px-4 sm:px-6 py-14">
-        <div className="rounded-xl border border-gray-200 bg-muted/30 p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-            <div className="flex-1">
-              <p className="text-sm font-medium text-foreground">
-                The shared framework
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                Every module runs the same loop: predict, receive input,
-                detect mismatch, update. The concept pages explain how the
-                loop works and where it breaks.
-              </p>
-            </div>
             <Link
-              to="/how-your-brain-predicts"
-              className="inline-flex items-center shrink-0 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+              to="/module/blurry-object-guess"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-6 py-3 text-sm font-semibold text-foreground shadow-sm transition-all hover:border-primary/40 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              Explore →
+              Try a Lesson
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
+
+          <p className="mt-8 sm:mt-10 text-balance text-[13px] text-muted-foreground">
+            {modules.length} interactive lessons · {TOPICS.length} topics ·{" "}
+            <Link
+              to="/about"
+              className="whitespace-nowrap underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:text-foreground hover:decoration-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+            >
+              Built from Emory NBB302 course notes
+            </Link>
+          </p>
         </div>
-      </div>
-    </section>
-  </div>
-);
+      </section>
+
+      {/* ── How it works ── */}
+      <section className="border-y border-border">
+        <div className="container mx-auto max-w-4xl px-4 sm:px-6 py-14 sm:py-16">
+          <h2 className="text-center font-display text-xl sm:text-2xl tracking-tight text-foreground">
+            Every lesson follows the same structure
+          </h2>
+          <p className="text-center text-balance mt-2 text-sm text-muted-foreground max-w-lg mx-auto">
+            Experience the phenomenon first. Then see the circuit. Then read the explanation.
+          </p>
+
+          <div className="mx-auto mt-8 flex max-w-3xl flex-col sm:flex-row items-stretch gap-2">
+            {/* Cards and arrows are siblings so every card gets the same width. */}
+            {STEPS.map((s, i) => (
+              <Fragment key={s.name}>
+                <div className="flex-1 rounded-lg bg-muted/40 px-4 py-4 text-center">
+                  <p className="text-sm font-semibold text-foreground">{s.name}</p>
+                  <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+                </div>
+                {i < STEPS.length - 1 && (
+                  <span className="hidden sm:block shrink-0 self-center text-muted-foreground/30" aria-hidden="true">→</span>
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Topics ── */}
+      <section className="bg-section-alt">
+        <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-20">
+          <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
+            Five areas of neuroscience
+          </h2>
+          <p className="mt-2 max-w-lg text-sm text-muted-foreground">
+            Pick a topic. Each has two or three short interactive lessons.
+          </p>
+
+          <div className="mt-8 space-y-2">
+            {TOPICS.map((t) => (
+              <Link
+                key={t.slug}
+                to={`/topics/${t.slug}`}
+                className="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white border-l-4 p-4 sm:p-5 transition-all hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                style={{ borderLeftColor: t.accent }}
+              >
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-base text-foreground group-hover:text-primary transition-colors">
+                    {t.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-0.5">{t.hook}</p>
+                </div>
+                <span className="text-xs text-muted-foreground shrink-0">
+                  {t.count} {t.count === 1 ? "lesson" : "lessons"}
+                </span>
+                <span
+                  className="text-gray-300 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── The framework ── */}
+      <section className="border-t border-border">
+        <div className="container mx-auto max-w-3xl px-4 sm:px-6 py-14">
+          <div className="rounded-xl border border-gray-200 bg-muted/30 p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+              <div className="flex-1">
+                <p className="text-sm font-medium text-foreground">
+                  The shared framework
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                  Every lesson runs the same loop: predict, receive input,
+                  detect mismatch, update. The concept pages explain how the
+                  loop works and where it breaks.
+                </p>
+              </div>
+              <Link
+                to="/how-your-brain-predicts"
+                className="-my-3 inline-flex min-h-11 items-center shrink-0 rounded-sm text-sm font-medium text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                Explore →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
 
 export default Index;

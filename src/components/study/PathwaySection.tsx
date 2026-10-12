@@ -5,8 +5,8 @@ interface PathwaySectionProps {
 }
 
 const PathwaySection = ({ pathways }: PathwaySectionProps) => (
-  <section>
-    <h3 className="font-display text-lg tracking-tight text-foreground">Neural Pathways</h3>
+  <section id="pathways">
+    <h2 className="font-display text-lg tracking-tight text-foreground">Neural Pathways</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
       Step-by-step signal flow through the structures involved.
     </p>
@@ -14,16 +14,17 @@ const PathwaySection = ({ pathways }: PathwaySectionProps) => (
       {pathways.map((pw) => (
         <div
           key={pw.id}
+          id={`pathway-${pw.id}`}
           className="rounded-xl border border-border/70 bg-card p-5 sm:p-6"
         >
-          <h4 className="text-[14px] font-semibold text-card-foreground">{pw.title}</h4>
+          <h3 className="font-sans text-[14px] font-semibold text-card-foreground">{pw.title}</h3>
           <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">{pw.description}</p>
 
           <ol className="mt-5 sm:mt-6 space-y-0" aria-label={`${pw.title} steps`}>
             {pw.steps.map((step, i) => (
               <li key={step.number} className="flex gap-3 sm:gap-4">
                 <div className="flex flex-col items-center">
-                  <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] sm:text-xs font-bold text-primary-foreground shadow-sm">
+                  <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] sm:text-xs font-bold text-primary-foreground shadow-sm">
                     {step.number}
                   </div>
                   {i < pw.steps.length - 1 && (

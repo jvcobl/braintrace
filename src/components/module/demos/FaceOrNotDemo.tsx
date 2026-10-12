@@ -121,7 +121,7 @@ const signalFeedback: Record<SignalKey, ExperienceFeedback> = {
     primary: "Correct — this was a real face.",
     secondary:
       "This reflects FFA activation recognizing the arrangement of features. Recognition relies on cell ensembles — distributed groups encoding eyes, nose, and mouth — not a single dedicated neuron per identity.",
-    bridge: "Explain covers ensemble theory and why 'grandmother cells' are flawed.",
+    bridge: "Explain covers how the FFA becomes specialized through experience.",
     structure: "FFA (fusiform gyrus)",
   },
   correctReject: {
@@ -176,7 +176,7 @@ function getSummary(
     return {
       heading: "What This Shows",
       body: "A high false-alarm rate reflects strong FFA detection bias — the system fires readily for anything resembling the face template. This is the same mechanism that produces pareidolia in everyday life and was likely protective in evolutionary contexts.",
-      bridge: "Explain covers pareidolia and evolutionary detection trade-offs.",
+      bridge: "Explain covers pareidolia and the face-detection trade-off.",
     };
   }
   if (falseAlarms === 0) {
@@ -199,7 +199,6 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<("face" | "not-face")[]>([]);
   const [currentAnswer, setCurrentAnswer] = useState<"face" | "not-face" | null>(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   const done = index >= stimulusSet.length;
   const trial = !done ? stimulusSet[index] : null;
@@ -208,7 +207,6 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
     (answer: "face" | "not-face") => {
       if (currentAnswer) return;
       setCurrentAnswer(answer);
-      if (!hasInteracted) setHasInteracted(true);
     },
     [currentAnswer]
   );
@@ -238,10 +236,18 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
       done={done}
       summary={getSummary(answers, stimulusSet)}
       onRestart={handleRestart}
+      stepKey={`${index}-${currentAnswer ? "answered" : "asking"}`}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["face-or-not"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
-      <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-        <p className="mb-4 text-xs text-muted-foreground">
-          {index + 1} of {stimulusSet.length}
+      <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <p data-announce={!currentAnswer || undefined} className="mb-4 text-xs text-muted-foreground">
+          Pattern {index + 1} of {stimulusSet.length}
         </p>
 
         <div className="flex items-center justify-center rounded-lg bg-secondary py-12">
@@ -249,7 +255,7 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-3">
-          {(["face", "not-face"] as const).map((opt) => {
+          {(["face", "not-face"] as const).map((opt, i) => {
             let style = "border border-border bg-card text-foreground hover:bg-secondary";
             if (currentAnswer) {
               style =
@@ -262,6 +268,7 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
                 key={opt}
                 onClick={() => handleAnswer(opt)}
                 disabled={!!currentAnswer}
+                data-autofocus={(!currentAnswer && i === 0) || undefined}
                 className={`rounded-md px-4 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${style} disabled:cursor-default`}
               >
                 {opt === "face" ? "Face" : "Not a Face"}
@@ -271,10 +278,13 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
         </div>
 
         {signalKey && (
-          <div className="mt-5">
-            <FeedbackCard onNavigate={onNavigate} feedback={signalFeedback[signalKey]} />
+          <div data-reveal className="mt-5">
+            <div data-announce>
+              <FeedbackCard feedback={signalFeedback[signalKey]} />
+            </div>
             <div className="mt-4 flex justify-center">
               <button
+                data-autofocus
                 onClick={handleNext}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -285,14 +295,6 @@ const FaceOrNotDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explai
         )}
       </div>
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["face-or-not"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

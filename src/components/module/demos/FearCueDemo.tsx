@@ -15,9 +15,11 @@ interface Trial {
   hasUS: boolean;
 }
 
+// Only the first trial is "early": once the cue has been paired, the
+// "no association yet" feedback no longer applies.
 const TRIALS: Trial[] = [
   { stage: "acquisition-early", hasUS: true },
-  { stage: "acquisition-early", hasUS: true },
+  { stage: "acquisition-late", hasUS: true },
   { stage: "acquisition-late", hasUS: true },
   { stage: "acquisition-late", hasUS: true },
   { stage: "extinction-early", hasUS: false },
@@ -51,7 +53,7 @@ const phaseInfo: Record<Exclude<Stage, "pause">, { label: string; color: string;
   },
   test: {
     label: "Test — After Delay",
-    color: "text-amber-500",
+    color: "text-amber-700",
     description: "Time has passed. Does the fear return?",
   },
 };
@@ -69,50 +71,50 @@ const phaseFeedback: Record<string, ExperienceFeedback> = {
   },
   "acquisition-early-bad": {
     primary: "The cue has not been paired with anything aversive yet.",
-    secondary: "Any unease at this point reflects contextual expectation — the cortex predicting what the experiment might do — rather than a learned CS-US association in the amygdala. True conditioned fear requires repeated pairing.",
-    bridge: "Compare cortical prediction vs amygdala conditioning in Explain.",
+    secondary: "Any unease at this point reflects contextual expectation — the cortex predicting what the experiment might do — rather than a learned CS-US association in the amygdala. True conditioned fear requires pairing.",
+    bridge: "Explain covers how the amygdala learns the CS–US association.",
     structure: "Cortical expectation (not conditioning)",
   },
   "acquisition-late-bad": {
     primary: "Correct — the association has formed.",
-    secondary: "After repeated CS-US pairings, the BLA encodes the association. The infralimbic cortex (IL) strengthened the connection with excitatory glutamatergic signals. The CeA now triggers anticipatory fear — freezing behavior — when the cue appears alone. This is classical conditioning.",
-    bridge: "Trace shows the IL → BLA → CeA fear acquisition pathway.",
-    structure: "IL → BLA → CeA",
+    secondary: "After repeated CS-US pairings, the BLA encodes the association. The prelimbic cortex (PL) strengthened the connection with excitatory glutamatergic signals. The CeA now triggers anticipatory fear — freezing behavior — when the cue appears alone. This is classical conditioning.",
+    bridge: "Trace shows the CS → BLA → CeA fear acquisition pathway.",
+    structure: "CS → BLA → CeA",
   },
   "acquisition-late-nothing": {
     primary: "Most people expect something aversive by this point.",
     secondary: "The BLA typically forms a strong CS-US association after repeated pairing. If the association feels weak here, it may be because the simulated pairing lacks the physical salience of a real unconditioned stimulus, or because cortical reasoning is overriding the emotional prediction.",
-    bridge: "Explain covers why real conditioning is stronger than simulated.",
+    bridge: "Explain covers what the amygdala learns during acquisition.",
     structure: "BLA association (weak or suppressed)",
   },
   "extinction-early-bad": {
     primary: "The fear persists — extinction has not occurred yet.",
-    secondary: "The BLA still holds the original association. Extinction requires repeated CS-alone presentations so the prelimbic cortex (PL) can activate intercalated cells (ITCs) to inhibit amygdala output. That process takes time.",
-    bridge: "Trace shows the PL → ITC → BLA inhibition pathway.",
+    secondary: "The BLA still holds the original association. Extinction requires repeated CS-alone presentations so the infralimbic cortex (IL) can activate intercalated cells (ITCs) to inhibit amygdala output. That process takes time.",
+    bridge: "Trace shows the vmPFC → ITC → CeA inhibition pathway.",
     structure: "BLA association still active",
   },
   "extinction-early-nothing": {
     primary: "You are already updating — faster than typical.",
-    secondary: "This may reflect cortical reasoning overriding the amygdala's prediction. In full extinction, the PL gradually activates ITCs to suppress BLA output. Here, conscious evaluation may be running ahead of the subcortical learning process.",
-    bridge: "Compare cortical override vs ITC-mediated extinction in Explain.",
+    secondary: "This may reflect cortical reasoning overriding the amygdala's prediction. In full extinction, the IL gradually activates ITCs to suppress BLA output. Here, conscious evaluation may be running ahead of the subcortical learning process.",
+    bridge: "Explain covers how vmPFC and ITCs suppress fear during extinction.",
     structure: "Cortical reasoning ahead of extinction circuit",
   },
   "extinction-late-nothing": {
     primary: "Extinction learning has formed.",
-    secondary: "The PL activated the ITCs, which suppressed BLA output. A new safety association now competes with the original fear memory. Critically, the original memory still exists — it has been suppressed, not erased. Extinction is new learning layered on top of old learning.",
-    bridge: "Trace shows the full extinction circuit: PL → ITCs → BLA inhibition.",
-    structure: "PL → ITCs → BLA inhibition",
+    secondary: "The IL activated the ITCs, which suppressed BLA output. A new safety association now competes with the original fear memory. Critically, the original memory still exists — it has been suppressed, not erased. Extinction is new learning layered on top of old learning.",
+    bridge: "Trace shows the full extinction circuit: vmPFC → ITCs → CeA inhibition.",
+    structure: "vmPFC → ITCs → CeA inhibition",
   },
   "extinction-late-bad": {
     primary: "The fear association is persisting despite repeated safe exposures.",
     secondary: "This can occur when the original CS-US association was strong or when amygdala primers (anxiety, fatigue, context) keep the BLA reactive. Extinction is not guaranteed to be fast or complete — it depends on the balance between the original association and the vmPFC-ITC inhibition system.",
-    bridge: "Explain covers why extinction varies and can be incomplete.",
+    bridge: "Explain covers how the new safety memory competes with the original fear.",
     structure: "BLA resisting ITC inhibition",
   },
   "test-bad": {
     primary: "The fear returned — this is spontaneous recovery.",
     secondary: "The original fear memory was never erased. During extinction, ITCs suppressed the BLA's output, creating a competing safety memory. After a delay, the suppression weakened and the original association resurfaced. This is proof that extinction is suppression, not erasure.",
-    bridge: "Explain covers why this matters for phobia and PTSD treatment.",
+    bridge: "Explain covers why this matters for exposure therapy.",
     structure: "Original BLA memory resurfaces",
   },
   "test-nothing": {
@@ -139,12 +141,12 @@ function getSummary(recoveryPrediction: "extinguished" | "returns" | null): Expe
     return {
       heading: "What This Shows",
       body: "You called it. You experienced the full cycle: acquisition, extinction, and spontaneous recovery. This demonstrates the unit's central principle: extinction is new learning, not forgetting. The vmPFC-ITC circuit suppressed the amygdala's fear output, but the original memory persisted. When the fear returned, it proved the original association was intact all along. This dual-memory architecture is why treating phobias and PTSD is difficult. The old fear always exists underneath.",
-      bridge: "Review covers why suppression of output is not erasure of memory.",
+      bridge: "Explain covers why suppression of output is not erasure of memory.",
     };
   }
   return {
     heading: "What This Shows",
-    body: "Most people predict that extinction = erasure. It doesn't. The fear came back at reduced strength because the original CS-US association in the BLA was suppressed, not deleted. The vmPFC-ITC inhibition weakened overnight and the underlying fear memory resurfaced. Spontaneous recovery is the proof that extinction is new learning layered on top of old learning, not a rewrite.",
+    body: "Most people predict that extinction means erasure. It doesn't. The fear came back at reduced strength because the original CS-US association in the BLA was suppressed, not deleted. The vmPFC-ITC inhibition weakened overnight and the underlying fear memory resurfaced. Spontaneous recovery is the proof that extinction is new learning layered on top of old learning, not a rewrite.",
     bridge: "Explain covers why the original memory is never truly erased.",
   };
 }
@@ -156,7 +158,6 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const [step, setStep] = useState<"predict" | "outcome" | "feedback">("predict");
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [predictions, setPredictions] = useState<{ stage: Stage; prediction: Prediction }[]>([]);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const [recoveryPhase, setRecoveryPhase] = useState<"prediction" | "timepass" | "replay" | "result" | "finished" | null>(null);
   const [recoveryPrediction, setRecoveryPrediction] = useState<"extinguished" | "returns" | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>();
@@ -180,10 +181,10 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
   const trial = index < TRIALS.length && !inRecovery ? TRIALS[index] : null;
 
   const handlePredict = useCallback((p: Prediction) => {
+    if (prediction !== null) return; // ignore a second click during the short reveal delay
     setPrediction(p);
-    if (!hasInteracted) setHasInteracted(true);
     timer.current = setTimeout(() => setStep("outcome"), 500);
-  }, [hasInteracted]);
+  }, [prediction]);
 
   const handleShowFeedback = useCallback(() => {
     if (prediction && trial) {
@@ -229,10 +230,18 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
       done={done}
       summary={getSummary(recoveryPrediction)}
       onRestart={restart}
+      stepKey={`${index}-${step}-${recoveryPhase ?? "trials"}`}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["fear-cue"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       {/* Pause interlude */}
       {trial?.stage === "pause" && (
-        <div className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center">
+        <div data-reveal data-announce className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center">
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-2">
             Time Passes
           </p>
@@ -243,6 +252,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
             The extinction memory — "the cue is safe" — can weaken during this gap, allowing the original fear memory to re-emerge. This is the setup for testing spontaneous recovery.
           </p>
           <button
+            data-autofocus
             onClick={advance}
             className="mt-6 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
@@ -253,20 +263,20 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Active trial */}
       {trial && trial.stage !== "pause" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
           {/* Phase header */}
           <div className="mb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className={`text-xs font-semibold uppercase tracking-wide ${phaseInfo[trial.stage].color}`}>
+                <span data-announce={step === "predict" || undefined} className={`text-xs font-semibold uppercase tracking-wide ${phaseInfo[trial.stage].color}`}>
                   {phaseInfo[trial.stage].label}
                 </span>
-                <span className="text-xs text-muted-foreground">
+                <span data-announce={step === "predict" || undefined} className="text-xs text-muted-foreground">
                   {trialProgress + 1} of {trialCount}
                 </span>
               </div>
             </div>
-            {isPhaseTransition && (
+            {isPhaseTransition && step !== "predict" && (
               <p className="mt-1.5 text-xs text-muted-foreground italic">
                 {phaseInfo[trial.stage].description}
               </p>
@@ -292,24 +302,29 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
             })}
           </div>
 
-          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary">
+          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary px-3 py-5">
             {step === "predict" && (
               <div className="text-center">
                 <div className="text-5xl mb-4 select-none animate-[fadeIn_400ms_ease-out]">◆</div>
                 <style>{`@keyframes fadeIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}`}</style>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p data-announce className="text-sm text-muted-foreground mb-4">
                   The cue appears. What do you expect will follow?
                 </p>
                 <div className="flex gap-3 justify-center">
                   <button
                     onClick={() => handlePredict("bad")}
-                    className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    aria-disabled={prediction !== null}
+                    data-autofocus={prediction === null || undefined}
+                    aria-pressed={prediction === "bad"}
+                    className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-disabled:cursor-default ${prediction === "bad" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
                   >
                     Something bad
                   </button>
                   <button
                     onClick={() => handlePredict("nothing")}
-                    className="rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    aria-disabled={prediction !== null}
+                    aria-pressed={prediction === "nothing"}
+                    className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-disabled:cursor-default ${prediction === "nothing" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
                   >
                     Nothing
                   </button>
@@ -317,33 +332,46 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
               </div>
             )}
 
-            {step === "outcome" && (
-              <div className="text-center animate-[fadeIn_300ms_ease-out]">
+            {/* The outcome stays visible while the feedback below is read */}
+            {(step === "outcome" || step === "feedback") && (
+              <div className={`text-center ${step === "outcome" ? "animate-[fadeIn_300ms_ease-out]" : ""}`}>
                 <div className="text-5xl mb-3 select-none flex items-center justify-center gap-3">
                   <span>◆</span>
                   {trial.hasUS && <span className="text-destructive animate-[fadeIn_200ms_ease-out]">✕</span>}
                 </div>
-                <p className="text-sm text-foreground">
+                <p data-announce={step === "outcome" || undefined} className="text-sm text-foreground">
                   {trial.hasUS
                     ? "An unpleasant outcome follows the cue."
                     : "Nothing happens. The cue appears alone."}
                 </p>
-                <button
-                  onClick={handleShowFeedback}
-                  className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  Continue
-                </button>
+                {step === "outcome" ? (
+                  <button
+                    data-autofocus
+                    onClick={handleShowFeedback}
+                    className="mt-4 rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent border border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    Continue
+                  </button>
+                ) : (
+                  prediction && (
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      You predicted: {prediction === "bad" ? "Something bad" : "Nothing"}
+                    </p>
+                  )
+                )}
               </div>
             )}
           </div>
 
           {/* FeedbackCard below interaction area */}
           {step === "feedback" && prediction && (
-            <div className="mt-5">
-              <FeedbackCard onNavigate={onNavigate} feedback={getFeedback(trial.stage, prediction)} />
+            <div data-reveal className="mt-5">
+              <div data-announce>
+                <FeedbackCard feedback={getFeedback(trial.stage, prediction)} />
+              </div>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={advance}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -357,29 +385,32 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: prediction commit */}
       {recoveryPhase === "prediction" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <p data-announce className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             After Extinction
           </p>
-          <p className="text-sm font-medium text-foreground mb-4">
+          <p data-announce className="text-sm font-medium text-foreground mb-4">
             {fearCueContent.recoveryPredictionPrompt}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <button
+              type="button"
+              data-autofocus
               onClick={() => {
                 setRecoveryPrediction("extinguished");
                 setRecoveryPhase("timepass");
               }}
-              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {fearCueContent.recoveryOptionExtinguished}
             </button>
             <button
+              type="button"
               onClick={() => {
                 setRecoveryPrediction("returns");
                 setRecoveryPhase("timepass");
               }}
-              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+              className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               {fearCueContent.recoveryOptionReturns}
             </button>
@@ -389,7 +420,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: time advance */}
       {recoveryPhase === "timepass" && (
-        <div className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center animate-[fadeIn_400ms_ease-out]">
+        <div tabIndex={-1} data-autofocus data-announce className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center animate-[fadeIn_400ms_ease-out]">
           <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-2">
             Time Passes
@@ -402,11 +433,11 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: CS replay (reuses existing trial-card pattern) */}
       {recoveryPhase === "replay" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+        <div tabIndex={-1} data-autofocus data-announce className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             Test — CS Alone
           </p>
-          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary">
+          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary px-3 py-5">
             <div className="text-center animate-[fadeIn_400ms_ease-out]">
               <div className="text-5xl mb-3 select-none">◆</div>
               <p className="text-xs text-muted-foreground mb-3">
@@ -428,8 +459,8 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: result */}
       {recoveryPhase === "result" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6 animate-[fadeIn_400ms_ease-out]">
-          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-500 mb-3">
+        <div data-reveal data-announce className="rounded-lg border border-border bg-card p-4 sm:p-6 animate-[fadeIn_400ms_ease-out]">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             Spontaneous Recovery
           </p>
           <div className="flex min-h-[120px] items-center justify-center rounded-lg bg-secondary mb-4">
@@ -453,6 +484,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
           </p>
           <div className="mt-5 flex justify-center">
             <button
+              data-autofocus
               onClick={() => setRecoveryPhase("finished")}
               className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
@@ -462,14 +494,6 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
         </div>
       )}
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["fear-cue"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

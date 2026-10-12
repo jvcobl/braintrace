@@ -17,7 +17,7 @@ export const conceptPages: Record<ConceptPageId, ConceptPage> = {
     id: "loop",
     title: "The Loop",
     slug: "loop",
-    description: "Your brain runs a constant cycle: predict, receive input, detect mismatch, update the model. Every BrainTrace module shows you one version of this loop.",
+    description: "Your brain runs a constant cycle: predict, receive input, detect mismatch, update the model. Every BrainTrace lesson shows you one version of this loop.",
     moduleLinks: ["blurry-object-guess", "face-or-not", "sudden-noise-reaction", "fear-cue-and-extinction", "memory-under-load", "stress-response-builder"],
   },
   "precision-attention": {
@@ -31,7 +31,7 @@ export const conceptPages: Record<ConceptPageId, ConceptPage> = {
     id: "failure",
     title: "When Prediction Fails",
     slug: "when-prediction-fails",
-    description: "Prediction breaks in three ways: the brain trusts its assumptions too much, overreacts to noise, or runs out of control capacity. Each failure mode maps to a BrainTrace module.",
+    description: "Prediction breaks in three ways: the brain trusts its assumptions too much, overreacts to noise, or runs out of control capacity. Each failure mode maps to a BrainTrace lesson.",
     moduleLinks: ["face-or-not", "sudden-noise-reaction", "fear-cue-and-extinction", "memory-under-load", "stress-response-builder"],
   },
 };

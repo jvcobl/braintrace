@@ -26,6 +26,12 @@ export interface TraceEdge {
   to: string;
   label?: string;
   route?: "primary" | "fast" | "slow";
+  /**
+   * Which end gets the arrowhead (default "to"). "from" keeps the edge's place in
+   * the top-down layout while showing influence flowing back up, e.g. the amygdala
+   * amplifying the brainstem startle circuit.
+   */
+  arrowAt?: "to" | "from";
 }
 
 export interface TracePathway {

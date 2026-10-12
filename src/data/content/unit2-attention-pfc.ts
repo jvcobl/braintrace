@@ -52,7 +52,7 @@ export const unit2ConceptCards = [
     id: "u2-cc-04",
     term: "Metabolic Cost of Thought",
     definition:
-      "Intense cognition is physiologically expensive. Robert Sapolsky noted that chess grandmasters can burn 6,000 to 7,000 calories a day simply by thinking, demonstrating the massive stress response that sustained executive function requires. The brain consumes enormous energy when the PFC is fully engaged.",
+      "Intense cognition is physiologically expensive. Robert Sapolsky noted that chess grandmasters can burn 6,000 to 7,000 calories a day, demonstrating the massive stress response that sustained executive function requires. The brain consumes enormous energy when the PFC is fully engaged.",
     structures: ["PFC"],
   },
   {

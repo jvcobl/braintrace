@@ -6,7 +6,7 @@ interface FeaturedLessonCardsProps {
 }
 
 const FeaturedLessonCards = ({ linkedModules }: FeaturedLessonCardsProps) => (
-  <section>
+  <section id="lessons">
     <h2 className="font-display text-xl tracking-tight text-foreground md:text-[1.35rem]">
       Interactive Lessons
     </h2>
@@ -20,7 +20,7 @@ const FeaturedLessonCards = ({ linkedModules }: FeaturedLessonCardsProps) => (
         ))}
       </div>
     ) : (
-      <p className="mt-6 text-[13px] text-muted-foreground/50">
+      <p className="mt-6 text-[13px] text-muted-foreground">
         Lessons coming soon
       </p>
     )}

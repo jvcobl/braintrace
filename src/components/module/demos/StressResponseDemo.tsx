@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { ExperienceShell } from "@/components/module/experience";
 import type { ExperienceSummary } from "@/components/module/experience";
 import PredictionOutcome from "@/components/module/PredictionOutcome";
@@ -18,7 +18,7 @@ interface Slot {
 }
 
 const CASCADE_SLOTS: Slot[] = [
-  { label: "Step 1: Detection", correctAnswer: "Hypothalamus releases CRH" },
+  { label: "Step 1: Initiation", correctAnswer: "Hypothalamus releases CRH" },
   { label: "Step 2: Signal", correctAnswer: "Anterior Pituitary releases ACTH" },
   { label: "Step 3: Release", correctAnswer: "Adrenal Cortex releases cortisol" },
 ];
@@ -81,8 +81,9 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   const [filledSlots, setFilledSlots] = useState<string[]>([]);
   const [usedChips, setUsedChips] = useState<Set<string>>(new Set());
   const [shakeSlot, setShakeSlot] = useState<number | null>(null);
+  const shakeTimer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(shakeTimer.current), []);
   const [buildErrors, setBuildErrors] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   // Build sub-steps
   const [buildStep, setBuildStep] = useState<"placing-A" | "running-A" | "result-A" | "placing-B" | "running-B" | "result-B">("placing-A");
@@ -111,19 +112,20 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   const handleChipClick = useCallback(
     (chip: string) => {
       if (buildComplete || usedChips.has(chip)) return;
-      if (!hasInteracted) setHasInteracted(true);
 
       const slot = SLOTS[currentSlotIndex];
+      clearTimeout(shakeTimer.current);
       if (chip === slot.correctAnswer) {
+        setShakeSlot(null);
         setFilledSlots((prev) => [...prev, chip]);
         setUsedChips((prev) => new Set(prev).add(chip));
       } else {
         setBuildErrors((e) => e + 1);
         setShakeSlot(currentSlotIndex);
-        setTimeout(() => setShakeSlot(null), 500);
+        shakeTimer.current = setTimeout(() => setShakeSlot(null), 500);
       }
     },
-    [buildComplete, usedChips, currentSlotIndex, hasInteracted],
+    [buildComplete, usedChips, currentSlotIndex],
   );
 
   const handleOverrideAnswer = useCallback((idx: number) => {
@@ -135,12 +137,14 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
     if (consequencesSubmitted) return;
     setCheckedConsequences((prev) => {
       const next = new Set(prev);
-      next.has(idx) ? next.delete(idx) : next.add(idx);
+      if (next.has(idx)) next.delete(idx);
+      else next.add(idx);
       return next;
     });
   }, [consequencesSubmitted]);
 
   const handleRestart = useCallback(() => {
+    clearTimeout(shakeTimer.current);
     setPhase("build");
     setBuildStep("placing-A");
     setConsequencesPrediction(null);
@@ -154,6 +158,18 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   }, []);
 
   const done = phase === "done";
+  const firstOpenChip = visibleChips.find((chip) => !usedChips.has(chip));
+  const lastPlacedIndex = filledSlots.length - 1;
+  const nextSlot = currentSlotIndex < visibleSlots.length ? visibleSlots[currentSlotIndex] : null;
+  const stepKey = [
+    phase,
+    buildStep,
+    filledSlots.length,
+    buildErrors,
+    overrideAnswer ?? "",
+    consequencesPrediction ?? "",
+    consequencesSubmitted ? "checked" : "",
+  ].join("-");
 
   return (
     <ExperienceShell
@@ -162,17 +178,37 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
       done={done}
       summary={getSummary(buildErrors, overrideCorrect, consequenceScore)}
       onRestart={handleRestart}
+      stepKey={stepKey}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["stress-response-builder"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
       {/* ── Phase 1: Build the cascade ── */}
       {phase === "build" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-4">
             {inStepB ? "Add Negative Feedback" : "Build the Cascade"}
           </p>
 
           {inStepB && buildStep === "placing-B" && (
-            <p className="text-sm text-muted-foreground mb-4">
+            <p data-announce={(filledSlots.length === CASCADE_SLOTS.length && shakeSlot === null) || undefined} className="text-sm text-muted-foreground mb-4">
               A new component is available. Place it in the shutdown slot, then run the cascade again.
+            </p>
+          )}
+
+          {/* Placement results for screen readers (the slots below show them visually). */}
+          {(buildStep === "placing-A" || buildStep === "placing-B") && (
+            <p data-announce className="sr-only">
+              {shakeSlot !== null
+                ? `That doesn't belong in ${SLOTS[shakeSlot]?.label ?? "this step"}. Try another component.`
+                : lastPlacedIndex >= 0 && !(buildStep === "placing-B" && lastPlacedIndex < CASCADE_SLOTS.length)
+                  ? `Placed in ${SLOTS[lastPlacedIndex].label}: ${filledSlots[lastPlacedIndex]}.`
+                  : ""}
+              {nextSlot && shakeSlot === null ? ` Next: ${nextSlot.label}.` : ""}
             </p>
           )}
 
@@ -201,7 +237,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                             : "border-dashed border-gray-200 bg-gray-50/50"
                       }`}
                     >
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-gray-400 mb-0.5">
+                      <p className="text-[11px] font-medium uppercase tracking-wider text-gray-500 mb-0.5">
                         {slot.label}
                       </p>
                       {filled ? (
@@ -210,7 +246,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                           <span className="text-sm font-medium text-gray-900">{filled}</span>
                         </div>
                       ) : (
-                        <p className="text-sm text-gray-400 italic">
+                        <p className="text-sm text-gray-500 italic">
                           {isCurrent ? "Select from below..." : "—"}
                         </p>
                       )}
@@ -229,9 +265,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                 return (
                   <button
                     key={chip}
+                    type="button"
                     onClick={() => handleChipClick(chip)}
                     disabled={used}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
+                    data-autofocus={chip === firstOpenChip || undefined}
+                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                       used
                         ? "border-gray-100 bg-gray-50 text-gray-300 cursor-default"
                         : "border-gray-200 bg-white text-gray-800 hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] cursor-pointer"
@@ -251,9 +289,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                 return (
                   <button
                     key={chip}
+                    type="button"
                     onClick={() => handleChipClick(chip)}
                     disabled={used}
-                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
+                    data-autofocus={chip === firstOpenChip || undefined}
+                    className={`rounded-lg border px-3 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                       used
                         ? "border-gray-100 bg-gray-50 text-gray-300 cursor-default"
                         : "border-gray-200 bg-white text-gray-800 hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] cursor-pointer"
@@ -270,6 +310,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {buildStep === "placing-A" && cascadeFilled && (
             <div className="text-center mt-4 pt-4 border-t border-gray-100">
               <button
+                data-autofocus
                 onClick={() => setBuildStep("running-A")}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -280,7 +321,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {/* Step A: running simulation */}
           {buildStep === "running-A" && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
+            <div tabIndex={-1} data-autofocus className="mt-4 pt-4 border-t border-gray-100">
               <CortisolGraph mode="runaway" onComplete={() => setBuildStep("result-A")} />
             </div>
           )}
@@ -288,12 +329,13 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {/* Step A: result */}
           {buildStep === "result-A" && (
             <div className="mt-4 pt-4 border-t border-gray-100">
-              <CortisolGraph mode="runaway" onComplete={() => {}} className="w-full max-w-xs mx-auto opacity-60" />
-              <p className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
+              <CortisolGraph mode="runaway" instant className="w-full max-w-xs mx-auto" />
+              <p data-announce className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
                 {stressResponseContent.buildStepARunningCaption}
               </p>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={() => setBuildStep("placing-B")}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -307,6 +349,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {buildStep === "placing-B" && buildComplete && (
             <div className="text-center mt-4 pt-4 border-t border-gray-100">
               <button
+                data-autofocus
                 onClick={() => setBuildStep("running-B")}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -317,7 +360,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {/* Step B: running simulation */}
           {buildStep === "running-B" && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
+            <div tabIndex={-1} data-autofocus className="mt-4 pt-4 border-t border-gray-100">
               <CortisolGraph mode="recovery" onComplete={() => setBuildStep("result-B")} />
             </div>
           )}
@@ -325,12 +368,13 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {/* Step B: result → advance to Override */}
           {buildStep === "result-B" && (
             <div className="mt-4 pt-4 border-t border-gray-100">
-              <CortisolGraph mode="recovery" onComplete={() => {}} className="w-full max-w-xs mx-auto opacity-60" />
-              <p className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
+              <CortisolGraph mode="recovery" instant className="w-full max-w-xs mx-auto" />
+              <p data-announce className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
                 {stressResponseContent.buildStepBRunningCaption}
               </p>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={() => setPhase("override")}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -344,24 +388,24 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       {/* ── Phase 2: Override question ── */}
       {phase === "override" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-wide text-amber-500 mb-4">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
+          <p className="text-xs font-semibold uppercase tracking-wide text-amber-700 mb-4">
             Feedback Override
           </p>
 
           {/* Completed cascade with feedback highlighted */}
           <div className="rounded-lg bg-gray-50 p-4 mb-5">
-            <div className="flex items-center gap-2 text-sm text-gray-700">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-700">
               <span>Hypothalamus</span>
-              <span className="text-gray-300">→</span>
-              <span>Pituitary</span>
-              <span className="text-gray-300">→</span>
+              <span className="text-gray-400" aria-hidden="true">→</span>
+              <span>Anterior Pituitary</span>
+              <span className="text-gray-400" aria-hidden="true">→</span>
               <span>Adrenal Cortex</span>
-              <span className="text-gray-300">→</span>
+              <span className="text-gray-400" aria-hidden="true">→</span>
               <span className="font-medium">Cortisol</span>
             </div>
             <div className={`mt-2 text-xs px-2 py-1 rounded inline-block ${
-              overrideAnswer !== null && overrideCorrect
+              overrideAnswer !== null
                 ? "bg-destructive/10 text-destructive line-through"
                 : "bg-primary/10 text-primary"
             }`}>
@@ -369,7 +413,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             </div>
           </div>
 
-          <p className="text-sm font-medium text-foreground mb-3">
+          <p data-announce={overrideAnswer === null || undefined} className="text-sm font-medium text-foreground mb-3">
             Under extreme or chronic stress, what prevents the feedback loop from working?
           </p>
 
@@ -383,15 +427,17 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                 } else if (selected) {
                   style = "border-destructive bg-destructive/5 text-gray-900";
                 } else {
-                  style = "border-gray-100 bg-gray-50 text-gray-400";
+                  style = "border-gray-100 bg-gray-50 text-gray-500";
                 }
               }
               return (
                 <button
                   key={i}
+                  type="button"
                   onClick={() => handleOverrideAnswer(i)}
                   disabled={overrideAnswer !== null}
-                  className={`w-full text-left rounded-lg border px-4 py-3 text-sm font-medium transition-colors ${style} disabled:cursor-default`}
+                  data-autofocus={(overrideAnswer === null && i === 0) || undefined}
+                  className={`w-full text-left rounded-lg border px-4 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${style} disabled:cursor-default`}
                 >
                   {opt.text}
                   {overrideAnswer !== null && opt.correct && (
@@ -407,13 +453,14 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {overrideAnswer !== null && (
             <div className="mt-5">
-              <div className="rounded-lg bg-gray-50 p-4 text-sm text-gray-700 leading-relaxed">
+              <div data-announce className="rounded-lg bg-gray-50 p-4 text-sm text-gray-700 leading-relaxed">
                 {overrideCorrect
                   ? "Correct — the central amygdala (CeA) and PFC send override signals that prevent cortisol from shutting the axis down. The cascade keeps running despite elevated cortisol."
                   : "The correct answer is: CeA and PFC override the feedback. Under chronic stress, these structures actively prevent the negative feedback loop from shutting the cascade down."}
               </div>
               <div className="mt-4 flex justify-center">
                 <button
+                  data-autofocus
                   onClick={() => setPhase("consequences")}
                   className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
@@ -427,26 +474,29 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       {/* ── Phase 3: Consequences ── */}
       {phase === "consequences" && (
-        <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-wide text-destructive mb-4">
             Chronic Stress Consequences
           </p>
 
           {consequencesPrediction === null && (
             <div>
-              <p className="text-sm font-medium text-foreground mb-4">
+              <p data-announce className="text-sm font-medium text-foreground mb-4">
                 {stressResponseContent.consequencesPredictionPrompt}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <button
+                  type="button"
+                  data-autofocus
                   onClick={() => setConsequencesPrediction("works")}
-                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   {stressResponseContent.consequencesPredictionOptions.works}
                 </button>
                 <button
+                  type="button"
                   onClick={() => setConsequencesPrediction("weakens")}
-                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97]"
+                  className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-800 transition-all hover:border-primary/40 hover:bg-primary/5 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   {stressResponseContent.consequencesPredictionOptions.weakens}
                 </button>
@@ -456,7 +506,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {consequencesPrediction !== null && (
             <>
-              <p className="text-sm font-medium text-foreground mb-4">
+              <p data-announce={!consequencesSubmitted || undefined} className="text-sm font-medium text-foreground mb-4">
                 What does sustained cortisol do to the brain? Select all that apply.
               </p>
 
@@ -473,15 +523,18 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
               return (
                 <button
                   key={i}
+                  type="button"
                   onClick={() => handleConsequenceToggle(i)}
                   disabled={consequencesSubmitted}
-                  className={`w-full text-left rounded-lg border px-4 py-3 transition-colors ${style} disabled:cursor-default`}
+                  aria-pressed={checked}
+                  data-autofocus={(!consequencesSubmitted && i === 0) || undefined}
+                  className={`w-full text-left rounded-lg border px-4 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${style} disabled:cursor-default`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-4 h-4 rounded border shrink-0 flex items-center justify-center ${
                       checked ? "bg-primary border-primary" : "border-gray-300"
                     }`}>
-                      {checked && <span className="text-white text-[10px] font-bold">✓</span>}
+                      {checked && <span className="text-white text-[10px] font-bold leading-none">✓</span>}
                     </div>
                     <span className="text-sm font-medium text-gray-800">{c.text}</span>
                   </div>
@@ -504,11 +557,11 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
               </button>
             </div>
           ) : (
-            <div className="mt-5 text-center">
+            <div data-announce className="mt-5 text-center">
               <p className="text-sm text-muted-foreground mb-4">
                 {consequenceScore === 4
                   ? "All correct — you identified every consequence of sustained cortisol."
-                  : `${consequenceScore} of 4 correct. The highlighted items show what you missed.`}
+                  : `${consequenceScore} of 4 correct. The highlighted items show what to review.`}
               </p>
               <p className="text-sm text-foreground mb-4 leading-relaxed">
                 {consequencesPrediction === "works"
@@ -516,6 +569,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                   : stressResponseContent.consequencesResultIfWeakens}
               </p>
               <button
+                data-autofocus
                 onClick={() => setPhase("done")}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -528,14 +582,6 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
         </div>
       )}
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["stress-response-builder"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

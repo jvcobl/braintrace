@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import type { GoDeeperCard as GoDeeperCardData } from "@/data/types";
 import { brainStructures, type BrainStructureId } from "@/data/brainStructures";
 
@@ -9,16 +10,23 @@ interface GoDeeperCardProps {
 
 const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
   const [open, setOpen] = useState(autoExpand);
+  // Also open when a link (e.g. a search result) targets this card while the page is already
+  // open, including again after the reader collapsed it.
+  const { hash, key } = useLocation();
+  useEffect(() => {
+    if (hash === `#deeper-${data.id}`) setOpen(true);
+  }, [hash, key, data.id]);
 
   return (
     <div className={`bg-white border border-gray-200 rounded-xl overflow-hidden transition-colors ${open ? "border-l-2 border-l-primary" : ""}`}>
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between py-3.5 px-5 cursor-pointer hover:bg-gray-50 transition-colors"
+        aria-expanded={open}
+        className="w-full flex items-center justify-between py-3.5 px-5 cursor-pointer hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
       >
         <span className="text-sm font-medium text-gray-900 text-left">{data.title}</span>
-        <span className="text-gray-400 text-lg leading-none select-none">
+        <span className="text-gray-500 text-lg leading-none select-none" aria-hidden="true">
           {open ? "−" : "+"}
         </span>
       </button>
@@ -46,7 +54,7 @@ const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
 
           {data.clinicalNote && (
             <div className="bg-gray-50 rounded-lg p-3 mt-3">
-              <p className="text-xs font-medium text-gray-400 mb-1">Clinical note</p>
+              <p className="text-xs font-medium text-gray-500 mb-1">Clinical note</p>
               <p className="text-[13px] text-gray-600 italic leading-relaxed">
                 {data.clinicalNote}
               </p>

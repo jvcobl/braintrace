@@ -1,7 +1,10 @@
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, Link } from "react-router-dom";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ModuleLink from "@/components/ModuleLink";
 import ConceptLink from "@/components/ConceptLink";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { TOPIC_TO_UNIT } from "@/data/topicUnits";
+import { lookup } from "@/lib/utils";
 
 /* ── Topic data ── */
 
@@ -71,7 +74,9 @@ const topics: Record<string, Topic> = {
 
 const TopicPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const topic = slug ? topics[slug] : undefined;
+  const topic = lookup(topics, slug);
+  const unitId = lookup(TOPIC_TO_UNIT, slug);
+  usePageMeta({ title: topic?.title, description: topic?.description, canonicalPath: topic ? `/topics/${slug}` : undefined });
 
   if (!topic) return <Navigate to="/topics" replace />;
 
@@ -80,21 +85,21 @@ const TopicPage = () => {
       <Breadcrumb />
 
       <div className="border-l-4 rounded-r-lg pl-5" style={{ borderLeftColor: topic.accent }}>
-        <h1 className="text-3xl text-foreground">{topic.title}</h1>
+        <h1 className="font-display text-3xl tracking-tight text-foreground">{topic.title}</h1>
         <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-2xl">
           {topic.description}
         </p>
-        <p className="mt-3 text-xs text-gray-400">
+        <p className="mt-3 text-xs text-gray-500">
           {topic.courseConnection}
         </p>
       </div>
 
       {/* Modules */}
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
-        Explore the modules
+        Explore the lessons
       </h2>
-      <p className="text-sm text-gray-400 mb-3">
-        Each module lets you experience the phenomenon, trace the neural pathway, and read the explanation.
+      <p className="text-sm text-gray-500 mb-3">
+        Each lesson lets you experience the phenomenon, trace the neural pathway, and read the explanation.
       </p>
       <div className="space-y-2">
         {topic.moduleIds.map((id) => (
@@ -102,12 +107,28 @@ const TopicPage = () => {
         ))}
       </div>
 
+      {/* Study guide (unit hub) */}
+      {unitId && (
+        <Link
+          to={`/unit/${unitId}`}
+          className="group mt-4 flex items-center justify-between gap-3 rounded-lg border border-dashed border-border bg-white/60 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <span>
+            <span className="block text-sm font-medium text-foreground">Study guide</span>
+            <span className="block text-xs text-gray-500 mt-0.5">
+              Key concepts, neural pathways, distinctions, case notes and review questions for this topic.
+            </span>
+          </span>
+          <span className="shrink-0 text-primary transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+        </Link>
+      )}
+
       {/* Related concepts */}
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
         How your brain predicts
       </h2>
-      <p className="text-sm text-gray-400 mb-3">
-        These concept pages explain the shared framework behind the modules above.
+      <p className="text-sm text-gray-500 mb-3">
+        These concept pages explain the shared framework behind the lessons above.
       </p>
       <div className="space-y-2 max-w-md">
         {topic.conceptIds.map((id) => (

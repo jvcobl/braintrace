@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { TracePathway, TraceNode as TNode, TraceEdge, TraceBadge } from "@/data/types";
 
 /* ── Design tokens ── */
@@ -22,6 +22,8 @@ const NH = 54;
 const LG = 100;
 const CG = 184;
 const PAD = 48;
+/** Graphs wider than this keep a readable size on phones and scroll sideways instead of shrinking. */
+const WIDE_GRAPH = 500;
 
 /* ── Layout types ── */
 
@@ -183,11 +185,19 @@ function layoutGraph(nodes: TNode[], edges: TraceEdge[]) {
 
 /* ── Edge path + label position ── */
 
-function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number) {
+type Pt = [number, number];
+
+/**
+ * Path for an edge as one cubic Bezier (a straight edge has its control points on the line).
+ * `toDx` shifts where it meets the target, so edges converging on one node don't share an arrowhead.
+ */
+function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number, toDx = 0) {
   if (isBack) {
     const rx = totalW - 24;
+    const pts: Pt[] = [[from.cx + NW / 2, from.cy], [rx, from.cy], [rx, to.cy], [to.cx + NW / 2, to.cy]];
     return {
-      d: `M ${from.cx + NW / 2} ${from.cy} C ${rx} ${from.cy}, ${rx} ${to.cy}, ${to.cx + NW / 2} ${to.cy}`,
+      d: `M ${pts[0]} C ${pts[1]}, ${pts[2]}, ${pts[3]}`,
+      pts,
       lx: rx - 24,
       ly: (from.cy + to.cy) / 2,
       anchor: "end" as const,
@@ -196,20 +206,24 @@ function getEdgePath(from: Pos, to: Pos, isBack: boolean, totalW: number) {
 
   const x1 = from.cx;
   const y1 = from.cy + NH / 2;
-  const x2 = to.cx;
-  const y2 = to.cy - NH / 2;
-  const dx = Math.abs(x2 - x1);
+  const x2 = to.cx + toDx;
+  // Stop above a role badge (the pill straddling the node's top edge), so it can't hide the arrowhead.
+  const y2 = to.cy - NH / 2 - (to.badge ? 10 : 0);
+  // Nodes stacked in one column get a straight edge (judged before any spread, so the spread
+  // can't change which side its label goes).
+  const straight = Math.abs(to.cx - from.cx) < 5;
 
-  const d =
-    dx < 5
-      ? `M ${x1} ${y1} L ${x2} ${y2}`
-      : `M ${x1} ${y1} C ${x1} ${y1 + (y2 - y1) * 0.4}, ${x2} ${y2 - (y2 - y1) * 0.4}, ${x2} ${y2}`;
+  const pts: Pt[] = straight
+    ? [[x1, y1], [x1, y1], [x2, y2], [x2, y2]]
+    : [[x1, y1], [x1, y1 + (y2 - y1) * 0.4], [x2, y2 - (y2 - y1) * 0.4], [x2, y2]];
+  const d = straight ? `M ${x1} ${y1} L ${x2} ${y2}` : `M ${pts[0]} C ${pts[1]}, ${pts[2]}, ${pts[3]}`;
 
   return {
     d,
-    lx: (x1 + x2) / 2 + (dx < 5 ? 12 : 0),
+    pts,
+    lx: (x1 + x2) / 2 + (straight ? 12 : 0),
     ly: (y1 + y2) / 2,
-    anchor: (dx < 5 ? "start" : "middle") as "start" | "middle" | "end",
+    anchor: (straight ? "start" : "middle") as "start" | "middle" | "end",
   };
 }
 
@@ -222,6 +236,149 @@ function splitLabel(text: string, max = 22): string[] {
   if (idx === -1) idx = text.indexOf(" ", mid);
   if (idx === -1) return [text];
   return [text.slice(0, idx), text.slice(idx + 1)];
+}
+
+/* ── Edge label placement: keep labels clear of nodes, badges and each other ── */
+
+type Anchor = "start" | "middle" | "end";
+
+interface Box {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+interface PlacedLabel {
+  lines: string[];
+  x: number;
+  y: number;
+  anchor: Anchor;
+}
+
+const LABEL_FONT = 11;
+const LABEL_CHAR_W = 6.5; // generous width of one 11px DM Sans glyph
+const LABEL_LINE_H = 14;
+const LABEL_GAP = 3;
+const SVG_FONT = "'DM Sans', system-ui, sans-serif";
+
+/** Points along an edge, used to keep other edges' labels off its line. */
+function sampleEdge(pts: Pt[], n = 32): Pt[] {
+  const [p0, p1, p2, p3] = pts;
+  return Array.from({ length: n + 1 }, (_, i) => {
+    const t = i / n;
+    const a = (1 - t) ** 3, b = 3 * (1 - t) ** 2 * t, c = 3 * (1 - t) * t ** 2, e = t ** 3;
+    return [a * p0[0] + b * p1[0] + c * p2[0] + e * p3[0], a * p0[1] + b * p1[1] + c * p2[1] + e * p3[1]] as Pt;
+  });
+}
+
+function wrapWords(text: string, maxChars: number): string[] {
+  const lines: string[] = [];
+  for (const word of text.split(" ")) {
+    const last = lines[lines.length - 1];
+    if (last && (last + " " + word).length <= maxChars) lines[lines.length - 1] = last + " " + word;
+    else lines.push(word);
+  }
+  return lines;
+}
+
+function labelBox(lines: string[], x: number, y: number, anchor: Anchor): Box {
+  const w = Math.max(...lines.map((l) => l.length)) * LABEL_CHAR_W;
+  const h = (lines.length - 1) * LABEL_LINE_H + 12;
+  const left = anchor === "start" ? x : anchor === "end" ? x - w : x - w / 2;
+  return { x: left, y: y - (lines.length - 1) * (LABEL_LINE_H / 2) - 9, w, h };
+}
+
+const containsPoint = (b: Box, [px, py]: Pt) => px > b.x - 2 && px < b.x + b.w + 2 && py > b.y - 2 && py < b.y + b.h + 2;
+
+function overlaps(a: Box, b: Box) {
+  return (
+    a.x < b.x + b.w + LABEL_GAP &&
+    a.x + a.w + LABEL_GAP > b.x &&
+    a.y < b.y + b.h + LABEL_GAP &&
+    a.y + a.h + LABEL_GAP > b.y
+  );
+}
+
+function placeLabels(
+  edges: TraceEdge[],
+  nodeMap: Map<string, Pos>,
+  backEdgeKeys: Set<string>,
+  totalW: number,
+  toDx: Map<string, number>,
+): (PlacedLabel | null)[] {
+  const obstacles: Box[] = [];
+  const pathOf = (e: TraceEdge) =>
+    getEdgePath(nodeMap.get(e.from)!, nodeMap.get(e.to)!, backEdgeKeys.has(`${e.from}->${e.to}`), totalW, toDx.get(`${e.from}->${e.to}`) ?? 0);
+  const edgePoints = edges.map((e) => sampleEdge(pathOf(e).pts));
+  const xs = [...nodeMap.values()].map((n) => n.cx);
+  const centerX = (Math.min(...xs) + Math.max(...xs)) / 2;
+  for (const n of nodeMap.values()) {
+    obstacles.push({ x: n.cx - NW / 2, y: n.cy - NH / 2, w: NW, h: NH });
+    if (n.badge) obstacles.push({ x: n.cx - 34, y: n.cy - NH / 2 - 10, w: 68, h: 20 });
+  }
+
+  return edges.map((e, idx) => {
+    if (!e.label) return null;
+    const from = nodeMap.get(e.from)!;
+    const to = nodeMap.get(e.to)!;
+    const isBack = backEdgeKeys.has(`${e.from}->${e.to}`);
+    const base = pathOf(e);
+    let lines = splitLabel(e.label);
+
+    if (isBack) {
+      // Loop-back edges bow out to the right margin. Sit the label just inside the
+      // curve and wrap it to the room left between the nodes and the curve.
+      const rx = totalW - 24;
+      const curveX = 0.125 * (from.cx + NW / 2) + 0.75 * rx + 0.125 * (to.cx + NW / 2);
+      const nodesRight = Math.max(...[...nodeMap.values()].map((n) => n.cx + NW / 2));
+      const room = curveX - 8 - (nodesRight + LABEL_GAP + 2);
+      lines = wrapWords(e.label, Math.max(8, Math.floor(room / LABEL_CHAR_W)));
+      const placed: PlacedLabel = { lines, x: curveX - 8, y: base.ly, anchor: "end" };
+      obstacles.push(labelBox(lines, placed.x, placed.y, placed.anchor));
+      return placed;
+    }
+
+    // Candidate anchors, preferred first: curved edges put the label on the side
+    // facing away from the diagram's center, so labels of edges that fan out from
+    // (or converge on) one node land on opposite sides instead of meeting.
+    let anchors: { x: number; anchor: Anchor }[];
+    if (base.anchor === "start") {
+      anchors = [
+        { x: base.lx, anchor: "start" },
+        { x: base.lx - 24, anchor: "end" },
+      ];
+    } else {
+      const away: Anchor = base.lx < centerX ? "end" : "start";
+      const toward: Anchor = away === "end" ? "start" : "end";
+      const off = (a: Anchor) => (a === "start" ? 8 : -8);
+      anchors = [
+        { x: base.lx + off(away), anchor: away },
+        { x: base.lx + off(toward), anchor: toward },
+        { x: base.lx, anchor: "middle" },
+      ];
+    }
+
+    // Vertical nudges; +-50 lands in the gap between two node rows (row pitch 100).
+    // First look for a spot clear of other edges' lines too; if there is none, settle for
+    // one clear of nodes, badges and labels (the white halo keeps a crossing line legible).
+    const crossesEdge = (box: Box) => edgePoints.some((pts, j) => j !== idx && pts.some((p) => containsPoint(box, p)));
+    for (const avoidEdges of [true, false]) {
+      for (const dy of [0, -16, 16, -32, 32, -50, 50, -64, 64]) {
+        for (const a of anchors) {
+          const box = labelBox(lines, a.x, base.ly + dy, a.anchor);
+          if (box.x < 2 || box.x + box.w > totalW - 2) continue;
+          if (obstacles.some((o) => overlaps(box, o))) continue;
+          if (avoidEdges && crossesEdge(box)) continue;
+          obstacles.push(box);
+          return { lines, x: a.x, y: base.ly + dy, anchor: a.anchor };
+        }
+      }
+    }
+    const fallback = { lines, x: anchors[0].x, y: base.ly, anchor: anchors[0].anchor };
+    obstacles.push(labelBox(lines, fallback.x, fallback.y, fallback.anchor));
+    return fallback;
+  });
 }
 
 /* ── Main component ── */
@@ -240,12 +397,52 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
   const { items, w, h, backEdgeKeys } = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
   const nodeMap = useMemo(() => new Map(items.map((n) => [n.id, n])), [items]);
 
-  const renderedEdges = edges.filter((e) => nodeMap.has(e.from) && nodeMap.has(e.to));
+  const renderedEdges = useMemo(
+    () => edges.filter((e) => nodeMap.has(e.from) && nodeMap.has(e.to)),
+    [edges, nodeMap],
+  );
+  // Edges converging on one node meet it side by side, ordered by where they come from.
+  const toDx = useMemo(() => {
+    const offsets = new Map<string, number>();
+    const byTarget = new Map<string, TraceEdge[]>();
+    for (const e of renderedEdges) {
+      if (backEdgeKeys.has(`${e.from}->${e.to}`)) continue;
+      byTarget.set(e.to, [...(byTarget.get(e.to) ?? []), e]);
+    }
+    for (const group of byTarget.values()) {
+      group.sort((a, b) => nodeMap.get(a.from)!.cx - nodeMap.get(b.from)!.cx);
+      group.forEach((e, i) => offsets.set(`${e.from}->${e.to}`, (i - (group.length - 1) / 2) * 18));
+    }
+    return offsets;
+  }, [renderedEdges, backEdgeKeys, nodeMap]);
+
+  const placedLabels = useMemo(
+    () => placeLabels(renderedEdges, nodeMap, backEdgeKeys, w, toDx),
+    [renderedEdges, nodeMap, backEdgeKeys, w, toDx],
+  );
+
+  const usedRoutes = useMemo(() => new Set(renderedEdges.map((e) => e.route ?? "primary")), [renderedEdges]);
 
   const usedBadges = useMemo(
     () => [...new Set(nodes.filter((n) => n.badge).map((n) => n.badge!))] as TraceBadge[],
     [nodes],
   );
+
+  const activeTitle = showAlt && pathway.alternateState ? pathway.alternateState.label : pathway.title;
+
+  // When the diagram is wider than its box (wide graphs on phones), make the box a focusable,
+  // labelled region so keyboard users can scroll it, and show the scroll hint.
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollable, setScrollable] = useState(false);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const measure = () => setScrollable(el.scrollWidth > el.clientWidth + 1);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [showAlt, w, h]);
 
   return (
     <section>
@@ -257,23 +454,26 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
 
       {/* State toggle */}
       {pathway.alternateState && (
-        <div className="mt-5 inline-flex rounded-full bg-gray-100 p-0.5">
+        // Stacked on phones, where the long state names would wrap inside a pill.
+        <div className="mt-5 flex flex-col gap-0.5 rounded-xl bg-gray-100 p-0.5 sm:inline-flex sm:flex-row sm:rounded-full">
           <button
             onClick={() => setShowAlt(false)}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
+            aria-pressed={!showAlt}
+            className={`rounded-lg px-4 py-2 text-left text-xs font-medium transition-all duration-200 sm:rounded-full sm:py-1.5 sm:text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               !showAlt
                 ? "bg-white text-foreground shadow-sm"
-                : "text-gray-400 hover:text-gray-600"
+                : "text-gray-600 hover:text-gray-800"
             }`}
           >
             {pathway.title}
           </button>
           <button
             onClick={() => setShowAlt(true)}
-            className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 ${
+            aria-pressed={showAlt}
+            className={`rounded-lg px-4 py-2 text-left text-xs font-medium transition-all duration-200 sm:rounded-full sm:py-1.5 sm:text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
               showAlt
                 ? "bg-white text-foreground shadow-sm"
-                : "text-gray-400 hover:text-gray-600"
+                : "text-gray-600 hover:text-gray-800"
             }`}
           >
             {pathway.alternateState.label}
@@ -285,16 +485,20 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
       {w > 0 && h > 0 && (
         <div
           key={showAlt ? "alt" : "default"}
-          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-8"
+          ref={scrollRef}
+          tabIndex={scrollable ? 0 : undefined}
+          role={scrollable ? "region" : undefined}
+          aria-label={scrollable ? `${activeTitle} diagram, scrolls sideways` : undefined}
+          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-3 sm:p-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           style={{ animation: "tpFadeIn 250ms ease-out" }}
         >
           <style>{`@keyframes tpFadeIn{from{opacity:0}to{opacity:1}}`}</style>
           <svg
             viewBox={`0 0 ${w} ${h}`}
             className="w-full mx-auto"
-            style={{ maxWidth: Math.max(w, 360), minWidth: 300 }}
+            style={{ maxWidth: Math.max(w, 360), minWidth: w > WIDE_GRAPH ? 480 : 260 }}
             role="img"
-            aria-label={`Neural pathway diagram: ${pathway.title}`}
+            aria-label={`Neural pathway diagram: ${activeTitle}`}
           >
             <defs>
               {/* Subtle shadow for active nodes */}
@@ -318,7 +522,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
               const from = nodeMap.get(e.from)!;
               const to = nodeMap.get(e.to)!;
               const isBack = backEdgeKeys.has(`${e.from}->${e.to}`);
-              const { d, lx, ly, anchor } = getEdgePath(from, to, isBack, w);
+              const { d } = getEdgePath(from, to, isBack, w, toDx.get(`${e.from}->${e.to}`) ?? 0);
               const route = e.route || "primary";
               const bothActive = from.active && to.active;
 
@@ -326,7 +530,6 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
               const strokeW = route === "fast" ? 2 : 1.5;
               const dash = route === "slow" ? "7 5" : undefined;
               const marker = route === "fast" ? "arr-fast" : route === "slow" ? "arr-slow" : "arr";
-              const lines = e.label ? splitLabel(e.label) : [];
 
               return (
                 <g key={`${e.from}-${e.to}-${i}`} opacity={bothActive ? 1 : 0.2}>
@@ -336,30 +539,10 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                     stroke={stroke}
                     strokeWidth={strokeW}
                     strokeDasharray={dash}
-                    markerEnd={`url(#${marker})`}
+                    markerEnd={e.arrowAt === "from" ? undefined : `url(#${marker})`}
+                    markerStart={e.arrowAt === "from" ? `url(#${marker})` : undefined}
                     opacity={0.7}
                   />
-                  {lines.length > 0 && (
-                    <text
-                      textAnchor={anchor}
-                      fontSize={10}
-                      fill="#888"
-                      stroke="white"
-                      strokeWidth={4}
-                      paintOrder="stroke"
-                      fontFamily="system-ui, sans-serif"
-                    >
-                      {lines.map((line, li) => (
-                        <tspan
-                          key={li}
-                          x={lx}
-                          y={ly + (li - (lines.length - 1) / 2) * 14}
-                        >
-                          {line}
-                        </tspan>
-                      ))}
-                    </text>
-                  )}
                 </g>
               );
             })}
@@ -390,7 +573,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                       textAnchor="middle"
                       fontSize={12}
                       fill="#bbb"
-                      fontFamily="system-ui, sans-serif"
+                      fontFamily={SVG_FONT}
                     >
                       {node.label}
                     </text>
@@ -431,7 +614,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                         fontSize={8.5}
                         fontWeight={700}
                         fill="white"
-                        fontFamily="system-ui, sans-serif"
+                        fontFamily={SVG_FONT}
                         style={{ letterSpacing: "0.08em" }}
                       >
                         {BADGE_LABEL[node.badge]}
@@ -446,15 +629,47 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
                     fontSize={13}
                     fontWeight={600}
                     fill="#1a1a1a"
-                    fontFamily="system-ui, sans-serif"
+                    fontFamily={SVG_FONT}
                   >
                     {node.label}
                   </text>
                 </g>
               );
             })}
+
+            {/* Edge labels: drawn after nodes so a node can never cover a label */}
+            {renderedEdges.map((e, i) => {
+              const placed = placedLabels[i];
+              if (!placed) return null;
+              const bothActive = nodeMap.get(e.from)!.active && nodeMap.get(e.to)!.active;
+              return (
+                <text
+                  key={`label-${e.from}-${e.to}-${i}`}
+                  textAnchor={placed.anchor}
+                  fontSize={LABEL_FONT}
+                  fill="#6b7280"
+                  stroke="white"
+                  strokeWidth={4}
+                  paintOrder="stroke"
+                  fontFamily={SVG_FONT}
+                  opacity={bothActive ? 1 : 0.2}
+                >
+                  {placed.lines.map((line, li) => (
+                    <tspan key={li} x={placed.x} y={placed.y + (li - (placed.lines.length - 1) / 2) * LABEL_LINE_H}>
+                      {line}
+                    </tspan>
+                  ))}
+                </text>
+              );
+            })}
           </svg>
         </div>
+      )}
+
+      {scrollable && (
+        <p className="mt-2 text-center text-xs text-muted-foreground">
+          Scroll sideways to see the whole diagram.
+        </p>
       )}
 
       {/* Legend */}
@@ -462,24 +677,28 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
         {usedBadges.map((b) => (
           <span key={b} className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: BADGE_COLOR[b] }} />
-            <span className="text-xs text-gray-400 capitalize">{b}</span>
+            <span className="text-xs text-gray-500 capitalize">{b}</span>
           </span>
         ))}
-        <span className="flex items-center gap-1.5">
-          <span className="w-5 h-0 border-t-2 border-[#D85A30]" />
-          <span className="text-xs text-gray-400">Fast route</span>
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="w-5 h-0 border-t-[1.5px] border-dashed border-gray-300" />
-          <span className="text-xs text-gray-400">Slow route</span>
-        </span>
+        {usedRoutes.has("fast") && (
+          <span className="flex items-center gap-1.5">
+            <span className="w-5 h-0 border-t-2 border-[#D85A30]" />
+            <span className="text-xs text-gray-500">Fast route</span>
+          </span>
+        )}
+        {usedRoutes.has("slow") && (
+          <span className="flex items-center gap-1.5">
+            <span className="w-5 h-0 border-t-[1.5px] border-dashed border-gray-300" />
+            <span className="text-xs text-gray-500">Slow route</span>
+          </span>
+        )}
       </div>
 
       {onAdvanceToExplain && (
         <div className="mt-8 flex justify-center">
           <button
             onClick={onAdvanceToExplain}
-            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            className="inline-flex items-center gap-2 rounded-sm px-2 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             Read the explanation
             <span aria-hidden="true">→</span>

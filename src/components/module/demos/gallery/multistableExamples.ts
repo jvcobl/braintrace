@@ -19,7 +19,7 @@ const examples: MultistableExample[] = [
     category: "Figure–Ground",
     interpretations: ["A vase", "Two faces in profile"],
     prompt:
-      "Look at the figure below — don't overthink it. What do you see first?",
+      "Look at the figure above — don't overthink it. What do you see first?",
     switchFeedback: [
       "You saw the vase — your brain assigned the bright center as the object and the dark sides as empty background. Now try the opposite: look at the dark regions on each side as two face profiles looking at each other.",
       "You saw two faces — your brain assigned the dark side regions as objects and the bright center as background. Now try the opposite: look at the bright center as a vase or goblet.",
@@ -45,13 +45,13 @@ const examples: MultistableExample[] = [
     category: "Color Constancy",
     interpretations: ["Blue and black", "White and gold"],
     prompt:
-      "Look at the photograph below. What colors do you see?",
+      "Look at the photograph above. What colors do you see?",
     switchFeedback: [
       "You see blue and black — your brain is reading the lighting as bright and even, so it takes the colors at face value. Now try imagining this dress is sitting in deep shadow. Could those same tones be a washed-out white and a muted gold?",
       "You see white and gold — your brain is assuming shadow and compensating, subtracting darkness to perceive lighter, warmer colors. Now try imagining the lighting is bright and even. Could those tones simply be blue and black?",
     ],
     switchHint: [
-      "Imagine warm shadow falling across white-and-gold fabric — the shadow would shift white toward blue-grey and gold toward dark brown.",
+      "Imagine cool shadow falling across white-and-gold fabric — the shadow would shift white toward blue-grey and gold toward dark brown.",
       "Imagine flat, even light. No shadow correction is needed — what you see is what's there.",
     ],
     resultFeedback: [

@@ -22,12 +22,12 @@ const ModuleLink = ({ moduleId }: ModuleLinkProps) => {
   return (
     <Link
       to={`/module/${mod.slug}`}
-      className="group flex items-center gap-3 border border-gray-200 border-l-4 rounded-lg p-3 hover:bg-gray-50 transition-colors"
+      className="group flex items-center gap-3 border border-gray-200 border-l-4 rounded-lg p-3 hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       style={{ borderLeftColor: accent }}
     >
       <div className="min-w-0 flex-1">
         <span className="font-display text-sm text-gray-900">{mod.title}</span>
-        <span className="block text-xs text-gray-500 mt-0.5 truncate">{mod.hook}</span>
+        <span className="block text-xs text-gray-500 mt-0.5">{mod.hook}</span>
       </div>
       <span className="text-gray-300 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" aria-hidden="true">→</span>
     </Link>

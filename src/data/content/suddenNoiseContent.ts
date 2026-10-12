@@ -4,9 +4,9 @@ export const suddenNoiseContent = {
   predictionOptionCalm: "I'll stay calm",
   predictionOptionFlinch: "I'll flinch",
   resultIfCalm:
-    "You said you'd stay calm. Your reaction time was {ms}ms. That's faster than conscious thought.",
+    "You said you'd stay calm. Your reaction time was {ms}ms.",
   resultIfFlinch:
     "You predicted you'd flinch. Your reaction time was {ms}ms. Either way, the response started before you could decide.",
   resultBridge:
-    "Your prediction lost to a subcortical reflex. The Trace step shows why.",
+    "Startle is a subcortical reflex. The Trace step shows why.",
 };

@@ -1,6 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import { modules } from "@/data/modules";
 import { conceptPages } from "@/data/conceptPages";
+import { UNIT_TO_TOPIC } from "@/data/topicUnits";
+import { lookup } from "@/lib/utils";
+
+const TOPIC_TITLES: Record<string, string> = {
+  perception: "Perception and Object Recognition",
+  attention: "Attention, Cognitive Load, and the PFC",
+  emotion: "Emotion, Limbic System, and Amygdala",
+  learning: "Learning and Fear Conditioning",
+  stress: "Stress and Homeostasis",
+};
 
 interface Crumb {
   label: string;
@@ -49,22 +59,20 @@ export default function Breadcrumb() {
         : { label: "How Your Brain Predicts", to: "/how-your-brain-predicts" },
     );
     if (segments[1]) {
-      crumbs.push({ label: conceptSlugToTitle[segments[1]] ?? segments[1] });
+      crumbs.push({ label: lookup(conceptSlugToTitle, segments[1]) ?? segments[1] });
     }
   } else if (segments[0] === "topics") {
     if (segments[1]) {
-      const TOPIC_TITLES: Record<string, string> = {
-        perception: "Perception and Object Recognition",
-        attention: "Attention, Cognitive Load, and the PFC",
-        emotion: "Emotion, Limbic System, and Amygdala",
-        learning: "Learning and Fear Conditioning",
-        stress: "Stress and Homeostasis",
-      };
       crumbs.push({ label: "Topics", to: "/topics" });
-      crumbs.push({ label: TOPIC_TITLES[segments[1]] ?? segments[1] });
+      crumbs.push({ label: lookup(TOPIC_TITLES, segments[1]) ?? segments[1] });
     } else {
       crumbs.push({ label: "Topics" });
     }
+  } else if (segments[0] === "unit" && segments[1]) {
+    const topicSlug = lookup(UNIT_TO_TOPIC, segments[1]);
+    crumbs.push({ label: "Topics", to: "/topics" });
+    if (topicSlug) crumbs.push({ label: TOPIC_TITLES[topicSlug], to: `/topics/${topicSlug}` });
+    crumbs.push({ label: "Study guide" });
   } else if (segments[0] === "course-map") {
     crumbs.push({ label: "Course Map" });
   } else if (segments[0] === "about") {
@@ -75,7 +83,7 @@ export default function Breadcrumb() {
 
   return (
     <nav aria-label="Breadcrumb" className="mb-6">
-      <ol className="flex items-center gap-1.5 text-sm">
+      <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm">
         {crumbs.map((crumb, i) => (
           <li key={i} className="flex items-center gap-1.5">
             {i > 0 && (
@@ -86,12 +94,12 @@ export default function Breadcrumb() {
             {crumb.to ? (
               <Link
                 to={crumb.to}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="inline-block py-1 text-gray-500 hover:text-gray-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
               >
                 {crumb.label}
               </Link>
             ) : (
-              <span className="text-gray-700 font-medium">{crumb.label}</span>
+              <span className="text-gray-700 font-medium" aria-current="page">{crumb.label}</span>
             )}
           </li>
         ))}

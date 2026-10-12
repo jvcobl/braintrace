@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { AnswerLine, useStepFocus } from "@/components/module/experience";
 
 interface Scenario {
   id: string;
@@ -66,7 +67,7 @@ function shuffle<T>(arr: T[]): T[] {
 type Phase = "match" | "result";
 
 const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain") => void }) => {
-  const [items] = useState(() => shuffle(SCENARIOS));
+  const [items, setItems] = useState(() => shuffle(SCENARIOS));
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [phase, setPhase] = useState<Phase>("match");
@@ -87,6 +88,7 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   );
 
   const handleReset = useCallback(() => {
+    setItems(shuffle(SCENARIOS));
     setCurrent(0);
     setAnswers({});
     setPhase("match");
@@ -96,12 +98,15 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
     (s) => answers[s.id] === s.correctRegion,
   ).length;
 
+  // Keep keyboard focus and screen readers with the current scenario (see useStepFocus).
+  const { containerRef, announcement } = useStepFocus<HTMLElement>(`${phase}-${current}`);
+
   return (
-    <section>
-      <h2 className="font-display text-2xl font-semibold text-foreground">
+    <section ref={containerRef}>
+      <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Experience
       </h2>
-      <p className="mt-2 text-[15px] text-muted-foreground leading-relaxed max-w-xl">
+      <p className="mt-2 text-[14px] sm:text-[15px] text-muted-foreground leading-relaxed max-w-xl">
         Each scenario describes something the prefrontal cortex does. Match it
         to the correct PFC region: <strong>dlPFC</strong> (logic & working memory),{" "}
         <strong>vmPFC</strong> (emotion regulation), or <strong>OFC</strong> (prediction
@@ -110,9 +115,9 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
       <div className="mt-6">
         {phase === "match" && (
-          <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-5">
-            <p className="text-xs text-muted-foreground">
-              {current + 1} of {items.length}
+          <div data-reveal className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-5">
+            <p data-announce className="text-xs text-muted-foreground">
+              Scenario {current + 1} of {items.length}
             </p>
 
             <div className="flex gap-0.5">
@@ -127,18 +132,19 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             </div>
 
             <div className="rounded-lg bg-secondary px-5 py-4">
-              <p className="text-sm text-foreground leading-relaxed">
+              <p data-announce className="text-sm text-foreground leading-relaxed">
                 {scenario.text}
               </p>
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {REGIONS.map((r) => (
+              {REGIONS.map((r, i) => (
                 <button
                   key={r}
                   type="button"
+                  data-autofocus={i === 0 || undefined}
                   onClick={() => handlePick(r)}
-                  className="flex-1 min-w-[100px] rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="flex-1 min-w-[100px] rounded-md border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-colors [@media(hover:hover)]:hover:bg-accent [@media(hover:hover)]:hover:text-accent-foreground active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
                   <span className="block font-semibold">{r}</span>
                   <span className="block text-[11px] text-muted-foreground">{REGION_LABELS[r].short}</span>
@@ -149,8 +155,8 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
         )}
 
         {phase === "result" && (
-          <div className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-6">
-            <div className="rounded-lg bg-accent/40 px-4 py-3">
+          <div data-reveal="start" className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-6">
+            <div data-autofocus tabIndex={-1} className="rounded-lg bg-accent/40 px-4 py-3 focus:outline-none">
               <p className="text-sm text-foreground leading-relaxed">
                 {correctCount === items.length
                   ? "Every match was correct. The three PFC regions handle distinct functions, though they collaborate constantly and compete for the same finite metabolic resources."
@@ -173,14 +179,13 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
                         : "border-destructive/30 bg-destructive/5"
                     }`}
                   >
+                    <AnswerLine
+                      correct={correct}
+                      picked={picked ? REGION_LABELS[picked].full : ""}
+                      answer={REGION_LABELS[s.correctRegion].full}
+                    />
                     <p className="text-foreground leading-relaxed">{s.text}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {correct ? (
-                        <>✓ {REGION_LABELS[s.correctRegion].full} — {s.explanation}</>
-                      ) : (
-                        <>{REGION_LABELS[s.correctRegion].full} — {s.explanation}</>
-                      )}
-                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">{s.explanation}</p>
                   </li>
                 );
               })}
@@ -190,9 +195,9 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
               <button
                 type="button"
                 onClick={() => onNavigate("Trace")}
-                className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group"
+                className="w-full text-center text-xs text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1.5 group rounded-sm py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                <span>Trace shows the PFC functional map and how these regions connect</span>
+                <span>Trace shows what each PFC region does</span>
                 <span className="text-primary/40 group-hover:text-primary/60 transition-colors" aria-hidden>→</span>
               </button>
             )}
@@ -200,12 +205,16 @@ const PFCRoleMatcherDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
             <button
               type="button"
               onClick={handleReset}
-              className="rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="mx-auto block rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Try Again
             </button>
           </div>
         )}
+      </div>
+
+      <div role="status" aria-live="polite" className="sr-only">
+        {announcement}
       </div>
     </section>
   );

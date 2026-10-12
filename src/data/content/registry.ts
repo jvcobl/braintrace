@@ -6,6 +6,7 @@
 // ============================================================
 
 import type { UnitContent } from "./types";
+import { lookup } from "@/lib/utils";
 
 import {
   unit1Meta, unit1ConceptCards, unit1Pathways, unit1Distinctions, unit1CaseNotes, unit1Review,
@@ -80,8 +81,8 @@ export const lessonMappings: LessonMapping[] = [
   { moduleId: "mod-5", unitId: "unit-2", title: "Memory Under Load" },
   { moduleId: "mod-8", unitId: "unit-2", title: "PFC Role Matcher" },
   { moduleId: "mod-3", unitId: "unit-3", title: "Sudden Noise Reaction" },
-  { moduleId: "mod-9", unitId: "unit-3", title: "Fear vs. Anxiety Sorter" },
   { moduleId: "mod-10", unitId: "unit-3", title: "Emotion vs. Arousal Sorter" },
+  { moduleId: "mod-9", unitId: "unit-3", title: "Fear vs. Anxiety Sorter" },
   { moduleId: "mod-4", unitId: "unit-4", title: "Fear Cue and Extinction" },
   { moduleId: "mod-11", unitId: "unit-4", title: "Classical vs. Operant Sorter" },
   { moduleId: "mod-6", unitId: "unit-5", title: "Stress Response Builder" },
@@ -95,7 +96,7 @@ export const lessonMappings: LessonMapping[] = [
 
 /** Get the full content bundle for a unit. */
 export function getUnitContent(unitId: string): UnitContent | undefined {
-  return unitContent[unitId];
+  return lookup(unitContent, unitId);
 }
 
 /** Get all unit IDs in order. */

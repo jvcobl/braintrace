@@ -2,19 +2,29 @@ import type { TraceNode } from "@/data/modules";
 
 interface TracePanelProps {
   nodes: TraceNode[];
+  onAdvanceToExplain?: () => void;
+  /** Line under the heading; lessons whose list is concepts rather than a signal path pass their own. */
+  subtitle?: string;
+  /** Accessible name for the list. */
+  listLabel?: string;
 }
 
-const TracePanel = ({ nodes }: TracePanelProps) => (
+const TracePanel = ({
+  nodes,
+  onAdvanceToExplain,
+  subtitle = "Follow the signal through the circuit.",
+  listLabel = "Neural pathway steps",
+}: TracePanelProps) => (
   <section>
     <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">Trace the Pathway</h2>
-    <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground/60">
-      Follow the signal through the circuit.
+    <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground">
+      {subtitle}
     </p>
-    <ol className="mt-5 sm:mt-6 space-y-0" aria-label="Neural pathway steps">
+    <ol className="mt-5 sm:mt-6 space-y-0" aria-label={listLabel}>
       {nodes.map((node, i) => (
         <li key={node.label} className="flex gap-3 sm:gap-4">
           <div className="flex flex-col items-center">
-            <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] sm:text-xs font-bold text-primary-foreground shadow-sm">
+            <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] sm:text-xs font-bold text-primary-foreground shadow-sm">
               {i + 1}
             </div>
             {i < nodes.length - 1 && (
@@ -28,6 +38,18 @@ const TracePanel = ({ nodes }: TracePanelProps) => (
         </li>
       ))}
     </ol>
+
+    {onAdvanceToExplain && (
+      <div className="mt-6 flex justify-center">
+        <button
+          onClick={onAdvanceToExplain}
+          className="inline-flex items-center gap-2 rounded-sm px-2 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          Read the explanation
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    )}
   </section>
 );
 

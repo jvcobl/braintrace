@@ -51,7 +51,7 @@ const RubinVaseFigure = ({ highlighted, assist }: Props) => {
       {/* Assist labels */}
       {assist !== "none" && (
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
-          <span className="rounded-md bg-primary/15 px-2.5 py-1 text-[10px] font-medium text-primary backdrop-blur-sm">
+          <span className="whitespace-nowrap rounded-md bg-white/90 px-2.5 py-1 text-[11px] font-medium text-primary shadow-sm">
             {assist === "a" ? "Focus on the bright center" : "Focus on the dark profiles"}
           </span>
         </div>

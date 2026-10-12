@@ -77,14 +77,14 @@ function getSummary(correctCount: number, total: number): ExperienceSummary {
     return {
       heading: "What This Shows",
       body: "The images were chosen to be ambiguous at low spatial frequencies. The OFC generated confident guesses from coarse input, and every guess pointed to the wrong identity. This illustrates both the power and the cost of the top-down prediction system: the same mechanism that enables millisecond recognition also produces confident wrong answers.",
-      bridge: "Explain covers the cost of heuristics in detail.",
+      bridge: "Explain covers how the OFC's fast guess gets confirmed or corrected.",
     };
   }
   if (correctCount >= total / 2) {
     return {
       heading: "What This Shows",
       body: "The OFC shortcut works well when coarse cues are distinctive, but misfires when shapes and color profiles overlap between objects. The system trades accuracy for speed, and the trade-off shows up in ambiguous cases.",
-      bridge: "Explain breaks down why heuristics are fast but fallible.",
+      bridge: "Explain breaks down why the OFC guess is fast and how it gets corrected.",
     };
   }
   return {
@@ -103,11 +103,13 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
   const [guessStage, setGuessStage] = useState<number | null>(null);
   const [done, setDone] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   const current = stimuli[round];
   const hasGuessed = guess !== null;
-  const blurPx = BLUR_STAGES[blurStage];
+  // Reveal the object once a guess is in, so the learner sees what it was.
+  const blurPx = hasGuessed ? 0 : BLUR_STAGES[blurStage];
+
+  const fullySharp = blurStage >= BLUR_STAGES.length - 1;
 
   const handleSharpen = useCallback(() => {
     if (blurStage < BLUR_STAGES.length - 1) setBlurStage((s) => s + 1);
@@ -118,10 +120,9 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       if (hasGuessed) return;
       setGuess(option);
       setGuessStage(blurStage);
-      if (!hasInteracted) setHasInteracted(true);
       if (option === current.name) setCorrectCount((c) => c + 1);
     },
-    [hasGuessed, blurStage, current.name, hasInteracted]
+    [hasGuessed, blurStage, current.name]
   );
 
   const handleNext = useCallback(() => {
@@ -156,15 +157,23 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
       done={done}
       summary={getSummary(correctCount, stimuli.length)}
       onRestart={handleRestart}
+      stepKey={`${round}-${hasGuessed ? "guessed" : fullySharp ? "sharp" : "blurred"}`}
+      footer={
+        <PredictionOutcome
+          visible
+          {...predictionOutcomeContent["blurry-object"]}
+          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
+        />
+      }
     >
-      <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
+      <div data-reveal="start" className="rounded-lg border border-border bg-card p-4 sm:p-6">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs text-muted-foreground">
+          <p data-announce={!hasGuessed || undefined} className="text-xs text-muted-foreground">
             Object {round + 1} of {stimuli.length}
           </p>
           {/* Blur stage indicator */}
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-muted-foreground/50">Clarity</span>
+            <span className="text-[11px] text-muted-foreground">Clarity</span>
             <div className="flex gap-0.5">
               {BLUR_STAGES.map((_, i) => (
                 <div
@@ -181,6 +190,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
         {/* Stimulus */}
         <div className="flex items-center justify-center rounded-lg bg-secondary py-12">
           <span
+            role="img"
             className="text-8xl transition-all duration-700 ease-out select-none"
             style={{ filter: `blur(${blurPx}px)` }}
             aria-label={hasGuessed ? current.name : "Blurred object — try to guess"}
@@ -194,10 +204,11 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
           <div className="mt-4 flex justify-center">
             <button
               onClick={handleSharpen}
-              disabled={blurStage >= BLUR_STAGES.length - 1}
+              disabled={fullySharp}
+              data-autofocus={!fullySharp || undefined}
               className="rounded-md bg-secondary px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              {blurStage >= BLUR_STAGES.length - 1 ? "Fully sharp" : "Sharpen"}
+              {fullySharp ? "Fully sharp" : "Sharpen"}
             </button>
           </div>
         )}
@@ -208,7 +219,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
             {hasGuessed ? "Your answer:" : "What is this object?"}
           </p>
           <div className="grid grid-cols-2 gap-2">
-            {current.options.map((option) => {
+            {current.options.map((option, i) => {
               let style = "border border-border bg-card text-foreground hover:bg-secondary";
               if (hasGuessed) {
                 if (option === current.name) {
@@ -224,6 +235,7 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
                   key={option}
                   onClick={() => handleGuess(option)}
                   disabled={hasGuessed}
+                  data-autofocus={(!hasGuessed && fullySharp && i === 0) || undefined}
                   className={`rounded-md px-4 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${style} disabled:cursor-default`}
                 >
                   {option}
@@ -235,10 +247,13 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
 
         {/* Feedback */}
         {outcome && (
-          <div className="mt-5">
-            <FeedbackCard onNavigate={onNavigate} feedback={trialFeedback[outcome]} />
+          <div data-reveal className="mt-5">
+            <div data-announce>
+              <FeedbackCard feedback={trialFeedback[outcome]} />
+            </div>
             <div className="mt-4 flex justify-center">
               <button
+                data-autofocus
                 onClick={handleNext}
                 className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
@@ -249,14 +264,6 @@ const BlurryObjectDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Exp
         )}
       </div>
 
-      {/* Prediction & Outcome bridge */}
-      <div className="mt-3">
-        <PredictionOutcome
-          visible={hasInteracted}
-          {...predictionOutcomeContent["blurry-object"]}
-          onNavigateTrace={onNavigate ? () => onNavigate("Trace") : undefined}
-        />
-      </div>
     </ExperienceShell>
   );
 };

@@ -2,12 +2,14 @@ import { modules } from "./modules";
 import { moduleDefinitions } from "./moduleDefinitions";
 import { conceptPages } from "./conceptPages";
 import { brainStructures } from "./brainStructures";
+import { unitContent } from "./content/registry";
+import multistableExamples from "@/components/module/demos/gallery/multistableExamples";
 
 export interface SearchItem {
   id: string;
   title: string;
   description: string;
-  type: "module" | "concept" | "structure" | "deeper";
+  type: "module" | "concept" | "structure" | "deeper" | "guide";
   url: string;
   keywords: string[];
 }
@@ -34,9 +36,13 @@ const items: SearchItem[] = [];
 // Modules + Go Deeper cards
 for (const mod of modules) {
   const def = moduleDefinitions[mod.slug];
-  const keywords = [mod.title, mod.slug, mod.shortGoal];
+  // Also findable by the structures and ideas on its Trace tab (and, for the gallery, its figures).
+  const keywords = [mod.title, mod.slug, mod.shortGoal, ...mod.traceNodes.map((n) => n.label)];
   if (def) {
     keywords.push(def.tagline, def.predictionLens.nbb302Connection);
+  }
+  if (mod.slug === "multistable-perception-gallery") {
+    keywords.push(...multistableExamples.flatMap((ex) => [ex.title, ex.category, ...ex.interpretations]));
   }
 
   items.push({
@@ -89,6 +95,61 @@ for (const struct of Object.values(brainStructures)) {
     url,
     keywords: [struct.name, struct.id, struct.shortDescription],
   });
+}
+
+// Study guides: the guide itself, then its concepts, pathways, distinctions and case notes.
+// Listed last, so lessons and structures come first when a search matches both.
+for (const [unitId, unit] of Object.entries(unitContent)) {
+  const base = `/unit/${unitId}`;
+  const where = `${unit.meta.title} study guide`;
+  items.push({
+    id: `guide-${unitId}`,
+    title: `${unit.meta.title}: Study Guide`,
+    description: unit.meta.subtitle,
+    type: "guide",
+    url: base,
+    keywords: [unit.meta.title, unit.meta.subtitle, ...unit.meta.majorStructures, ...unit.meta.lectureTopics],
+  });
+  for (const card of unit.conceptCards) {
+    items.push({
+      id: `guide-concept-${card.id}`,
+      title: card.term,
+      description: `Key concept · ${where}`,
+      type: "guide",
+      url: `${base}#concept-${card.id}`,
+      keywords: [card.term, ...card.structures, card.definition],
+    });
+  }
+  for (const pathway of unit.pathways) {
+    items.push({
+      id: `guide-pathway-${pathway.id}`,
+      title: pathway.title,
+      description: `Pathway · ${where}`,
+      type: "guide",
+      url: `${base}#pathway-${pathway.id}`,
+      keywords: [pathway.title, pathway.description, ...pathway.steps.map((s) => s.structure)],
+    });
+  }
+  for (const d of unit.distinctions) {
+    items.push({
+      id: `guide-distinction-${d.id}`,
+      title: `${d.termA} vs. ${d.termB}`,
+      description: `Distinction · ${where}`,
+      type: "guide",
+      url: `${base}#distinction-${d.id}`,
+      keywords: [d.termA, d.termB, d.keyDifference],
+    });
+  }
+  for (const note of unit.caseNotes) {
+    items.push({
+      id: `guide-case-${note.id}`,
+      title: note.title,
+      description: `Case note · ${where}`,
+      type: "guide",
+      url: `${base}#case-${note.id}`,
+      keywords: [note.title, note.content],
+    });
+  }
 }
 
 export const searchIndex = items;

@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import ModuleLink from "@/components/ModuleLink";
 import ConceptLink from "@/components/ConceptLink";
+import { usePageMeta } from "@/hooks/use-page-meta";
 
 /* ── Topic area data ── */
 
@@ -24,14 +25,14 @@ const topicAreas: TopicArea[] = [
       "Top-down and Bottom-up Integrations",
     ],
     temporal: "Milliseconds Before → One Second Before",
-    moduleIds: ["blurry-object-guess", "face-or-not", "memory-under-load"],
+    moduleIds: ["blurry-object-guess", "face-or-not", "multistable-perception-gallery", "memory-under-load", "pfc-role-matcher"],
   },
   {
     title: "Emotion, Arousal, and Salience",
     accent: "#D85A30",
     courseTopics: ["States that Prime Behavior — Arousal, Emotions"],
     temporal: "Seconds to Minutes",
-    moduleIds: ["sudden-noise-reaction"],
+    moduleIds: ["sudden-noise-reaction", "emotion-vs-arousal-sorter", "fear-vs-anxiety-sorter"],
   },
   {
     title: "Learning, Fear, and Stress",
@@ -42,7 +43,7 @@ const topicAreas: TopicArea[] = [
       "Stress & Survival — HPA Axis",
     ],
     temporal: "Minutes to Days → Days to Months",
-    moduleIds: ["fear-cue-and-extinction", "stress-response-builder"],
+    moduleIds: ["fear-cue-and-extinction", "classical-vs-operant-sorter", "stress-response-builder", "homeostasis-vs-allostasis-sorter"],
   },
 ];
 
@@ -60,13 +61,13 @@ const timeline: TimelineEntry[] = [
   { week: "3–4", topic: "What and Where is Behavior / Bases of Behavior", temporal: "Nuts & Bolts" },
   { week: "5", topic: "The Behavior — Reflexive and Goal-Directed", temporal: "The Act Itself" },
   { week: "6", topic: "EXAM 1" },
-  { week: "7", topic: "Sensation, Perception, and Inklings of Awareness", temporal: "Milliseconds Before", modules: ["Blurry Object Guess", "Face or Not?"] },
-  { week: "8", topic: "Object Recognition and Decision-making", temporal: "One Second Before", modules: ["Memory Under Load"] },
-  { week: "9", topic: "States that Prime Behavior", temporal: "Seconds to Minutes", modules: ["Sudden Noise Reaction"] },
+  { week: "7", topic: "Sensation, Perception, and Inklings of Awareness", temporal: "Milliseconds Before", modules: ["Blurry Object Guess", "Face or Not?", "Multistable Perception Gallery"] },
+  { week: "8", topic: "Object Recognition and Decision-making", temporal: "One Second Before", modules: ["Memory Under Load", "PFC Role Matcher"] },
+  { week: "9", topic: "States that Prime Behavior", temporal: "Seconds to Minutes", modules: ["Sudden Noise Reaction", "Emotion vs. Arousal Sorter", "Fear vs. Anxiety Sorter"] },
   { week: "—", topic: "SPRING BREAK" },
-  { week: "10", topic: "Learning 101", temporal: "Minutes to Days" },
+  { week: "10", topic: "Learning 101", temporal: "Minutes to Days", modules: ["Classical vs. Operant Sorter"] },
   { week: "11", topic: "The Push & Pull — Fear and Anxiety", temporal: "Minutes to Days", modules: ["Fear Cue and Extinction"] },
-  { week: "12", topic: "Stress & Survival — HPA/HPG Axis", temporal: "Days to Months", modules: ["Stress Response Builder"] },
+  { week: "12", topic: "Stress & Survival — HPA/HPG Axis", temporal: "Days to Months", modules: ["Stress Response Builder", "Homeostasis vs. Allostasis Sorter"] },
   { week: "13", topic: "Social Life & Memory", temporal: "Days to Years" },
   { week: "14–15", topic: "Neurodevelopment", temporal: "Years to Decades" },
   { week: "16", topic: "Lineage & Culture", temporal: "Centuries to Millennia" },
@@ -78,16 +79,17 @@ const timeline: TimelineEntry[] = [
 /* ── Page ── */
 
 const CourseMap = () => {
+  usePageMeta({ title: "Course Map", description: "How BrainTrace lessons connect to the NBB302 course topics." });
   const [timelineOpen, setTimelineOpen] = useState(false);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
 
       {/* Hero */}
-      <h1 className="text-3xl font-semibold text-foreground">Course map</h1>
+      <h1 className="font-display text-3xl tracking-tight text-foreground">Course Map</h1>
       <p className="mt-3 text-lg text-gray-500 max-w-2xl">
-        How BrainTrace connects to NBB302. Each module maps to specific course
+        How BrainTrace connects to NBB302. Each lesson maps to specific course
         topics.
       </p>
 
@@ -107,14 +109,14 @@ const CourseMap = () => {
               ))}
             </div>
 
-            <span className="inline-block mt-3 text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
+            <span className="inline-block mt-3 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
               {area.temporal}
             </span>
 
             <div className="border-t border-gray-100 my-4" />
 
-            <p className="text-[10px] font-medium text-gray-400 uppercase tracking-wider mb-2">
-              BrainTrace modules
+            <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider mb-2">
+              BrainTrace lessons
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {area.moduleIds.map((id) => (
@@ -129,7 +131,7 @@ const CourseMap = () => {
       <div className="mt-12">
         <h2 className="text-lg font-medium text-foreground mb-2">The shared framework</h2>
         <p className="text-sm text-gray-500 max-w-2xl mb-4">
-          Every module above runs the same loop. Your brain predicts,
+          Every lesson above runs the same loop. Your brain predicts,
           receives input, detects mismatch, and updates its model.
         </p>
         <div className="space-y-2 max-w-md">
@@ -143,15 +145,16 @@ const CourseMap = () => {
       <div className="mt-12 border border-gray-200 rounded-xl overflow-hidden">
         <button
           onClick={() => setTimelineOpen((o) => !o)}
-          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+          aria-expanded={timelineOpen}
+          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
         >
           <span className="text-sm font-medium text-foreground">
             View full course timeline
           </span>
           {timelineOpen ? (
-            <ChevronUp className="w-4 h-4 text-gray-400" />
+            <ChevronUp className="w-4 h-4 text-gray-500" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-gray-400" />
+            <ChevronDown className="w-4 h-4 text-gray-500" />
           )}
         </button>
 
@@ -172,14 +175,14 @@ const CourseMap = () => {
                     />
 
                     <div className="flex items-baseline gap-2 flex-wrap">
-                      <span className="text-xs text-gray-400 font-medium shrink-0">
-                        {entry.week === "—" ? "" : `Week ${entry.week}`}
-                      </span>
-                      <span className={`text-sm ${isExam ? "text-gray-400 font-medium" : "text-gray-700"}`}>
+                      {entry.week !== "—" && (
+                        <span className="text-xs text-gray-500 font-medium shrink-0">Week {entry.week}</span>
+                      )}
+                      <span className={`text-sm ${isExam ? "text-gray-500 font-medium" : "text-gray-700"}`}>
                         {entry.topic}
                       </span>
                       {entry.temporal && (
-                        <span className="text-[10px] text-gray-400">
+                        <span className="text-[11px] text-gray-500">
                           ({entry.temporal})
                         </span>
                       )}
@@ -190,7 +193,7 @@ const CourseMap = () => {
                         {entry.modules!.map((name) => (
                           <span
                             key={name}
-                            className="text-[10px] font-medium bg-[#1D9E75]/10 text-[#1D9E75] px-2 py-0.5 rounded"
+                            className="text-[11px] font-medium bg-primary/10 text-primary px-2 py-0.5 rounded"
                           >
                             {name}
                           </span>

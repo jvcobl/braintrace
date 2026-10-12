@@ -6,8 +6,8 @@ interface CaseNoteSectionProps {
 }
 
 const CaseNoteSection = ({ caseNotes }: CaseNoteSectionProps) => (
-  <section>
-    <h3 className="font-display text-lg tracking-tight text-foreground">Clinical &amp; Research Notes</h3>
+  <section id="case-notes">
+    <h2 className="font-display text-lg tracking-tight text-foreground">Clinical &amp; Research Notes</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
       Cases and findings that connect these ideas to neuroscience research.
     </p>
@@ -15,9 +15,10 @@ const CaseNoteSection = ({ caseNotes }: CaseNoteSectionProps) => (
       {caseNotes.map((cn) => (
         <article
           key={cn.id}
+          id={`case-${cn.id}`}
           className="rounded-xl border border-border/70 bg-card p-4 sm:p-5"
         >
-          <h4 className="text-[13px] sm:text-[14px] font-semibold text-card-foreground">{cn.title}</h4>
+          <h3 className="font-sans text-[13px] sm:text-[14px] font-semibold text-card-foreground">{cn.title}</h3>
           <p className="mt-2 sm:mt-2.5 text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">{cn.content}</p>
           {cn.sensitivity === "high" && <SensitivityBadge note={cn.sensitivityNote} />}
         </article>

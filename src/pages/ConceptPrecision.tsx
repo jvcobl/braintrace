@@ -2,6 +2,10 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import ModuleLink from "@/components/ModuleLink";
 import Breadcrumb from "@/components/layout/Breadcrumb";
+import { badgeFill } from "@/lib/colors";
+import { usePageMeta } from "@/hooks/use-page-meta";
+import { conceptPages } from "@/data/conceptPages";
+import ConceptPageNav from "@/components/ConceptPageNav";
 
 /* ── Scenario data (text only, no slider) ── */
 
@@ -47,13 +51,14 @@ const crossLinks = [
 /* ── Page ── */
 
 const ConceptPrecision = () => {
+  usePageMeta({ title: "Precision & Attention", description: conceptPages["precision-attention"].description });
   const [deeperOpen, setDeeperOpen] = useState(false);
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
       <Breadcrumb />
 
-      <h1 className="text-3xl font-semibold text-foreground">Precision &amp; Attention</h1>
+      <h1 className="font-display text-3xl tracking-tight text-foreground">Precision &amp; Attention</h1>
       <p className="mt-3 text-lg text-muted-foreground max-w-2xl leading-relaxed">
         Your brain doesn't trust every signal equally. It assigns a confidence
         level, called <em>precision</em>, to both incoming sensory input and to
@@ -91,7 +96,7 @@ const ConceptPrecision = () => {
         Precision in action
       </h2>
       <p className="text-sm text-muted-foreground mt-2 mb-6 max-w-2xl">
-        Each BrainTrace module demonstrates a different balance between
+        Each BrainTrace lesson demonstrates a different balance between
         prior precision and input precision. Here's how the weighting plays out
         in three scenarios.
       </p>
@@ -102,8 +107,8 @@ const ConceptPrecision = () => {
             <div className="flex items-center gap-2">
               <h3 className="text-base font-medium text-foreground">{s.title}</h3>
               <span
-                className="text-[10px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
-                style={{ backgroundColor: s.dominantColor }}
+                className="text-[11px] font-bold uppercase tracking-wider text-white px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: badgeFill(s.dominantColor) }}
               >
                 {s.dominant} dominates
               </span>
@@ -126,7 +131,7 @@ const ConceptPrecision = () => {
         {crossLinks.map((link) => (
           <div key={link.id} className="flex items-start gap-3">
             <span className="mt-1 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-            <div>
+            <div className="min-w-0 flex-1">
               <p className="text-sm text-muted-foreground leading-relaxed">{link.note}</p>
               <div className="mt-1.5 max-w-sm">
                 <ModuleLink moduleId={link.id} />
@@ -140,7 +145,8 @@ const ConceptPrecision = () => {
       <div className="mt-12 border border-gray-200 rounded-xl overflow-hidden">
         <button
           onClick={() => setDeeperOpen(!deeperOpen)}
-          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+          aria-expanded={deeperOpen}
+          className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
         >
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary" />
@@ -149,9 +155,9 @@ const ConceptPrecision = () => {
             </span>
           </div>
           {deeperOpen ? (
-            <ChevronUp className="w-4 h-4 text-gray-400" />
+            <ChevronUp className="w-4 h-4 text-gray-500" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-gray-400" />
+            <ChevronDown className="w-4 h-4 text-gray-500" />
           )}
         </button>
 
@@ -182,7 +188,7 @@ const ConceptPrecision = () => {
               prior). The signal didn't change. The precision weights did.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              In BrainTrace modules, you can see precision at work whenever
+              In BrainTrace lessons, you can see precision at work whenever
               the brain's expectation competes with incoming evidence. The
               outcome depends on which side the brain trusts more, and
               attention is the process that tips the balance.
@@ -190,6 +196,7 @@ const ConceptPrecision = () => {
           </div>
         )}
       </div>
+      <ConceptPageNav current="precision-attention" />
     </div>
   );
 };

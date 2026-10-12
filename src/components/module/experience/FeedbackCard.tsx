@@ -28,7 +28,7 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
 
       {/* Secondary — interpretation */}
       <div className="rounded-lg border border-border bg-secondary/30 px-3.5 py-2.5 sm:px-4 sm:py-3">
-        <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground/70 mb-1 sm:mb-1.5">
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-1 sm:mb-1.5">
           What this reflects
         </p>
         <p className="text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">
@@ -50,13 +50,13 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
           aria-label={handleNavigate ? `View ${feedback.structure} pathway in ${target}` : undefined}
           onKeyDown={handleNavigate ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleNavigate(); } } : undefined}
         >
-          <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary/50 mb-1 sm:mb-1.5">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-primary mb-1 sm:mb-1.5">
             Pathway
             {handleNavigate && (
-              <span className="ml-1.5 text-primary/35 hidden sm:inline">→ view in {target}</span>
+              <span className="ml-1.5 text-primary hidden sm:inline">→ view in {target}</span>
             )}
           </p>
-          <p className="text-[12px] sm:text-[13px] font-mono text-foreground/60 leading-relaxed break-words">
+          <p className="text-[12px] sm:text-[13px] font-mono text-foreground/75 leading-relaxed break-words">
             {feedback.structure}
           </p>
         </div>
@@ -67,13 +67,13 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
         <button
           type="button"
           onClick={handleNavigate}
-          className="w-full text-center text-[11px] sm:text-xs text-primary/60 hover:text-primary/80 transition-colors pt-0.5 sm:pt-1 flex items-center justify-center gap-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+          className="w-full text-center text-[11px] sm:text-xs text-primary hover:text-primary/80 transition-colors pt-0.5 sm:pt-1 flex items-center justify-center gap-1.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
         >
           <span>{feedback.bridge}</span>
           <span className="text-primary/30 group-hover:text-primary/50 transition-colors" aria-hidden>→</span>
         </button>
       ) : (
-        <p className="text-[11px] sm:text-xs text-muted-foreground/60 text-center italic pt-0.5 sm:pt-1">
+        <p className="text-[11px] sm:text-xs text-muted-foreground text-center italic pt-0.5 sm:pt-1">
           {feedback.bridge}
         </p>
       )}

@@ -6,17 +6,17 @@ interface ReviewSectionProps {
 }
 
 const ReviewSection = ({ questions }: ReviewSectionProps) => {
-  const [showHint, setShowHint] = useState<string | null>(null);
+  const [openHints, setOpenHints] = useState<Set<string>>(new Set());
 
   return (
-    <section className="rounded-xl border border-border/70 bg-section-alt p-5 sm:p-6 md:p-8">
-      <h3 className="font-display text-lg tracking-tight text-foreground">Test Your Understanding</h3>
+    <section id="review" className="rounded-xl border border-border/70 bg-section-alt p-5 sm:p-6 md:p-8">
+      <h2 className="font-display text-lg tracking-tight text-foreground">Test Your Understanding</h2>
       <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
         Try answering these before checking the hints.
       </p>
       <ol className="mt-5 sm:mt-6 space-y-3 sm:space-y-4">
         {questions.map((q, i) => {
-          const hintOpen = showHint === q.id;
+          const hintOpen = openHints.has(q.id);
 
           return (
             <li
@@ -29,8 +29,16 @@ const ReviewSection = ({ questions }: ReviewSectionProps) => {
               </p>
               <button
                 type="button"
-                onClick={() => setShowHint(hintOpen ? null : q.id)}
-                className="mt-3 text-[11px] sm:text-[12px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                onClick={() =>
+                  setOpenHints((prev) => {
+                    const next = new Set(prev);
+                    if (next.has(q.id)) next.delete(q.id);
+                    else next.add(q.id);
+                    return next;
+                  })
+                }
+                aria-expanded={hintOpen}
+                className="mt-3 -my-1.5 py-1.5 text-[11px] sm:text-[12px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
               >
                 {hintOpen ? "Hide hint" : "Show hint"}
               </button>

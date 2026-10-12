@@ -56,11 +56,11 @@ const PredictionOutcome = ({
       <div className="rounded-md border-l-2 border-l-primary/30 bg-muted/25 px-3.5 py-3 sm:px-5 sm:py-3.5">
         {/* Header */}
         <div className="flex items-center gap-1.5 sm:gap-2 mb-2.5 sm:mb-3">
-          <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground/70">
+          <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Prediction &amp; Outcome
           </span>
           {structureChip && (
-            <span className="hidden sm:inline-flex items-center rounded-full bg-primary/[0.06] px-1.5 py-px text-[9px] font-medium text-primary/45 tracking-wide">
+            <span className="hidden sm:inline-flex items-center rounded-full bg-primary/[0.06] px-1.5 py-px text-[11px] font-medium text-primary tracking-wide">
               {structureChip}
             </span>
           )}
@@ -70,7 +70,7 @@ const PredictionOutcome = ({
         <div className="space-y-2.5 sm:space-y-1.5">
           {ROW_META.map(({ key, label }) => (
             <div key={key} className="sm:flex sm:items-baseline sm:gap-3 text-[12px] sm:text-[13px] leading-relaxed">
-              <span className="block text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/45 sm:w-20 shrink-0 whitespace-nowrap mb-0.5 sm:mb-0 sm:pt-[1px]">
+              <span className="block text-[11px] font-semibold uppercase tracking-[0.15em] text-muted-foreground sm:w-20 shrink-0 whitespace-nowrap mb-0.5 sm:mb-0 sm:pt-[1px]">
                 {label}
               </span>
               <p className="text-foreground/70 min-w-0">{rows[key]}</p>
@@ -83,7 +83,7 @@ const PredictionOutcome = ({
           <button
             type="button"
             onClick={onNavigateTrace}
-            className="mt-3 sm:mt-4 flex items-center gap-1.5 rounded px-1.5 py-1.5 -mx-1.5 text-[10px] sm:text-[11px] text-primary/55 hover:text-primary/80 hover:bg-primary/[0.04] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="mt-2 sm:mt-3 flex items-center gap-1.5 rounded px-1.5 py-3 -mx-1.5 text-[11px] text-primary hover:text-primary/80 hover:bg-primary/[0.04] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <span className="font-medium">See the pathway in Trace</span>
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>
