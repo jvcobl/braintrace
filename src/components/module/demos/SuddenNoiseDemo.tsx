@@ -326,7 +326,7 @@ const SuddenNoiseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Expl
             {phase.trial === "target" && (
               <div className="flex flex-col items-center gap-2">
                 <div className="h-14 w-14 rounded-full bg-primary animate-pulse" />
-                <p className="text-sm font-medium text-foreground">Now!</p>
+                <p data-announce className="text-sm font-medium text-foreground">Now!</p>
               </div>
             )}
 

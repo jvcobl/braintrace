@@ -1,6 +1,42 @@
 import { useEffect, useRef, useState } from "react";
 import { focusIsLost, scrollBehavior } from "@/lib/utils";
 
+/*
+ * Double-tap guard. When a click or key press moves a demo to its next step, the control
+ * under the finger changes: a quick second tap would land on whatever moved there (the next
+ * answer, or a link below the demo) and act on something the learner never saw. For a
+ * moment after such a step change, further clicks are ignored. Steps that change on a timer
+ * (e.g. the Sudden Noise target appearing) don't arm it, so reaction clicks are unaffected.
+ */
+const CAUSED_BY_INPUT_MS = 300;
+const GUARD_MS = 400;
+let lastInputAt = -Infinity;
+let guardUntil = -Infinity;
+let guardInstalled = false;
+
+function installDoubleTapGuard() {
+  if (guardInstalled || typeof window === "undefined") return;
+  guardInstalled = true;
+  const noteInput = () => (lastInputAt = performance.now());
+  window.addEventListener("pointerdown", noteInput, true);
+  window.addEventListener("keydown", noteInput, true);
+  window.addEventListener(
+    "click",
+    (e) => {
+      if (performance.now() < guardUntil) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    },
+    true,
+  );
+}
+
+function armDoubleTapGuard() {
+  const now = performance.now();
+  if (now - lastInputAt < CAUSED_BY_INPUT_MS) guardUntil = now + GUARD_MS;
+}
+
 /**
  * Keeps keyboard and screen-reader users oriented as a demo moves from step to step.
  *
@@ -16,20 +52,31 @@ export function useStepFocus<T extends HTMLElement = HTMLDivElement>(stepKey: st
   const previousKey = useRef(stepKey);
   const [announcement, setAnnouncement] = useState("");
 
+  useEffect(installDoubleTapGuard, []);
+
   useEffect(() => {
     if (previousKey.current === stepKey) return;
     previousKey.current = stepKey;
+    armDoubleTapGuard();
     const root = containerRef.current;
-    if (!root) return;
+    if (!root) {
+      // The step's content is gone (e.g. the summary replaced it); don't leave stale text behind.
+      setAnnouncement("");
+      return;
+    }
 
     const target = root.querySelector<HTMLElement>("[data-autofocus]");
     if (target && focusIsLost()) {
       let reveal = target.closest<HTMLElement>("[data-reveal]") ?? target;
       let block: ScrollLogicalPosition = reveal.dataset.reveal === "start" ? "start" : "nearest";
-      // A tall card revealed from its top could leave the focused control below the fold;
-      // then bring the control itself up from the bottom instead (keeping what's above it).
-      const HEADER_CLEARANCE = 96;
-      if (block === "start" && target.getBoundingClientRect().bottom - reveal.getBoundingClientRect().top + HEADER_CLEARANCE > window.innerHeight) {
+      // If the card is too tall to show the focused control along with it (from the card's
+      // top, or at all), reveal the control itself, keeping as much above it as fits.
+      const room = window.innerHeight - 96; // sticky header and margins
+      const span =
+        block === "start"
+          ? target.getBoundingClientRect().bottom - reveal.getBoundingClientRect().top
+          : reveal.getBoundingClientRect().height;
+      if (reveal !== target && span > room) {
         reveal = target;
         block = "end";
       }
