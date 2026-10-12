@@ -89,6 +89,9 @@ const ModulePageContent = () => {
   useEffect(() => {
     if (previousSection.current === section) return;
     previousSection.current = section;
+    // A deep link to a card (e.g. a Go Deeper search result) focuses that card instead.
+    const hash = window.location.hash.slice(1);
+    if (hash && !TAB_IDS.includes(hash)) return;
     if (!focusIsLost()) return;
     const heading = document.querySelector<HTMLElement>(`#${section.toLowerCase()} h2`);
     if (!heading) return;

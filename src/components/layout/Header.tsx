@@ -24,7 +24,17 @@ const Header = () => {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   // Escape dismisses the Topics dropdown (it otherwise stays open while hovered or focused).
   const [topicsDismissed, setTopicsDismissed] = useState(false);
+  const [topicsHovered, setTopicsHovered] = useState(false);
   const topicsLinkRef = useRef<HTMLAnchorElement>(null);
+  // While the dropdown is open under the pointer (focus may be elsewhere), Escape closes it too.
+  useEffect(() => {
+    if (!topicsHovered) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setTopicsDismissed(true);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [topicsHovered]);
 
   // Close the mobile menu whenever the route changes (by any link, not just its own).
   useEffect(() => setMenuOpen(false), [pathname]);
@@ -74,7 +84,11 @@ const Header = () => {
                   setTopicsDismissed(true);
                   topicsLinkRef.current?.focus();
                 }}
-                onMouseLeave={() => setTopicsDismissed(false)}
+                onMouseEnter={() => setTopicsHovered(true)}
+                onMouseLeave={() => {
+                  setTopicsHovered(false);
+                  setTopicsDismissed(false);
+                }}
                 onBlur={(e) => {
                   if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setTopicsDismissed(false);
                 }}

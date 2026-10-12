@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import type { GoDeeperCard as GoDeeperCardData } from "@/data/types";
 import { brainStructures, type BrainStructureId } from "@/data/brainStructures";
 
@@ -9,10 +10,12 @@ interface GoDeeperCardProps {
 
 const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
   const [open, setOpen] = useState(autoExpand);
-  // Also open when a link (e.g. a search result) targets this card while the page is already open.
+  // Also open when a link (e.g. a search result) targets this card while the page is already
+  // open, including again after the reader collapsed it.
+  const { hash, key } = useLocation();
   useEffect(() => {
-    if (autoExpand) setOpen(true);
-  }, [autoExpand]);
+    if (hash === `#deeper-${data.id}`) setOpen(true);
+  }, [hash, key, data.id]);
 
   return (
     <div className={`bg-white border border-gray-200 rounded-xl overflow-hidden transition-colors ${open ? "border-l-2 border-l-primary" : ""}`}>
