@@ -22,6 +22,8 @@ const NH = 54;
 const LG = 100;
 const CG = 184;
 const PAD = 48;
+/** Graphs wider than this keep a readable size on phones and scroll sideways instead of shrinking. */
+const WIDE_GRAPH = 500;
 
 /* ── Layout types ── */
 
@@ -415,14 +417,14 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
       {w > 0 && h > 0 && (
         <div
           key={showAlt ? "alt" : "default"}
-          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-8"
+          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-3 sm:p-8"
           style={{ animation: "tpFadeIn 250ms ease-out" }}
         >
           <style>{`@keyframes tpFadeIn{from{opacity:0}to{opacity:1}}`}</style>
           <svg
             viewBox={`0 0 ${w} ${h}`}
             className="w-full mx-auto"
-            style={{ maxWidth: Math.max(w, 360), minWidth: 300 }}
+            style={{ maxWidth: Math.max(w, 360), minWidth: w > WIDE_GRAPH ? 480 : 300 }}
             role="img"
             aria-label={`Neural pathway diagram: ${pathway.title}`}
           >
@@ -592,6 +594,12 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
         </div>
       )}
 
+      {w > WIDE_GRAPH && (
+        <p className="mt-2 text-center text-xs text-muted-foreground sm:hidden">
+          Scroll sideways to see the whole diagram.
+        </p>
+      )}
+
       {/* Legend */}
       <div className="mt-5 pt-4 border-t border-gray-100 flex flex-wrap gap-x-6 gap-y-2 justify-center">
         {usedBadges.map((b) => (
@@ -614,7 +622,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
         <div className="mt-8 flex justify-center">
           <button
             onClick={onAdvanceToExplain}
-            className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            className="inline-flex items-center gap-2 rounded-sm px-2 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             Read the explanation
             <span aria-hidden="true">→</span>
