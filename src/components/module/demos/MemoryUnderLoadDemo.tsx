@@ -237,8 +237,8 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
       <div className="rounded-lg border border-border bg-card p-4 sm:p-6">
         {/* Header */}
         {round && (
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+            <div className="flex items-center gap-2 whitespace-nowrap">
               <span className={`text-xs font-semibold uppercase tracking-wide ${loadColors[round.load]}`}>
                 {round.label}
               </span>
@@ -246,7 +246,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                 Round {roundIndex + 1} of {ROUNDS.length}
               </span>
             </div>
-            <span className="text-xs text-muted-foreground">{round.description}</span>
+            <span className="text-xs text-muted-foreground whitespace-nowrap">{round.description}</span>
           </div>
         )}
 
@@ -306,7 +306,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
             <div className="text-center">
               <p className="text-xs text-muted-foreground mb-1">Memorize these letters:</p>
               <p className="text-[11px] text-muted-foreground mb-3">They'll disappear shortly</p>
-              <div className="flex gap-1.5 justify-center flex-wrap">
+              <div className="flex gap-1 sm:gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => (
                   <span
                     key={i}
@@ -337,6 +337,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
               <div className="flex items-center justify-center gap-2">
                 <input
                   type="number"
+                  aria-label="Answer to the math problem"
                   value={distractorInput}
                   onChange={(e) => setDistractorInput(e.target.value)}
                   className="w-20 rounded-md border border-border bg-card px-3 py-2 text-center text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
@@ -361,6 +362,10 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
               </p>
               <input
                 type="text"
+                aria-label={`The ${sequence.length} letters in order`}
+                autoComplete="off"
+                autoCapitalize="characters"
+                spellCheck={false}
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 placeholder={
@@ -385,7 +390,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
           {phase === "feedback" && (
             <div className="text-center">
               <p className="text-xs text-muted-foreground mb-2">Correct sequence:</p>
-              <div className="flex gap-1.5 justify-center flex-wrap">
+              <div className="flex gap-1 sm:gap-1.5 justify-center flex-wrap">
                 {sequence.map((letter, i) => {
                   const isCorrect = parseLetters(userInput)[i] === letter;
                   return (
