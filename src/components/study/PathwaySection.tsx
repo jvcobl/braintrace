@@ -5,7 +5,7 @@ interface PathwaySectionProps {
 }
 
 const PathwaySection = ({ pathways }: PathwaySectionProps) => (
-  <section id="pathways" className="scroll-mt-24">
+  <section id="pathways">
     <h2 className="font-display text-lg tracking-tight text-foreground">Neural Pathways</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
       Step-by-step signal flow through the structures involved.
@@ -15,7 +15,7 @@ const PathwaySection = ({ pathways }: PathwaySectionProps) => (
         <div
           key={pw.id}
           id={`pathway-${pw.id}`}
-          className="scroll-mt-24 rounded-xl border border-border/70 bg-card p-5 sm:p-6"
+          className="rounded-xl border border-border/70 bg-card p-5 sm:p-6"
         >
           <h3 className="font-sans text-[14px] font-semibold text-card-foreground">{pw.title}</h3>
           <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">{pw.description}</p>

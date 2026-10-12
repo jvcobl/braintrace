@@ -23,7 +23,7 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
   const visible = expanded ? cards : cards.slice(0, INITIAL_VISIBLE);
 
   return (
-    <section id="key-concepts" ref={sectionRef} className="scroll-mt-24">
+    <section id="key-concepts" ref={sectionRef}>
       <h2 className="font-display text-lg tracking-tight text-foreground">Key Concepts</h2>
       <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
         {cards.length} terms and definitions for this topic.
@@ -33,7 +33,7 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
           <div
             key={card.id}
             id={`concept-${card.id}`}
-            className="scroll-mt-24 rounded-xl border border-border/70 bg-card p-4 sm:p-5"
+            className="rounded-xl border border-border/70 bg-card p-4 sm:p-5"
           >
             <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
               <h3 className="font-sans text-[13px] sm:text-[14px] font-semibold text-card-foreground leading-snug">

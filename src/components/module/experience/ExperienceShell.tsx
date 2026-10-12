@@ -74,7 +74,7 @@ const ExperienceShell = ({
       <h2
         ref={headingRef}
         tabIndex={-1}
-        className="scroll-mt-24 font-display text-xl sm:text-2xl tracking-tight text-foreground focus:outline-none"
+        className="font-display text-xl sm:text-2xl tracking-tight text-foreground focus:outline-none"
       >
         Experience
       </h2>
@@ -86,7 +86,7 @@ const ExperienceShell = ({
             tabIndex={-1}
             role="group"
             aria-labelledby="experience-summary-heading"
-            className="mt-4 scroll-mt-24 scroll-mb-4 rounded-lg border border-border bg-card px-5 py-6 sm:p-8 text-center space-y-3 focus:outline-none"
+            className="mt-4 rounded-lg border border-border bg-card px-5 py-6 sm:p-8 text-center space-y-3 focus:outline-none"
           >
             <h3 id="experience-summary-heading" className="font-display text-base sm:text-lg text-foreground">
               {summary.heading}

@@ -6,7 +6,7 @@ interface CaseNoteSectionProps {
 }
 
 const CaseNoteSection = ({ caseNotes }: CaseNoteSectionProps) => (
-  <section id="case-notes" className="scroll-mt-24">
+  <section id="case-notes">
     <h2 className="font-display text-lg tracking-tight text-foreground">Clinical &amp; Research Notes</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
       Cases and findings that connect these ideas to neuroscience research.
@@ -16,7 +16,7 @@ const CaseNoteSection = ({ caseNotes }: CaseNoteSectionProps) => (
         <article
           key={cn.id}
           id={`case-${cn.id}`}
-          className="scroll-mt-24 rounded-xl border border-border/70 bg-card p-4 sm:p-5"
+          className="rounded-xl border border-border/70 bg-card p-4 sm:p-5"
         >
           <h3 className="font-sans text-[13px] sm:text-[14px] font-semibold text-card-foreground">{cn.title}</h3>
           <p className="mt-2 sm:mt-2.5 text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">{cn.content}</p>

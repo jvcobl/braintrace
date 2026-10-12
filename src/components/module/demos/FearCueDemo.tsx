@@ -302,7 +302,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
             })}
           </div>
 
-          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary">
+          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary px-3 py-5">
             {step === "predict" && (
               <div className="text-center">
                 <div className="text-5xl mb-4 select-none animate-[fadeIn_400ms_ease-out]">◆</div>
@@ -313,18 +313,18 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
                 <div className="flex gap-3 justify-center">
                   <button
                     onClick={() => handlePredict("bad")}
-                    disabled={prediction !== null}
+                    aria-disabled={prediction !== null}
                     data-autofocus={prediction === null || undefined}
                     aria-pressed={prediction === "bad"}
-                    className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default ${prediction === "bad" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
+                    className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-disabled:cursor-default ${prediction === "bad" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
                   >
                     Something bad
                   </button>
                   <button
                     onClick={() => handlePredict("nothing")}
-                    disabled={prediction !== null}
+                    aria-disabled={prediction !== null}
                     aria-pressed={prediction === "nothing"}
-                    className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-default ${prediction === "nothing" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
+                    className={`rounded-md border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 aria-disabled:cursor-default ${prediction === "nothing" ? "border-primary ring-2 ring-primary/30" : "border-border"}`}
                   >
                     Nothing
                   </button>
@@ -420,7 +420,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: time advance */}
       {recoveryPhase === "timepass" && (
-        <div data-announce className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center animate-[fadeIn_400ms_ease-out]">
+        <div tabIndex={-1} data-autofocus data-announce className="rounded-lg border border-border bg-card p-5 sm:p-8 text-center animate-[fadeIn_400ms_ease-out]">
           <style>{`@keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground mb-2">
             Time Passes
@@ -433,11 +433,11 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
 
       {/* Recovery: CS replay (reuses existing trial-card pattern) */}
       {recoveryPhase === "replay" && (
-        <div data-announce className="rounded-lg border border-border bg-card p-4 sm:p-6">
+        <div tabIndex={-1} data-autofocus data-announce className="rounded-lg border border-border bg-card p-4 sm:p-6">
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-amber-700 mb-3">
             Test — CS Alone
           </p>
-          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary">
+          <div className="flex min-h-[160px] items-center justify-center rounded-lg bg-secondary px-3 py-5">
             <div className="text-center animate-[fadeIn_400ms_ease-out]">
               <div className="text-5xl mb-3 select-none">◆</div>
               <p className="text-xs text-muted-foreground mb-3">

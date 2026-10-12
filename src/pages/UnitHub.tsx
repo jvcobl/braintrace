@@ -12,10 +12,10 @@ import ReviewSection from "@/components/study/ReviewSection";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import NotFoundContent from "@/components/NotFoundContent";
-import { scrollBehavior } from "@/lib/utils";
+import { focusTarget, scrollBehavior } from "@/lib/utils";
 
 /** Item anchors (from search results or shared links) get a brief highlight; section anchors don't. */
-const ITEM_ANCHOR = /^(concept|pathway|distinction|case)-/;
+const ITEM_ANCHOR = /^(concept|pathway|distinction|case)-u\d/;
 
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
@@ -35,7 +35,9 @@ const UnitHub = () => {
       const el = document.getElementById(target);
       if (!el) return;
       el.scrollIntoView({ block: "start", behavior: scrollBehavior() });
-      if (ITEM_ANCHOR.test(target)) {
+      const isItem = ITEM_ANCHOR.test(target);
+      focusTarget(isItem ? el : el.querySelector<HTMLElement>("h2") ?? el);
+      if (isItem) {
         el.classList.add("search-highlight");
         setTimeout(() => el.classList.remove("search-highlight"), 1500);
       }

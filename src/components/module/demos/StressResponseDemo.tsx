@@ -321,7 +321,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {/* Step A: running simulation */}
           {buildStep === "running-A" && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
+            <div tabIndex={-1} data-autofocus className="mt-4 pt-4 border-t border-gray-100">
               <CortisolGraph mode="runaway" onComplete={() => setBuildStep("result-A")} />
             </div>
           )}
@@ -360,7 +360,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
 
           {/* Step B: running simulation */}
           {buildStep === "running-B" && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
+            <div tabIndex={-1} data-autofocus className="mt-4 pt-4 border-t border-gray-100">
               <CortisolGraph mode="recovery" onComplete={() => setBuildStep("result-B")} />
             </div>
           )}

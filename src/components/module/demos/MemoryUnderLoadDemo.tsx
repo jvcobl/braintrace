@@ -305,7 +305,7 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
 
           {/* Show sequence */}
           {phase === "show" && (
-            <div className="text-center">
+            <div tabIndex={-1} data-autofocus className="text-center">
               <p data-announce className="text-xs text-muted-foreground mb-1">Memorize these letters:</p>
               <p className="text-[11px] text-muted-foreground mb-3">They'll disappear shortly</p>
               <div className="flex gap-1 sm:gap-1.5 justify-center flex-wrap">

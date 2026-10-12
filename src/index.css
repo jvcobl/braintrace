@@ -110,11 +110,10 @@
   outline: none;
 }
 
-/* Demo steps scroll these into view (useStepFocus); keep them clear of the sticky header. */
-[data-reveal],
-[data-autofocus] {
-  scroll-margin-top: 5rem;
-  scroll-margin-bottom: 1rem;
+/* Keep anything scrolled into view (anchors, focus, demo steps) clear of the 64px sticky header. */
+html {
+  scroll-padding-top: 5rem;
+  scroll-padding-bottom: 1rem;
 }
 
 @keyframes shake {

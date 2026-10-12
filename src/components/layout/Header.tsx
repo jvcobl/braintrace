@@ -22,6 +22,9 @@ const Header = () => {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  // Escape dismisses the Topics dropdown (it otherwise stays open while hovered or focused).
+  const [topicsDismissed, setTopicsDismissed] = useState(false);
+  const topicsLinkRef = useRef<HTMLAnchorElement>(null);
 
   // Close the mobile menu whenever the route changes (by any link, not just its own).
   useEffect(() => setMenuOpen(false), [pathname]);
@@ -63,8 +66,21 @@ const Header = () => {
         <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
           {navLinks.map(({ to, label }) =>
             to === "/topics" ? (
-              <div key={to} className="group relative">
+              <div
+                key={to}
+                className="group relative"
+                onKeyDown={(e) => {
+                  if (e.key !== "Escape") return;
+                  setTopicsDismissed(true);
+                  topicsLinkRef.current?.focus();
+                }}
+                onMouseLeave={() => setTopicsDismissed(false)}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setTopicsDismissed(false);
+                }}
+              >
                 <Link
+                  ref={topicsLinkRef}
                   to={to}
                   className={linkClass(to)}
                   aria-current={isActive(to) ? "page" : undefined}
@@ -73,13 +89,19 @@ const Header = () => {
                 </Link>
 
                 {/* Dropdown: opens on hover, and on keyboard focus so its links are never focusable while hidden */}
-                <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-1 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                <div
+                  className={`invisible absolute left-1/2 top-full -translate-x-1/2 pt-1 opacity-0 transition-opacity duration-150 ${
+                    topicsDismissed
+                      ? ""
+                      : "group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100"
+                  }`}
+                >
                   <div className="w-64 rounded-lg border border-gray-200 bg-white py-1.5 shadow-lg">
                     {topicItems.map((item) => (
                       <Link
                         key={item.slug}
                         to={`/topics/${item.slug}`}
-                        className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-foreground transition-colors normal-case tracking-normal focus-visible:outline-none focus-visible:bg-gray-50 focus-visible:text-foreground"
+                        className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-foreground transition-colors normal-case tracking-normal focus-visible:outline-none focus-visible:bg-gray-50 focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
                       >
                         {item.label}
                       </Link>

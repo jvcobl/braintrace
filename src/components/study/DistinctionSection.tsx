@@ -5,7 +5,7 @@ interface DistinctionSectionProps {
 }
 
 const DistinctionSection = ({ distinctions }: DistinctionSectionProps) => (
-  <section id="distinctions" className="scroll-mt-24">
+  <section id="distinctions">
     <h2 className="font-display text-lg tracking-tight text-foreground">Key Distinctions</h2>
     <p className="mt-1.5 text-[12px] sm:text-[13px] text-muted-foreground leading-relaxed">
       Terms that are easy to confuse — and why the difference matters.
@@ -15,7 +15,7 @@ const DistinctionSection = ({ distinctions }: DistinctionSectionProps) => (
         <div
           key={d.id}
           id={`distinction-${d.id}`}
-          className="scroll-mt-24 overflow-hidden rounded-xl border border-border/70 bg-card"
+          className="overflow-hidden rounded-xl border border-border/70 bg-card"
         >
           <div className="grid sm:grid-cols-2">
             <div className="p-4 sm:p-5 sm:border-r sm:border-border/50">

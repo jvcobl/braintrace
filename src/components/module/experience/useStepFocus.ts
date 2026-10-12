@@ -24,11 +24,16 @@ export function useStepFocus<T extends HTMLElement = HTMLDivElement>(stepKey: st
 
     const target = root.querySelector<HTMLElement>("[data-autofocus]");
     if (target && focusIsLost()) {
-      const reveal = target.closest<HTMLElement>("[data-reveal]") ?? target;
-      reveal.scrollIntoView({
-        block: reveal.dataset.reveal === "start" ? "start" : "nearest",
-        behavior: scrollBehavior(),
-      });
+      let reveal = target.closest<HTMLElement>("[data-reveal]") ?? target;
+      let block: ScrollLogicalPosition = reveal.dataset.reveal === "start" ? "start" : "nearest";
+      // A tall card revealed from its top could leave the focused control below the fold;
+      // then bring the control itself up from the bottom instead (keeping what's above it).
+      const HEADER_CLEARANCE = 96;
+      if (block === "start" && target.getBoundingClientRect().bottom - reveal.getBoundingClientRect().top + HEADER_CLEARANCE > window.innerHeight) {
+        reveal = target;
+        block = "end";
+      }
+      reveal.scrollIntoView({ block, behavior: scrollBehavior() });
       target.focus({ preventScroll: true });
     }
 

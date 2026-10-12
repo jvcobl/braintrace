@@ -20,3 +20,14 @@ export function focusIsLost(): boolean {
   const active = document.activeElement as HTMLElement | null;
   return !active || active === document.body || !active.isConnected || !active.matches(FOCUSABLE);
 }
+
+/**
+ * After navigating to an in-page target (a search result or deep link), move keyboard focus
+ * there too, but only if focus is lost or still on <main> from the route change.
+ */
+export function focusTarget(el: HTMLElement | null) {
+  if (!el || typeof document === "undefined") return;
+  if (!focusIsLost() && document.activeElement?.id !== "main") return;
+  if (!el.matches(FOCUSABLE)) el.setAttribute("tabindex", "-1");
+  el.focus({ preventScroll: true });
+}

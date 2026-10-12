@@ -10,7 +10,7 @@ import ExperienceSection from "@/components/module/ExperienceSection";
 import TracePanel from "@/components/module/TracePanel";
 import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
-import { focusIsLost, scrollBehavior } from "@/lib/utils";
+import { focusIsLost, focusTarget, scrollBehavior } from "@/lib/utils";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import NotFoundContent from "@/components/NotFoundContent";
 
@@ -62,6 +62,8 @@ const ModulePageContent = () => {
       if (!el) return;
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: scrollBehavior() });
+      // Focus the tab's heading, or the card's toggle, so keyboard users continue from here.
+      focusTarget(TAB_IDS.includes(target) ? el.querySelector<HTMLElement>("h2") : el.querySelector<HTMLElement>("button[aria-expanded]") ?? el);
       // Flash specific targets (a Go Deeper card, the Prediction Lens), not whole tabs.
       if (!TAB_IDS.includes(target)) {
         el.classList.add("search-highlight");

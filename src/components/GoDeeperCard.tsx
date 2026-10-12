@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { GoDeeperCard as GoDeeperCardData } from "@/data/types";
 import { brainStructures, type BrainStructureId } from "@/data/brainStructures";
 
@@ -9,6 +9,10 @@ interface GoDeeperCardProps {
 
 const GoDeeperCard = ({ data, autoExpand = false }: GoDeeperCardProps) => {
   const [open, setOpen] = useState(autoExpand);
+  // Also open when a link (e.g. a search result) targets this card while the page is already open.
+  useEffect(() => {
+    if (autoExpand) setOpen(true);
+  }, [autoExpand]);
 
   return (
     <div className={`bg-white border border-gray-200 rounded-xl overflow-hidden transition-colors ${open ? "border-l-2 border-l-primary" : ""}`}>
