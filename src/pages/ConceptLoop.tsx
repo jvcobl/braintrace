@@ -4,6 +4,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 import { badgeFill } from "@/lib/colors";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { conceptPages } from "@/data/conceptPages";
+import ConceptPageNav from "@/components/ConceptPageNav";
 
 const steps = [
   { name: "Predict", badge: "Prediction", color: "#7F77DD", description: "The brain generates an expectation based on prior experience and context." },
@@ -37,7 +38,7 @@ const ConceptLoop = () => {
       <div id="loop-visualization" className="mt-10">
         <div className="flex flex-col sm:flex-row items-stretch gap-3">
           {steps.map((step, i) => (
-            <div key={step.name} className="flex items-center gap-3 flex-1">
+            <div key={step.name} className="flex items-stretch gap-3 flex-1">
               <div className="rounded-xl border border-gray-200 bg-white p-4 flex-1">
                 <div className="flex items-center gap-2 mb-1.5">
                   <span
@@ -50,7 +51,7 @@ const ConceptLoop = () => {
                 <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
               {i < steps.length - 1 && (
-                <span className="hidden sm:block shrink-0 text-gray-300" aria-hidden="true">→</span>
+                <span className="hidden sm:block self-center shrink-0 text-gray-300" aria-hidden="true">→</span>
               )}
             </div>
           ))}
@@ -82,6 +83,7 @@ const ConceptLoop = () => {
           </div>
         ))}
       </div>
+      <ConceptPageNav current="loop" />
     </div>
   );
 };

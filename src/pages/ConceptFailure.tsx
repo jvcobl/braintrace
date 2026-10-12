@@ -3,6 +3,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 import { badgeFill } from "@/lib/colors";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { conceptPages } from "@/data/conceptPages";
+import ConceptPageNav from "@/components/ConceptPageNav";
 
 const failures = [
   {
@@ -43,7 +44,7 @@ const ConceptFailure = () => {
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
       <Breadcrumb />
-      <h1 className="font-display text-3xl tracking-tight text-foreground">When prediction fails</h1>
+      <h1 className="font-display text-3xl tracking-tight text-foreground">When Prediction Fails</h1>
       <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
         Prediction breaks in three ways. Each maps to a specific step in the
         prediction loop going wrong.
@@ -76,6 +77,7 @@ const ConceptFailure = () => {
           </div>
         ))}
       </div>
+      <ConceptPageNav current="failure" />
     </div>
   );
 };

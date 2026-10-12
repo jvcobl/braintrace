@@ -5,6 +5,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 import { badgeFill } from "@/lib/colors";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { conceptPages } from "@/data/conceptPages";
+import ConceptPageNav from "@/components/ConceptPageNav";
 
 /* ── Scenario data (text only, no slider) ── */
 
@@ -194,6 +195,7 @@ const ConceptPrecision = () => {
           </div>
         )}
       </div>
+      <ConceptPageNav current="precision-attention" />
     </div>
   );
 };
