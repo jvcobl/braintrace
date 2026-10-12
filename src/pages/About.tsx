@@ -10,11 +10,8 @@ const steps = [
 const About = () => (
   <div className="container max-w-2xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
     <Breadcrumb />
-    <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary">
-      About
-    </p>
-    <h1 className="mt-3 font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-4xl">
-      BrainTrace
+    <h1 className="font-display text-2xl sm:text-3xl tracking-tight text-foreground md:text-4xl">
+      About BrainTrace
     </h1>
 
     <p className="mt-5 sm:mt-6 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
@@ -48,6 +45,20 @@ const About = () => (
     <p className="mt-7 sm:mt-8 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
       Everything runs in your browser. No accounts, no saved data, no
       tracking. Anyone curious about how the brain works can use it.
+    </p>
+
+    <h2 className="mt-10 sm:mt-12 font-display text-xl sm:text-2xl tracking-tight text-foreground">
+      Who built it
+    </h2>
+    <p className="mt-3 sm:mt-4 text-[14px] sm:text-[15px] text-foreground/80 leading-[1.7]">
+      BrainTrace was designed and built by Jacob Hyun Lee. The science in every
+      lesson comes from course notes for NBB302, Behavioral Neuroscience, at
+      Emory University. Lessons that end with an &ldquo;NBB302 connection&rdquo;
+      name the lectures they draw on.
+    </p>
+    <p className="mt-3.5 sm:mt-4 text-[13px] sm:text-[14px] text-muted-foreground leading-[1.7]">
+      BrainTrace is an independent study project. It is not affiliated with or
+      endorsed by Emory University, and it is not medical advice.
     </p>
 
     {/* Primary CTA */}
