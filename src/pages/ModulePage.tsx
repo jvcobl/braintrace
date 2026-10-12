@@ -13,6 +13,7 @@ import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
 import { scrollBehavior } from "@/lib/utils";
 import { usePageMeta } from "@/hooks/use-page-meta";
+import NotFoundContent from "@/components/NotFoundContent";
 
 const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
   "blurry-object-guess": { slug: "perception", title: "Perception and Object Recognition" },
@@ -85,20 +86,7 @@ const ModulePageContent = () => {
   };
 
   if (!mod) {
-    return (
-      <div className="container flex flex-col items-center justify-center py-32 text-center">
-        <h1 className="font-display text-3xl sm:text-4xl text-foreground">Lesson Not Found</h1>
-        <p className="mt-4 text-[14px] sm:text-[15px] text-muted-foreground">
-          The lesson you're looking for doesn't exist.
-        </p>
-        <Link
-          to="/"
-          className="mt-10 inline-flex items-center rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-        >
-          Back to Home
-        </Link>
-      </div>
-    );
+    return <NotFoundContent title="Lesson not found" message="The lesson you're looking for doesn't exist." />;
   }
 
   const siblingLessons = getLessonsByUnit(mod.unitId)
