@@ -82,7 +82,7 @@ export default function Breadcrumb() {
 
   return (
     <nav aria-label="Breadcrumb" className="mb-6">
-      <ol className="flex items-center gap-1.5 text-sm">
+      <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm">
         {crumbs.map((crumb, i) => (
           <li key={i} className="flex items-center gap-1.5">
             {i > 0 && (
@@ -93,12 +93,12 @@ export default function Breadcrumb() {
             {crumb.to ? (
               <Link
                 to={crumb.to}
-                className="text-gray-500 hover:text-gray-700 transition-colors"
+                className="inline-block py-1 text-gray-500 hover:text-gray-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
               >
                 {crumb.label}
               </Link>
             ) : (
-              <span className="text-gray-700 font-medium">{crumb.label}</span>
+              <span className="text-gray-700 font-medium" aria-current="page">{crumb.label}</span>
             )}
           </li>
         ))}
