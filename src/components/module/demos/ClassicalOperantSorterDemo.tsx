@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { AnswerLine, useStepFocus } from "@/components/module/experience";
+import { AnswerLine, EndActions, useStepFocus } from "@/components/module/experience";
 
 const capitalize = (w: string | undefined) => (w ? w[0].toUpperCase() + w.slice(1) : "");
 
@@ -123,8 +123,8 @@ const ClassicalOperantSorterDemo = ({ onNavigate }: { onNavigate?: (target: "Tra
               ))}
             </div>
 
-            <div className="rounded-lg bg-secondary px-5 py-4">
-              <p data-announce className="text-sm text-foreground leading-relaxed">
+            <div className="rounded-lg bg-secondary px-5 py-8 sm:py-10 text-center">
+              <p data-announce className="mx-auto max-w-lg font-display text-lg sm:text-xl text-foreground leading-snug">
                 {scenario.text}
               </p>
             </div>
@@ -152,6 +152,7 @@ const ClassicalOperantSorterDemo = ({ onNavigate }: { onNavigate?: (target: "Tra
         {phase === "result" && (
           <div data-reveal="start" className="rounded-lg border border-border bg-card p-4 sm:p-6 space-y-6">
             <div data-autofocus tabIndex={-1} className="rounded-lg bg-accent/40 px-4 py-3 focus:outline-none">
+              <h3 className="mb-1.5 font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-primary">What this shows</h3>
               <p className="text-sm text-foreground leading-relaxed">
                 {correctCount === items.length
                   ? "Every classification was correct. The key differentiator — agency — was clear: classical conditioning happens to the organism, operant conditioning happens because of the organism's action."
@@ -168,11 +169,7 @@ const ClassicalOperantSorterDemo = ({ onNavigate }: { onNavigate?: (target: "Tra
                 return (
                   <li
                     key={s.id}
-                    className={`rounded-md border px-4 py-2.5 text-sm ${
-                      correct
-                        ? "border-primary/30 bg-primary/5"
-                        : "border-destructive/30 bg-destructive/5"
-                    }`}
+                    className="rounded-md border border-border bg-white px-4 py-2.5 text-sm"
                   >
                     <AnswerLine correct={correct} picked={capitalize(picked)} answer={capitalize(s.correct)} />
                     <p className="text-foreground leading-relaxed">{s.text}</p>
@@ -195,13 +192,11 @@ const ClassicalOperantSorterDemo = ({ onNavigate }: { onNavigate?: (target: "Tra
               </button>
             )}
 
-            <button
-              type="button"
-              onClick={handleReset}
-              className="mx-auto block rounded-md bg-secondary px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              Try Again
-            </button>
+            <EndActions
+              className="justify-center"
+              onRestart={handleReset}
+              onContinue={onNavigate ? () => onNavigate("Trace") : undefined}
+            />
           </div>
         )}
       </div>

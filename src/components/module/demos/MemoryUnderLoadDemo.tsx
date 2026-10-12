@@ -363,7 +363,10 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
               <p data-announce className="text-2xl font-bold text-foreground mb-4">{distractor.question}</p>
               <div className="flex items-center justify-center gap-2">
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  autoComplete="off"
                   aria-label="Answer to the math problem"
                   value={distractorInput}
                   onChange={(e) => setDistractorInput(e.target.value)}

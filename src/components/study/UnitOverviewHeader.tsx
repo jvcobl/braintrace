@@ -21,11 +21,14 @@ const UnitOverviewHeader = ({ unitNumber, meta }: UnitOverviewHeaderProps) => (
       {meta.overview}
     </p>
 
-    <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-1.5 sm:gap-2">
+    <p className="mt-6 sm:mt-8 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+      Key structures
+    </p>
+    <div className="mt-2 flex flex-wrap items-center gap-1.5 sm:gap-2">
       {meta.majorStructures.map((s) => (
         <span
           key={s}
-          className="rounded-full border border-border bg-secondary px-2.5 sm:px-3 py-0.5 sm:py-1 text-[11px] font-medium text-muted-foreground"
+          className="rounded-md border border-border bg-secondary px-2.5 sm:px-3 py-0.5 sm:py-1 text-[11px] font-medium text-muted-foreground"
         >
           {s}
         </span>

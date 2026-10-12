@@ -41,9 +41,9 @@ function sectionFromHash(hash: string): SectionId {
 }
 
 /** Sorters and the PFC matcher trace concepts, not a signal path, so their Trace tab says so. */
-const SORTER_TRACE = { subtitle: "The ideas the sorter is built on, and what separates them.", listLabel: "Key ideas" };
-const CONCEPT_TRACE: Record<string, { subtitle: string; listLabel: string }> = {
-  "pfc-role-matcher": { subtitle: "What each region of the prefrontal cortex contributes.", listLabel: "PFC regions" },
+const SORTER_TRACE = { subtitle: "The ideas the sorter is built on, and what separates them.", listLabel: "Key ideas", heading: "Key Ideas" };
+const CONCEPT_TRACE: Record<string, { subtitle: string; listLabel: string; heading: string }> = {
+  "pfc-role-matcher": { subtitle: "What each region of the prefrontal cortex contributes.", listLabel: "PFC regions", heading: "PFC Regions" },
   "fear-vs-anxiety-sorter": SORTER_TRACE,
   "emotion-vs-arousal-sorter": SORTER_TRACE,
   "classical-vs-operant-sorter": SORTER_TRACE,
@@ -172,7 +172,6 @@ const ModulePageContent = () => {
                 goDeeper={modDef?.goDeeper}
                 conceptLinks={modDef?.conceptLinks}
                 traceBridge={modDef?.traceBridge}
-                topicLink={MODULE_TOPIC[mod.slug] ? { to: `/topics/${MODULE_TOPIC[mod.slug].slug}`, label: MODULE_TOPIC[mod.slug].title } : undefined}
               />
             );
           })()}

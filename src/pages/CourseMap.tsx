@@ -101,7 +101,7 @@ const CourseMap = () => {
             className="bg-white border border-gray-200 border-l-4 rounded-xl p-6"
             style={{ borderLeftColor: area.accent }}
           >
-            <h2 className="text-lg font-medium text-gray-900">{area.title}</h2>
+            <h2 className="font-display text-lg tracking-tight text-gray-900">{area.title}</h2>
 
             <div className="mt-2 space-y-1">
               {area.courseTopics.map((t) => (
@@ -129,12 +129,12 @@ const CourseMap = () => {
 
       {/* Shared framework */}
       <div className="mt-12">
-        <h2 className="text-lg font-medium text-foreground mb-2">The shared framework</h2>
+        <h2 className="font-display text-lg tracking-tight text-foreground mb-2">The shared framework</h2>
         <p className="text-sm text-gray-500 max-w-2xl mb-4">
           Every lesson above runs the same loop. Your brain predicts,
           receives input, detects mismatch, and updates its model.
         </p>
-        <div className="space-y-2 max-w-md">
+        <div className="space-y-2">
           <ConceptLink conceptPageId="loop" />
           <ConceptLink conceptPageId="precision-attention" />
           <ConceptLink conceptPageId="failure" />

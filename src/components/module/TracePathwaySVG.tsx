@@ -449,7 +449,10 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
       <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
         Trace the Pathway
       </h2>
-      <h3 className="mt-3 text-lg font-medium text-foreground">{pathway.title}</h3>
+      {/* With two states, the toggle below already names them. */}
+      {!pathway.alternateState && (
+        <h3 className="mt-3 font-display text-lg tracking-tight text-foreground">{pathway.title}</h3>
+      )}
       <p className="mt-1.5 text-sm text-gray-500 max-w-lg">{pathway.description}</p>
 
       {/* State toggle */}
@@ -489,7 +492,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
           tabIndex={scrollable ? 0 : undefined}
           role={scrollable ? "region" : undefined}
           aria-label={scrollable ? `${activeTitle} diagram, scrolls sideways` : undefined}
-          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-3 sm:p-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="mt-6 overflow-x-auto border border-gray-200 rounded-xl bg-gray-50/40 p-3 sm:p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           style={{ animation: "tpFadeIn 250ms ease-out" }}
         >
           <style>{`@keyframes tpFadeIn{from{opacity:0}to{opacity:1}}`}</style>
@@ -698,7 +701,7 @@ export default function TracePathwaySVG({ pathway, onAdvanceToExplain }: TracePa
         <div className="mt-8 flex justify-center">
           <button
             onClick={onAdvanceToExplain}
-            className="inline-flex items-center gap-2 rounded-sm px-2 py-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             Read the explanation
             <span aria-hidden="true">→</span>

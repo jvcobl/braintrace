@@ -85,7 +85,11 @@ export default function Breadcrumb() {
     <nav aria-label="Breadcrumb" className="mb-6">
       <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-sm">
         {crumbs.map((crumb, i) => (
-          <li key={i} className="flex items-center gap-1.5">
+          // On phones, keep Home, the parent and the current page; the middle steps would wrap.
+          <li
+            key={i}
+            className={`items-center gap-1.5 ${i > 0 && i < crumbs.length - 2 ? "hidden sm:flex" : "flex"}`}
+          >
             {i > 0 && (
               <span className="text-gray-300" aria-hidden="true">
                 /

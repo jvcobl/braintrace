@@ -56,7 +56,7 @@ const FeedbackCard = ({ feedback, onNavigate }: FeedbackCardProps) => {
               <span className="ml-1.5 text-primary hidden sm:inline">→ view in {target}</span>
             )}
           </p>
-          <p className="text-[12px] sm:text-[13px] font-mono text-foreground/75 leading-relaxed break-words">
+          <p className="text-[13px] sm:text-[14px] text-foreground/75 leading-relaxed break-words">
             {feedback.structure}
           </p>
         </div>

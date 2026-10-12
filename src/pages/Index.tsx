@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { modules } from "@/data/modules";
 import { usePageMeta } from "@/hooks/use-page-meta";
@@ -37,7 +36,7 @@ const Index = () => {
           aria-hidden="true"
         />
 
-        <div className="container relative mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center sm:py-24 md:py-32">
+        <div className="container relative mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center sm:py-24">
           <h1 className="font-display text-[2rem] leading-[1.12] tracking-tight text-foreground sm:text-[2.5rem] md:text-[3.25rem]">
             Experience how your brain
             <br className="hidden sm:block" />
@@ -90,20 +89,17 @@ const Index = () => {
             Experience the phenomenon first. Then see the circuit. Then read the explanation.
           </p>
 
-          <div className="mx-auto mt-8 flex max-w-3xl flex-col sm:flex-row items-stretch gap-2">
-            {/* Cards and arrows are siblings so every card gets the same width. */}
+          <ol className="mx-auto mt-8 grid max-w-3xl gap-3 sm:grid-cols-3 sm:gap-4">
             {STEPS.map((s, i) => (
-              <Fragment key={s.name}>
-                <div className="flex-1 rounded-lg bg-muted/40 px-4 py-4 text-center">
-                  <p className="text-sm font-semibold text-foreground">{s.name}</p>
-                  <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
-                </div>
-                {i < STEPS.length - 1 && (
-                  <span className="hidden sm:block shrink-0 self-center text-muted-foreground/30" aria-hidden="true">→</span>
-                )}
-              </Fragment>
+              <li key={s.name} className="rounded-xl border border-border/70 bg-card p-4 sm:p-5">
+                <span className="inline-flex h-6 w-6 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-primary text-[11px] sm:text-xs font-bold text-primary-foreground" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <h3 className="mt-2.5 sm:mt-3 font-display text-[15px] sm:text-base text-foreground">{s.name}</h3>
+                <p className="mt-1 sm:mt-1.5 text-[13px] text-muted-foreground leading-relaxed">{s.desc}</p>
+              </li>
             ))}
-          </div>
+          </ol>
 
           {/* The idea that ties every lesson together */}
           <div className="mx-auto mt-8 max-w-3xl rounded-xl border border-gray-200 bg-white p-5 sm:p-6">
@@ -129,7 +125,7 @@ const Index = () => {
 
       {/* ── Topics ── */}
       <section className="bg-section-alt">
-        <div className="container mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-20">
+        <div className="container mx-auto max-w-3xl px-4 sm:px-6 py-16 sm:py-20">
           <h2 className="font-display text-xl sm:text-2xl tracking-tight text-foreground">
             Five areas of neuroscience
           </h2>
@@ -151,7 +147,7 @@ const Index = () => {
                   </h3>
                   <p className="text-xs text-gray-500 mt-0.5">{t.hook}</p>
                 </div>
-                <span className="text-xs text-muted-foreground shrink-0">
+                <span className="hidden sm:inline text-xs text-muted-foreground shrink-0">
                   {t.count} {t.count === 1 ? "lesson" : "lessons"}
                 </span>
                 <span

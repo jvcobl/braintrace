@@ -8,9 +8,21 @@ const Footer = () => (
           BrainTrace. An interactive neuroscience learning experience.
         </p>
       </div>
-      <Link to="/about" className="inline-flex min-h-11 items-center rounded-sm px-2 text-sm text-gray-500 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-        About
-      </Link>
+      <nav aria-label="Footer" className="flex items-center gap-1 sm:gap-2">
+        {[
+          { to: "/topics", label: "Topics" },
+          { to: "/course-map", label: "Course map" },
+          { to: "/about", label: "About" },
+        ].map((l) => (
+          <Link
+            key={l.to}
+            to={l.to}
+            className="inline-flex min-h-11 items-center rounded-sm px-2 text-sm text-gray-500 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {l.label}
+          </Link>
+        ))}
+      </nav>
     </div>
   </footer>
 );

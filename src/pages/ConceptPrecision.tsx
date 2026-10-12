@@ -54,7 +54,7 @@ const ConceptPrecision = () => {
       </p>
 
       {/* ── The volume knob ── */}
-      <h2 className="text-xl font-medium text-foreground mt-12">The volume knob</h2>
+      <h2 className="font-display text-xl tracking-tight text-foreground mt-12">The volume knob</h2>
       <p className="text-sm text-muted-foreground mt-3 leading-relaxed max-w-2xl">
         Think of precision as a volume knob on each signal your brain processes.
         When you pay attention to something, you're turning up the precision on
@@ -78,7 +78,7 @@ const ConceptPrecision = () => {
       </p>
 
       {/* ── Precision in action ── */}
-      <h2 id="precision-slider" className="text-xl font-medium text-foreground mt-12">
+      <h2 id="precision-slider" className="font-display text-xl tracking-tight text-foreground mt-12">
         Precision in action
       </h2>
       <p className="text-sm text-muted-foreground mt-2 mb-6 max-w-2xl">

@@ -95,7 +95,7 @@ const TopicPage = () => {
       </div>
 
       {/* Modules */}
-      <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
+      <h2 className="font-display text-lg tracking-tight text-foreground mt-10 mb-1">
         Explore the lessons
       </h2>
       <p className="text-sm text-gray-500 mb-3">
@@ -111,10 +111,10 @@ const TopicPage = () => {
       {unitId && (
         <Link
           to={`/unit/${unitId}`}
-          className="group mt-4 flex items-center justify-between gap-3 rounded-lg border border-dashed border-border bg-white/60 px-4 py-3 transition-colors hover:border-primary/40 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="group mt-4 flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 transition-all hover:border-primary/40 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <span>
-            <span className="block text-sm font-medium text-foreground">Study guide</span>
+            <span className="block font-display text-sm text-foreground">Study guide</span>
             <span className="block text-xs text-gray-500 mt-0.5">
               Key concepts, neural pathways, distinctions, case notes and review questions for this topic.
             </span>
@@ -124,13 +124,13 @@ const TopicPage = () => {
       )}
 
       {/* Related concepts */}
-      <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
+      <h2 className="font-display text-lg tracking-tight text-foreground mt-10 mb-1">
         How your brain predicts
       </h2>
       <p className="text-sm text-gray-500 mb-3">
         These concept pages explain the shared framework behind the lessons above.
       </p>
-      <div className="space-y-2 max-w-md">
+      <div className="space-y-2">
         {topic.conceptIds.map((id) => (
           <ConceptLink key={id} conceptPageId={id} />
         ))}

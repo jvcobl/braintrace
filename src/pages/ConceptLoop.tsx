@@ -37,7 +37,7 @@ const ConceptLoop = () => {
 
       {/* 4-step diagram */}
       <div id="loop-visualization" className="mt-10">
-        <div className="flex flex-col sm:flex-row items-stretch gap-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:flex lg:flex-row lg:items-stretch">
           {/* Cards and arrows are siblings so every card gets the same width. */}
           {steps.map((step, i) => (
             <Fragment key={step.name}>
@@ -53,7 +53,7 @@ const ConceptLoop = () => {
                 <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
               </div>
               {i < steps.length - 1 && (
-                <span className="hidden sm:block self-center shrink-0 text-gray-300" aria-hidden="true">→</span>
+                <span className="hidden lg:block self-center shrink-0 text-gray-300" aria-hidden="true">→</span>
               )}
             </Fragment>
           ))}
@@ -66,7 +66,7 @@ const ConceptLoop = () => {
       </div>
 
       {/* Per-module callouts */}
-      <h2 id="loop-modules" className="text-xl font-medium text-foreground mt-14 mb-2">
+      <h2 id="loop-modules" className="font-display text-xl tracking-tight text-foreground mt-14 mb-2">
         Where to see the loop
       </h2>
       <p className="text-sm text-gray-500 mb-5">

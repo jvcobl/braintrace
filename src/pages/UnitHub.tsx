@@ -17,6 +17,10 @@ import { focusTarget, scrollBehavior } from "@/lib/utils";
 /** Item anchors (from search results or shared links) get a brief highlight; section anchors don't. */
 const ITEM_ANCHOR = /^(concept|pathway|distinction|case)-u\d/;
 
+const UNIT_NAV_LINK =
+  "group flex-1 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2";
+const unitTitle = (id: string) => getUnitContent(id)?.meta.title ?? `Unit ${id.replace("unit-", "")}`;
+
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
   const content = unitId ? getUnitContent(unitId) : undefined;
@@ -74,7 +78,10 @@ const UnitHub = () => {
       <UnitOverviewHeader unitNumber={unitNumber} meta={content.meta} />
 
       {/* On-this-page links for a long study guide */}
-      <nav aria-label="On this page" className="mt-8 flex flex-wrap gap-2">
+      <p className="mt-8 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground" aria-hidden="true">
+        On this page
+      </p>
+      <nav aria-label="On this page" className="mt-2 flex flex-wrap gap-2">
         {[
           ["#lessons", "Lessons"],
           ["#key-concepts", "Key concepts"],
@@ -116,35 +123,23 @@ const UnitHub = () => {
         <ReviewSection questions={content.review} />
       </div>
 
-      {/* Prev / Next */}
-      <nav className="mt-12 sm:mt-16 flex items-center justify-between border-t border-border pt-6 sm:pt-8">
+      {/* Prev / Next (the same cards as the concept pages) */}
+      <nav aria-label="Study guides" className="mt-12 sm:mt-16 flex flex-col sm:flex-row gap-3 border-t border-border pt-8">
         {prevUnit ? (
-          <Link
-            to={`/unit/${prevUnit}`}
-            className="group -my-3 inline-flex min-h-11 items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
-          >
-            <span className="transition-transform group-hover:-translate-x-0.5">←</span>
-            {(() => {
-              const pc = getUnitContent(prevUnit);
-              return pc ? pc.meta.title : `Unit ${prevUnit.replace("unit-", "")}`;
-            })()}
+          <Link to={`/unit/${prevUnit}`} className={UNIT_NAV_LINK}>
+            <span className="block text-xs text-muted-foreground">← Previous study guide</span>
+            <span className="block font-display text-base text-foreground">{unitTitle(prevUnit)}</span>
           </Link>
         ) : (
-          <span />
+          <span className="hidden sm:block flex-1" />
         )}
         {nextUnit ? (
-          <Link
-            to={`/unit/${nextUnit}`}
-            className="group -my-3 inline-flex min-h-11 items-center gap-2 text-[12px] sm:text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
-          >
-            {(() => {
-              const nc = getUnitContent(nextUnit);
-              return nc ? nc.meta.title : `Unit ${nextUnit.replace("unit-", "")}`;
-            })()}
-            <span className="transition-transform group-hover:translate-x-0.5">→</span>
+          <Link to={`/unit/${nextUnit}`} className={`${UNIT_NAV_LINK} sm:text-right`}>
+            <span className="block text-xs text-muted-foreground">Next study guide →</span>
+            <span className="block font-display text-base text-foreground">{unitTitle(nextUnit)}</span>
           </Link>
         ) : (
-          <span />
+          <span className="hidden sm:block flex-1" />
         )}
       </nav>
     </div>
