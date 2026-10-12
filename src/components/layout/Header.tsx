@@ -98,7 +98,7 @@ const Header = () => {
               </Link>
             ),
           )}
-          <SearchBar />
+          <SearchBar shortcut />
         </nav>
 
         {/* Mobile: search + hamburger */}
@@ -106,7 +106,7 @@ const Header = () => {
           <SearchBar />
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-full p-2.5 text-gray-500 hover:bg-gray-100 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             ref={menuButtonRef}
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
