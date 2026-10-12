@@ -280,7 +280,7 @@ const FearCueDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "Explain"
                 </span>
               </div>
             </div>
-            {isPhaseTransition && (
+            {isPhaseTransition && step !== "predict" && (
               <p className="mt-1.5 text-xs text-muted-foreground italic">
                 {phaseInfo[trial.stage].description}
               </p>
