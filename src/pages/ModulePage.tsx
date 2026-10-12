@@ -105,7 +105,7 @@ const ModulePageContent = () => {
     .filter((l) => l.moduleId !== mod.id)
     .map((l) => {
       const m = modules.find((x) => x.id === l.moduleId);
-      return m ? { id: m.id, title: m.title } : null;
+      return m ? { id: m.id, slug: m.slug, title: m.title } : null;
     })
     .filter((x): x is NonNullable<typeof x> => x != null);
 
@@ -168,7 +168,7 @@ const ModulePageContent = () => {
             {siblingLessons.map((s) => (
               <li key={s.id}>
                 <Link
-                  to={`/module/${s.id}`}
+                  to={`/module/${s.slug}`}
                   className="inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
                 >
                   <span className="text-xs text-muted-foreground/50" aria-hidden="true">→</span>

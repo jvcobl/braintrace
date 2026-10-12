@@ -11,7 +11,7 @@ interface LessonCardProps {
 
 const LessonCard = ({ module, contextLabel, variant = "full" }: LessonCardProps) => (
   <Link
-    to={`/module/${module.id}`}
+    to={`/module/${module.slug}`}
     className="group flex flex-col rounded-xl border border-border bg-card p-4 sm:p-6 transition-all hover:border-primary/25 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
   >
     {contextLabel && (
