@@ -345,7 +345,11 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                   onChange={(e) => setDistractorInput(e.target.value)}
                   className="w-20 rounded-md border border-border bg-card px-3 py-2 text-center text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                   autoFocus
-                  onKeyDown={(e) => e.key === "Enter" && setPhase("recall")}
+                  onKeyDown={(e) => {
+                    if (e.key !== "Enter") return;
+                    e.preventDefault(); // or the same Enter press would also activate the next step's button
+                    setPhase("recall");
+                  }}
                 />
                 <button
                   onClick={() => setPhase("recall")}
@@ -378,7 +382,11 @@ const MemoryUnderLoadDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "
                 }
                 className="w-full rounded-md border border-border bg-card px-3 py-2 text-center text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                 autoFocus
-                onKeyDown={(e) => e.key === "Enter" && handleRecallSubmit()}
+                onKeyDown={(e) => {
+                  if (e.key !== "Enter") return;
+                  e.preventDefault(); // or the same Enter press would also press "Next" once focus moves there
+                  handleRecallSubmit();
+                }}
               />
               <button
                 onClick={handleRecallSubmit}

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { ExperienceShell } from "@/components/module/experience";
 import type { ExperienceSummary } from "@/components/module/experience";
 import PredictionOutcome from "@/components/module/PredictionOutcome";
@@ -81,6 +81,8 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   const [filledSlots, setFilledSlots] = useState<string[]>([]);
   const [usedChips, setUsedChips] = useState<Set<string>>(new Set());
   const [shakeSlot, setShakeSlot] = useState<number | null>(null);
+  const shakeTimer = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(shakeTimer.current), []);
   const [buildErrors, setBuildErrors] = useState(0);
 
   // Build sub-steps
@@ -112,13 +114,15 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
       if (buildComplete || usedChips.has(chip)) return;
 
       const slot = SLOTS[currentSlotIndex];
+      clearTimeout(shakeTimer.current);
       if (chip === slot.correctAnswer) {
+        setShakeSlot(null);
         setFilledSlots((prev) => [...prev, chip]);
         setUsedChips((prev) => new Set(prev).add(chip));
       } else {
         setBuildErrors((e) => e + 1);
         setShakeSlot(currentSlotIndex);
-        setTimeout(() => setShakeSlot(null), 500);
+        shakeTimer.current = setTimeout(() => setShakeSlot(null), 500);
       }
     },
     [buildComplete, usedChips, currentSlotIndex],
@@ -140,6 +144,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
   }, [consequencesSubmitted]);
 
   const handleRestart = useCallback(() => {
+    clearTimeout(shakeTimer.current);
     setPhase("build");
     setBuildStep("placing-A");
     setConsequencesPrediction(null);
@@ -199,7 +204,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {(buildStep === "placing-A" || buildStep === "placing-B") && (
             <p data-announce className="sr-only">
               {shakeSlot !== null
-                ? `That doesn't belong in ${SLOTS[currentSlotIndex].label}. Try another component.`
+                ? `That doesn't belong in ${SLOTS[shakeSlot]?.label ?? "this step"}. Try another component.`
                 : lastPlacedIndex >= 0 && !(buildStep === "placing-B" && lastPlacedIndex < CASCADE_SLOTS.length)
                   ? `Placed in ${SLOTS[lastPlacedIndex].label}: ${filledSlots[lastPlacedIndex]}.`
                   : ""}
