@@ -44,7 +44,7 @@ const Index = () => {
             <span className="text-primary/80"> predicts, reacts, and learns.</span>
           </h1>
 
-          <p className="mx-auto mt-5 sm:mt-6 max-w-lg text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-5 sm:mt-6 max-w-lg text-balance text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
             Interactive neuroscience lessons where you experience a phenomenon,
             trace the pathway, and understand what your brain is doing.
           </p>
@@ -65,7 +65,7 @@ const Index = () => {
             </Link>
           </div>
 
-          <p className="mt-8 sm:mt-10 text-[13px] text-muted-foreground">
+          <p className="mt-8 sm:mt-10 text-balance text-[13px] text-muted-foreground">
             {modules.length} interactive lessons · {TOPICS.length} topics ·{" "}
             <Link
               to="/about"
@@ -83,7 +83,7 @@ const Index = () => {
           <h2 className="text-center font-display text-xl sm:text-2xl tracking-tight text-foreground">
             Every lesson follows the same structure
           </h2>
-          <p className="text-center mt-2 text-sm text-muted-foreground max-w-lg mx-auto">
+          <p className="text-center text-balance mt-2 text-sm text-muted-foreground max-w-lg mx-auto">
             Experience the phenomenon first. Then see the circuit. Then read the explanation.
           </p>
 
