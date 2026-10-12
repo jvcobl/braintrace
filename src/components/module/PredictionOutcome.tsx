@@ -83,7 +83,7 @@ const PredictionOutcome = ({
           <button
             type="button"
             onClick={onNavigateTrace}
-            className="mt-3 sm:mt-4 flex items-center gap-1.5 rounded px-1.5 py-1.5 -mx-1.5 text-[10px] sm:text-[11px] text-primary hover:text-primary/80 hover:bg-primary/[0.04] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="mt-2 sm:mt-3 flex items-center gap-1.5 rounded px-1.5 py-3 -mx-1.5 text-[10px] sm:text-[11px] text-primary hover:text-primary/80 hover:bg-primary/[0.04] transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <span className="font-medium">See the pathway in Trace</span>
             <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>

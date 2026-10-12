@@ -17,7 +17,7 @@ const SectionNav = ({ current, onSelect }: SectionNavProps) => (
         key={s}
         type="button"
         onClick={() => onSelect(s)}
-        className={`relative pb-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+        className={`relative min-h-11 pt-2.5 pb-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
           current === s
             ? "text-gray-900 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary"
             : "text-gray-500 hover:text-gray-700"

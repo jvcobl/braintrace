@@ -103,7 +103,7 @@ const ModulePageContent = () => {
         {MODULE_TOPIC[mod.slug] && (
           <Link
             to={`/topics/${MODULE_TOPIC[mod.slug].slug}`}
-            className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary hover:text-primary/80 transition-colors"
+            className="inline-block py-1.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-primary hover:text-primary/80 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
           >
             {MODULE_TOPIC[mod.slug].title}
           </Link>
@@ -149,12 +149,12 @@ const ModulePageContent = () => {
           <h2 className="font-sans text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
             More in this topic
           </h2>
-          <ul className="mt-3 sm:mt-4 space-y-2">
+          <ul className="mt-2 sm:mt-3">
             {siblingLessons.map((s) => (
               <li key={s.id}>
                 <Link
                   to={`/module/${s.slug}`}
-                  className="inline-flex items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                  className="inline-flex min-h-11 items-center gap-2 text-[13px] font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
                 >
                   <span className="text-xs text-muted-foreground/50" aria-hidden="true">→</span>
                   {s.title}
