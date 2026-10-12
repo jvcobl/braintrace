@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import SearchBar from "./SearchBar";
@@ -21,6 +21,23 @@ const topicItems = [
 const Header = () => {
   const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Close the mobile menu whenever the route changes (by any link, not just its own).
+  useEffect(() => setMenuOpen(false), [pathname]);
+
+  // Escape closes the mobile menu and returns focus to its button.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
   const isActive = (to: string) =>
     pathname === to || (to !== "/" && pathname.startsWith(to));
@@ -52,14 +69,14 @@ const Header = () => {
                   {label}
                 </Link>
 
-                {/* Dropdown */}
-                <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 pt-1 opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
+                {/* Dropdown: opens on hover, and on keyboard focus so its links are never focusable while hidden */}
+                <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-1 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                   <div className="w-64 rounded-lg border border-gray-200 bg-white py-1.5 shadow-lg">
                     {topicItems.map((item) => (
                       <Link
                         key={item.slug}
                         to={`/topics/${item.slug}`}
-                        className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-foreground transition-colors normal-case tracking-normal"
+                        className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-foreground transition-colors normal-case tracking-normal focus-visible:outline-none focus-visible:bg-gray-50 focus-visible:text-foreground"
                       >
                         {item.label}
                       </Link>
@@ -87,8 +104,11 @@ const Header = () => {
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-full p-2.5 text-gray-500 hover:bg-gray-100 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            ref={menuButtonRef}
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -97,7 +117,7 @@ const Header = () => {
 
       {/* Mobile drawer */}
       {menuOpen && (
-        <nav className="sm:hidden border-t border-gray-200/60 bg-white px-4 pb-4 pt-2 space-y-1" aria-label="Mobile navigation">
+        <nav id="mobile-nav" className="sm:hidden border-t border-gray-200/60 bg-white px-4 pb-4 pt-2 space-y-1" aria-label="Mobile navigation">
           {navLinks.map(({ to, label }) => (
             <Link
               key={to}
