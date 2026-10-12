@@ -15,7 +15,8 @@ const CaseNoteSection = ({ caseNotes }: CaseNoteSectionProps) => (
       {caseNotes.map((cn) => (
         <article
           key={cn.id}
-          className="rounded-xl border border-border/70 bg-card p-4 sm:p-5"
+          id={`case-${cn.id}`}
+          className="scroll-mt-24 rounded-xl border border-border/70 bg-card p-4 sm:p-5"
         >
           <h3 className="font-sans text-[13px] sm:text-[14px] font-semibold text-card-foreground">{cn.title}</h3>
           <p className="mt-2 sm:mt-2.5 text-[12px] sm:text-[13px] text-foreground/80 leading-relaxed">{cn.content}</p>

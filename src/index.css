@@ -96,9 +96,10 @@
   }
 }
 
+/* Brief teal wash on the item a search result or shared link points to. */
 @keyframes searchHighlight {
-  0% { background-color: rgb(239 246 255); }
-  100% { background-color: transparent; }
+  /* No "to" frame: it fades back to the element's own background. */
+  from { background-color: hsl(var(--accent)); }
 }
 .search-highlight {
   animation: searchHighlight 1.5s ease-out;

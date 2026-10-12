@@ -14,7 +14,8 @@ const DistinctionSection = ({ distinctions }: DistinctionSectionProps) => (
       {distinctions.map((d) => (
         <div
           key={d.id}
-          className="overflow-hidden rounded-xl border border-border/70 bg-card"
+          id={`distinction-${d.id}`}
+          className="scroll-mt-24 overflow-hidden rounded-xl border border-border/70 bg-card"
         >
           <div className="grid sm:grid-cols-2">
             <div className="p-4 sm:p-5 sm:border-r sm:border-border/50">

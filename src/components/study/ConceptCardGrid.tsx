@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { scrollBehavior } from "@/lib/utils";
 import type { ConceptCard } from "@/data/content/types";
 import SensitivityBadge from "./SensitivityBadge";
@@ -10,7 +11,13 @@ interface ConceptCardGridProps {
 const INITIAL_VISIBLE = 6;
 
 const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
-  const [expanded, setExpanded] = useState(false);
+  // A link to a card behind "Show all" (from search or a shared URL) opens the full list.
+  const { hash } = useLocation();
+  const linkedToHiddenCard = cards.slice(INITIAL_VISIBLE).some((card) => hash === `#concept-${card.id}`);
+  const [expanded, setExpanded] = useState(linkedToHiddenCard);
+  useEffect(() => {
+    if (linkedToHiddenCard) setExpanded(true);
+  }, [linkedToHiddenCard, hash]);
   const sectionRef = useRef<HTMLElement>(null);
   const showToggle = cards.length > INITIAL_VISIBLE;
   const visible = expanded ? cards : cards.slice(0, INITIAL_VISIBLE);
@@ -25,7 +32,8 @@ const ConceptCardGrid = ({ cards }: ConceptCardGridProps) => {
         {visible.map((card) => (
           <div
             key={card.id}
-            className="rounded-xl border border-border/70 bg-card p-4 sm:p-5"
+            id={`concept-${card.id}`}
+            className="scroll-mt-24 rounded-xl border border-border/70 bg-card p-4 sm:p-5"
           >
             <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
               <h3 className="font-sans text-[13px] sm:text-[14px] font-semibold text-card-foreground leading-snug">

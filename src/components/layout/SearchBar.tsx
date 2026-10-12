@@ -4,13 +4,13 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { searchIndex, type SearchItem } from "@/data/searchIndex";
-import { scrollBehavior } from "@/lib/utils";
 
 const TYPE_LABEL: Record<SearchItem["type"], string> = {
   module: "Lesson",
   concept: "Concept",
   structure: "Structure",
   deeper: "Go Deeper",
+  guide: "Study guide",
 };
 
 const GROUP_LABEL: Record<SearchItem["type"], string> = {
@@ -18,6 +18,7 @@ const GROUP_LABEL: Record<SearchItem["type"], string> = {
   concept: "Concepts",
   structure: "Structures",
   deeper: "Go deeper",
+  guide: "Study guides",
 };
 
 const TYPE_COLOR: Record<SearchItem["type"], string> = {
@@ -25,20 +26,19 @@ const TYPE_COLOR: Record<SearchItem["type"], string> = {
   concept: "bg-purple-50 text-purple-700",
   structure: "bg-blue-50 text-blue-700",
   deeper: "bg-amber-50 text-amber-800",
+  guide: "bg-secondary text-secondary-foreground",
 };
 
-const GROUP_ORDER: SearchItem["type"][] = ["module", "concept", "structure", "deeper"];
+/** Lower-case and strip accents, so "kluver" finds "Klüver". */
+const fold = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-function scrollToHash(hash: string) {
-  setTimeout(() => {
-    const el = document.getElementById(hash);
-    if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: scrollBehavior() });
-    el.classList.add("search-highlight");
-    setTimeout(() => el.classList.remove("search-highlight"), 1500);
-  }, 100);
-}
+const SEARCHABLE = searchIndex.map((item) => ({
+  item,
+  title: fold(item.title),
+  text: fold([item.description, ...item.keywords].join("\n")),
+}));
+
+const GROUP_ORDER: SearchItem["type"][] = ["module", "concept", "structure", "deeper", "guide"];
 
 interface SearchBarProps {
   /**
@@ -92,18 +92,16 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
     };
   }, [open]);
 
-  // Filter results
+  // Filter results: title matches first (so "Phineas" finds the Phineas Gage note before cards
+  // that merely mention him), then the index order (lessons, concepts, structures, study guides).
   const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = fold(query.trim());
     if (q.length < 2) return [];
-    return searchIndex
-      .filter(
-        (item) =>
-          item.title.toLowerCase().includes(q) ||
-          item.description.toLowerCase().includes(q) ||
-          item.keywords.some((k) => k.toLowerCase().includes(q)),
-      )
-      .slice(0, 8);
+    return SEARCHABLE.filter(({ title, text }) => title.includes(q) || text.includes(q))
+      .map(({ item, title }, order) => ({ item, order, rank: title.includes(q) ? 0 : 1 }))
+      .sort((a, b) => a.rank - b.rank || a.order - b.order)
+      .slice(0, 8)
+      .map(({ item }) => item);
   }, [query]);
 
   // Group results by type
@@ -118,10 +116,8 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
   const handleSelect = useCallback(
     (url: string) => {
       closeSearch(false);
-      // Keep the hash: lesson pages open the right tab and scroll to the target from it.
+      // Keep the hash: lesson and study-guide pages scroll to (and open) the target from it.
       navigate(url);
-      const hashIdx = url.indexOf("#");
-      if (hashIdx !== -1 && !url.startsWith("/module/")) scrollToHash(url.slice(hashIdx + 1));
     },
     [navigate, closeSearch],
   );
@@ -135,9 +131,11 @@ export default function SearchBar({ shortcut = false }: SearchBarProps) {
     const resultButtons = focusables.filter((el) => el.dataset.result === "true");
     const index = focusables.indexOf(document.activeElement as HTMLElement);
 
-    if (e.key === "Enter" && document.activeElement === inputRef.current && results[0]) {
+    // Enter opens the first result as displayed (results are grouped by type on screen).
+    const firstShown = GROUP_ORDER.map((type) => grouped[type]?.[0]).find(Boolean);
+    if (e.key === "Enter" && document.activeElement === inputRef.current && firstShown) {
       e.preventDefault();
-      handleSelect(results[0].url);
+      handleSelect(firstShown.url);
     } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       if (!resultButtons.length) return;
       e.preventDefault();

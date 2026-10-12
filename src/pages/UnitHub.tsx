@@ -1,4 +1,5 @@
-import { useParams, Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { getUnitContent, getLessonsByUnit, getUnitIds } from "@/data/content/registry";
 import { modules } from "@/data/modules";
 import UnitOverviewHeader from "@/components/study/UnitOverviewHeader";
@@ -11,6 +12,10 @@ import ReviewSection from "@/components/study/ReviewSection";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import NotFoundContent from "@/components/NotFoundContent";
+import { scrollBehavior } from "@/lib/utils";
+
+/** Item anchors (from search results or shared links) get a brief highlight; section anchors don't. */
+const ITEM_ANCHOR = /^(concept|pathway|distinction|case)-/;
 
 const UnitHub = () => {
   const { unitId } = useParams<{ unitId: string }>();
@@ -20,6 +25,23 @@ const UnitHub = () => {
       ? { title: `${content.meta.title}: Study Guide`, description: content.meta.overview, canonicalPath: `/unit/${unitId}` }
       : { title: "Page not found", noindex: true },
   );
+
+  // Scroll to a linked section or item once the page (and any expanded list) has rendered.
+  const location = useLocation();
+  useEffect(() => {
+    const target = decodeURIComponent(location.hash.slice(1));
+    if (!target) return;
+    const timer = setTimeout(() => {
+      const el = document.getElementById(target);
+      if (!el) return;
+      el.scrollIntoView({ block: "start", behavior: scrollBehavior() });
+      if (ITEM_ANCHOR.test(target)) {
+        el.classList.add("search-highlight");
+        setTimeout(() => el.classList.remove("search-highlight"), 1500);
+      }
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [location.hash, location.key]);
 
   if (!content || !unitId) {
     return <NotFoundContent title="Study guide not found" message="The study guide you're looking for doesn't exist." />;
