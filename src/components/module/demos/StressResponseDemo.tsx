@@ -288,7 +288,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {/* Step A: result */}
           {buildStep === "result-A" && (
             <div className="mt-4 pt-4 border-t border-gray-100">
-              <CortisolGraph mode="runaway" onComplete={() => {}} className="w-full max-w-xs mx-auto opacity-60" />
+              <CortisolGraph mode="runaway" instant className="w-full max-w-xs mx-auto opacity-80" />
               <p className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
                 {stressResponseContent.buildStepARunningCaption}
               </p>
@@ -325,7 +325,7 @@ const StressResponseDemo = ({ onNavigate }: { onNavigate?: (target: "Trace" | "E
           {/* Step B: result → advance to Override */}
           {buildStep === "result-B" && (
             <div className="mt-4 pt-4 border-t border-gray-100">
-              <CortisolGraph mode="recovery" onComplete={() => {}} className="w-full max-w-xs mx-auto opacity-60" />
+              <CortisolGraph mode="recovery" instant className="w-full max-w-xs mx-auto opacity-80" />
               <p className="mt-4 text-sm text-muted-foreground leading-relaxed text-center">
                 {stressResponseContent.buildStepBRunningCaption}
               </p>

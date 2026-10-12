@@ -11,6 +11,7 @@ import ExperienceSection from "@/components/module/ExperienceSection";
 import TracePanel from "@/components/module/TracePanel";
 import TracePathwaySVG from "@/components/module/TracePathwaySVG";
 import ExplainSection from "@/components/module/ExplainSection";
+import { scrollBehavior } from "@/lib/utils";
 
 const MODULE_TOPIC: Record<string, { slug: string; title: string }> = {
   "blurry-object-guess": { slug: "perception", title: "Perception and Object Recognition" },
@@ -48,7 +49,7 @@ const ModulePageContent = () => {
       const el = document.getElementById(hash);
       if (!el) return;
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: "smooth" });
+      window.scrollTo({ top, behavior: scrollBehavior() });
       el.classList.add("search-highlight");
       setTimeout(() => el.classList.remove("search-highlight"), 1500);
     }, 150);
@@ -57,7 +58,7 @@ const ModulePageContent = () => {
 
   const handleSection = (s: SectionId) => {
     setSection(s);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: scrollBehavior() });
   };
 
   if (!mod) {

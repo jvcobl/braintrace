@@ -109,3 +109,15 @@
   25% { transform: translateX(-6px); }
   75% { transform: translateX(6px); }
 }
+
+/* Respect the OS "reduce motion" setting: no fades, shakes, pulses or smooth scrolling. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { searchIndex, type SearchItem } from "@/data/searchIndex";
+import { scrollBehavior } from "@/lib/utils";
 
 const TYPE_LABEL: Record<SearchItem["type"], string> = {
   module: "Module",
@@ -25,7 +26,7 @@ function scrollToHash(hash: string) {
     const el = document.getElementById(hash);
     if (!el) return;
     const top = el.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: "smooth" });
+    window.scrollTo({ top, behavior: scrollBehavior() });
     el.classList.add("search-highlight");
     setTimeout(() => el.classList.remove("search-highlight"), 1500);
   }, 100);
