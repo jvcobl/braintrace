@@ -13,7 +13,7 @@ const ConceptHub = () => (
     <Breadcrumb />
     <h1 className="font-display text-3xl tracking-tight text-foreground">How your brain predicts</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
-      Every BrainTrace module runs on the same prediction loop. These
+      Every BrainTrace lesson runs on the same prediction loop. These
       three pages explain how that loop works, how attention shapes it,
       and where it breaks.
     </p>
@@ -42,7 +42,7 @@ const ConceptHub = () => (
 
     <div className="mt-12 text-center">
       <p className="text-sm text-muted-foreground">
-        Looking for the interactive modules?
+        Looking for the interactive lessons?
       </p>
       <Link
         to="/topics"

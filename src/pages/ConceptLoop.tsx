@@ -25,7 +25,7 @@ const ConceptLoop = () => (
     <h1 className="font-display text-3xl tracking-tight text-foreground">The Loop</h1>
     <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
       Your brain runs a constant cycle: predict, receive input, detect mismatch,
-      update the model. Every BrainTrace module shows you one version of this loop.
+      update the model. Every BrainTrace lesson shows you one version of this loop.
     </p>
 
     {/* 4-step diagram */}
@@ -59,10 +59,10 @@ const ConceptLoop = () => (
 
     {/* Per-module callouts */}
     <h2 id="loop-modules" className="text-xl font-medium text-foreground mt-14 mb-2">
-      The loop in each module
+      Where to see the loop
     </h2>
     <p className="text-sm text-gray-500 mb-5">
-      Each module emphasizes different steps of the loop. The badges show which roles are most prominent.
+      Each lesson emphasizes different steps of the loop. The labels show which roles are most prominent.
     </p>
     <div className="space-y-3">
       {moduleCallouts.map((m) => (

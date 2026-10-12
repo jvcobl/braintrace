@@ -107,7 +107,7 @@ export const moduleDefinitions: Record<string, ModuleDefinition> = {
         title: "Pareidolia: When Priors Overpower Input",
         explanation: "Pareidolia is seeing faces in clouds, toast, or power outlets. It's a prediction error in reverse. Your face-detection prior is so strong that it fires even when the incoming sensory evidence is weak. The brain treats 'might be a face' as 'probably a face' because the cost of missing a real face is higher than the cost of a false alarm.",
         keyStructures: ["ffa", "pfc", "ofc"],
-        whyItMattersHere: "Every false positive you made in this module is pareidolia in action. Your brain's top-down face prior overwhelmed the actual evidence.",
+        whyItMattersHere: "Every false positive you made in this lesson is pareidolia in action. Your brain's top-down face prior overwhelmed the actual evidence.",
       },
     ],
     conceptLinks: ["loop", "precision-attention", "failure"],

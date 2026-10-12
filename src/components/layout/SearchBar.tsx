@@ -6,7 +6,7 @@ import { searchIndex, type SearchItem } from "@/data/searchIndex";
 import { scrollBehavior } from "@/lib/utils";
 
 const TYPE_LABEL: Record<SearchItem["type"], string> = {
-  module: "Module",
+  module: "Lesson",
   concept: "Concept",
   structure: "Structure",
   deeper: "Go Deeper",
@@ -127,7 +127,7 @@ export default function SearchBar() {
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search modules, concepts, structures..."
+                placeholder="Search lessons, concepts, structures..."
                 className="w-full text-sm text-gray-900 placeholder:text-gray-500 outline-none bg-transparent"
               />
               <kbd className="hidden sm:inline-flex shrink-0 items-center rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-medium text-gray-500">

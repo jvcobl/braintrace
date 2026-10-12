@@ -92,7 +92,7 @@ const ConceptPrecision = () => {
         Precision in action
       </h2>
       <p className="text-sm text-muted-foreground mt-2 mb-6 max-w-2xl">
-        Each BrainTrace module demonstrates a different balance between
+        Each BrainTrace lesson demonstrates a different balance between
         prior precision and input precision. Here's how the weighting plays out
         in three scenarios.
       </p>
@@ -183,7 +183,7 @@ const ConceptPrecision = () => {
               prior). The signal didn't change. The precision weights did.
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              In BrainTrace modules, you can see precision at work whenever
+              In BrainTrace lessons, you can see precision at work whenever
               the brain's expectation competes with incoming evidence. The
               outcome depends on which side the brain trusts more, and
               attention is the process that tips the balance.

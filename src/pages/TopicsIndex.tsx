@@ -14,7 +14,7 @@ const TopicsIndex = () => (
     <Breadcrumb />
     <h1 className="font-display text-3xl tracking-tight text-foreground">Explore by topic</h1>
     <p className="mt-4 text-sm text-muted-foreground max-w-2xl">
-      Pick a topic to see the modules connected to it.
+      Pick a topic to see the lessons connected to it.
     </p>
 
     <div className="mt-10 space-y-3">
@@ -34,7 +34,7 @@ const TopicsIndex = () => (
             </p>
           </div>
           <span className="text-xs text-muted-foreground shrink-0">
-            {t.modules} {t.modules === 1 ? "module" : "modules"}
+            {t.modules} {t.modules === 1 ? "lesson" : "lessons"}
           </span>
           <span
             className="text-gray-300 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0"

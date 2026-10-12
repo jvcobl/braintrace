@@ -91,10 +91,10 @@ const TopicPage = () => {
 
       {/* Modules */}
       <h2 className="text-lg font-medium text-foreground mt-10 mb-1">
-        Explore the modules
+        Explore the lessons
       </h2>
       <p className="text-sm text-gray-500 mb-3">
-        Each module lets you experience the phenomenon, trace the neural pathway, and read the explanation.
+        Each lesson lets you experience the phenomenon, trace the neural pathway, and read the explanation.
       </p>
       <div className="space-y-2">
         {topic.moduleIds.map((id) => (
@@ -107,7 +107,7 @@ const TopicPage = () => {
         How your brain predicts
       </h2>
       <p className="text-sm text-gray-500 mb-3">
-        These concept pages explain the shared framework behind the modules above.
+        These concept pages explain the shared framework behind the lessons above.
       </p>
       <div className="space-y-2 max-w-md">
         {topic.conceptIds.map((id) => (

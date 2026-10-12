@@ -40,7 +40,7 @@ const Index = () => (
         </h1>
 
         <p className="mx-auto mt-5 sm:mt-6 max-w-lg text-[15px] sm:text-[1.05rem] leading-relaxed text-muted-foreground">
-          Interactive neuroscience modules where you experience a phenomenon,
+          Interactive neuroscience lessons where you experience a phenomenon,
           trace the pathway, and understand what your brain is doing.
         </p>
 
@@ -76,7 +76,7 @@ const Index = () => (
     <section className="border-y border-border">
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 py-14 sm:py-16">
         <h2 className="text-center font-display text-xl sm:text-2xl tracking-tight text-foreground">
-          Every module follows the same structure
+          Every lesson follows the same structure
         </h2>
         <p className="text-center mt-2 text-sm text-muted-foreground max-w-lg mx-auto">
           Experience the phenomenon first. Then see the circuit. Then read the explanation.
@@ -105,8 +105,7 @@ const Index = () => (
           Five areas of neuroscience
         </h2>
         <p className="mt-2 max-w-lg text-sm text-muted-foreground">
-          Pick a topic. Each has a few interactive modules you can
-          finish in a few minutes.
+          Pick a topic. Each has two or three short interactive lessons.
         </p>
 
         <div className="mt-8 space-y-2">
@@ -124,7 +123,7 @@ const Index = () => (
                 <p className="text-xs text-gray-500 mt-0.5">{t.hook}</p>
               </div>
               <span className="text-xs text-muted-foreground shrink-0">
-                {t.count} {t.count === 1 ? "module" : "modules"}
+                {t.count} {t.count === 1 ? "lesson" : "lessons"}
               </span>
               <span
                 className="text-gray-300 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0"
@@ -148,7 +147,7 @@ const Index = () => (
                 The shared framework
               </p>
               <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                Every module runs the same loop: predict, receive input,
+                Every lesson runs the same loop: predict, receive input,
                 detect mismatch, update. The concept pages explain how the
                 loop works and where it breaks.
               </p>

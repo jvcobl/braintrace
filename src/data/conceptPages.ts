@@ -17,7 +17,7 @@ export const conceptPages: Record<ConceptPageId, ConceptPage> = {
     id: "loop",
     title: "The Loop",
     slug: "loop",
-    description: "Your brain runs a constant cycle: predict, receive input, detect mismatch, update the model. Every BrainTrace module shows you one version of this loop.",
+    description: "Your brain runs a constant cycle: predict, receive input, detect mismatch, update the model. Every BrainTrace lesson shows you one version of this loop.",
     moduleLinks: ["blurry-object-guess", "face-or-not", "sudden-noise-reaction", "fear-cue-and-extinction", "memory-under-load", "stress-response-builder"],
   },
   "precision-attention": {

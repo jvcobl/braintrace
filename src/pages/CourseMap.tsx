@@ -87,7 +87,7 @@ const CourseMap = () => {
       {/* Hero */}
       <h1 className="font-display text-3xl tracking-tight text-foreground">Course map</h1>
       <p className="mt-3 text-lg text-gray-500 max-w-2xl">
-        How BrainTrace connects to NBB302. Each module maps to specific course
+        How BrainTrace connects to NBB302. Each lesson maps to specific course
         topics.
       </p>
 
@@ -114,7 +114,7 @@ const CourseMap = () => {
             <div className="border-t border-gray-100 my-4" />
 
             <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider mb-2">
-              BrainTrace modules
+              BrainTrace lessons
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {area.moduleIds.map((id) => (
@@ -129,7 +129,7 @@ const CourseMap = () => {
       <div className="mt-12">
         <h2 className="text-lg font-medium text-foreground mb-2">The shared framework</h2>
         <p className="text-sm text-gray-500 max-w-2xl mb-4">
-          Every module above runs the same loop. Your brain predicts,
+          Every lesson above runs the same loop. Your brain predicts,
           receives input, detects mismatch, and updates its model.
         </p>
         <div className="space-y-2 max-w-md">
