@@ -72,6 +72,7 @@ src/
 npm install
 npm run dev                          # dev server on localhost:8080
 npx tsc --noEmit -p tsconfig.app.json   # type-check
+npm test                             # content-integrity tests (links, search, sitemap)
 npm run build                        # production build → dist/
 npm run preview                      # serve the production build
 ```
