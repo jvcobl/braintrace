@@ -38,7 +38,7 @@ const capitalize = (s: string) => (/^[a-z]+\b/.test(s) ? s[0].toUpperCase() + s.
 /** Each sentence becomes a row: arrow chains render as pills, plain sentences as text. */
 function PathwayPills({ text }: { text: string }) {
   const sentences = text
-    .split(/(?<=\.)\s+/)
+    .split(/\.\s+/)
     .map((s) => s.trim().replace(/\.$/, ""))
     .filter(Boolean);
 
